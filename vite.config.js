@@ -30,7 +30,7 @@ export default defineConfig(({ mode, command }) => {
     resolve: {
       alias: {
         // 设置路径别名,方便快捷引入其他文件
-        '~': resolve(__dirname, './src')
+        '@/': resolve(__dirname, './src')
       }
     },
     json: {
