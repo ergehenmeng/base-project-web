@@ -21,9 +21,7 @@ export default defineConfig(({ mode, command }) => {
         resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [ElementPlusResolver({
-          importStyle: 'sass'
-        })],
+        resolvers: [ElementPlusResolver()],
       })
     ],
     // 在生产中服务时的基本公共路径
@@ -33,13 +31,6 @@ export default defineConfig(({ mode, command }) => {
       alias: {
         // 设置路径别名,方便快捷引入其他文件
         '~': resolve(__dirname, './src')
-      }
-    }, css: {
-      // 预处理器配置
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "~/styles/element/index.scss" as *;`
-        }
       }
     },
     json: {
