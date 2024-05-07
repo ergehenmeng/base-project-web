@@ -7,7 +7,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode, command }) => {
+export default defineConfig(({ mode }) => {
 
   const env = loadEnv(mode, process.cwd())
   console.log('启动模式: %s 环境变量: %s', mode, env)
@@ -34,13 +34,14 @@ export default defineConfig(({ mode, command }) => {
         '~': resolve(__dirname, './')
       }
     },
+    // json导入配置
     json: {
       // 是否支持从 .json 文件中进行按名导入
       namedExports: true,
       // 若设置为 true 导入的json会被转为 export default JSON.parse("..") 会比转译成对象字面量性能更好
       stringify: true
     },
-
+    // 正式环境编译配置
     build: {
       // 设置最终构建的浏览器兼容目标。modules:支持原生 ES 模块的浏览器
       target: 'modules',
