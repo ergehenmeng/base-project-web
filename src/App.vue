@@ -9,7 +9,8 @@
 <script >
   import { defineComponent } from 'vue'
   import { ElConfigProvider } from 'element-plus'
-  import HelloWorld from './components/HelloWorld.vue'
+  import HelloWorld from '@/components/HelloWorld.vue'
+
   export default defineComponent({
     components: {
       ElConfigProvider,
