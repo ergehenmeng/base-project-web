@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
+import Icons from 'unplugin-icons/vite'
+import IconsResolver from 'unplugin-icons/resolver'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { resolve } from 'path'
 
@@ -18,10 +20,22 @@ export default defineConfig(({ mode }) => {
       vue(),
       vueJsx(),
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        imports: ['vue', 'vue-router'],
+        resolvers: [ElementPlusResolver(), IconsResolver({
+          prefix: 'Icon',
+        })],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          IconsResolver({
+            enabledCollections: ['ep'],
+          }),
+          ElementPlusResolver()
+        ]
+      }),
+      Icons({
+        autoInstall: true,
+        compiler: 'vue3',
       })
     ],
     // 在生产中服务时的基本公共路径
