@@ -11,6 +11,7 @@ import { resolve } from "path";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
+
   console.log("启动模式: %s 环境变量: %s", mode, env);
 
   return {
