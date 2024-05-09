@@ -1,0 +1,19 @@
+$bg-color: #e5e5e5;
+$text-color: #111111;
+$font-size: 18px;
+$font: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#app,
+html,
+body {
+  font-family: $font;
+  background-color: $bg-color;
+  color: $text-color;
+  font-size: $font-size;
+}
