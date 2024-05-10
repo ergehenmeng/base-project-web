@@ -26,6 +26,8 @@ export const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  // 严格模式，默认为true 即匹配/user/detail而不是/user/detail/
+  strict: true,
 });
 
 export default router;
