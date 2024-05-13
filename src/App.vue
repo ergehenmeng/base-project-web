@@ -1,5 +1,5 @@
 <template>
-  <el-config-provider :locale="local" :size="size" :zIndex="zIndex">
+  <el-config-provider :locale="local" :size="size" :zIndex="zIndex" :value-on-clear="null" :empty-values="[undefined, null]">
   </el-config-provider>
   <Container></Container>
 </template>

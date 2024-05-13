@@ -6,7 +6,7 @@ import "@/styles/index.scss";
 const app = createApp(App);
 // 绑定路由
 app.use(router);
-// 添加路由属性(方便全局调用)
+// 配置全局路由
 app.config.globalProperties.$router = router;
 // 挂载
 app.mount("#app");
