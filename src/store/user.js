@@ -1,0 +1,55 @@
+import { loginApi } from "@/api/login";
+import { defineStore } from "pinia";
+import { ref } from "vue";
+
+/**
+ * 用户登录信息
+ */
+const useUserStore = defineStore(
+  "user",
+  () => {
+    const user = ref({
+      // 登录token
+      token: "",
+      // 用户类型 1:系统用户 2:商户用户
+      userType: null,
+      // 昵称
+      nickName: "",
+      // 按钮权限
+      permList: [],
+    });
+    // 用户是否登陆
+    const isLogin = ref(false);
+
+    // 判断是否有指定的按钮权限
+    const hasAuth = (authCode) => {
+      const permList = user.value.permList;
+      return (
+        permList !== null &&
+        Array.isArray(permList) &&
+        permList.includes(authCode)
+      );
+    };
+    // 清空用户信息
+    const logout = () => {
+      this.$reset();
+      user.value = {};
+      isLogin.value = false;
+    };
+    // 登录并设置用户信息
+    const login = async (loginData) => {
+      if (isLogin.value) {
+        return;
+      }
+      const result = await loginApi(loginData);
+      console.log(result);
+      isLogin.value = true;
+      user.value = Object.assign(user.value, result.data);
+    };
+    return { user, login, hasAuth, logout };
+  },
+  // 开启持久化
+  { persist: true }
+);
+
+export default useUserStore;

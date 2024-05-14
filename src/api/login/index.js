@@ -1,10 +1,9 @@
 import request from "@/utils/request";
 
-export default {
-  login(data) {
-    return request.post({
-      url: "/manage/login",
-      data,
-    });
-  },
+// 登录接口
+export const loginApi = (data) => {
+  return request.post({
+    url: "/manage/login",
+    data: data,
+  });
 };

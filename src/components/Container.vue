@@ -83,12 +83,22 @@
     <el-button type="primary" @click="sub">减</el-button>
   </el-button-group>
 
-  <el-scrollbar max-height="200px" >
+  <el-scrollbar max-height="200px">
     <p v-for="item in count" class="item-scrollbar">{{ item }}</p>
   </el-scrollbar>
 </template>
 <script setup>
 import { ref } from 'vue';
+import useUserStore from '@/store/user'
+
+const userStore = useUserStore()
+
+userStore.login({
+  userName: "13000000000",
+  pwd: "e10adc3949ba59abbe56e057f20f883e",
+  verifyCode: "123"
+})
+
 const count = ref(3)
 const add = () => { count.value++ }
 const sub = () => {

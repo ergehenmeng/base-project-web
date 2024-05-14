@@ -101,10 +101,10 @@ export default defineConfig(({ mode }) => {
       // 允许跨域
       cors: true,
       proxy: {
-        "/api": {
+        [env.VITE_API_URL]: {
           target: env.VITE_BASE_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
+          rewrite: (path) => path.replace(new RegExp('^' + env.VITE_API_URL), ""),
         },
       },
     },
