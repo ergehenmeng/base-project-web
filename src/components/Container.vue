@@ -89,16 +89,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import useUserStore from '@/store/user'
-
-const userStore = useUserStore()
-
-userStore.login({
-  userName: "13000000000",
-  pwd: "e10adc3949ba59abbe56e057f20f883e",
-  verifyCode: "123"
-})
-
 const count = ref(3)
 const add = () => { count.value++ }
 const sub = () => {

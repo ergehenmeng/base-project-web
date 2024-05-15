@@ -1,28 +1,14 @@
 <template>
-  <el-config-provider :locale="local" :size="size" :zIndex="zIndex" :value-on-clear="null" :empty-values="[undefined, null]">
+  <el-config-provider :locale="zhCn" size="small" :zIndex="zIndex" :value-on-clear="null" :empty-values="[undefined, null]">
   </el-config-provider>
-  <Container></Container>
+  <!-- 默认主页 -->
+  <Main></Main>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 import { ElConfigProvider } from 'element-plus'
-import HelloWorld from '@/components/HelloWorld.vue'
-import Container from '@/components/Container.vue'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-
-// 设置Element Plus全局配置
-export default defineComponent({
-  components: {
-    ElConfigProvider,
-  },
-  setup() {
-    return {
-      zIndex: 2000,
-      size: 'small',
-      // 中文显示
-      local: zhCn,
-    }
-  }
-})
+import Main from '@/views/main/index.vue'
+import { ref } from 'vue';
+const zIndex = ref(2000)
 </script>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import useUserStore from "@/store/user";
 
 // 创建axios实例
 const service = axios.create({
@@ -16,6 +17,7 @@ service.interceptors.request.use(
         `Expected 'config' and 'config.headers' not to be undefined`
       );
     }
+    config.headers["token"] = useUserStore().user.token;
     return config;
   },
   (error) => {
@@ -31,10 +33,12 @@ service.interceptors.response.use(
     if (code === 200) {
       return res;
     } else {
+      ElMessage.error(msg)
       return Promise.reject(new Error(msg || "Error"));
     }
   },
   (error) => {
+    ElMessage.error("请求超时，请重试");
     return Promise.reject(error);
   }
 );

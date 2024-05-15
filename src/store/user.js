@@ -32,9 +32,10 @@ const useUserStore = defineStore(
     };
     // 清空用户信息
     const logout = () => {
-      this.$reset();
       user.value = {};
       isLogin.value = false;
+      window.localStorage.clear();
+      window.sessionStorage.clear();
     };
     // 登录并设置用户信息
     const login = async (loginData) => {
@@ -42,7 +43,7 @@ const useUserStore = defineStore(
         return;
       }
       const result = await loginApi(loginData);
-      console.log(result);
+      console.log(result)
       isLogin.value = true;
       user.value = Object.assign(user.value, result.data);
     };

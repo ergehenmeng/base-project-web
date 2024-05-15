@@ -2,12 +2,12 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 export const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "login",
     component: () => import("@/views/login/index.vue"),
   },
   {
-    path: "/main",
+    path: "/",
     name: "main",
     component: () => import("@/views/main/index.vue"),
   },
@@ -29,5 +29,6 @@ const router = createRouter({
   // 严格模式，默认为true 即匹配/user/detail而不是/user/detail/
   strict: true,
 });
+
 
 export default router;
