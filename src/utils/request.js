@@ -1,5 +1,18 @@
 import axios from "axios";
 import useUserStore from "@/store/user";
+import { useRouter } from "vue-router";
+
+/**
+ * 特殊错误回调函数注册
+ */
+const errorCallback = {
+  8848: (data, response) => {
+    useUserStore().logout(response.config.url);
+  },
+  403: () => {
+    useRouter().push("/403");
+  },
+};
 
 // 创建axios实例
 const service = axios.create({
@@ -12,11 +25,6 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    if (!config.headers) {
-      throw new Error(
-        `Expected 'config' and 'config.headers' not to be undefined`
-      );
-    }
     config.headers["token"] = useUserStore().user.token;
     return config;
   },
@@ -33,7 +41,7 @@ service.interceptors.response.use(
     if (code === 200) {
       return res;
     } else {
-      ElMessage.error(msg)
+      errorMsg(res, response);
       return Promise.reject(new Error(msg || "Error"));
     }
   },
@@ -85,8 +93,25 @@ const download = ({ url, params, ...config }) => {
   });
 };
 
-// 统一处理请求响应异常
-function handleError() {}
+/**
+ * 弹出错误信息并在关闭时执行回调
+ *
+ * @param { data } data 响应数据
+ * @param { response } response 响应对象
+ */
+const errorMsg = (data, response) => {
+  ElMessage({
+    message: data.msg,
+    type: "error",
+    duration: 3000,
+    onClose: () => {
+      const callbackFunc = errorCallback[data.code];
+      if (callbackFunc) {
+        callbackFunc(data, response);
+      }
+    },
+  });
+};
 
 // 导出实例
 export default {

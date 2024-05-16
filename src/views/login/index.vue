@@ -76,7 +76,8 @@ const api = import.meta.env.VITE_API_URL;
 const getCode = () => {
   verifyUrl.value = api + "/manage/captcha?t=" + new Date().getTime();
 }
-onMounted(() => getCode())
+onMounted(() => getCode());
+
 // 登录
 const handleLogin = async () => {
   await formDataRef.value.validate(valid => {
@@ -86,14 +87,18 @@ const handleLogin = async () => {
       userStore.login({ ...formData.value })
         .then(() => {
           const fullPath = useRoute().fullPath;
-          if (fullPath.indexOf('/'))
+          if (fullPath.startsWith("/login?redirect=") !== -1) {
+            useRouter().push(fullPath.replace("/login?redirect=", ""));
+          } else {
+            useRouter().push("/");
+          }
         })
         .catch(() => getCode())
         .finally(() => {
           loading.value = false;
         })
     }
-  })
+  });
 }
 
 </script>

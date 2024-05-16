@@ -7,3 +7,9 @@ export const loginApi = (data) => {
     data: data,
   });
 };
+
+export const logoutApi = () => {
+  return request.post({
+    url: "/manage/logout",
+  });
+}

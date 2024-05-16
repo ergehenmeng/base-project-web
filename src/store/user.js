@@ -1,6 +1,7 @@
-import { loginApi } from "@/api/login";
+import { loginApi, logoutApi } from "@/api/login";
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 /**
  * 用户登录信息
@@ -30,12 +31,27 @@ const useUserStore = defineStore(
         permList.includes(authCode)
       );
     };
-    // 清空用户信息
-    const logout = () => {
-      user.value = {};
-      isLogin.value = false;
-      window.localStorage.clear();
-      window.sessionStorage.clear();
+    /**
+     * 退出登录
+     * @param { redirectUrl } redirectUrl 是否包含重定向地址
+     * @returns
+     */
+    const logout = (redirectUrl) => {
+      if (!isLogin.value) {
+        return;
+      }
+      logoutApi().then(() => {
+        user.value = {};
+        isLogin.value = false;
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        if (redirectUrl) {
+          useRouter().push("/login?redirect=" + encodeURIComponent(redirectUrl));
+        } else {
+          useRouter().push("/login");
+        }
+        window.location.reload();
+      });
     };
     // 登录并设置用户信息
     const login = async (loginData) => {
@@ -43,11 +59,11 @@ const useUserStore = defineStore(
         return;
       }
       const result = await loginApi(loginData);
-      console.log(result)
+      console.log(result);
       isLogin.value = true;
       user.value = Object.assign(user.value, result.data);
     };
-    return { user, login, hasAuth, logout };
+    return { user, isLogin, login, hasAuth, logout };
   },
   // 开启持久化
   { persist: true }
