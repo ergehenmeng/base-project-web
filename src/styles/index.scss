@@ -2,7 +2,8 @@ $bg-color: #FBFbFb;
 $text-color: #111111;
 $font-size: 18px;
 $font: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
-$main-header-color: linear-gradient(135deg, #abdcff, #0396ff);
+$main-header-color: linear-gradient(127deg,#3c8ce7,#00eaff);
+$main-header-logo-url: '@/assets/images/logo.png';
 
 * {
   margin: 0;
@@ -17,4 +18,5 @@ body {
   background-color: $bg-color;
   color: $text-color;
   font-size: $font-size;
+  height: 100%;
 }

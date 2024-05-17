@@ -10,7 +10,7 @@ export const routes = [
   {
     path: "/",
     name: "main",
-    component: () => import("@/views/main/index.vue"),
+    component: () => import("@/views/index.vue"),
   },
   {
     path: "/403",

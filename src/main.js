@@ -3,16 +3,22 @@ import App from "./App.vue";
 import router from "@/router";
 import "@/styles/index.scss";
 import { createPinia } from "pinia";
-import {createPersistedState} from "pinia-plugin-persistedstate";
+import { createPersistedState } from "pinia-plugin-persistedstate";
+import hasPerm from "@/directive/hasPerm.js";
 
 const app = createApp(App);
 // 绑定路由
 app.use(router);
+// 绑定指令
+app.directive("hasPerm", hasPerm);
 // 创建pinia
 const pinia = createPinia();
-pinia.use(createPersistedState({
-  key: id => `__persisted__${id}`
-}));
+pinia.use(
+  createPersistedState({
+    key: (id) => `__persisted__${id}`,
+    storage: window.sessionStorage,
+  })
+);
 // 绑定状态管理
 app.use(pinia);
 // 配置全局路由

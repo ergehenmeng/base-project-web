@@ -1,8 +1,9 @@
 <template>
-  <el-container class="login-container">
-    <el-main class="login-layout-form">
-      <div class="login-form-label">
-        <h3 class="login-title">后台管理系统</h3>
+  <div class="login-container">
+    <div class="login-layout">
+      <div class="login-layout-left"></div>
+      <div class="login-layout-right">
+        <h3>后台管理系统</h3>
         <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData">
           <el-form-item prop="userName">
             <el-input placeholder="请输入账号" maxlength="20" v-model="formData.userName" size="large">
@@ -32,7 +33,7 @@
                 </el-icon>
               </template>
             </el-input>
-            <div class="verfiy-layout">
+            <div class="login-form-verfiy">
               <img :src="verifyUrl" @click="getCode">
             </div>
           </el-form-item>
@@ -44,12 +45,13 @@
           </el-form-item>
         </el-form>
       </div>
-    </el-main>
-  </el-container>
+    </div>
+  </div>
 </template>
 <script setup>
 import useUserStore from '@/store/user';
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue';
+import md5 from 'md5';
 import { reactive, ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
@@ -84,7 +86,11 @@ const handleLogin = async () => {
     if (valid) {
       loading.value = true;
       const userStore = useUserStore()
-      userStore.login({ ...formData.value })
+      userStore.login({
+        userName: formData.value.userName,
+        pwd: md5(formData.value.pwd),
+        verifyCode: formData.value.verifyCode
+       })
         .then(() => {
           const fullPath = useRoute().fullPath;
           if (fullPath.startsWith("/login?redirect=") !== -1) {
@@ -105,38 +111,54 @@ const handleLogin = async () => {
 
 <style lang="scss" scoped>
 .login-container {
-  background-image: url(@/assets/images/background.png);
-}
-
-.login-layout-form {
-  height: 900px;
   display: flex;
-  align-items: center;
   justify-content: center;
-}
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  background: url("@/assets/images/background.png") repeat 1px 1px, linear-gradient(207deg,#3c8ce7,#00eaff);
+  background-blend-mode: multiply;
 
-.login-form-label {
-  padding: 30px;
-  border: 1px solid #ddd;
-  background-color: #EEE
-}
+  .login-layout {
+    width: 900px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
 
-.verfiy-layout {
-  float: right;
-  padding-left: 10px;
+    .login-layout-left {
+      width: 500px;
+      height: 100%;
+      background-image: url("@/assets/images/login.png");
+    }
 
-  img {
-    height: 38px;
-    vertical-align: middle;
-    cursor: pointer;
+    .login-layout-right {
+      width: 400px;
+      height: 100%;
+      padding: 30px;
+      display: grid;
+      place-items: center;
+      background-color: #FFF;
+
+      .login-form {
+        width: 280px;
+      }
+
+      .login-form-verfiy {
+        float: right;
+        padding-left: 10px;
+
+        img {
+          height: 38px;
+          vertical-align: middle;
+          cursor: pointer;
+        }
+      }
+
+    }
   }
-}
-
-.login-title {
-  text-align: center;
-}
-
-.login-form {
-  width: 280px;
 }
 </style>
