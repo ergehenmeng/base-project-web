@@ -1,7 +1,7 @@
 import { loginApi, logoutApi } from "@/api/login";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 /**
  * 用户登录信息
@@ -33,7 +33,7 @@ const useUserStore = defineStore(
     };
     /**
      * 退出登录
-     * @param { redirectUrl } redirectUrl 是否包含重定向地址
+     * @param { * } redirectUrl 是否包含重定向地址
      * @returns
      */
     const logout = (redirectUrl) => {
