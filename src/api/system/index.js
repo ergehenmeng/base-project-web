@@ -7,8 +7,9 @@ export const listPageApi = (params) => {
   });
 };
 
-export const updateApi = () => {
+export const updateApi = (data) => {
   return request.post({
     url: "/manage/config/update",
+    data
   });
 }

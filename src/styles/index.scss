@@ -30,10 +30,17 @@ body {
   }
 }
 
-.conetent-main {
+.content-main {
   margin-top: 18px;
   background-color: #fff;
   padding: 15px;
   border-radius: 3px;
   min-height: calc(100vh - 205px);
+}
+
+.el-dialog {
+  width: 500px;
+  .el-input, .el-textarea {
+    width: 350px;
+  }
 }

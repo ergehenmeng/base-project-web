@@ -10,13 +10,13 @@
     </div>
     <div class="main-content">
       <el-scrollbar>
-        <Content />
+        <System />
       </el-scrollbar>
     </div>
   </div>
 </template>
 <script setup>
-import Content from '@/layout/Content.vue'
+import System from '@/views/system/index.vue'
 
 </script>
 <style lang='scss' scoped>

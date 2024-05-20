@@ -33,8 +33,8 @@
                 </el-icon>
               </template>
             </el-input>
-            <div class="login-form-verfiy">
-              <img :src="verifyUrl" @click="getCode">
+            <div class="login-form-verify">
+              <img :src="verifyUrl" @click="getCode" alt="点击刷新验证码">
             </div>
           </el-form-item>
           <el-form-item>
@@ -146,7 +146,7 @@ const handleLogin = async () => {
         width: 280px;
       }
 
-      .login-form-verfiy {
+      .login-form-verify {
         float: right;
         padding-left: 10px;
 

@@ -16,7 +16,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="conetent-main">
+    <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
@@ -26,7 +26,9 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="primary" @click="handleEdit(scope.$index, scope.row)" :icon="Edit" link></el-button>
+            <el-button v-has-perm="'PiK0'" type="primary" @click="handleEdit(scope.row)" link>
+              <el-icon title="编辑"><Edit/></el-icon>
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
