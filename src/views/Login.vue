@@ -157,7 +157,6 @@ const handleLogin = async () => {
           cursor: pointer;
         }
       }
-
     }
   }
 }

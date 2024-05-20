@@ -46,7 +46,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    ElMessage.error("请求超时，请重试");
+    ElMessage.error("接口请求超时，请重试");
     return Promise.reject(error);
   }
 );

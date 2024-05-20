@@ -3,8 +3,6 @@ import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import Icons from "unplugin-icons/vite";
-import IconsResolver from "unplugin-icons/resolver";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { resolve } from "path";
 
@@ -21,24 +19,10 @@ export default defineConfig(({ mode }) => {
       vueJsx(),
       AutoImport({
         imports: ["vue", "vue-router"],
-        resolvers: [
-          ElementPlusResolver(),
-          IconsResolver({
-            prefix: "Icon",
-          }),
-        ],
+        resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [
-          IconsResolver({
-            enabledCollections: ["ep"],
-          }),
-          ElementPlusResolver(),
-        ],
-      }),
-      Icons({
-        autoInstall: true,
-        compiler: "vue3",
+        resolvers: [ElementPlusResolver()],
       }),
     ],
     // 在生产中服务时的基本公共路径
@@ -104,7 +88,8 @@ export default defineConfig(({ mode }) => {
         [env.VITE_API_URL]: {
           target: env.VITE_BASE_URL,
           changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp('^' + env.VITE_API_URL), ""),
+          rewrite: (path) =>
+            path.replace(new RegExp("^" + env.VITE_API_URL), ""),
         },
       },
     },

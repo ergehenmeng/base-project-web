@@ -5,12 +5,12 @@ export const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/login/index.vue"),
+    component: () => import("@/views/Login.vue"),
   },
   {
     path: "/",
     name: "main",
-    component: () => import("@/views/index.vue"),
+    component: () => import("@/views/Index.vue"),
   },
   {
     path: "/403",

@@ -5,10 +5,10 @@
     </el-header>
     <el-container>
       <el-aside width="200px">
-        <Menu></Menu>
+        <Aside></Aside>
       </el-aside>
       <el-main style="height: calc(100vh - 60px);">
-        <Center></Center>
+        <Main></Main>
       </el-main>
     </el-container>
   </el-container>
@@ -16,8 +16,8 @@
 </template>
 <script setup>
 import Header from "@/layout/Header.vue"
-import Menu from "@/layout/Menu.vue"
-import Center from "@/layout/Center.vue"
+import Aside from "@/layout/Aside.vue"
+import Main from "@/layout/Main.vue"
 import useUserStore from "@/store/user";
 
 const { isLogin } = toRefs(useUserStore());
