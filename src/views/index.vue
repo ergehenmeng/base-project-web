@@ -1,5 +1,5 @@
 <template>
-  <el-container class="main-container" v-show="isLogin">
+  <el-container class="main-container" v-if="isLogin">
     <el-header class="main-header">
       <Header></Header>
     </el-header>

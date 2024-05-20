@@ -6,7 +6,8 @@
           <el-input v-model="queryParams.queryName" placeholder="请输入内容" clearable />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.locked" clearable>
+          <el-select v-model="queryParams.locked" >
+            <el-option label="全部" value="" />
             <el-option label="禁止编辑" value="true" />
             <el-option label="可编辑" value="false" />
           </el-select>
@@ -20,13 +21,13 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
-        <el-table-column prop="content" label="值" width="300" />
+        <el-table-column prop="content" label="配置信息" width="300" />
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column prop="locked" label="状态" width="100" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="primary" @click="handleEdit(scope.$index, scope.row)" :icon="Edit" link></el-button>
+            <el-button type="primary" @click="handleEdit(scope.$index, scope.row)" :icon="Edit" title="编辑" link></el-button>
           </template>
         </el-table-column>
       </el-table>

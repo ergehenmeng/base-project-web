@@ -20,3 +20,20 @@ body {
   font-size: $font-size;
   height: 100%;
 }
+
+.content-top {
+  border-radius: 3px;
+  background-color: #fff;
+  padding-top: 18px;
+  .el-input, .el-select {
+    width: 200px;
+  }
+}
+
+.conetent-main {
+  margin-top: 18px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 3px;
+  min-height: calc(100vh - 205px);
+}

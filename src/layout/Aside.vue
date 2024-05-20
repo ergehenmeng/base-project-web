@@ -1,19 +1,31 @@
 <template>
-  <el-menu router >
-    <el-menu-item index="0">
-      <el-icon><HomeFilled /></el-icon>
+  <el-menu router>
+    <el-menu-item index="/home">
+      <el-icon>
+        <HomeFilled />
+      </el-icon>
       <template #title>首页</template>
     </el-menu-item>
-    <el-sub-menu index="1">
-      <template #title>Workspace</template>
-      <el-menu-item index="1">1</el-menu-item>
-      <el-menu-item index="2">2</el-menu-item>
-      <el-menu-item index="3" v-has-perm="'xx'">3</el-menu-item>
-    </el-sub-menu>
+    <el-scrollbar height="calc(100vh - 120px)">
+      <template v-for="(item) in menuList" :key="item.id">
+        <el-sub-menu :index="item.code">
+          <el-icon v-if="item.icon">
+            <component :is="item.icon" />
+          </el-icon>
+          <template #title>{{ item.title }}</template>
+          <template v-for="(subItem) in item.children" :key="subItem.id">
+            <el-menu-item :index="item.code">{{ subItem.title }}</el-menu-item>
+          </template>
+        </el-sub-menu>
+      </template>
+    </el-scrollbar>
   </el-menu>
 </template>
 <script setup>
-import { HomeFilled } from '@element-plus/icons-vue'
+import useUserStore from '@/store/user';
+const userStore = useUserStore();
+
+const menuList = userStore.user.menuList;
 
 </script>
 <style lang='scss' scoped>

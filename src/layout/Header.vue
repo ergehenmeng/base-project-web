@@ -1,6 +1,11 @@
 <template>
   <div class="main-header">
+    <span class="main-header-title">欢迎您: {{ nickName }}</span>
     <ul>
+      <li><el-icon title="个人中心" @click="changePwd">
+          <UserFilled />
+        </el-icon>
+      </li>
       <li><el-icon title="修改密码" @click="changePwd">
           <Unlock />
         </el-icon></li>
@@ -11,12 +16,21 @@
   </div>
 </template>
 <script setup>
-import { CircleCloseFilled, Unlock } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 
-const logout = ()=> {
-  const userStore = useUserStore();
-  userStore.logout();
+const userStore = useUserStore();
+
+const nickName = userStore.user.nickName;
+
+const logout = () => {
+  ElMessageBox.confirm("确定要退出系统吗?").then(() => {
+    const userStore = useUserStore();
+    userStore.logout();
+  })
+}
+
+const changePwd = () => {
+
 }
 
 </script>
@@ -34,13 +48,22 @@ const logout = ()=> {
   ul {
     list-style: none;
     display: inline-flex;
+
     li {
       color: white;
       margin-right: 10px;
+
       i {
         cursor: pointer;
       }
     }
+  }
+  .main-header-title {
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    margin-right: 20px;
+    padding-bottom: 2px;
   }
 }
 </style>

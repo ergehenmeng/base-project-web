@@ -1,5 +1,4 @@
 <script setup>
-import { Check, Delete, Search, Edit, Message, Star, ArrowLeft, ArrowRight, Share, Eleme } from '@element-plus/icons-vue';
 </script>
 
 <template>

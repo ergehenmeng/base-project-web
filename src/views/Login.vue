@@ -50,7 +50,6 @@
 </template>
 <script setup>
 import useUserStore from '@/store/user';
-import { CircleCheck, Lock, User } from '@element-plus/icons-vue';
 import md5 from 'md5';
 import { reactive, ref, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';

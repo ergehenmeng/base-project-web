@@ -9,7 +9,9 @@
       </el-breadcrumb>
     </div>
     <div class="main-content">
-      <Content/>
+      <el-scrollbar>
+        <Content />
+      </el-scrollbar>
     </div>
   </div>
 </template>
@@ -18,11 +20,12 @@ import Content from '@/layout/Content.vue'
 
 </script>
 <style lang='scss' scoped>
-.main-navigation,
-.main-center,
-.main-content {
+.main-navigation {
   padding: 10px;
 }
 
-
+.main-center,
+.main-content {
+  padding: 10px 10px 0px 10px;
+}
 </style>
