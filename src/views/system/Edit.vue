@@ -37,7 +37,14 @@ const formRules = reactive({
   }]
 })
 
-const formData = ref({});
+const formData = ref({
+  id: null,
+  title: "",
+  nid: "",
+  content: "",
+  remark: ""
+});
+
 const formDataRef = ref({});
 
 const showDialog = ref(false);
