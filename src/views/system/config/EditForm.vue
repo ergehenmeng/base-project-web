@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { updateApi } from "@/api/system/index.js";
+import { updateApi } from "@/api/system/config";
 
 const loading = ref(false);
 
