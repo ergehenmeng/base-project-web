@@ -1,16 +1,18 @@
 import axios from "axios";
 import useUserStore from "@/store/user";
-import { useRouter } from "vue-router";
+import router from "@/router";
+
 
 /**
  * 特殊错误回调函数注册
  */
 const errorCallback = {
   8848: (data, response) => {
-    useUserStore().logout(response.config.url);
+    const userStore = useUserStore();
+    userStore.logout(response.config.url);
   },
   403: () => {
-    useRouter().push("/403");
+    router.push("/403");
   },
 };
 
@@ -25,7 +27,8 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    config.headers["token"] = useUserStore().user.token;
+    const userStore = useUserStore()
+    config.headers["token"] = userStore.user.token;
     return config;
   },
   (error) => {

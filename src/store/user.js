@@ -1,7 +1,7 @@
 import { loginApi, logoutApi } from "@/api/login";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import router from "@/router";
 
 /**
  * 用户登录信息
@@ -40,17 +40,16 @@ const useUserStore = defineStore(
       if (!isLogin.value) {
         return;
       }
-      logoutApi().then(() => {
+      logoutApi().then((res) => {
         user.value = {};
         isLogin.value = false;
         window.localStorage.clear();
         window.sessionStorage.clear();
         if (redirectUrl) {
-          useRouter().push("/login?redirect=" + encodeURIComponent(redirectUrl));
+          router.replace("/login?redirect=" + encodeURIComponent(redirectUrl))
         } else {
-          useRouter().push("/login");
+          router.replace("/login");
         }
-        window.location.reload();
       });
     };
     // 登录并设置用户信息
@@ -59,7 +58,6 @@ const useUserStore = defineStore(
         return;
       }
       const result = await loginApi(loginData);
-      console.log(result);
       isLogin.value = true;
       user.value = Object.assign(user.value, result.data);
     };

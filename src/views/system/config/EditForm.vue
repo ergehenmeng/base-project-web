@@ -1,20 +1,19 @@
 <template>
   <el-dialog title="编辑" v-model="showDialog" width="500px" draggable>
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto">
-      <el-form-item label="参数名称" prop="title" di>
-        <el-input v-model="formData.title" disabled/>
-      </el-form-item>
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="参数名称" prop="title">
-        <el-input v-model="formData.title" disabled/>
+        <el-input v-model="formData.title" show-word-limit maxlength="30" />
       </el-form-item>
       <el-form-item label="标示符" prop="nid">
-        <el-input v-model="formData.nid" disabled/>
+        <el-input v-model="formData.nid" disabled />
       </el-form-item>
       <el-form-item label="配置信息" prop="content">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.content" autosize maxlength="400" show-word-limit :disabled="formData.locked"/>
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.content" autosize
+          maxlength="400" show-word-limit :disabled="formData.locked" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" autosize maxlength="200" show-word-limit/>
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" autosize
+          maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -28,15 +27,20 @@
 </template>
 
 <script setup>
-import {ref, reactive} from 'vue';
-import {updateApi} from "@/api/system/index.js";
+import { ref, reactive } from 'vue';
+import { updateApi } from "@/api/system/index.js";
+
+const loading = ref(false);
 
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  reactive: [
-    {required: true, message: '配置信息不能为空', trigger: 'blur'}
-  ]
+  title: [
+    { required: true, message: '参数名称不能为空', trigger: 'blur' }
+  ],
+  content: [
+    { required: true, message: '配置信息不能为空', trigger: 'blur' }
+  ],
 })
 
 const formData = ref({
@@ -71,17 +75,19 @@ const resetForm = () => {
 }
 
 const handleUpdate = () => {
-  formDataRef.value.validate(async (valid) => {
+  formDataRef.value.validate((valid) => {
     if (valid) {
+      loading.value = true;
       updateApi(formData.value).then(res => {
+        ElMessage.success("参数修改成功");
+        showDialog.value = false;
         emit('reload');
       }).finally(() => {
-        showDialog.value = false;
+        loading.value = false;
       })
     }
   })
 }
-
 
 defineExpose({
   openDialog

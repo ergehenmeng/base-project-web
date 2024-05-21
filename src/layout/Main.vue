@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup>
-import System from '@/views/system/index.vue'
+import System from '@/views/system/config/index.vue'
 
 </script>
 <style lang='scss' scoped>

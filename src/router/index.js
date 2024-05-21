@@ -23,7 +23,7 @@ export const routes = [
     component: () => import("@/views/error/403.vue"),
   },
   {
-    path: "/404",
+    path: "/:pathMatch(.*)*",
     name: "notFound",
     component: () => import("@/views/error/404.vue"),
   },
@@ -54,5 +54,13 @@ router.beforeEach((to, from, next) => {
     }
   }
 });
+
+const modules = import.meta.glob("./modules/*/*.*", { eager: true });
+
+for (const path in modules) {
+  modules[path].default.forEach((item) => {
+    router.addRoute(item);
+  });
+}
 
 export default router;

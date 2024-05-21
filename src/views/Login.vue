@@ -52,8 +52,9 @@
 import useUserStore from '@/store/user';
 import md5 from 'md5';
 import { reactive, ref, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const formData = ref({})
 const formDataRef = ref();
 const loading = ref(false)
@@ -89,16 +90,14 @@ const handleLogin = async () => {
         userName: formData.value.userName,
         pwd: md5(formData.value.pwd),
         verifyCode: formData.value.verifyCode
-       })
-        .then(() => {
-          const fullPath = useRoute().fullPath;
-          if (fullPath.startsWith("/login?redirect=") !== -1) {
-            useRouter().push(fullPath.replace("/login?redirect=", ""));
-          } else {
-            useRouter().push("/");
-          }
-        })
-        .catch(() => getCode())
+      }).then(() => {
+        const fullPath = route.fullPath;
+        if (fullPath.startsWith("/login?redirect=") !== -1) {
+          router.replace(fullPath.replace("/login?redirect=", ""));
+        } else {
+          router.replace("/");
+        }
+      }).catch(() => getCode())
         .finally(() => {
           loading.value = false;
         })
@@ -115,7 +114,7 @@ const handleLogin = async () => {
   align-items: center;
   height: 100%;
   overflow: hidden;
-  background: url("@/assets/images/background.png") repeat 1px 1px, linear-gradient(207deg,#3c8ce7,#00eaff);
+  background: url("@/assets/images/background.png") repeat 1px 1px, linear-gradient(207deg, #3c8ce7, #00eaff);
   background-blend-mode: multiply;
 
   .login-layout {

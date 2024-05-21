@@ -74,7 +74,6 @@ onMounted(() => {
 })
 
 const handleEdit = (row) => {
-  console.log(row)
 }
 
 </script>

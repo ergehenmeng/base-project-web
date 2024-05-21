@@ -31,7 +31,4 @@ const { isLogin } = toRefs(useUserStore());
   background: url($main-header-logo-url) no-repeat 50px 5px, $main-header-color;
 }
 
-.main-container {
-  background-color: #ebebeb;
-}
 </style>

@@ -43,7 +43,7 @@
 import {listPageApi} from '@/api/system';
 import {onMounted, reactive, ref} from 'vue';
 import {Edit} from '@element-plus/icons-vue';
-import EditForm from "@/views/system/EditForm.vue";
+import EditForm from "./EditForm.vue";
 
 const loading = ref(false)
 const total = ref(0);
