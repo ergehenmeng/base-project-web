@@ -24,7 +24,8 @@ const nickName = userStore.user.nickName;
 
 const logout = () => {
   ElMessageBox.confirm("确定要退出系统吗?", {
-    autofocus: false
+    autofocus: false,
+    type: "warning"
   }).then(() => {
     const userStore = useUserStore();
     userStore.logout();
