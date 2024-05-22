@@ -9,8 +9,7 @@ export const routes = [
   },
   {
     path: "/",
-    name: "main",
-    component: () => import("@/views/index.vue"),
+    component: () => import("@/layout/index.vue"),
   },
   {
     path: "/home",
@@ -44,6 +43,8 @@ router.beforeEach((to, from, next) => {
   if (userStore.isLogin) {
     if (to.path === "/login") {
       next("/");
+    } else {
+      next();
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
@@ -62,5 +63,4 @@ for (const path in modules) {
     router.addRoute(item);
   });
 }
-
 export default router;

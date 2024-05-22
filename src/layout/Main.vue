@@ -2,21 +2,27 @@
   <div class="main-center">
     <div class="main-navigation">
       <el-breadcrumb>
-        <el-breadcrumb-item>一级</el-breadcrumb-item>
-        <el-breadcrumb-item>二级</el-breadcrumb-item>
-        <el-breadcrumb-item>三级</el-breadcrumb-item>
-        <el-breadcrumb-item>四级</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="index" :to="{path: breadcrumb.path}">
+          {{ breadcrumb.meta.title }}
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="main-content">
       <el-scrollbar>
-        <System />
+        <router-view @reloadBreadcrumb="reload"></router-view>
       </el-scrollbar>
     </div>
   </div>
 </template>
 <script setup>
-import System from '@/views/system/config/index.vue'
+import { ref } from 'vue';
+
+const breadcrumbList = ref([]);
+
+const reload = (rows) => {
+  breadcrumbList.value = rows;
+}
+
 
 </script>
 <style lang='scss' scoped>

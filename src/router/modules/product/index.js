@@ -1,6 +1,6 @@
 export default [
   {
-    path: "/goods",
+    path: "/product",
     meta: {
       title: "商品管理",
     },
@@ -8,7 +8,7 @@ export default [
       {
         path: "scenic",
         name: "scenic",
-        component: () => import("@/views/goods/ticket/scenic/index.vue"),
+        component: () => import("@/views/product/ticket/scenic/index.vue"),
         meta: {
           title: "景区管理",
         },
@@ -16,7 +16,7 @@ export default [
       {
         path: "ticket",
         name: "ticket",
-        component: () => import("@/views/goods/ticket/index.vue"),
+        component: () => import("@/views/product/ticket/index.vue"),
         meta: {
           title: "门票管理",
         },
@@ -24,7 +24,7 @@ export default [
       {
         path: "homestay",
         name: "homestay",
-        component: () => import("@/views/goods/homestay/index.vue"),
+        component: () => import("@/views/product/homestay/index.vue"),
         meta: {
           title: "民宿管理",
         },
@@ -32,7 +32,7 @@ export default [
       {
         path: "room",
         name: "room",
-        component: () => import("@/views/goods/homestay/room/index.vue"),
+        component: () => import("@/views/product/homestay/room/index.vue"),
         meta: {
           title: "房型管理",
         },
@@ -40,7 +40,7 @@ export default [
       {
         path: "store",
         name: "store",
-        component: () => import("@/views/goods/item/store/index.vue"),
+        component: () => import("@/views/product/item/store/index.vue"),
         meta: {
           title: "零售店铺",
         },
@@ -48,15 +48,31 @@ export default [
       {
         path: "item",
         name: "item",
-        component: () => import("@/views/goods/item/index.vue"),
+        component: () => import("@/views/product/item/index.vue"),
         meta: {
           title: "零售商品",
         },
       },
       {
+        path: "express",
+        name: "express",
+        component: () => import("@/views/product/item/express/index.vue"),
+        meta: {
+          title: "快递模板",
+        },
+      },
+      {
+        path: "address",
+        name: "address",
+        component: () => import("@/views/product/item/address/index.vue"),
+        meta: {
+          title: "收货地址",
+        },
+      },
+      {
         path: "travelAgency",
         name: "travelAgency",
-        component: () => import("@/views/goods/line/travelAgency/index.vue"),
+        component: () => import("@/views/product/line/travelAgency/index.vue"),
         meta: {
           title: "旅行社",
         },
@@ -64,7 +80,7 @@ export default [
       {
         path: "line",
         name: "line",
-        component: () => import("@/views/goods/line/index.vue"),
+        component: () => import("@/views/product/line/index.vue"),
         meta: {
           title: "线路管理",
         },
@@ -72,7 +88,7 @@ export default [
       {
         path: "restaurant",
         name: "restaurant",
-        component: () => import("@/views/goods/voucher/restaurant/index.vue"),
+        component: () => import("@/views/product/voucher/restaurant/index.vue"),
         meta: {
           title: "餐饮商家",
         },
@@ -80,7 +96,7 @@ export default [
       {
         path: "voucher",
         name: "voucher",
-        component: () => import("@/views/goods/voucher/index.vue"),
+        component: () => import("@/views/product/voucher/index.vue"),
         meta: {
           title: "餐饮券",
         },
@@ -88,7 +104,7 @@ export default [
       {
         path: "venue",
         name: "venue",
-        component: () => import("@/views/goods/venue/index.vue"),
+        component: () => import("@/views/product/venue/index.vue"),
         meta: {
           title: "场馆管理",
         },
@@ -96,7 +112,7 @@ export default [
       {
         path: "site",
         name: "site",
-        component: () => import("@/views/goods/venue/site/index.vue"),
+        component: () => import("@/views/product/venue/site/index.vue"),
         meta: {
           title: "场地管理",
         },

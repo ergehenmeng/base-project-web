@@ -34,7 +34,7 @@
               </template>
             </el-input>
             <div class="login-form-verify">
-              <img :src="verifyUrl" @click="getCode" alt="点击刷新验证码">
+              <img :src="verifyUrl" @click="getCode" alt="点击刷新" >
             </div>
           </el-form-item>
           <el-form-item>

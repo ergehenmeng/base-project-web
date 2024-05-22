@@ -6,11 +6,11 @@ export default [
     },
     children: [
       {
-        path: "config",
+        path: "/sys/config",
         name: "sysConfig",
         component: () => import("@/views/system/config/index.vue"),
         meta: {
-          title: "系统配置",
+          title: "系统参数",
         },
       },
       {

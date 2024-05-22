@@ -1,5 +1,5 @@
 <template>
-  <el-menu router unique-opened >
+  <el-menu router unique-opened :default-active="$route.path" >
     <el-menu-item index="/home">
       <el-icon>
         <HomeFilled />
@@ -8,17 +8,17 @@
     </el-menu-item>
     <el-scrollbar height="calc(100vh - 120px)">
       <template v-for="(item) in menuList" :key="item.id">
-        <el-sub-menu :index="item.code">
+        <el-sub-menu :index="item.path ? item.path : item.code">
           <template #title>
             <el-icon v-if="item.icon">
-              <component :is="`${item.icon}`"></component>
+              <component :is="item.icon"></component>
             </el-icon>
             {{ item.title }}</template>
           <template v-for="(subItem) in item.children" :key="subItem.id">
-            <el-menu-item :index="subItem.code">
+            <el-menu-item :index="subItem.path ? subItem.path : subItem.code">
               <template #title>
                 <el-icon v-if="subItem.icon">
-                  <component :is="`${subItem.icon}`"></component>
+                  <component :is="subItem.icon"></component>
                 </el-icon>
                 {{ subItem.title }}
               </template>
