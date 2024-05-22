@@ -6,11 +6,13 @@ export const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/views/Login.vue"),
+    components: {
+      login: () => import("@/views/Login.vue")
+    },
   },
   {
     path: "/",
-    component: () => import("@/layout/index.vue"),
+    redirect: "/home"
   },
   {
     path: "/home",
@@ -39,23 +41,15 @@ const router = createRouter({
 const whiteList = ["/login"];
 
 router.beforeEach((to, from, next) => {
-  var breadcrumbStore = useBreadcrumbStore();
+  const breadcrumbStore = useBreadcrumbStore();
   breadcrumbStore.switchPage(to);
   const userStore = useUserStore();
   // 用户已登录, 即使访问登录页, 也跳转到首页
-  if (userStore.isLogin) {
-    if (to.path === "/login") {
-      next("/");
-    } else {
-      next();
-    }
+  if (userStore.isLogin || whiteList.indexOf(to.path) !== -1) {
+    next();
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      next();
-    } else {
-      // 未登录, 且不在白名单中, 需要跳转到登录页
-      next("/login?redirect=" + to.path);
-    }
+    // 未登录, 且不在白名单中, 需要跳转到登录页
+    next("/login?redirect=" + to.path);
   }
 });
 

@@ -27,13 +27,11 @@ const logout = () => {
     autofocus: false,
     type: "warning"
   }).then(() => {
-    const userStore = useUserStore();
     userStore.logout();
   }).catch(() => { });
 }
 
 const changePwd = () => {
-
 }
 
 </script>

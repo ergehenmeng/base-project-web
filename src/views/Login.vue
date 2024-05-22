@@ -52,9 +52,11 @@
 import useUserStore from '@/store/user';
 import md5 from 'md5';
 import { reactive, ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const userStore = useUserStore()
 const router = useRouter();
+const route = useRoute();
 const formData = ref({})
 const formDataRef = ref();
 const loading = ref(false)
@@ -85,17 +87,16 @@ const handleLogin = async () => {
   await formDataRef.value.validate(valid => {
     if (valid) {
       loading.value = true;
-      const userStore = useUserStore()
       userStore.login({
         userName: formData.value.userName,
         pwd: md5(formData.value.pwd),
         verifyCode: formData.value.verifyCode
       }).then(() => {
         const fullPath = route.fullPath;
-        if (fullPath.startsWith("/login?redirect=") !== -1) {
+        if (fullPath.startsWith("/login?redirect=")) {
           router.replace(fullPath.replace("/login?redirect=", ""));
         } else {
-          router.replace("/home");
+          router.replace("/");
         }
       }).catch(() => getCode())
         .finally(() => {

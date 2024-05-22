@@ -12,7 +12,7 @@
       </el-main>
     </el-container>
   </el-container>
-  <router-view v-if="!isLogin"></router-view>
+  <router-view v-if="!isLogin" name="login"></router-view>
 </template>
 <script setup>
 import Header from "@/layout/Header.vue"
