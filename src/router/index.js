@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import useUserStore from "@/store/user";
+import useBreadcrumbStore from "@/store/breadcrumb";
 
 export const routes = [
   {
@@ -38,6 +39,8 @@ const router = createRouter({
 const whiteList = ["/login"];
 
 router.beforeEach((to, from, next) => {
+  var breadcrumbStore = useBreadcrumbStore();
+  breadcrumbStore.switchPage(to);
   const userStore = useUserStore();
   // 用户已登录, 即使访问登录页, 也跳转到首页
   if (userStore.isLogin) {

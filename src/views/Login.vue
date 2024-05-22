@@ -95,7 +95,7 @@ const handleLogin = async () => {
         if (fullPath.startsWith("/login?redirect=") !== -1) {
           router.replace(fullPath.replace("/login?redirect=", ""));
         } else {
-          router.replace("/");
+          router.replace("/home");
         }
       }).catch(() => getCode())
         .finally(() => {

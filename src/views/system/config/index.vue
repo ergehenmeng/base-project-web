@@ -44,10 +44,6 @@ import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from "./EditForm.vue";
 
-import getBreadcrumb from "@/utils/breadcrumb.js";
-const breadcrumb = getBreadcrumb();
-const emit = defineEmits(['reloadBreadcrumb']);
-emit('reloadBreadcrumb', breadcrumb);
 
 const loading = ref(false)
 const total = ref(0);

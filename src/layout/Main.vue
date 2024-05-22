@@ -2,27 +2,25 @@
   <div class="main-center">
     <div class="main-navigation">
       <el-breadcrumb>
-        <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="index" :to="{path: breadcrumb.path}">
-          {{ breadcrumb.meta.title }}
+        <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="index" :to="{ path: breadcrumb?.path }">
+          {{ breadcrumb.meta?.title }}
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="main-content">
       <el-scrollbar>
-        <router-view @reloadBreadcrumb="reload"></router-view>
+        <router-view></router-view>
       </el-scrollbar>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
-
-const breadcrumbList = ref([]);
-
-const reload = (rows) => {
-  breadcrumbList.value = rows;
-}
-
+import useBreadcrumbStore from '@/store/breadcrumb';
+import { computed, ref } from 'vue';
+const breadcrumbStore = useBreadcrumbStore();
+const breadcrumbList = computed(() => {
+  return breadcrumbStore.breadcrumb;
+})
 
 </script>
 <style lang='scss' scoped>
