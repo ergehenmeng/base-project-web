@@ -46,11 +46,14 @@ import { Edit, Connection, Delete, Plus } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
 import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';
+import useUserStore from '@/store/user';
 
+const userStore = useUserStore();
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
 const authRef = ref();
+const pageData = ref([]);
 
 const queryParams = reactive({
   queryName: "",
@@ -59,14 +62,15 @@ const queryParams = reactive({
   state: null
 })
 
-const pageData = ref([]);
 
 const getPage = async () => {
   loading.value = true;
   try {
-    const { data } = await listPageApi(queryParams);
-    pageData.value = data.rows;
-    total.value = data.total;
+    if (userStore.hasAuth('JjK0')) {
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
   } finally {
     loading.value = false;
   }

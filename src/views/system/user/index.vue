@@ -3,11 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search"/>
+          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state">
-            <el-option label="全部" value="" />
+          <el-select v-model="queryParams.state" clearable>
             <el-option label="正常" value="1" />
             <el-option label="禁用" value="0" />
           </el-select>
@@ -25,7 +24,7 @@
         <el-table-column prop="nickName" label="昵称" width="120" />
         <el-table-column prop="mobile" label="登录账号" width="150" />
         <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
-        <el-table-column prop="dataType" label="数据权限" width="150" :formatter="formatter" />
+        <el-table-column prop="dataType" column-key="dataKey" label="数据权限" width="150" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="deptName" label="所属部门" width="150" />
         <el-table-column prop="remark" label="备注" />
@@ -65,10 +64,12 @@ import { onMounted, reactive, ref, h } from 'vue';
 import { Document, Edit, Lock, Unlock, Delete, Plus, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
+import useUserStore from '@/store/user';
 
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
+const userStore = useUserStore();
 
 const queryParams = reactive({
   queryName: "",
@@ -82,15 +83,18 @@ const pageData = ref([]);
 const getPage = async () => {
   loading.value = true;
   try {
-    const { data } = await listPageApi(queryParams);
-    pageData.value = data.rows;
-    total.value = data.total;
+    if (userStore.hasAuth('XqK0')) {
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
   } finally {
     loading.value = false;
   }
 }
 
 const formatter = (row, column, cellValue) => {
+  console.log(column)
   if (column.property === "state") {
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '锁定');
   } else if (column.property === "userType") {

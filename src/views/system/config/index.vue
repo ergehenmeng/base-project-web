@@ -3,11 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable @keyup.enter="search"/>
+          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.locked">
-            <el-option label="全部" value="" />
+          <el-select v-model="queryParams.locked" clearable>
             <el-option label="禁止编辑" value="true" />
             <el-option label="可编辑" value="false" />
           </el-select>
@@ -43,7 +42,9 @@ import { listPageApi } from '@/api/system/config';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from "./EditForm.vue";
+import useUserStore from '@/store/user';
 
+const userStore = useUserStore();
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
@@ -64,9 +65,11 @@ const pageData = ref([]);
 const getPage = async () => {
   loading.value = true;
   try {
-    const { data } = await listPageApi(queryParams);
-    pageData.value = data.rows;
-    total.value = data.total;
+    if (userStore.hasAuth('siK0')) {
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
   } finally {
     loading.value = false;
   }
