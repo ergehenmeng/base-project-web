@@ -16,7 +16,7 @@
 </template>
 <script setup>
 import useBreadcrumbStore from '@/store/breadcrumb';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {
   return breadcrumbStore.breadcrumb;

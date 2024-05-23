@@ -12,15 +12,16 @@
       </el-main>
     </el-container>
   </el-container>
-  <router-view v-if="!isLogin" name="login"></router-view>
+  <!-- fullScreen:需要全屏显示的页面 -->
+  <router-view v-if="!isLogin" name="fullScreen"></router-view>
 </template>
 <script setup>
 import Header from "@/layout/Header.vue"
 import Aside from "@/layout/Aside.vue"
 import Main from "@/layout/Main.vue"
 import useUserStore from "@/store/user";
-
-const { isLogin } = toRefs(useUserStore());
+const userStore = useUserStore();
+const { isLogin } = toRefs(userStore);
 
 </script>
 

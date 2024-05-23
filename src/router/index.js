@@ -7,7 +7,7 @@ export const routes = [
     path: "/login",
     name: "login",
     components: {
-      login: () => import("@/views/Login.vue")
+      fullScreen: () => import("@/views/Login.vue")
     },
   },
   {
