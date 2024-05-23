@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable />
+          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable @keyup.enter="search"/>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.locked">
@@ -77,8 +77,8 @@ const search = () => {
   getPage()
 }
 
-const handleEdit = (rows) => {
-  formRef.value.openDialog(rows);
+const handleEdit = (row) => {
+  formRef.value.openDialog(row);
 }
 
 </script>

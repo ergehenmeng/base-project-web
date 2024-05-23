@@ -1,6 +1,5 @@
 import axios from "axios";
 import useUserStore from "@/store/user";
-import router from "@/router";
 
 
 /**
@@ -10,10 +9,7 @@ const errorCallback = {
   8848: (data, response) => {
     const userStore = useUserStore();
     userStore.logout(response.config.url);
-  },
-  403: () => {
-    router.push("/403");
-  },
+  }
 };
 
 // 创建axios实例

@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable />
+          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search"/>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state">
@@ -15,7 +15,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button">
+        <el-form-item class="right-button" v-has-perm="'gqK0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
@@ -121,44 +121,44 @@ onMounted(() => {
   getPage()
 })
 
-const handleDetail = (rows) => {
-  formRef.value.openDialog(rows);
+const handleDetail = (row) => {
+  formRef.value.openDialog(row);
 }
 
-const handleEdit = (rows) => {
-  formRef.value.openDialog(rows);
+const handleEdit = (row) => {
+  formRef.value.openDialog(row);
 }
 
-const handleLock = (rows) => {
+const handleLock = (row) => {
   confirmMsg("确定要锁定该用户吗?", () => {
-    const data = { id: rows.id };
+    const data = { id: row.id };
     lockApi(data).then(res => {
       getPage();
     })
   })
 }
 
-const handleUnlock = (rows) => {
+const handleUnlock = (row) => {
   confirmMsg("确定要解锁该用户吗?", () => {
-    const data = { id: rows.id };
+    const data = { id: row.id };
     unlockApi(data).then(res => {
       getPage();
     })
   })
 }
 
-const handleReset = (rows) => {
+const handleReset = (row) => {
   confirmMsg("确定要重置该用户的密码?", () => {
-    const data = { id: rows.id };
+    const data = { id: row.id };
     resetPwdApi(data).then(res => {
       getPage();
     })
   })
 }
 
-const handleDelete = (rows) => {
+const handleDelete = (row) => {
   confirmMsg("确定要删除该用户吗?", () => {
-    const data = { id: rows.id };
+    const data = { id: row.id };
     deleteApi(data).then(res => {
       getPage();
     })
@@ -166,6 +166,7 @@ const handleDelete = (rows) => {
 }
 
 const handleCreate = () => {
+  formRef.value.openDialog({});
 }
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑" v-model="showDialog" width="500px" draggable>
+  <el-dialog title="编辑" v-model="showDialog" width="500px" draggable align-center>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="参数名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
@@ -19,7 +19,7 @@
     <template #footer>
       <span>
         <el-button @click=" showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleUpdate">确认</el-button>
+        <el-button type="primary" @click="handleSave">保存</el-button>
       </span>
     </template>
   </el-dialog>
@@ -74,7 +74,7 @@ const resetForm = () => {
   formDataRef.value?.resetFields();
 }
 
-const handleUpdate = () => {
+const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
