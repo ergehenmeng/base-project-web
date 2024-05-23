@@ -18,17 +18,16 @@
 <script setup>
 import useUserStore from '@/store/user';
 
+import { confirmMsg } from '@/utils/message';
+
 const userStore = useUserStore();
 
 const nickName = userStore.user.nickName;
 
 const logout = () => {
-  ElMessageBox.confirm("确定要退出系统吗?", {
-    autofocus: false,
-    type: "warning"
-  }).then(() => {
+  confirmMsg("确定要退出系统吗?", () => {
     userStore.logout();
-  }).catch(() => { });
+  });
 }
 
 const changePwd = () => {

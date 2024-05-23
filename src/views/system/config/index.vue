@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="请输入内容" clearable />
+          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.locked">
@@ -22,7 +22,7 @@
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
         <el-table-column prop="content" label="配置信息" width="300" />
-        <el-table-column prop="remark" label="备注信息" />
+        <el-table-column prop="remark" label="备注" />
         <el-table-column prop="locked" label="状态" width="100" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
@@ -44,11 +44,13 @@ import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from "./EditForm.vue";
 
-
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
 
+onMounted(() => {
+  getPage();
+})
 
 const queryParams = reactive({
   queryName: "",
@@ -74,10 +76,6 @@ const search = () => {
   queryParams.page = 1;
   getPage()
 }
-
-onMounted(() => {
-  getPage();
-})
 
 const handleEdit = (rows) => {
   formRef.value.openDialog(rows);
