@@ -3,12 +3,11 @@
     <div class="content-top">
       <el-form :inline="true" label-width="80px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="图片名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="图片名称" clearable @keyup.enter="search"/>
         </el-form-item>
         <el-form-item label="分类">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="正常" value="1" />
-            <el-option label="禁用" value="0" />
+          <el-select v-model="queryParams.imageType" clearable>
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -21,39 +20,50 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="图片名称" width="150" />
-        <el-table-column prop="path"  label="预览" width="150" :formatter="formatter" />
-        <el-table-column prop="imageType" label="图片分类" :formatter="formatter" />
-        <el-table-column prop="path" label="url" />
-        <el-table-column prop="size" label="图片大小" :formatter="formatter" />
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
+        <el-table-column prop="title" label="图片名称" width="150"/>
+        <el-table-column prop="path" label="预览" width="150">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <el-image fit="contain" :src="scope.row.path" :preview-src-list="[scope.row.path]"
+                        style="width: 50px;height: 50px;" preview-teleported hide-on-click-modal/>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="imageType" label="图片分类" :formatter="formatter"/>
+        <el-table-column prop="path" label="url"/>
+        <el-table-column prop="size" label="图片大小" :formatter="formatter"/>
+        <el-table-column prop="remark" label="备注"/>
+        <el-table-column prop="createTime" label="创建时间"/>
+        <el-table-column prop="updateTime" label="更新时间"/>
         <el-table-column label="操作">
           <template #default="scope">
             <el-button v-has-perm="'I2K0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
             <el-button v-has-perm="'F2K0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link
-              title="删除">
+                       title="删除">
             </el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+                     :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total"
+                     @change="getPage"/>
     </div>
   </div>
   <ImageForm ref="imageRef" @reload="getPage"></ImageForm>
 </template>
 <script setup>
-import { listPageApi, deleteApi } from '@/api/system/image';
-import { onMounted, reactive, ref, h } from 'vue';
-import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {listPageApi, deleteApi} from '@/api/system/image';
+import {onMounted, reactive, ref, h} from 'vue';
+import {Edit, Delete, Plus} from '@element-plus/icons-vue';
+import {confirmMsg} from '@/utils/message';
 import ImageForm from './ImageForm.vue';
 import useUserStore from '@/store/user';
+import useDictStore from "@/store/dict.js";
 
 const userStore = useUserStore();
+const dictStore = useDictStore();
+const dictList = dictStore.getDict('image_type');
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
@@ -64,14 +74,14 @@ const queryParams = reactive({
   queryName: "",
   page: 1,
   pageSize: 10,
-  state: null
+  imageType: null
 })
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (userStore.hasAuth('ogK0')) {
-      const { data } = await listPageApi(queryParams);
+      const {data} = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
     }
@@ -95,19 +105,18 @@ const handleEdit = (row) => {
 
 const handleDelete = (row) => {
   confirmMsg("确定要删除该图片吗?", () => {
-    const data = { id: row.id };
+    const data = {id: row.id};
     deleteApi(data).then(res => {
       getPage();
     })
   })
 }
 
-
 const formatter = (row, column, cellValue) => {
   if (column.property === "size") {
-    return cellValue / 1024 + "KB";
+    return (cellValue / 1024).toFixed(1) + "KB";
   } else if (column.property === "imageType") {
-    return cellValue === 1 ? "系统图片" : "业务图片";
+    return dictStore.parseDict("image_type", cellValue);
   } else if (column.property === "path") {
     return cellValue === 1 ? "启用" : "禁用";
   } else {
