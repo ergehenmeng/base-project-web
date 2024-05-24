@@ -53,7 +53,7 @@
 </template>
 <script setup>
 import { listPageApi, deleteApi } from '@/api/system/image';
-import { onMounted, reactive, ref, h } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
 import ImageForm from './ImageForm.vue';
@@ -66,7 +66,6 @@ const dictList = dictStore.getDict('image_type');
 
 const loading = ref(false)
 const total = ref(0);
-const formRef = ref();
 const imageRef = ref();
 const pageData = ref([]);
 

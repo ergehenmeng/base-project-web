@@ -2,21 +2,49 @@ import request from "@/utils/request";
 
 export const listPageApi = (params) => {
     return request.get({
-        url: "/manage/image/listPage",
+        url: "/manage/dict/listPage",
         params,
     });
 };
 
 export const createApi = (data) => {
     return request.post({
-        url: "/manage/image/create",
+        url: "/manage/dict/create",
         data
     });
 }
 
 export const updateApi = (data) => {
     return request.post({
-        url: "/manage/image/update",
+        url: "/manage/dict/update",
+        data
+    });
+}
+
+export const deleteApi = (data) => {
+    return request.post({
+        url: "/manage/dict/delete",
+        data
+    });
+}
+
+export const createItemApi = (data) => {
+    return request.post({
+        url: "/manage/dict/item/create",
+        data
+    });
+}
+
+export const updateItemApi = (data) => {
+    return request.post({
+        url: "/manage/dict/item/create",
+        data
+    });
+}
+
+export const deleteItemApi = (data) => {
+    return request.post({
+        url: "/manage/dict/item/delete",
         data
     });
 }

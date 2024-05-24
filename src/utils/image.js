@@ -8,7 +8,7 @@ import { errorMsg } from "./message";
  * @returns
  */
 export const imageCheck = (file, maxSize, ...imageType) => {
-  const type = imageType || ["image/jpeg", "image/jpg", "image/png", "image/svg"];
+  const type = imageType.length !== 0 ? imageType : ["image/jpeg", "image/jpg", "image/png", "image/svg"];
   const isImage = type.includes(file.type);
   if (!isImage) {
     errorMsg("图片格式不正确");

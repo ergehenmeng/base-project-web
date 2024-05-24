@@ -65,7 +65,7 @@ const formRules = reactive({
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
   ],
   roleIds: [
-    { required: true, message: '请选择角色', trigger: 'channge', type: 'array' }
+    { required: true, message: '请选择角色', trigger: 'change', type: 'array' }
   ]
 })
 

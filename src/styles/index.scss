@@ -21,6 +21,11 @@ body {
   height: 100%;
 }
 
+/*消除element按钮边框颜色(icon按钮显示有问题)*/
+.el-button:focus-visible {
+  outline: none !important;
+}
+
 .content-top {
   border-radius: 3px;
   background-color: #fff;
