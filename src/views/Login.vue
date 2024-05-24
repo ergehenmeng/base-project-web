@@ -54,7 +54,7 @@ import md5 from 'md5';
 import { reactive, ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const formData = ref({})

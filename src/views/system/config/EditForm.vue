@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑" v-model="showDialog" width="500px" draggable align-center>
+  <el-dialog title="编辑" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="参数名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />

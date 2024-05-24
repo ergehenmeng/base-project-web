@@ -1,15 +1,27 @@
 import axios from "axios";
 import useUserStore from "@/store/user";
+import qs from "qs";
+import { errorMsg } from "@/utils/message";
 
+const sourceMap = new Map();
 
 /**
  * 特殊错误回调函数注册
  */
 const errorCallback = {
   8848: (data, response) => {
-    const userStore = useUserStore();
-    userStore.logout(response.config.url);
-  }
+    cancelRequest();
+    errorMsg(data.msg, () => {
+      const userStore = useUserStore();
+      userStore.logout(response.config.url);
+    })
+  },
+};
+
+const cancelRequest = () => {
+  sourceMap.forEach(item => {
+    item.abort();
+  });
 };
 
 // 创建axios实例
@@ -23,7 +35,11 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    const userStore = useUserStore()
+    // 保存请求信息, 方便后续进行取消操作
+    const controller = new AbortController();
+    config.signal = controller.signal;
+    sourceMap.set(config.url, controller);
+    const userStore = useUserStore();
     config.headers["token"] = userStore.user.token;
     return config;
   },
@@ -35,17 +51,20 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
+    sourceMap.delete(response.config.url);
     const res = response.data;
     const { code, msg } = res;
     if (code === 200) {
       return res;
     } else {
-      errorMsg(res, response);
+      errorHandle(res, response);
       return Promise.reject(new Error(msg || "Error"));
     }
   },
   (error) => {
-    ElMessage.error("接口请求超时，请重试");
+    if (!axios.isCancel(error)) {
+      ElMessage.error("接口请求超时，请重试");
+    }
     return Promise.reject(error);
   }
 );
@@ -56,6 +75,9 @@ const get = ({ url, params, ...config }) => {
     method: "get",
     params: params,
     ...config,
+    paramsSerializer: function (params) {
+      return qs.stringify(params, { arrayFormat: "repeat" });
+    },
   });
 };
 
@@ -93,24 +115,19 @@ const download = ({ url, params, ...config }) => {
 };
 
 /**
- * 弹出错误信息并在关闭时执行回调
- *
- * @param { data } data 响应数据
- * @param { response } response 响应对象
+ * 业务移除处理
+ * 注意: 优先执行特殊错误回调(可在errorCallback定义), 如果没有则弹出错误信息
+ * @param {*} data 管理后台返回的数据
+ * @param {*} response response信息
  */
-const errorMsg = (data, response) => {
-  ElMessage({
-    message: data.msg,
-    type: "error",
-    duration: 3000,
-    onClose: () => {
-      const callbackFunc = errorCallback[data.code];
-      if (callbackFunc) {
-        callbackFunc(data, response);
-      }
-    },
-  });
-};
+const errorHandle = (data, response) => {
+  const callbackFunc = errorCallback[data.code];
+  if (callbackFunc) {
+    callbackFunc(data, response);
+  } else {
+    errorMsg(data.msg);
+  }
+}
 
 // 导出实例
 export default {

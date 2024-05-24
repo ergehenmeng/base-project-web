@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center>
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="用户名称" prop="nickName">
