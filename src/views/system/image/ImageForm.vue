@@ -11,7 +11,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="path">
-        <el-upload class="image-uploader" :action="uploadUrl", :headers="heanders"
+        <el-upload class="image-uploader" :action="uploadUrl" :headers="heanders"
           :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload">
           <img v-if="formData.path" :src="formData.path" class="image-uploader-preview" />
           <el-icon v-else class="image-uploader-icon">
@@ -39,9 +39,11 @@ import { createApi, updateApi } from '@/api/system/role';
 import { reactive, ref } from 'vue';
 import useDictStore from "@/store/dict.js";
 import useUserStore from '@/store/user';
+import { errorMsg } from '@/utils/message';
+import { imageCheck } from '@/utils/image';
 
 const userStore = useUserStore();
-const uploadUrl = import.meta.env.VITE_API_URL + "manage/upload";
+const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
 const heanders = {
   'token': userStore.user.token
 }
@@ -102,7 +104,7 @@ const handleSave = () => {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value).then(res => {
-          ElMessage.success("修改角色成功");
+          ElMessage.success("修改图片成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -110,7 +112,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(res => {
-          ElMessage.success("新增角色成功");
+          ElMessage.success("新增图片成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -121,20 +123,18 @@ const handleSave = () => {
   })
 }
 
-const handleImageSuccess = (res, file) => {
-  formData.value.path = res.data;
-  formData.value.size = file.size;
+const handleImageSuccess = (res) => {
+  if (res.code !== 200) {
+    errorMsg(res.msg);
+    return;
+  }
+  const { data } = res;
+  formData.value.path = data.address + data.path
+  formData.value.size = Number.parseInt(data.size);
 }
 
 const beforeImageUpload = (rawFile) => {
-  if (rawFile.type !== 'image/jpeg') {
-    ElMessage.error('Avatar picture must be JPG format!')
-    return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
-    return false
-  }
-  return true
+  return imageCheck(rawFile);
 }
 
 defineExpose({
