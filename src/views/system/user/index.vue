@@ -24,7 +24,7 @@
         <el-table-column prop="nickName" label="昵称" width="120" />
         <el-table-column prop="mobile" label="登录账号" width="150" />
         <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
-        <el-table-column prop="dataType" column-key="dataKey" label="数据权限" width="150" :formatter="formatter" />
+        <el-table-column prop="dataType" label="数据权限" width="150" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="deptName" label="所属部门" width="150" />
         <el-table-column prop="remark" label="备注" />

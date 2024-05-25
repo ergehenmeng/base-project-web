@@ -20,10 +20,7 @@ import Header from "@/layout/Header.vue"
 import Aside from "@/layout/Aside.vue"
 import Main from "@/layout/Main.vue"
 import useUserStore from "@/store/user";
-import useDictStore from '@/store/dict';
 
-const dictStore = useDictStore();
-dictStore.initDict("image_type");
 const userStore = useUserStore();
 const { isLogin } = toRefs(userStore);
 

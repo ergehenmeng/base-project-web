@@ -17,6 +17,11 @@
 <script setup>
 import useBreadcrumbStore from '@/store/breadcrumb';
 import { computed } from 'vue';
+import useDictStore from '@/store/dict';
+
+const dictStore = useDictStore();
+dictStore.initDict("image_type");
+
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {
   return breadcrumbStore.breadcrumb;

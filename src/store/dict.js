@@ -37,7 +37,7 @@ const useDictStore = defineStore(
 
     /**
      * 加载数据字典
-     * @param nidCode 数据字典编码
+     * @param nid 数据字典编码
      * @returns {Promise<void>}
      */
     const initDict = async (...nid) => {
