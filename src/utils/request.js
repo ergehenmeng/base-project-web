@@ -44,7 +44,7 @@ service.interceptors.request.use(
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(new Error(error));
   }
 );
 
@@ -65,7 +65,7 @@ service.interceptors.response.use(
     if (!axios.isCancel(error)) {
       ElMessage.error("接口请求超时，请重试");
     }
-    return Promise.reject(error);
+    return Promise.reject(new Error(error));
   }
 );
 

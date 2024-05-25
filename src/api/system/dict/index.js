@@ -37,7 +37,7 @@ export const createItemApi = (data) => {
 
 export const updateItemApi = (data) => {
     return request.post({
-        url: "/manage/dict/item/create",
+        url: "/manage/dict/item/update",
         data
     });
 }

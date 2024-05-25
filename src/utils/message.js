@@ -2,7 +2,7 @@ export const confirmMsg = (msg, fn, type) => {
   type = type || "warning";
   ElMessageBox.confirm(msg, {
     autofocus: false,
-    type: "warning",
+    type: type,
   })
     .then(() => {
       fn();

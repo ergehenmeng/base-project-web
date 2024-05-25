@@ -85,8 +85,4 @@ const handleEdit = (row) => {
 }
 
 </script>
-<style lang='scss' scoped>
-.el-pagination {
-  margin: 10px 10px 0 0;
-}
-</style>
+

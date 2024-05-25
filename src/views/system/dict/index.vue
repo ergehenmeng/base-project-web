@@ -5,10 +5,10 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="字典名称、字典编码" clearable @keyup.enter="search" />
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.locked" clearable>
-            <el-option label="可编辑" value="false" />
-            <el-option label="不可编辑" value="true" />
+        <el-form-item label="分类">
+          <el-select v-model="queryParams.dictType" clearable>
+            <el-option label="系统字典" value="1" />
+            <el-option label="系统字典" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -23,7 +23,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="expand">
           <template #default="props">
-            <div style="padding: 0 50px;">
+            <div style="padding: 0 55px;">
               <span class="dict-item-title">子项列表</span>
               <el-table :data="props.row.itemList" border>
                 <el-table-column label="显示值" prop="showValue" />
@@ -42,12 +42,12 @@
         </el-table-column>
         <el-table-column prop="title" label="字典名称"/>
         <el-table-column prop="nid" label="字典编码"/>
-        <el-table-column prop="locked" label="状态" :formatter="formatter"/>
+        <el-table-column prop="dictType" label="分类" :formatter="formatter"/>
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button v-has-perm="'9mK0'" type="primary" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项">
+            <el-button v-has-perm="'9mK0'" type="success" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项">
             </el-button>
             <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
@@ -109,24 +109,19 @@ onMounted(() => {
   getPage()
 })
 
-
-
-const handleEdit = (row) => {
-  dictRef.value.openDialog(row);
-}
-
 const handleDelete = (row) => {
-  confirmMsg("确定要删除该图片吗?", () => {
+  confirmMsg("确定要删除该选项吗?", () => {
     const data = { id: row.id };
     deleteApi(data).then(res => {
+      ElMessage.success('字典删除成功');
       getPage();
     })
   })
 }
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === "locked") {
-    return cellValue ? "不可编辑" : "可编辑";
+  if (column.property === "dictType") {
+    return cellValue === 1 ? "系统字典" : "业务字典";
   } else {
     return cellValue;
   }
@@ -136,8 +131,12 @@ const handleCreate = () => {
   dictRef.value.openDialog({});
 }
 
+const handleEdit = (row) => {
+  dictRef.value.openDialog(row);
+}
+
 const handleItemCreate = (row) => {
-  itemRef.value.openDialog(row);
+  itemRef.value.openDialog({nid: row.nid});
 }
 
 const handleItemEdit = (row) => {
@@ -148,6 +147,7 @@ const handleItemDelete = (row) => {
   confirmMsg("确定要删除该子项数据吗?", () => {
     const data = { id: row.id };
     deleteItemApi(data).then(res => {
+      ElMessage.success('子项数据删除成功');
       getPage();
     })
   })
@@ -155,12 +155,10 @@ const handleItemDelete = (row) => {
 
 </script>
 <style lang='scss' scoped>
-.el-pagination {
-  margin: 10px 10px 0 0;
-}
 
 .dict-item-title {
-  font: bold 14px "Microsoft YaHei";
+  font-weight: bold;
+  font-size: 14px;
   display: block;
   margin-bottom: 10px;
 }

@@ -21,6 +21,10 @@ body {
   height: 100%;
 }
 
+.el-pagination {
+  margin: 10px 10px 0 0 !important;
+}
+
 /*消除element按钮边框颜色(icon按钮显示有问题)*/
 .el-button:focus-visible {
   outline: none !important;

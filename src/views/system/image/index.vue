@@ -106,6 +106,7 @@ const handleDelete = (row) => {
   confirmMsg("确定要删除该图片吗?", () => {
     const data = { id: row.id };
     deleteApi(data).then(res => {
+      ElMessage.success('图片删除成功');
       getPage();
     })
   })
@@ -126,8 +127,4 @@ const handleCreate = () => {
 }
 
 </script>
-<style lang='scss' scoped>
-.el-pagination {
-  margin: 10px 10px 0 0;
-}
-</style>
+

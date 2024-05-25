@@ -136,6 +136,7 @@ const handleLock = (row) => {
   confirmMsg("确定要锁定该用户吗?", () => {
     const data = { id: row.id };
     lockApi(data).then(res => {
+      ElMessage.success('用户锁定成功');
       getPage();
     })
   })
@@ -145,6 +146,7 @@ const handleUnlock = (row) => {
   confirmMsg("确定要解锁该用户吗?", () => {
     const data = { id: row.id };
     unlockApi(data).then(res => {
+      ElMessage.success('用户解锁成功');
       getPage();
     })
   })
@@ -154,6 +156,7 @@ const handleReset = (row) => {
   confirmMsg("确定要重置该用户的密码?", () => {
     const data = { id: row.id };
     resetPwdApi(data).then(res => {
+      ElMessage.success('密码重置成功');
       getPage();
     })
   })
@@ -163,6 +166,7 @@ const handleDelete = (row) => {
   confirmMsg("确定要删除该用户吗?", () => {
     const data = { id: row.id };
     deleteApi(data).then(res => {
+      ElMessage.success('用户删除成功');
       getPage();
     })
   })
@@ -173,8 +177,4 @@ const handleCreate = () => {
 }
 
 </script>
-<style lang='scss' scoped>
-.el-pagination {
-  margin: 10px 10px 0 0;
-}
-</style>
+

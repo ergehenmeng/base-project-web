@@ -8,12 +8,6 @@
       <el-form-item label="字典编码" prop="nid">
         <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== null"/>
       </el-form-item>
-      <el-form-item label="状态" prop="locked">
-        <el-select v-model="formData.locked" :disabled="formData.id !== null && formData.locked === true">
-          <el-option label="可编辑" :value="false" />
-          <el-option label="不可编辑" :value="true" />
-        </el-select>
-      </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize
                   maxlength="200" show-word-limit />
@@ -32,9 +26,6 @@
 <script setup>
 import { createApi, updateApi } from '@/api/system/dict';
 import { reactive, ref } from 'vue';
-import { errorMsg } from '@/utils/message';
-import { imageCheck } from '@/utils/image';
-
 
 const loading = ref(false);
 const dialogTitle = ref("");
@@ -67,10 +58,10 @@ const openDialog = (row) => {
   showDialog.value = true;
   resetForm();
   if (row.id) {
-    dialogTitle.value = "编辑图片";
-    formData.value = Object.assign({}, row);
+    dialogTitle.value = "编辑字典";
+    formData.value = {...row};
   } else {
-    dialogTitle.value = "新增图片";
+    dialogTitle.value = "新增字典";
   }
 }
 
@@ -91,7 +82,7 @@ const handleSave = () => {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value).then(res => {
-          ElMessage.success("修改图片成功");
+          ElMessage.success("修改字典成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -99,7 +90,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(res => {
-          ElMessage.success("新增图片成功");
+          ElMessage.success("新增字典成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -110,24 +101,8 @@ const handleSave = () => {
   })
 }
 
-const handleImageSuccess = (res) => {
-  if (res.code !== 200) {
-    errorMsg(res.msg);
-    return;
-  }
-  const { data } = res;
-  formData.value.path = data.address + data.path
-  formData.value.size = Number.parseInt(data.size);
-}
-
-const beforeImageUpload = (rawFile) => {
-  return imageCheck(rawFile);
-}
-
 defineExpose({
   openDialog
 })
 
 </script>
-
-<style lang="scss" scoped></style>

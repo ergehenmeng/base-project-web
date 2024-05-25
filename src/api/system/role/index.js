@@ -62,6 +62,6 @@ export const systemMenuApi = () => {
  */
 export const merchantMenuApi = () => {
   return request.get({
-    url: "/manage/menu/systemList"
+    url: "/manage/menu/merchantList"
   });
 }

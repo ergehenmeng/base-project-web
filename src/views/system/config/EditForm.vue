@@ -56,10 +56,10 @@ const formDataRef = ref();
 
 const showDialog = ref(false);
 
-const openDialog = (rows) => {
+const openDialog = (row) => {
   showDialog.value = true;
   resetForm();
-  formData.value = Object.assign({}, rows);
+  formData.value = {...row}
 }
 
 const resetForm = () => {
@@ -94,5 +94,3 @@ defineExpose({
 })
 
 </script>
-
-<style lang="scss" scoped></style>

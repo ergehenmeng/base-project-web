@@ -39,6 +39,7 @@ const formRules = reactive({
 
 const formData = ref({
   id: null,
+  nid: null,
   showValue: "",
   hiddenValue: ""
 });
@@ -48,8 +49,9 @@ const openDialog = (row) => {
   resetForm();
   if (row.id) {
     dialogTitle.value = "编辑子项";
-    formData.value = Object.assign({}, row);
+    formData.value = {...row};
   } else {
+    formData.value.nid = row.nid;
     dialogTitle.value = "新增子项";
   }
 }
@@ -57,6 +59,7 @@ const openDialog = (row) => {
 const resetForm = () => {
   formData.value = {
     id: null,
+    nid: null,
     showValue: "",
     hiddenValue: ""
   }
@@ -93,5 +96,3 @@ defineExpose({
 })
 
 </script>
-
-<style lang="scss" scoped></style>

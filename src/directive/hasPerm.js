@@ -12,7 +12,7 @@ export default {
       console.warn("v-has-perm未配置权限标示符");
     }
     if (!perm) {
-      el.parentNode && el.parentNode.removeChild(el);
+      el.parentNode?.removeChild(el);
     }
   },
 };

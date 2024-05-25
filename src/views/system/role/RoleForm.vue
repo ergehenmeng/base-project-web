@@ -48,7 +48,7 @@ const openDialog = (row) => {
   resetForm();
   if (row.id) {
     dialogTitle.value = "编辑角色";
-    formData.value = Object.assign({}, row);
+    formData.value = {...row};
   } else {
     dialogTitle.value = "新增角色";
   }
@@ -93,5 +93,3 @@ defineExpose({
 })
 
 </script>
-
-<style lang="scss" scoped></style>
