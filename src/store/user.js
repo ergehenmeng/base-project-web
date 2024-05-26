@@ -36,7 +36,7 @@ const useUserStore = defineStore(
      * @param { * } redirectUrl 是否包含重定向地址
      * @returns
      */
-    const logout = (redirectUrl) => {
+    const logout = (redirectUrl = null) => {
       if (!isLogin.value) {
         return;
       }

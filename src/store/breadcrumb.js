@@ -10,7 +10,7 @@ const useBreadcrumbStore = defineStore(
     const breadcrumb = ref([]);
     const switchPage = (toPage) => {
       const breadcrumbList = toPage.matched.filter(
-        (item) => item.meta !== null && item.meta.title !== null
+        (item) => item.meta !== null && item.meta.title !== undefined
       );
       const home = [{ path: "/home", meta: { title: "首页" } }];
       if (breadcrumbList.length === 0) {

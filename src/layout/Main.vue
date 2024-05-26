@@ -20,7 +20,7 @@ import { computed } from 'vue';
 import useDictStore from '@/store/dict';
 
 const dictStore = useDictStore();
-dictStore.initDict("image_type");
+dictStore.initDict("image_type", "help_type");
 
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {

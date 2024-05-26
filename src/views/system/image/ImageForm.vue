@@ -11,7 +11,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="path">
-        <el-upload class="image-uploader" :action="uploadUrl" :headers="heanders"
+        <el-upload class="image-uploader" :action="uploadUrl" :headers="headers"
           :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :disabled="formData.path !==''">
           <img v-if="formData.path" :src="formData.path" class="image-uploader-preview" alt="预览" title="编辑时不可修改"/>
           <el-icon v-else class="image-uploader-icon">
@@ -44,7 +44,7 @@ import { imageCheck } from '@/utils/image';
 
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
-const heanders = {
+const headers = {
   'token': userStore.user.token
 }
 

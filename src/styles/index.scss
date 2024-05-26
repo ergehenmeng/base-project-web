@@ -21,6 +21,31 @@ body {
   height: 100%;
 }
 
+/*三级页面样式(一般为编辑页面)*/
+
+.edit-content {
+  padding: 20px;
+  background-color: white;
+  border-radius: 3px;
+  min-height: calc(100vh - 120px);
+  .el-input, .el-select {
+    width: 350px;
+  }
+}
+
+.edit-button-footer {
+  position: fixed;
+  bottom: 10px;
+  z-index: 4000;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/*列表单行样式*/
+.el-table .success-row {
+  --el-table-tr-bg-color: #e9f9e3;
+}
+/*分页组件样式*/
 .el-pagination {
   margin: 10px 10px 0 0 !important;
 }
@@ -30,6 +55,7 @@ body {
   outline: none !important;
 }
 
+/*列表顶部搜索样式*/
 .content-top {
   border-radius: 3px;
   background-color: #fff;
@@ -44,7 +70,7 @@ body {
     width: 200px;
   }
 }
-
+/*列表中间内容样式*/
 .content-main {
   margin-top: 18px;
   background-color: #fff;
@@ -52,7 +78,7 @@ body {
   border-radius: 3px;
   min-height: calc(100vh - 205px);
 }
-
+/*弹框样式*/
 .el-dialog {
   width: 500px;
   .el-input,
@@ -62,10 +88,7 @@ body {
   }
 }
 
-.right-button {
-  float: right;
-}
-
+/*图片预览样式(缩小百分50%)*/
 .el-image-viewer__img {
   height: 50% !important;
   width: auto;

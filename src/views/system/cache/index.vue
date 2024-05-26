@@ -8,10 +8,10 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" ref="tableRef" @selection-change="handleSelected" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :row-class-name="tableRowClass" :data="pageData" ref="tableRef" @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="selection" width="50"/>
         <el-table-column prop="cacheName" label="缓存名称" />
-        <el-table-column prop="updateTime" label="最近一次更新时间" :formatter="formatter"/>
+        <el-table-column prop="updateTime" label="最近一次更新时间" />
         <el-table-column prop="remark" label="备注" />
       </el-table>
     </div>
@@ -61,11 +61,14 @@ onMounted(() => {
   getPage()
 })
 
-const formatter = (row, column, cellValue) => {
-  const updateTime = dayjs(cellValue);
-  const nowTime = dayjs();
-  return nowTime.diff(updateTime, 'minute') <= 60 ? h('span', { style: 'color: green; font-weight: bold;' }, cellValue) : cellValue
+const tableRowClass = (row) => {
+  if (row.row.updateTime) {
+    const updateTime = dayjs(row.row.updateTime);
+    const nowTime = dayjs();
+    return nowTime.diff(updateTime, 'minute') <= 60 ? "success-row" : "";
+  }
+  return "";
 }
 
-</script>
 
+</script>

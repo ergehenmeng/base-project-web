@@ -104,10 +104,32 @@ export default [
       {
         path: "help",
         name: "help",
-        component: () => import("@/views/system/help/index.vue"),
         meta: {
           title: "帮助中心",
         },
+        children: [
+          {
+            path: "",
+            name: "helpIndex",
+            component: () => import("@/views/system/help/index.vue")
+          },
+          {
+            path: "create",
+            name: "helpCreate",
+            component: () => import("@/views/system/help/HelpForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit",
+            name: "helpEdit",
+            component: () => import("@/views/system/help/HelpForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+       ],
       },
     ],
   },

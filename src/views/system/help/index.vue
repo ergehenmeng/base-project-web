@@ -1,13 +1,129 @@
 <template>
-  <div>
-
+  <router-view ></router-view>
+  <div >
+    <div class="content-top">
+      <el-form :inline="true" label-width="80px">
+        <el-form-item label="搜索">
+          <el-input v-model="queryParams.queryName" placeholder="问" clearable @keyup.enter="search" />
+        </el-form-item>
+        <el-form-item label="问题分类">
+          <el-select v-model="queryParams.helpType" clearable>
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="显示" :value="1" />
+            <el-option label="隐藏" :value="0" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="search">搜索</el-button>
+        </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'QF50'">
+          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="content-main">
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="title" label="问" width="250" />
+        <el-table-column prop="helpType" label="问题分类" :formatter="formatter"/>
+        <el-table-column prop="state" label="状态" :formatter="formatter"/>
+        <el-table-column prop="sort" label="排序" />
+        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="updateTime" label="更新时间" />
+        <el-table-column label="操作">
+          <template #default="scope">
+            <el-button v-has-perm="'VF50'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
+            </el-button>
+            <el-button v-has-perm="'6F50'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link
+                       title="删除">
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize"
+                     :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+    </div>
   </div>
 </template>
-
 <script setup>
+import { listPageApi, deleteApi } from '@/api/system/help';
+import { onMounted, reactive, ref } from 'vue';
+import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import { confirmMsg } from '@/utils/message';
+import useUserStore from '@/store/user';
+import useDictStore from "@/store/dict.js";
+import { useRouter } from "vue-router";
+
+const dictStore = useDictStore();
+const dictList = dictStore.getDict('help_type');
+
+const userStore = useUserStore();
+const loading = ref(false)
+const total = ref(0);
+const formRef = ref();
+const pageData = ref([]);
+const router = useRouter();
+
+const queryParams = reactive({
+  queryName: "",
+  page: 1,
+  pageSize: 10,
+  state: null,
+  helpType: null
+})
+
+const getPage = async () => {
+  loading.value = true;
+  try {
+    if (userStore.hasAuth('zF50')) {
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+const formatter = (row, column, cellValue) => {
+  if (column.property === "helpType") {
+    return dictStore.parseDict("help_type", cellValue);
+  } else if (column.property === "state") {
+    return cellValue === 1 ? "显示" : "隐藏"
+  } else {
+    return cellValue;
+  }
+}
+
+const search = () => {
+  queryParams.page = 1;
+  getPage()
+}
+
+onMounted(() => {
+  getPage()
+})
+
+const handleEdit = (row) => {
+  formRef.value.openDialog(row);
+}
+
+const handleDelete = (row) => {
+  confirmMsg("确定要删除该问答吗?", () => {
+    const data = { id: row.id };
+    deleteApi(data).then(res => {
+      ElMessage.success('问答删除成功');
+      getPage();
+    })
+  })
+}
+
+const handleCreate = () => {
+  router.push("/sys/help/create");
+}
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>
