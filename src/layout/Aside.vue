@@ -39,7 +39,7 @@ const route = useRoute();
 // 如果所有页面的新增编辑等页面都在一个页面(弹框),则不需要下面的特殊处理
 const activeIndex = computed(() => {
   const pathList = route.path.split('/');
-  if (pathList.length === 4) {
+  if (pathList.length >= 4) {
     return `${pathList[0]}/${pathList[1]}/${pathList[2]}`;
   }
   return route.path;

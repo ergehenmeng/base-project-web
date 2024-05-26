@@ -32,18 +32,19 @@
 </template>
 
 <script setup>
-import {createApi, updateApi} from '@/api/system/help';
-import {reactive, ref} from 'vue';
+import { createApi, updateApi, selectApi } from '@/api/system/help';
+import { reactive, ref } from 'vue';
 import useDictStore from "@/store/dict.js";
 import WangEditor from "@/components/WangEditor.vue";
+import { useRoute, useRouter } from "vue-router";
 
+const route = useRoute();
+const router = useRouter();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
 const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
-
-const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   ask: [
@@ -69,7 +70,6 @@ const formData = ref({
   state: 1
 });
 
-
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
@@ -78,7 +78,7 @@ const handleSave = () => {
         updateApi(formData.value).then(res => {
           ElMessage.success("修改问答成功");
           showDialog.value = false;
-          emit('reload');
+          router.go(-1);
         }).finally(() => {
           loading.value = false;
         })
@@ -86,7 +86,7 @@ const handleSave = () => {
         createApi(formData.value).then(res => {
           ElMessage.success("新增问答成功");
           showDialog.value = false;
-          emit('reload');
+          router.go(-1);
         }).finally(() => {
           loading.value = false;
         })
@@ -94,6 +94,17 @@ const handleSave = () => {
     }
   })
 }
+
+onMounted(() => {
+  const params = route.params;
+  loading.value = true;
+  selectApi(params).then(res => {
+    formData.value = res.data;
+    formData.value.answerText = res.data.answer;
+  }).finally(() => {
+    loading.value = false;
+  })
+})
 
 </script>
 

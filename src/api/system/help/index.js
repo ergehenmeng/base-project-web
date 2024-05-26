@@ -11,13 +11,19 @@ export const createApi = (data) => {
     return request.post({
         url: "/manage/help/create",
         data
-
     });
 }
 export const updateApi = (data) => {
     return request.post({
         url: "/manage/help/update",
         data
+    });
+}
+
+export const selectApi = (params) => {
+    return request.get({
+        url: "/manage/help/select",
+        params
     });
 }
 

@@ -27,7 +27,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="问" width="250" />
+        <el-table-column prop="ask" label="问" width="300" />
         <el-table-column prop="helpType" label="问题分类" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" :formatter="formatter"/>
         <el-table-column prop="sort" label="排序" />
@@ -108,7 +108,7 @@ onMounted(() => {
 })
 
 const handleEdit = (row) => {
-  formRef.value.openDialog(row);
+  router.push("/sys/help/edit/" + row.id);
 }
 
 const handleDelete = (row) => {

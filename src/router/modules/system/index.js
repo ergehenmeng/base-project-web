@@ -122,7 +122,7 @@ export default [
             },
           },
           {
-            path: "edit",
+            path: "edit/:id",
             name: "helpEdit",
             component: () => import("@/views/system/help/HelpForm.vue"),
             meta: {
