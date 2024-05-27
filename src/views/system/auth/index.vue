@@ -26,7 +26,7 @@
         <el-table-column prop="appKey" label="appKey" width="300"/>
         <el-table-column prop="privateKey" label="签名秘钥" />
         <el-table-column prop="expireDate" label="过期时间" width="100"/>
-        <el-table-column prop="remark" label="备注" width="250"/>
+        <el-table-column prop="remark" label="备注" width="200"/>
         <el-table-column prop="createTime" label="创建时间" width="200"/>
         <el-table-column prop="updateTime" label="更新时间" width="200"/>
         <el-table-column label="操作" width="200">

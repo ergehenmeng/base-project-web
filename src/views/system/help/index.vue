@@ -30,7 +30,11 @@
         <el-table-column prop="ask" label="问" width="300" />
         <el-table-column prop="helpType" label="问题分类" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" :formatter="formatter"/>
-        <el-table-column prop="sort" label="排序" />
+        <el-table-column prop="sort" label="排序" width="80">
+          <template #default="scope">
+            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" ></el-input>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
@@ -49,7 +53,7 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi } from '@/api/system/help';
+import { listPageApi, deleteApi, sortApi } from '@/api/system/help';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
@@ -61,6 +65,8 @@ const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
 
 const userStore = useUserStore();
+const selectAuth = userStore.hasAuth('zF50');
+const sortAuth = userStore.hasAuth('xF50');
 const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
@@ -78,7 +84,7 @@ const queryParams = reactive({
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('zF50')) {
+    if (selectAuth) {
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
@@ -109,6 +115,17 @@ onMounted(() => {
 
 const handleEdit = (row) => {
   router.push("/sys/help/edit/" + row.id);
+}
+
+const handleSort = (row) => {
+  if (!sortAuth) {
+    return;
+  }
+  const data = { id: row.id, sortBy: row.sort };
+  sortApi(data).then(res => {
+    ElMessage.success('排序更新成功');
+    getPage();
+  })
 }
 
 const handleDelete = (row) => {

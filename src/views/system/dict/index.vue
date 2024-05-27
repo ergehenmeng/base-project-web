@@ -74,7 +74,7 @@ import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
 
 const userStore = useUserStore();
-const loading = ref(false)
+const loading = ref(false);
 const total = ref(0);
 const dictRef = ref();
 const itemRef = ref();
