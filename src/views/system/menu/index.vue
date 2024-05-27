@@ -8,7 +8,7 @@
               <el-button v-has-perm="'nhK0'" type="primary" :icon="Plus" @click="handleCreate" link>新增主菜单</el-button>
             </el-header>
             <el-main>
-              <el-scrollbar height="730px">
+              <el-scrollbar height="710px">
                 <el-tree :data="menuList" node-key="id" :props="defaultProps" @node-click="clickTree">
                   <template #default="{ node, data }">
                     <span class="custom-tree-node">
@@ -52,6 +52,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="state" label="状态" :formatter="formatter"/>
+              <el-table-column prop="displayState" label="菜单类型" :formatter="formatter"/>
               <el-table-column prop="path" label="路由地址" />
               <el-table-column prop="subPath" label="权限URL" />
               <el-table-column prop="grade" label="菜单级别" :formatter="formatter" width="100" />
@@ -159,6 +160,9 @@ const handleDelete = (id) => {
   })
 }
 
+const handleCreate = () => {
+  formRef.value.openDialog({});
+}
 
 const handleEdit = (row) => {
   formRef.value.openDialog(row);
@@ -169,6 +173,11 @@ const formatter = (row, column, cellValue) => {
     return cellValue === 1 ? "导航菜单" : "按钮菜单";
   } else if (column.property === "state") {
     return cellValue === true ? "启用" : "禁用";
+  } else if (column.property === "displayState") {
+    if (cellValue === 1) {
+      return "商户菜单";
+    }
+    return cellValue === 2 ? "系统菜单" : "通用菜单"
   }
   return cellValue;
 }
