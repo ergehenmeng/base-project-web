@@ -6,7 +6,7 @@
         <el-input v-model="formData.startIp" show-word-limit maxlength="15" />
       </el-form-item>
       <el-form-item label="截止IP" prop="endIp">
-        <el-input v-model="formData.endIp" show-word-limit maxlength="15" :disabled="formData.id !== null"/>
+        <el-input v-model="formData.endIp" show-word-limit maxlength="15" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize

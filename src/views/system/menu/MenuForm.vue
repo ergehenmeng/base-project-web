@@ -1,34 +1,26 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center
-    :close-on-click-modal="false">
+    :close-on-click-modal="false" :before-close="handleClose">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="菜单名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="10" />
       </el-form-item>
-      <el-form-item label="菜单级别" prop="grade">
-        <el-radio-group v-model="formData.grade">
-          <el-radio :value="1">导航菜单</el-radio>
-          <el-radio :value="2">按钮菜单</el-radio>
+      <el-form-item label="菜单类型" prop="grade" >
+        <el-radio-group v-model="formData.grade" :disabled="formData.id !== null || formData.pid.length === 6 " @change="changeGrade">
+          <el-radio :value="1">导航</el-radio>
+          <el-radio :value="2">按钮</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="状态" prop="state">
-        <el-switch
-          v-model="formData.state"
-          inline-prompt
-          active-text="启用"
-          inactive-text="禁用"
-        />
-      </el-form-item>
-      <el-form-item label="菜单类型" prop="displayState">
+      <el-form-item label="菜单权限" prop="displayState">
         <el-radio-group v-model="formData.displayState">
           <el-radio :value="1" title="表示菜单或按钮只对商户开放">商户菜单</el-radio>
-          <el-radio :value="2" title="表示菜单或按钮只对系统人员开放">系统系统</el-radio>
+          <el-radio :value="2" title="表示菜单或按钮只对系统人员开放">系统菜单</el-radio>
           <el-radio :value="3" title="表示菜单或按钮对商户和系统人员都开放">通用菜单</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="图标" prop="icon">
-        <el-input v-model="formData.icon" @focus="selectIcon" ref="inputRef" readonly>
+        <el-input v-model="formData.icon" ref="inputRef" readonly :disabled="disabledIcon || (formData.id !== null && formData.grade === 2)">
           <template #prefix v-if="formData.icon">
             <el-icon :size="18">
               <component :is="formData.icon"></component>
@@ -36,16 +28,16 @@
           </template>
         </el-input>
         <el-popover placement="bottom" :width="350" trigger="click" :virtual-ref="inputRef" ref="popoverRef"
-          virtual-triggering>
+          virtual-triggering :hide-after="0">
           <IconSelect v-model="formData.icon"></IconSelect>
         </el-popover>
       </el-form-item>
       <el-form-item label="路由地址" prop="path">
-        <el-input v-model="formData.path" show-word-limit maxlength="50" />
+        <el-input v-model="formData.path" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="权限URL" prop="subPath">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.subPath" autosize
-          maxlength="500" show-word-limit />
+          maxlength="300" show-word-limit placeholder="多个逗号分割"/>
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
@@ -71,10 +63,10 @@ const loading = ref(false);
 const dialogTitle = ref("");
 const formDataRef = ref();
 const showDialog = ref(false);
-const showIcon = ref(false);
 const popoverRef = ref();
 const inputRef = ref();
 const emit = defineEmits(['reload']);
+const disabledIcon = ref(false);
 
 const formRules = reactive({
   title: [
@@ -82,9 +74,6 @@ const formRules = reactive({
   ],
   grade: [
     { required: true, message: '请选择菜单级别', trigger: 'change' }
-  ],
-  state: [
-    { required: true, message: '请选择状态', trigger: 'change' }
   ],
   displayState: [
     { required: true, message: '请选择菜单类型', trigger: 'change' }
@@ -95,7 +84,6 @@ const formData = ref({
   id: null,
   title: "",
   grade: 1,
-  state: true,
   icon: "",
   pid: "",
   path: "",
@@ -111,6 +99,12 @@ const openDialog = (row) => {
     dialogTitle.value = "编辑菜单";
     formData.value = { ...row };
   } else {
+    formData.value.pid = row.pid;
+    // 菜单支持三级,第二级添加的一定是按钮
+    if (row.pid.length === 6) {
+      formData.value.grade = 2;
+      disabledIcon.value = true;
+    }
     dialogTitle.value = "新增菜单";
   }
 }
@@ -120,7 +114,6 @@ const resetForm = () => {
     id: null,
     title: "",
     grade: 1,
-    state: true,
     icon: "",
     pid: "",
     path: "",
@@ -138,7 +131,6 @@ const handleSave = () => {
       if (formData.value.id) {
         updateApi(formData.value).then(res => {
           ElMessage.success("修改菜单成功");
-          showIcon.value = false;
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -147,7 +139,6 @@ const handleSave = () => {
       } else {
         createApi(formData.value).then(res => {
           ElMessage.success("新增菜单成功");
-          showIcon.value = false;
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -158,8 +149,19 @@ const handleSave = () => {
   })
 }
 
-const selectIcon = () => {
-  showIcon.value = true;
+// 此处防止点开Popover后按Esc退出Dialog导致Popover没有关闭
+const handleClose = (done) => {
+  document.body.click();
+  done();
+}
+
+const changeGrade = (grade) => {
+  if (grade === 2) {
+    formData.value.icon = '';
+    disabledIcon.value = true;
+  } else {
+    disabledIcon.value = false;
+  }
 }
 
 defineExpose({

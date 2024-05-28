@@ -1,42 +1,43 @@
 import request from "@/utils/request";
 
-export const listPageApi = (params) => {
+export const listMenuApi = (params) => {
   return request.get({
-    url: "/manage/menu/listPage",
-    params,
-  });
-};
-
-export const listMenuApi = () => {
-  return request.get({
-    url: "/manage/menu/list"
+    url: "/manage/menu/list",
+    params
   });
 }
 
 export const createApi = (data) => {
   return request.post({
-    url: "/manage/image/create",
+    url: "/manage/menu/create",
     data
   });
 }
 
 export const updateApi = (data) => {
   return request.post({
-    url: "/manage/image/update",
+    url: "/manage/menu/update",
     data
   });
 }
 
 export const deleteApi = (data) => {
   return request.post({
-    url: "/manage/image/delete",
+    url: "/manage/menu/delete",
     data
   });
 }
 
 export const sortApi = (data) => {
   return request.post({
-    url: "/manage/image/sort",
+    url: "/manage/menu/sort",
+    data
+  });
+}
+
+export const stateApi = (data) => {
+  return request.post({
+    url: "/manage/menu/updateState",
     data
   });
 }

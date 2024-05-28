@@ -6,7 +6,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="字典编码" prop="nid">
-        <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== null"/>
+        <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== undefined"/>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize
