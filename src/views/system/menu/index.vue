@@ -35,7 +35,7 @@
     <div class="content-main">
       <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670"
         show-overflow-tooltip>
-        <el-table-column prop="title" label="菜单名称" width="120" />
+        <el-table-column prop="title" label="菜单名称" width="150" />
         <el-table-column prop="icon" label="图标" :formatter="formatter" width="80">
           <template #default="scope">
             <el-icon :size="18">
