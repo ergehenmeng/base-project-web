@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="图片名称" clearable @keyup.enter="search" />
         </el-form-item>
@@ -63,7 +63,7 @@ import useDictStore from "@/store/dict.js";
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('image_type');
-
+const selectAuth = userStore.hasAuth('ogK0');
 const loading = ref(false);
 const total = ref(0);
 const imageRef = ref();
@@ -79,7 +79,7 @@ const queryParams = reactive({
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('ogK0')) {
+    if (selectAuth) {
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
@@ -59,7 +59,7 @@
   <UserForm ref="formRef" @reload="getPage"></UserForm>
 </template>
 <script setup>
-import { listPageApi, deleteApi, lockApi, unlockApi, resetPwdApi, selectApi } from '@/api/system/user';
+import { listPageApi, deleteApi, lockApi, unlockApi, resetPwdApi } from '@/api/system/user';
 import { onMounted, reactive, ref, h } from 'vue';
 import { Document, Edit, Lock, Unlock, Delete, Plus, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
@@ -70,7 +70,7 @@ const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
 const userStore = useUserStore();
-
+const selectAuth = userStore.hasAuth('XqK0');
 const queryParams = reactive({
   queryName: "",
   page: 1,
@@ -83,7 +83,7 @@ const pageData = ref([]);
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('XqK0')) {
+    if (selectAuth) {
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
@@ -97,7 +97,10 @@ const formatter = (row, column, cellValue) => {
   if (column.property === "state") {
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '锁定');
   } else if (column.property === "userType") {
-    return cellValue === 1 ? "系统用户" : (cellValue === 2 ? "商户管理员" : "商户用户");
+    if (cellValue === 1) {
+      return "系统用户";
+    }
+    return cellValue === 2 ? "商户管理员" : "商户用户";
   } else if (column.property === "dataType") {
     if (cellValue === 1) {
       return "本人数据权限";

@@ -25,7 +25,7 @@ import useUserStore from '@/store/user';
 import dayjs from "dayjs";
 
 const userStore = useUserStore();
-
+const selectAuth = userStore.hasAuth('E7K0');
 const selected = ref([]);
 const loading = ref(false)
 const tableRef = ref();
@@ -34,7 +34,7 @@ const pageData = ref([]);
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('E7K0')) {
+    if (selectAuth) {
       const { data } = await listPageApi();
       pageData.value = data;
     }

@@ -47,7 +47,7 @@ const loading = ref(false)
 const total = ref(0);
 const formRef = ref();
 const userStore = useUserStore();
-
+const selectAuth = userStore.hasAuth('boK0');
 const queryParams = reactive({
   queryName: "",
   page: 1,
@@ -59,7 +59,7 @@ const pageData = ref([]);
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('boK0')) {
+    if (selectAuth) {
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;

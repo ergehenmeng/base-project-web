@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="字典名称、字典编码" clearable @keyup.enter="search" />
         </el-form-item>
@@ -74,6 +74,7 @@ import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
 
 const userStore = useUserStore();
+const selectAuth = userStore.hasAuth('GmK0');
 const loading = ref(false);
 const total = ref(0);
 const dictRef = ref();
@@ -90,7 +91,7 @@ const queryParams = reactive({
 const getPage = async () => {
   loading.value = true;
   try {
-    if (userStore.hasAuth('GmK0')) {
+    if (selectAuth) {
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
