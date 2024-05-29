@@ -24,10 +24,32 @@ export default [
       {
         path: "notice",
         name: "notice",
-        component: () => import("@/views/operation/notice/index.vue"),
         meta: {
           title: "公告管理",
         },
+        children: [
+          {
+            path: "",
+            name: "noticeIndex",
+            component: () => import("@/views/operation/notice/index.vue")
+          },
+          {
+            path: "create",
+            name: "noticeCreate",
+            component: () => import("@/views/operation/notice/NoticeForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "noticeEdit",
+            component: () => import("@/views/operation/notice/NoticeForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+        ],
       },
       {
         path: "news",

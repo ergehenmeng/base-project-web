@@ -3,23 +3,17 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
              v-loading="loading">
-      <el-form-item label="问题分类" prop="helpType">
-        <el-select v-model="formData.helpType">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="formData.title" show-word-limit maxlength="20"/>
+      </el-form-item>
+      <el-form-item label="公告类型" prop="noticeType">
+        <el-select v-model="formData.noticeType">
           <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="状态" prop="state">
-        <el-radio-group v-model="formData.grade" >
-          <el-radio :value="1">显示</el-radio>
-          <el-radio :value="0">隐藏</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="问" prop="ask">
-        <el-input v-model="formData.ask" show-word-limit maxlength="50"/>
-      </el-form-item>
-      <el-form-item label="答" prop="answerText">
-        <el-input v-model="formData.answerText" type="textarea" style="display: none;"/>
-        <WangEditor v-model:html-value="formData.answer" v-model:text-value="formData.answerText"></WangEditor>
+      <el-form-item label="公告内容" prop="contentText">
+        <el-input v-model="formData.contentText" type="textarea" style="display: none;"/>
+        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
       </el-form-item>
     </el-form>
     <div class="edit-footer">
@@ -32,40 +26,39 @@
 </template>
 
 <script setup>
-import { createApi, updateApi, selectApi } from '@/api/system/help';
-import { reactive, ref } from 'vue';
+import {createApi, updateApi, selectApi} from '@/api/operation/notice';
+import {reactive, ref} from 'vue';
 import useDictStore from "@/store/dict.js";
 import WangEditor from "@/components/WangEditor.vue";
-import { useRoute, useRouter } from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 
 const route = useRoute();
 const router = useRouter();
 const dictStore = useDictStore();
-const dictList = dictStore.getDict('help_type');
+const dictList = dictStore.getDict('notice_type');
 const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
 
 const formRules = reactive({
-  ask: [
-    {required: true, message: "'问'不能为空", trigger: 'blur'}
+  title: [
+    {required: true, message: "标题不能为空", trigger: 'blur'}
   ],
-  answerText: [
-    {required: true, message: "'答'不能为空", trigger: 'change'}
+  contentText: [
+    {required: true, message: "内容不能为空", trigger: 'change'}
   ],
-  helpType: [
-    {required: true, message: '请选择帮助分类', trigger: 'change'}
+  noticeType: [
+    {required: true, message: '请选择公告类型', trigger: 'change'}
   ]
 })
 
 const formData = ref({
   id: null,
-  ask: "",
-  answer: "",
-  answerText: "",
-  helpType: null,
-  state: 1
+  title: "",
+  content: "",
+  contentText: "",
+  noticeType: null
 });
 
 const handleSave = () => {
@@ -74,7 +67,7 @@ const handleSave = () => {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("修改问答成功");
+          successMsg("公告更新成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -82,7 +75,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("新增问答成功");
+          successMsg("公告添加成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
