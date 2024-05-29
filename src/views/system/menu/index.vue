@@ -53,9 +53,9 @@
         <el-table-column prop="displayState" label="菜单权限" :formatter="formatter" />
         <el-table-column prop="path" label="路由地址" />
         <el-table-column prop="subPath" label="权限URL" />
-        <el-table-column prop="sort" label="排序" width="70">
+        <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth"></el-input>
+            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" />
@@ -81,7 +81,7 @@
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus, CirclePlus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import MenuForm from './MenuForm.vue';
 
@@ -130,8 +130,8 @@ const loadData = () => {
 const handleDelete = (id) => {
   confirmMsg("确定要删除该菜单吗?", () => {
     const data = { id };
-    deleteApi(data).then(res => {
-      ElMessage.success('菜单删除成功');
+    deleteApi(data).then(() => {
+      successMsg('菜单删除成功');
       getPage();
     })
   })
@@ -165,13 +165,13 @@ const handleSort = (row) => {
     id: row.id,
     sortBy: row.sort
   }
-  sortApi(data).then(res => {
+  sortApi(data).then(() => {
     getPage();
   })
 }
 
 const updateState = (row) => {
-  stateApi({id: row.id, state: row.state}).then(res => {
+  stateApi({id: row.id, state: row.state}).then(() => {
     getPage();
   })
 }

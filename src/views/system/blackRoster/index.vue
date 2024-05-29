@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="IP地址、备注" clearable @keyup.enter="search" />
         </el-form-item>
@@ -39,7 +39,7 @@
 import { listPageApi, deleteApi, reloadApi } from '@/api/system/black';
 import { onMounted, reactive, ref } from 'vue';
 import { Delete, Plus, Refresh } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue'
 
@@ -85,8 +85,8 @@ onMounted(() => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该IP段吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('IP段删除成功');
+    deleteApi(data).then(() => {
+      successMsg('IP段删除成功');
       getPage();
     })
   })
@@ -94,7 +94,7 @@ const handleDelete = (row) => {
 
 const handleReload = () => {
   reloadApi().then(() => {
-    ElMessage.success('黑名单刷新成功');
+    successMsg('黑名单刷新成功');
     getPage();
   })}
 

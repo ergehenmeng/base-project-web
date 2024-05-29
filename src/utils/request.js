@@ -11,10 +11,9 @@ const sourceMap = new Map();
 const errorCallback = {
   8848: (data, response) => {
     cancelRequest();
-    errorMsg(data.msg, () => {
-      const userStore = useUserStore();
-      userStore.logout(response.config.url);
-    })
+    errorMsg(data.msg);
+    const userStore = useUserStore();
+    userStore.logout(response.config.url);
   },
 };
 

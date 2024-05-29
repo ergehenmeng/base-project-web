@@ -62,7 +62,7 @@
 import { listPageApi, deleteApi, lockApi, unlockApi, resetPwdApi } from '@/api/system/user';
 import { onMounted, reactive, ref, h } from 'vue';
 import { Document, Edit, Lock, Unlock, Delete, Plus, Refresh } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 
@@ -138,8 +138,8 @@ const handleEdit = (row) => {
 const handleLock = (row) => {
   confirmMsg("确定要锁定该用户吗?", () => {
     const data = { id: row.id };
-    lockApi(data).then(res => {
-      ElMessage.success('用户锁定成功');
+    lockApi(data).then(() => {
+      successMsg('用户锁定成功');
       getPage();
     })
   })
@@ -148,8 +148,8 @@ const handleLock = (row) => {
 const handleUnlock = (row) => {
   confirmMsg("确定要解锁该用户吗?", () => {
     const data = { id: row.id };
-    unlockApi(data).then(res => {
-      ElMessage.success('用户解锁成功');
+    unlockApi(data).then(() => {
+      successMsg('用户解锁成功');
       getPage();
     })
   })
@@ -158,8 +158,8 @@ const handleUnlock = (row) => {
 const handleReset = (row) => {
   confirmMsg("确定要重置该用户的密码?", () => {
     const data = { id: row.id };
-    resetPwdApi(data).then(res => {
-      ElMessage.success('密码重置成功');
+    resetPwdApi(data).then(() => {
+      successMsg('密码重置成功');
       getPage();
     })
   })
@@ -168,8 +168,8 @@ const handleReset = (row) => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该用户吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('用户删除成功');
+    deleteApi(data).then(() => {
+      successMsg('用户删除成功');
       getPage();
     })
   })

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="角色名称" prop="roleName">
@@ -23,6 +23,7 @@
 <script setup>
 import { createApi, updateApi } from '@/api/system/role';
 import { reactive, ref } from 'vue';
+import {successMsg} from "@/utils/message.js";
 
 const loading = ref(false);
 const dialogTitle = ref("");
@@ -68,16 +69,16 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi(formData.value).then(res => {
-          ElMessage.success("修改角色成功");
+        updateApi(formData.value).then(() => {
+          successMsg("修改角色成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
           loading.value = false;
         })
       } else {
-        createApi(formData.value).then(res => {
-          ElMessage.success("新增角色成功");
+        createApi(formData.value).then(() => {
+          successMsg("新增角色成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {

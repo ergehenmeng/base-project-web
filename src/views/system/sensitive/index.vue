@@ -34,7 +34,7 @@
 import { listPageApi, deleteApi, createApi } from '@/api/system/sensitive';
 import { onMounted, reactive, ref } from 'vue';
 import { Delete } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 
 const userStore = useUserStore();
@@ -74,8 +74,8 @@ onMounted(() => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该敏感词吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('敏感词删除成功');
+    deleteApi(data).then(() => {
+      successMsg('敏感词删除成功');
       getPage();
     })
   })
@@ -91,8 +91,8 @@ const handleCreate = () => {
       return str !== '' && str !== null && str !== undefined;
     }
   }).then(({ value }) => {
-    createApi({ keyword: value }).then(res => {
-      ElMessage.success('敏感词添加成功');
+    createApi({ keyword: value }).then(() => {
+      successMsg('敏感词添加成功');
       getPage();
     })
   }).catch(() => {})

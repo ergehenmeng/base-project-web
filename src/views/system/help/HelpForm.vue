@@ -37,6 +37,7 @@ import { reactive, ref } from 'vue';
 import useDictStore from "@/store/dict.js";
 import WangEditor from "@/components/WangEditor.vue";
 import { useRoute, useRouter } from "vue-router";
+import {successMsg} from "@/utils/message.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -75,16 +76,16 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi(formData.value).then(res => {
-          ElMessage.success("修改问答成功");
+        updateApi(formData.value).then(() => {
+          successMsg("修改问答成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
           loading.value = false;
         })
       } else {
-        createApi(formData.value).then(res => {
-          ElMessage.success("新增问答成功");
+        createApi(formData.value).then(() => {
+          successMsg("新增问答成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {

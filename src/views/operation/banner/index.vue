@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="85px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="标题" clearable @keyup.enter="search" />
         </el-form-item>
@@ -10,7 +10,7 @@
             <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
           </el-select>
         </el-form-item>
-        <el-form-item label="客户端类型">
+        <el-form-item label="客户端">
           <el-select v-model="queryParams.clientType" clearable>
             <el-option label="PC" value="PC" />
             <el-option label="ANDROID" value="ANDROID" />
@@ -62,21 +62,21 @@
         <el-table-column prop="clientType" label="客户端类型" width="100"/>
         <el-table-column prop="startTime" label="开始时间" width="180"/>
         <el-table-column prop="endTime" label="截止时间" width="180"/>
-        <el-table-column prop="click" label="是否跳转" width="80">
+        <el-table-column prop="click" label="是否点击" width="80">
           <template #default="scope">
             <el-switch v-model="scope.row.click" inline-prompt active-text="是" inactive-text="否" disabled/>
           </template>
         </el-table-column>
-        <el-table-column prop="jumpUrl" label="跳转地址" />
-        <el-table-column prop="sort" label="排序" width="70">
+        <el-table-column prop="jumpUrl" label="跳转地址" width="180"/>
+        <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="2" :readonly="!sortAuth" ></el-input>
+            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="remark" label="备注" width="180"/>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
-        <el-table-column label="操作">
+        <el-table-column label="操作" fixed="right">
           <template #default="scope">
             <el-button v-has-perm="'2xU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
@@ -96,7 +96,7 @@
 import { listPageApi, deleteApi, stateApi, sortApi } from '@/api/operation/banner';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import BannerForm from './BannerForm.vue';
 import useUserStore from '@/store/user';
 import useDictStore from "@/store/dict.js";
@@ -147,13 +147,13 @@ onMounted(() => {
 
 const handleSort = (row) => {
   const data = { id: row.id, sortBy: row.sort };
-  sortApi(data).then(res => {
+  sortApi(data).then(() => {
     getPage();
   })
 }
 
 const updateState = (row) => {
-  stateApi({id: row.id, state: row.state}).then(res => {
+  stateApi({id: row.id, state: row.state}).then(() => {
     getPage();
   })
 }
@@ -165,8 +165,8 @@ const handleEdit = (row) => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该轮播图吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('轮播图删除成功');
+    deleteApi(data).then(() => {
+      successMsg('轮播图删除成功');
       getPage();
     })
   })

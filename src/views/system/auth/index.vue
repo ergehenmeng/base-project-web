@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="单位名称" clearable @keyup.enter="search" />
         </el-form-item>
@@ -52,7 +52,7 @@
 import { listPageApi, deleteApi} from '@/api/system/auth';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus, Refresh } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 
@@ -98,10 +98,10 @@ const handleEdit = (row) => {
 }
 
 const handleDelete = (row) => {
-  confirmMsg("确定要删除该用户吗?", () => {
+  confirmMsg("确定要删除该授权信息吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('用户删除成功');
+    deleteApi(data).then(() => {
+      successMsg('授权信息删除成功');
       getPage();
     })
   })

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="角色授权" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="角色授权" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-scrollbar height="400px">
       <el-tree class="role-menu-auth" ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps"
         :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading">
@@ -19,6 +19,7 @@
 import { merchantMenuApi, roleMenuApi, systemMenuApi, authApi } from '@/api/system/role';
 import useUserStore from '@/store/user';
 import { ref } from 'vue';
+import {successMsg} from "@/utils/message.js";
 
 const defaultProps = {
   label: 'title',
@@ -71,8 +72,8 @@ const handleSave = () => {
   authApi({
     roleId: roleIdRef.value,
     menuIds: [...checkedKeys, ...checkedHalfKeys]
-  }).then(res => {
-    ElMessage.success("角色授权成功");
+  }).then(() => {
+    successMsg("角色授权成功");
     showDialog.value = false;
     emit('reload');
   }).finally(() => {

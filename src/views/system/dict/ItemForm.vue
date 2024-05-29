@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="显示值" prop="showValue">
@@ -21,6 +21,7 @@
 <script setup>
 import { createItemApi, updateItemApi } from '@/api/system/dict';
 import { reactive, ref } from 'vue';
+import {successMsg} from "@/utils/message.js";
 
 const loading = ref(false);
 const dialogTitle = ref("");
@@ -71,16 +72,16 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateItemApi(formData.value).then(res => {
-          ElMessage.success("修改子项成功");
+        updateItemApi(formData.value).then(() => {
+          successMsg("修改子项成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
           loading.value = false;
         })
       } else {
-        createItemApi(formData.value).then(res => {
-          ElMessage.success("新增子项成功");
+        createItemApi(formData.value).then(() => {
+          successMsg("新增子项成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="80px">
+      <el-form :inline="true" label-width="70px">
         <el-form-item v-has-perm="'w7K0'" style="margin-left: 30px;">
           <el-button type="primary" :icon="Refresh" @click="handeClear" :disabled="selected.length === 0 ">清除缓存</el-button>
         </el-form-item>
@@ -23,6 +23,7 @@ import {onMounted, ref} from 'vue';
 import {Refresh} from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import dayjs from "dayjs";
+import {successMsg} from "@/utils/message.js";
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('E7K0');
@@ -50,7 +51,7 @@ const handleSelected = (val) => {
 const handeClear = () => {
   loading.value = true;
   clearApi({cacheNames: selected.value}).then(() => {
-    ElMessage.success('缓存清除成功');
+    successMsg('缓存清除成功');
     getPage();
   }).finally(() => {
     loading.value = false;

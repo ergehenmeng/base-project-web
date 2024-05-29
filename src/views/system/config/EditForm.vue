@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="编辑" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="参数名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
@@ -29,9 +29,9 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { updateApi } from "@/api/system/config";
+import {successMsg} from "@/utils/message.js";
 
 const loading = ref(false);
-
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
@@ -53,7 +53,6 @@ const formData = ref({
 });
 
 const formDataRef = ref();
-
 const showDialog = ref(false);
 
 const openDialog = (row) => {
@@ -78,8 +77,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      updateApi(formData.value).then(res => {
-        ElMessage.success("参数修改成功");
+      updateApi(formData.value).then(() => {
+        successMsg("参数修改成功");
         showDialog.value = false;
         emit('reload');
       }).finally(() => {

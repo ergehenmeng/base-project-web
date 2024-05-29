@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="图片名称" prop="title">
@@ -11,13 +11,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="path">
-        <el-upload class="image-uploader" :action="uploadUrl" :headers="headers"
-          :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :disabled="formData.path !==''">
-          <img v-if="formData.path" :src="formData.path" class="image-uploader-preview" alt="预览" title="编辑时不可修改"/>
-          <el-icon v-else class="image-uploader-icon">
-            <Plus />
-          </el-icon>
-        </el-upload>
+        <UploadImage v-model="formData.path" :disabled="formData.id !== null && formData.path !==''"></UploadImage>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize
@@ -35,18 +29,13 @@
 </template>
 
 <script setup>
-import { createApi, updateApi } from '@/api/system/image';
-import { reactive, ref } from 'vue';
+import {createApi, updateApi} from '@/api/system/image';
+import {reactive, ref} from 'vue';
 import useDictStore from "@/store/dict.js";
-import useUserStore from '@/store/user';
-import { errorMsg } from '@/utils/message';
-import { imageCheck } from '@/utils/image';
+import { successMsg } from '@/utils/message';
+import UploadImage from "@/components/UploadImage.vue";
 
-const userStore = useUserStore();
-const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
-const headers = {
-  'token': userStore.user.token
-}
+
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('image_type');
@@ -83,7 +72,7 @@ const openDialog = (row) => {
   resetForm();
   if (row.id) {
     dialogTitle.value = "编辑图片";
-    formData.value = Object.assign({}, row);
+    formData.value = {...row};
   } else {
     dialogTitle.value = "新增图片";
   }
@@ -106,16 +95,16 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi(formData.value).then(res => {
-          ElMessage.success("修改图片成功");
+        updateApi(formData.value).then(() => {
+          successMsg("修改图片成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
           loading.value = false;
         })
       } else {
-        createApi(formData.value).then(res => {
-          ElMessage.success("新增图片成功");
+        createApi(formData.value).then(() => {
+          successMsg("新增图片成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -124,20 +113,6 @@ const handleSave = () => {
       }
     }
   })
-}
-
-const handleImageSuccess = (res) => {
-  if (res.code !== 200) {
-    errorMsg(res.msg);
-    return;
-  }
-  const { data } = res;
-  formData.value.path = data.address + data.path
-  formData.value.size = Number.parseInt(data.size);
-}
-
-const beforeImageUpload = (rawFile) => {
-  return imageCheck(rawFile);
 }
 
 defineExpose({

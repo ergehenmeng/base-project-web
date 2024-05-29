@@ -22,3 +22,16 @@ export const errorMsg = (msg, func) => {
     },
   });
 };
+
+export const successMsg = (msg, func) => {
+  ElMessage({
+    message: msg,
+    type: "success",
+    duration: 3000,
+    onClose: () => {
+      if (func) {
+        func();
+      }
+    },
+  });
+};

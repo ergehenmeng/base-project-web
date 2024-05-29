@@ -55,7 +55,7 @@
 import { listPageApi, deleteApi } from '@/api/system/image';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import ImageForm from './ImageForm.vue';
 import useUserStore from '@/store/user';
 import useDictStore from "@/store/dict.js";
@@ -105,8 +105,8 @@ const handleEdit = (row) => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该图片吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('图片删除成功');
+    deleteApi(data).then(() => {
+      successMsg('图片删除成功');
       getPage();
     })
   })

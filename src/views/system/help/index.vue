@@ -56,20 +56,18 @@
 import { listPageApi, deleteApi, sortApi } from '@/api/system/help';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from "@/store/dict.js";
 import { useRouter } from "vue-router";
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
-
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('zF50');
 const sortAuth = userStore.hasAuth('xF50');
 const loading = ref(false)
 const total = ref(0);
-const formRef = ref();
 const pageData = ref([]);
 const router = useRouter();
 
@@ -122,8 +120,8 @@ const handleSort = (row) => {
     return;
   }
   const data = { id: row.id, sortBy: row.sort };
-  sortApi(data).then(res => {
-    ElMessage.success('排序更新成功');
+  sortApi(data).then(() => {
+    successMsg('排序更新成功');
     getPage();
   })
 }
@@ -131,8 +129,8 @@ const handleSort = (row) => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该问答吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('问答删除成功');
+    deleteApi(data).then(() => {
+      successMsg('问答删除成功');
       getPage();
     })
   })

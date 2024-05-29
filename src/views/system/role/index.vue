@@ -41,9 +41,9 @@
 </template>
 <script setup>
 import { listPageApi, deleteApi } from '@/api/system/role';
-import { onMounted, reactive, ref, h } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { Edit, Connection, Delete, Plus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
@@ -97,8 +97,8 @@ const handleAuth = (row) => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该角色吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('角色删除成功');
+    deleteApi(data).then(() => {
+      successMsg('角色删除成功');
       getPage();
     })
   })

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="反馈回复" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="反馈回复" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
       v-loading="loading">
       <el-form-item label="反馈信息" prop="remark">
@@ -20,6 +20,7 @@
 <script setup>
 import { disposeApi } from '@/api/system/feedback';
 import { reactive, ref } from 'vue';
+import {successMsg} from "@/utils/message.js";
 
 const loading = ref(false);
 const formDataRef = ref();
@@ -55,8 +56,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      disposeApi(formData.value).then(res => {
-        ElMessage.success("反馈回复成功");
+      disposeApi(formData.value).then(() => {
+        successMsg("反馈回复成功");
         showDialog.value = false;
         emit('reload');
       }).finally(() => {

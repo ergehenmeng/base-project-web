@@ -68,7 +68,7 @@
 import { listPageApi, deleteApi, deleteItemApi } from '@/api/system/dict';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus, CirclePlus } from '@element-plus/icons-vue';
-import { confirmMsg } from '@/utils/message';
+import {confirmMsg, successMsg} from '@/utils/message';
 import DickForm from './DickForm.vue';
 import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
@@ -113,8 +113,8 @@ onMounted(() => {
 const handleDelete = (row) => {
   confirmMsg("确定要删除该选项吗?", () => {
     const data = { id: row.id };
-    deleteApi(data).then(res => {
-      ElMessage.success('字典删除成功');
+    deleteApi(data).then(() => {
+      successMsg('字典删除成功');
       getPage();
     })
   })
@@ -147,8 +147,8 @@ const handleItemEdit = (row) => {
 const handleItemDelete = (row) => {
   confirmMsg("确定要删除该子项数据吗?", () => {
     const data = { id: row.id };
-    deleteItemApi(data).then(res => {
-      ElMessage.success('子项数据删除成功');
+    deleteItemApi(data).then(() => {
+      successMsg('子项数据删除成功');
       getPage();
     })
   })

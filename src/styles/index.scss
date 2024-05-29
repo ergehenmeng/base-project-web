@@ -65,9 +65,11 @@ body {
     float: right;
   }
 
-  .el-input,
+  .el-input {
+    width: 180px;
+  }
   .el-select {
-    width: 200px;
+    width: 150px;
   }
 }
 /*列表中间内容样式*/
@@ -80,11 +82,10 @@ body {
 }
 /*弹框样式*/
 .el-dialog {
-  width: 500px;
   .el-input,
   .el-textarea,
   .el-select {
-    width: 350px;
+    width: 400px !important;
   }
 }
 
@@ -120,4 +121,8 @@ body {
 
 .image-uploader .el-upload:hover {
   border-color: var(--el-color-primary);
+}
+
+.datetime-cell {
+  width: 350px;
 }

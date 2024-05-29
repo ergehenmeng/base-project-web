@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新增黑名单" v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="新增黑名单" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
              v-loading="loading">
       <el-form-item label="开始IP" prop="startIp">
@@ -26,6 +26,7 @@
 <script setup>
 import { createApi } from '@/api/system/black';
 import { reactive, ref } from 'vue';
+import {successMsg} from "@/utils/message.js";
 
 const loading = ref(false);
 const formDataRef = ref();
@@ -70,8 +71,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      createApi(formData.value).then(res => {
-        ElMessage.success("新增ip黑名单成功");
+      createApi(formData.value).then(() => {
+        successMsg("新增ip黑名单成功");
         showDialog.value = false;
         emit('reload');
       }).finally(() => {
