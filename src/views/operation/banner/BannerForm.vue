@@ -139,7 +139,7 @@ const handleSave = () => {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("修改图片成功");
+          successMsg("修改轮播成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {
@@ -147,7 +147,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("新增图片成功");
+          successMsg("新增轮播成功");
           showDialog.value = false;
           emit('reload');
         }).finally(() => {

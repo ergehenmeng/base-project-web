@@ -98,13 +98,15 @@ const handleSave = () => {
 
 onMounted(() => {
   const params = route.params;
-  loading.value = true;
-  selectApi(params).then(res => {
-    formData.value = res.data;
-    formData.value.answerText = res.data.answer;
-  }).finally(() => {
-    loading.value = false;
-  })
+  if (params.id !== undefined) {
+    loading.value = true;
+    selectApi(params).then(res => {
+      formData.value = res.data;
+      formData.value.answerText = res.data.answer;
+    }).finally(() => {
+      loading.value = false;
+    })
+  }
 })
 
 </script>
