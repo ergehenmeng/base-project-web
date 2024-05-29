@@ -55,7 +55,7 @@
         <el-table-column prop="bannerType" label="轮播图类型" :formatter="formatter" width="120"/>
         <el-table-column prop="state" label="状态" width="80">
           <template #default="scope">
-            <el-switch v-model="scope.row.state" inline-prompt active-text="正常" inactive-text="禁用"
+            <el-switch v-model="scope.row.state" inline-prompt :active-value="true" :inactive-value="false" active-text="正常" inactive-text="禁用"
                        @change="updateState(scope.row)" :disabled="!stateAuth" style="--el-switch-off-color: #ff4949;"/>
           </template>
         </el-table-column>

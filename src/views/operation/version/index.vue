@@ -1,13 +1,146 @@
 <template>
   <div>
-
+    <div class="content-top">
+      <el-form :inline="true" label-width="70px">
+        <el-form-item label="搜索">
+          <el-input v-model="queryParams.queryName" placeholder="更新信息" clearable @keyup.enter="search" />
+        </el-form-item>
+        <el-form-item label="客户端">
+          <el-select v-model="queryParams.channel" clearable>
+            <el-option label="IOS" value="IOS" />
+            <el-option label="ANDROID" value="ANDROID" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="待上架" :value="false" />
+            <el-option label="已上架" :value="true" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="search">搜索</el-button>
+        </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'QkU0'">
+          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="content-main">
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="channel" label="客户端" width="100" />
+        <el-table-column prop="version" label="版本号" width="100" />
+        <el-table-column prop="state" label="状态" width="100" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" inline-prompt :active-value="true" :inactive-value="false" active-text="已上架" inactive-text="待上架"
+                       @change="updateState(scope.row.id, scope.row.state)" :disabled="!stateAuth" style="--el-switch-off-color: #ff4949;"/>
+          </template>
+        </el-table-column>
+        <el-table-column prop="forceUpdate" label="是否强更" :formatter="formatter" width="100" />
+        <el-table-column prop="url" label="下载地址" width="350" />
+        <el-table-column prop="remark" label="更新信息" />
+        <el-table-column prop="createTime" label="创建时间" width="180"/>
+        <el-table-column prop="updateTime" label="更新时间" width="180"/>
+        <el-table-column label="操作" fixed="right" width="150">
+          <template #default="scope">
+            <el-button v-has-perm="'VkU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
+            </el-button>
+            <el-button v-has-perm="'tkU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link
+                       title="删除">
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize"
+                     :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+    </div>
   </div>
+  <VersionForm ref="formRef" @reload="getPage"></VersionForm>
 </template>
-
 <script setup>
+import { listPageApi, deleteApi, stateApi } from '@/api/operation/version';
+import { onMounted, reactive, ref } from 'vue';
+import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import {confirmMsg, successMsg} from '@/utils/message';
+import useUserStore from '@/store/user';
+import useDictStore from "@/store/dict.js";
+import {useRouter} from "vue-router";
+import VersionForm from "./VersionForm.vue";
+
+const router = useRouter();
+const userStore = useUserStore();
+const dictStore = useDictStore();
+const dictList = dictStore.getDict('notice_type');
+
+const loading = ref(false);
+const total = ref(0);
+const formRef = ref();
+const pageData = ref([]);
+const selectAuth = userStore.hasAuth("zkU0");
+const stateAuth = userStore.hasAuth("UJU0");
+
+const queryParams = reactive({
+  queryName: "",
+  page: 1,
+  pageSize: 10,
+  state: null,
+  noticeType: null,
+})
+
+const getPage = async () => {
+  loading.value = true;
+  try {
+    if (selectAuth) {
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+const search = () => {
+  queryParams.page = 1;
+  getPage()
+}
+
+onMounted(() => {
+  getPage()
+})
+
+const handleDelete = (row) => {
+  confirmMsg("确定要删除该版本信息吗?", () => {
+    const data = { id: row.id };
+    deleteApi(data).then(() => {
+      successMsg('版本信息删除成功');
+      getPage();
+    })
+  })
+}
+
+const updateState = (id, state) => {
+  if (stateAuth) {
+    stateApi({id: id, state: state}).then(() => {
+      getPage();
+    })
+  }
+}
+
+const formatter = (row, column, cellValue) => {
+  if (column.property === "forceUpdate") {
+    return cellValue === true ? "是" : "否";
+  } else {
+    return cellValue;
+  }
+}
+const handleCreate = () => {
+  formRef.value.openDialog({});
+}
+
+
+const handleEdit = (row) => {
+  formRef.value.openDialog(row);
+}
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>
