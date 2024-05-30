@@ -1,13 +1,157 @@
 <template>
   <div>
-
+    <div class="content-top">
+      <el-form :inline="true" label-width="70px">
+        <el-form-item label="景区">
+          <el-select v-model="queryParams.bannerType" clearable>
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="月份">
+          <el-select v-model="queryParams.clientType" clearable>
+            <el-option label="PC" value="PC"/>
+            <el-option label="ANDROID" value="ANDROID"/>
+            <el-option label="IOS" value="IOS"/>
+            <el-option label="H5" value="H5"/>
+            <el-option label="WECHAT" value="WECHAT"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="search">搜索</el-button>
+        </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'gxU0'">
+          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="content-main">
+      <el-calendar ref="calendar" v-model="nowDate">
+        <template #header="{ date }">
+          <span>{{ date }}</span>
+          <el-button-group>
+            <el-button size="small" @click="selectDate('prev-month')">
+              上一月
+            </el-button>
+            <el-button size="small" @click="selectDate('today')">今天</el-button>
+            <el-button size="small" @click="selectDate('next-month')">
+              下一月
+            </el-button>
+          </el-button-group>
+        </template>
+        <template #date-cell="{ data }">
+          <span style="display: block">{{ data.day.split('-')[2] }}</span>
+          <ul class="calender-msg-list">
+            <el-scrollbar height="50">
+              <li v-for="item in activityList(data)" :key="item.id">
+                <el-row>
+                  <el-col :span="20">
+                    <el-text truncated>{{ item.title }}</el-text>
+                  </el-col>
+                  <el-col :span="2">
+                    <el-button v-has-perm="'2xU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑">
+                    </el-button>
+                  </el-col>
+                  <el-col :span="2">
+                    <el-button v-has-perm="'mxU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link
+                               title="删除">
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </li>
+            </el-scrollbar>
+          </ul>
+        </template>
+      </el-calendar>
+    </div>
   </div>
 </template>
-
 <script setup>
+import {listApi, deleteApi,} from '@/api/operation/activity';
+import { reactive, ref} from 'vue';
+import {Edit, Delete, Plus} from '@element-plus/icons-vue';
+import {confirmMsg, successMsg} from '@/utils/message';
+import useUserStore from '@/store/user';
+import useDictStore from "@/store/dict.js";
+import dayjs from "dayjs";
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+const userStore = useUserStore();
+const dictStore = useDictStore();
+const dictList = dictStore.getDict('banner_type');
+
+const loading = ref(false);
+const bannerRef = ref();
+const calendar = ref();
+const nowDate = ref(new Date())
+
+const dataMap = ref({});
+const selectAuth = userStore.hasAuth("jxU0");
+
+const queryParams = reactive({
+  scenicId: null,
+  month: dayjs().format("YYYY-MM")
+})
+
+const getList = async () => {
+  loading.value = true;
+  try {
+    if (selectAuth) {
+      const {data} = await listApi(queryParams);
+      data.forEach((item) => {
+        dataMap.value[item.nowDate] = item.activityList;
+      })
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+const search = () => {
+  getList()
+}
+
+
+onBeforeMount(() => {
+  getList()
+})
+
+const handleEdit = (row) => {
+  bannerRef.value.openDialog(row);
+}
+
+const selectDate = (val) => {
+  if (!calendar.value) {
+    return
+  }
+  calendar.value.selectDate(val)
+}
+
+const activityList = (data) => {
+  for (let key in dataMap.value) {
+    if (key === data.day) {
+      return dataMap.value[key];
+    }
+  }
+}
+
+const handleDelete = (row) => {
+  confirmMsg("确定要删除该活动吗?", () => {
+    const data = {id: row.id};
+    deleteApi(data).then(() => {
+      successMsg('活动删除成功');
+      getPage();
+    })
+  })
+}
+
+const handleCreate = () => {
+  router.push("/operation/activity/create")
+}
 
 </script>
-
 <style lang="scss" scoped>
-
+.calender-msg-list {
+  list-style: none;
+}
 </style>

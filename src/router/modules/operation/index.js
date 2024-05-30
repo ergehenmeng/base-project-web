@@ -8,10 +8,32 @@ export default [
       {
         path: "activity",
         name: "activity",
-        component: () => import("@/views/operation/activity/index.vue"),
         meta: {
           title: "活动管理",
         },
+        children: [
+          {
+            path: "",
+            name: "activityIndex",
+            component: () => import("@/views/operation/activity/index.vue")
+          },
+          {
+            path: "create",
+            name: "activityCreate",
+            component: () => import("@/views/operation/activity/ConfigForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "activityEdit",
+            component: () => import("@/views/operation/activity/ActivityForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+        ],
       },
       {
         path: "banner",
