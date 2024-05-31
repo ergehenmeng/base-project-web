@@ -18,9 +18,17 @@ export default [
             component: () => import("@/views/operation/activity/index.vue")
           },
           {
+            path: "config",
+            name: "activityConfig",
+            component: () => import("@/views/operation/activity/ConfigForm.vue"),
+            meta: {
+              title: "批量配置",
+            },
+          },
+          {
             path: "create",
             name: "activityCreate",
-            component: () => import("@/views/operation/activity/ConfigForm.vue"),
+            component: () => import("@/views/operation/activity/ActivityForm.vue"),
             meta: {
               title: "新增",
             },

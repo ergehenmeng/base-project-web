@@ -61,7 +61,7 @@
                      :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
     </div>
   </div>
-  <DickForm ref="dictRef" @reload="getPage"></DickForm>
+  <DictForm ref="dictRef" @reload="getPage"></DictForm>
   <ItemForm ref="itemRef" @reload="getPage"></ItemForm>
 </template>
 <script setup>
@@ -69,7 +69,7 @@ import { listPageApi, deleteApi, deleteItemApi } from '@/api/system/dict';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus, CirclePlus } from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
-import DickForm from './DickForm.vue';
+import DictForm from './DictForm.vue';
 import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
 

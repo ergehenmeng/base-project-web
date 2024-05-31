@@ -8,7 +8,7 @@
       </el-form-item>
       <el-form-item label="活动日期" prop="activityDate">
         <div style="width: 350px;">
-          <el-date-picker type="daterange" v-model="formData.activityDate" style="width: 350px;"></el-date-picker>
+          <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="formData.activityDate" style="width: 350px;"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="周期" prop="week">
@@ -49,11 +49,10 @@
 import { configApi } from '@/api/operation/activity';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
-import {useRoute, useRouter} from "vue-router";
+import { useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import UploadImage from "@/components/UploadImage.vue";
 
-const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
@@ -98,6 +97,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
+      formData.value.startDate = formData.value.activityDate[0]
+      formData.value.endDate = formData.value.activityDate[1]
       configApi(formData.value).then(() => {
         successMsg("活动添加成功");
         showDialog.value = false;

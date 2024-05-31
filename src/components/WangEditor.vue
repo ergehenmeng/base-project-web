@@ -70,6 +70,16 @@ editorConfig.MENU_CONF['uploadImage'] = {
         userStore.logout(route.fullPath);
       }
     }
+  },
+  onFailed: (file, res) => {
+    console.log(`${file.name} 上传失败`, res)
+  },
+  onError: (file, err, res) => {
+    if (err.message.indexOf("maximum allowed") !== -1) {
+      errorMsg("图片大小不能超过2MB")
+    } else {
+      console.error("富文本上传图异常", err, res)
+    }
   }
 }
 

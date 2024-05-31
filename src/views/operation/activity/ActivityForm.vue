@@ -1,24 +1,33 @@
 <template>
   <div class="edit-content">
-    <el-divider />
+    <el-divider/>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
              v-loading="loading">
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
-      <el-form-item label="公告类型" prop="noticeType">
-        <el-select v-model="formData.noticeType">
-          <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
-        </el-select>
+      <el-form-item label="活动日期" prop="activityDate">
+        <div style="width: 350px;">
+          <el-date-picker type="date" value-format="YYYY-MM-DD" v-model="formData.nowDate" style="width: 350px;" :disabled="formData.id !== null"></el-date-picker>
+        </div>
       </el-form-item>
-      <el-form-item label="公告内容" prop="contentText">
-        <el-input v-model="formData.contentText" type="textarea" style="display: none;"/>
-        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
+      <el-form-item label="活动时间" prop="activityTime">
+        <el-input v-model="formData.activityTime" show-word-limit maxlength="20" placeholder="18:00~22:00"/>
+      </el-form-item>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImage v-model="formData.coverUrl"></UploadImage>
+      </el-form-item>
+      <el-form-item label="活动地址" prop="address">
+        <el-input v-model="formData.address" show-word-limit maxlength="100"/>
+      </el-form-item>
+      <el-form-item label="公告内容" prop="introduceText">
+        <el-input v-model="formData.introduceText" type="textarea" style="display: none;"/>
+        <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
       </el-form-item>
     </el-form>
     <div class="edit-footer">
       <div class="edit-button-footer">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="$router.back()">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
     </div>
@@ -26,11 +35,12 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/operation/notice';
-import {reactive, ref} from 'vue';
+import { updateApi, createApi, selectApi } from '@/api/operation/activity';
+import { reactive, ref } from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
-import {useRoute, useRouter} from "vue-router";
-import {successMsg} from "@/utils/message.js";
+import { useRoute, useRouter } from "vue-router";
+import { successMsg } from "@/utils/message.js";
+import UploadImage from "@/components/UploadImage.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -40,22 +50,31 @@ const showDialog = ref(false);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "标题不能为空", trigger: 'blur'}
+    {required: true, message: "活动名称不能为空", trigger: 'blur'}
   ],
-  contentText: [
-    {required: true, message: "内容不能为空", trigger: 'change'}
+  activityTime: [
+    {required: true, message: '请选择活动时间', trigger: 'blur'}
   ],
-  noticeType: [
-    {required: true, message: '请选择公告类型', trigger: 'change'}
+  address: [
+    {required: true, message: "活动地点不能为空", trigger: 'blur'}
+  ],
+  coverUrl: [
+    {required: true, message: "请上传封面", trigger: 'blur'}
+  ],
+  introduceText: [
+    {required: true, message: "活动详细介绍不能为空", trigger: 'blur'}
   ]
 })
 
 const formData = ref({
   id: null,
   title: "",
-  content: "",
-  contentText: "",
-  noticeType: null
+  nowDate: null,
+  activityTime: null,
+  introduce: "",
+  introduceText: "",
+  address: null,
+  coverUrl: null,
 });
 
 const handleSave = () => {
@@ -64,17 +83,17 @@ const handleSave = () => {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("公告更新成功");
+          successMsg("活动更新成功");
           showDialog.value = false;
-          router.go(-1);
+          router.back();
         }).finally(() => {
           loading.value = false;
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("公告添加成功");
+          successMsg("活动添加成功");
           showDialog.value = false;
-          router.go(-1);
+          router.back();
         }).finally(() => {
           loading.value = false;
         })
@@ -89,10 +108,12 @@ onMounted(() => {
     loading.value = true;
     selectApi(params).then(res => {
       formData.value = res.data;
-      formData.value.answerText = res.data.answer;
+      formData.value.introduceText = res.data.introduce;
     }).finally(() => {
       loading.value = false;
     })
+  } else {
+    formData.value.nowDate = route.query.nowDate;
   }
 })
 
