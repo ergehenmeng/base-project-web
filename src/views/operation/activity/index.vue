@@ -19,10 +19,10 @@
         <el-form-item>
           <el-button type="primary" @click="getList">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'gxU0'">
+        <el-form-item class="right-button" v-has-perm="'UdU0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'gxU0'">
+        <el-form-item class="right-button" v-has-perm="'ZdU0'">
           <el-button type="primary" :icon="Plus" @click="handleConfig">配置</el-button>
         </el-form-item>
       </el-form>
@@ -51,11 +51,11 @@
                     <el-text truncated>{{ item.title }}</el-text>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'2xU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑">
+                    <el-button v-has-perm="'kdU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑">
                     </el-button>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'mxU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link
+                    <el-button v-has-perm="'OdU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link
                                title="删除">
                     </el-button>
                   </el-col>
@@ -88,7 +88,7 @@ const calendar = ref();
 const nowDate = ref(new Date())
 
 const dataMap = ref({});
-const selectAuth = userStore.hasAuth("jxU0");
+const selectAuth = userStore.hasAuth("5dU0");
 
 const queryParams = reactive({
   scenicId: null,
