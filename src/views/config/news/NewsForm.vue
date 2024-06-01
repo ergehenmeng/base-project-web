@@ -76,7 +76,7 @@ const formData = ref({
   includeTitle: true,
   includeDepict: false,
   includeImage: false,
-  includeContent: false,
+  includeContent: true,
   includeVideo: false
 });
 

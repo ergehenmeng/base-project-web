@@ -84,10 +84,32 @@ export default [
       {
         path: "news",
         name: "news",
-        component: () => import("@/views/operation/news/index.vue"),
         meta: {
           title: "资讯管理",
         },
+        children: [
+          {
+            path: "",
+            name: "newsIndex",
+            component: () => import("@/views/operation/news/index.vue")
+          },
+          {
+            path: "create",
+            name: "newsCreate",
+            component: () => import("@/views/operation/news/NewsForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "newsEdit",
+            component: () => import("@/views/operation/news/NewsForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+        ],
       },
       {
         path: "comment",

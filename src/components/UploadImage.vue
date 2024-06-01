@@ -1,6 +1,6 @@
 <template>
   <el-upload class="image-uploader" :action="uploadUrl" :headers="headers"
-             :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :disabled="prop.disabled">
+             :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :disabled="prop.disabled" >
     <img v-if="imgUrl" :src="imgUrl" class="image-uploader-preview" alt="预览" />
     <el-icon v-else class="image-uploader-icon">
       <Plus />
