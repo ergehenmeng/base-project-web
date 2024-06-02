@@ -1,5 +1,5 @@
 <template>
-  <el-upload class="image-uploader" :action="uploadUrl" :headers="headers" v-model:file-list="fileList"
+  <el-upload class="image-uploader" :action="uploadUrl" :headers="headers" v-model:file-list="localFile"
              list-type="picture-card" :on-success="handleImageSuccess" :before-upload="beforeImageUpload"
              :disabled="prop.disabled" :on-preview="imagePreview" :multiple="true"
              :limit="prop.limit" :on-exceed="handleExceed" :class="fileList.length >= prop.limit ? 'upload-image-hide-box' : ''"
@@ -22,19 +22,11 @@ import { useRoute } from "vue-router";
 const dialogVisible = ref(false);
 const dialogImageUrl = ref('');
 const route = useRoute();
-
-const fileList = ref([
-  {
-    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-  }
-])
-
-
-// const fileList = defineModel({
-//   default: () => [{name:"test.jpg", url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"}],
-//   type: Array,
-//   required: false,
-// });
+const localFile = ref([]);
+const fileList = defineModel({
+  type: Array,
+  required: true,
+});
 
 const prop = defineProps({
   disabled: {
@@ -62,8 +54,8 @@ const handleImageSuccess = (res, file) => {
     return;
   }
   const { data } = res;
-  console.log(fileList.value);
   file.url = data.address + data.path;
+  fileList.value.push(file.url);
 }
 
 const beforeImageUpload = (rawFile) => {
@@ -81,13 +73,29 @@ const handleExceed = () => {
 
 const handleRemoveImage = (uploadFile, uploadFiles)=> {
   let removeIndex;
-  fileList.value.forEach((item, index) => {
-    if (item === uploadFile.url) {
+  localFile.value.forEach((item, index) => {
+    if (item["url"] === uploadFile.url) {
       removeIndex = index;
     }
   })
   fileList.value.splice(removeIndex, 1)
 }
+
+const convert = (fileList) => {
+  const arr = [];
+  if (fileList instanceof Array) {
+    fileList.forEach((item) => {
+      arr.push({url: item});
+    })
+  } else {
+    console.log("fileList only supported array")
+  }
+  return arr;
+}
+
+onMounted(() => {
+  localFile.value = convert(fileList.value);
+})
 
 </script>
 <style lang="scss" scoped>
