@@ -1,8 +1,10 @@
 <template>
-  <el-upload class="image-uploader" :action="uploadUrl" :headers="headers" :file-list="fileList"
+  <el-upload class="image-uploader" :action="uploadUrl" :headers="headers" v-model:file-list="fileList"
              list-type="picture-card" :on-success="handleImageSuccess" :before-upload="beforeImageUpload"
-             :disabled="prop.disabled" :on-preview="imagePreview" :multiple="true" :limit="prop.limit">
-    <el-icon class="image-uploader-icon">
+             :disabled="prop.disabled" :on-preview="imagePreview" :multiple="true"
+             :limit="prop.limit" :on-exceed="handleExceed" :class="fileList.length >= prop.limit ? 'upload-image-hide-box' : ''"
+              :on-remove="handleRemoveImage">
+    <el-icon v-if="prop.limit " class="image-uploader-icon">
       <Plus />
     </el-icon>
   </el-upload>
@@ -20,11 +22,19 @@ import { useRoute } from "vue-router";
 const dialogVisible = ref(false);
 const dialogImageUrl = ref('');
 const route = useRoute();
-const fileList = defineModel({
-  default: () => [],
-  type: Array,
-  required: true,
-});
+
+const fileList = ref([
+  {
+    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
+  }
+])
+
+
+// const fileList = defineModel({
+//   default: () => [{name:"test.jpg", url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"}],
+//   type: Array,
+//   required: false,
+// });
 
 const prop = defineProps({
   disabled: {
@@ -43,7 +53,7 @@ const headers = {
   'token': userStore.user.token
 }
 
-const handleImageSuccess = (res) => {
+const handleImageSuccess = (res, file) => {
   if (res.code !== 200) {
     errorMsg(res.msg);
     if (res.code === 8848) {
@@ -52,7 +62,8 @@ const handleImageSuccess = (res) => {
     return;
   }
   const { data } = res;
-  fileList.value.push(data.address + data.path);
+  console.log(fileList.value);
+  file.url = data.address + data.path;
 }
 
 const beforeImageUpload = (rawFile) => {
@@ -64,5 +75,25 @@ const imagePreview = (uploadFile) => {
   dialogVisible.value = true;
 }
 
-</script>
+const handleExceed = () => {
+  errorMsg("最多只能上传" + prop.limit + "张图片");
+}
 
+const handleRemoveImage = (uploadFile, uploadFiles)=> {
+  let removeIndex;
+  fileList.value.forEach((item, index) => {
+    if (item === uploadFile.url) {
+      removeIndex = index;
+    }
+  })
+  fileList.value.splice(removeIndex, 1)
+}
+
+</script>
+<style lang="scss" scoped>
+.hide_box {
+  .el-upload--picture-card {
+    display: none !important;
+  }
+}
+</style>
