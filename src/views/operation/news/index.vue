@@ -58,15 +58,15 @@
   </div>
 </template>
 <script setup>
-import {listPageApi, deleteApi, listApi} from '@/api/operation/news';
+import {listPageApi, deleteApi, configListApi} from '@/api/operation/news';
 import {onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus} from '@element-plus/icons-vue';
-import {confirmMsg, successMsg} from '@/utils/message';
+import {confirmMsg, errorMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
 import {sortApi} from "@/api/operation/banner/index.js";
 
-const activeName = ref("0");
+const activeName = ref("");
 const configList = ref([]);
 const router = useRouter();
 const userStore = useUserStore();
@@ -121,12 +121,8 @@ onMounted(() => {
 })
 
 const getConfigList = async () => {
-  const {data} = await listApi();
+  const {data} = await configListApi();
   configList.value = data;
-}
-
-const handleEdit = (row) => {
-  router.push("/operation/news/edit/" + row.id);
 }
 
 const handleDelete = (row) => {
@@ -154,7 +150,25 @@ const handleSort = (row) => {
 }
 
 const handleCreate = () => {
-  router.push("/operation/news/create");
+  if (!activeName) {
+    errorMsg("请先配置资讯类型")
+    return;
+  }
+  router.push({
+    name: "newsCreate",
+    query: {
+      code: activeName.value
+    }
+  });
+}
+
+const handleEdit = (row) => {
+  router.push({
+    path: "/operation/news/edit/" + row.id,
+    query: {
+      code: activeName.value
+    }
+  });
 }
 
 </script>

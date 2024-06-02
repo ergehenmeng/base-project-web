@@ -28,9 +28,23 @@ export const deleteApi = (data) => {
     });
 }
 
-export const listApi = (params) => {
+export const configListApi = (params) => {
     return request.get({
-        url: "/manage/news/list",
+        url: "/manage/news/config/list",
+        params
+    });
+}
+
+export const configApi = (params) => {
+    return request.get({
+        url: "/manage/news/config/select",
+        params
+    });
+}
+
+export const selectApi = (params) => {
+    return request.get({
+        url: "/manage/news/select",
         params
     });
 }
@@ -38,13 +52,6 @@ export const listApi = (params) => {
 export const sortApi = (data) => {
     return request.post({
         url: "/manage/news/sort",
-        data
-    });
-}
-
-export const cancelApi = (data) => {
-    return request.post({
-        url: "/manage/notice/cancel",
         data
     });
 }

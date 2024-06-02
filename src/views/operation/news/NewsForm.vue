@@ -6,13 +6,13 @@
       <el-form-item label="资讯标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
-      <el-form-item label="描述信息" prop="depict">
+      <el-form-item label="描述信息" prop="depict" v-if="showField.includeDepict">
         <el-input v-model="formData.depict" show-word-limit maxlength="50"/>
       </el-form-item>
-      <el-form-item label="图集" prop="image">
+      <el-form-item label="图集" prop="image" v-if="showField.includeImage">
         <UploadImageList v-model="formData.image"></UploadImageList>
       </el-form-item>
-      <el-form-item label="视频" prop="video">
+      <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input v-model="formData.video" show-word-limit maxlength="200"/>
       </el-form-item>
       <el-form-item label="详细信息" prop="contentText">
@@ -30,11 +30,11 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/operation/notice';
+import {createApi, updateApi, configApi, selectApi} from '@/api/operation/news';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
-import {successMsg} from "@/utils/message.js";
+import {errorMsg, successMsg} from "@/utils/message.js";
 import UploadImageList from "@/components/UploadImageList.vue";
 
 const route = useRoute();
@@ -45,14 +45,20 @@ const showDialog = ref(false);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "标题不能为空", trigger: 'blur'}
+    {required: true, message: "资讯标题不能为空", trigger: 'blur'}
   ],
   contentText: [
-    {required: true, message: "内容不能为空", trigger: 'change'}
+    {required: true, message: "详细信息不能为空", trigger: 'change'}
   ],
-  noticeType: [
-    {required: true, message: '请选择公告类型', trigger: 'change'}
-  ]
+  depict: [],
+  image: [],
+  video: []
+})
+
+const showField = ref({
+  includeDepict: false,
+  includeImage: false,
+  includeVideo: false
 })
 
 const formData = ref({
@@ -92,15 +98,37 @@ const handleSave = () => {
 
 onMounted(() => {
   const params = route.params;
-  if (params.id !== undefined) {
-    loading.value = true;
-    selectApi(params).then(res => {
-      formData.value = res.data;
-      formData.value.answerText = res.data.answer;
-    }).finally(() => {
-      loading.value = false;
-    })
+  const query = route.query;
+  if (!query.code) {
+    errorMsg("请选择资讯分类");
+    return;
   }
+  configApi({code: query.code}).then(res => {
+    const {includeDepict, includeImage, includeVideo} = res.data
+    if (includeDepict === true) {
+      showField.value.includeDepict = true;
+      formRules.depict.push({required: true, message: "描述信息不能为空", trigger: 'blur'});
+    }
+    if (includeImage === true) {
+      showField.value.includeImage = true;
+      formRules.image.push({required: true, message: "图集不能为空", trigger: 'change'});
+    }
+    if (includeVideo === true) {
+      showField.value.includeVideo = true;
+      formRules.video.push({required: true, message: "视频不能为空", trigger: 'blur'});
+    }
+    if (params.id) {
+      loading.value = true;
+      selectApi(params).then(res => {
+        formData.value = res.data;
+        formData.value.answerText = res.data.answer;
+      }).finally(() => {
+        loading.value = false;
+      })
+    }
+  })
+
+
 })
 
 </script>

@@ -27,7 +27,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="包含详细信息" prop="includeContent">
-        <el-radio-group v-model="formData.includeContent">
+        <el-radio-group v-model="formData.includeContent" disabled>
           <el-radio label="是" :value="true"></el-radio>
           <el-radio label="否" :value="false"></el-radio>
         </el-radio-group>
