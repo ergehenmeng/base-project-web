@@ -30,7 +30,7 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="sort" label="排序">
+            <el-table-column prop="sort" label="排序" width="80">
               <template #default="scope">
                 <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
               </template>
@@ -58,13 +58,12 @@
   </div>
 </template>
 <script setup>
-import {listPageApi, deleteApi, configListApi} from '@/api/operation/news';
+import {listPageApi, deleteApi, configListApi, sortApi} from '@/api/operation/news';
 import {onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus} from '@element-plus/icons-vue';
 import {confirmMsg, errorMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
-import {sortApi} from "@/api/operation/banner/index.js";
 
 const activeName = ref("");
 const configList = ref([]);

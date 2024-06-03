@@ -127,6 +127,14 @@ export default [
           title: "版本管理",
         },
       },
+      {
+        path: "commentReport",
+        name: "commentReport",
+        component: () => import("@/views/operation/comment/report/index.vue"),
+        meta: {
+          title: "评论举报",
+        },
+      },
     ],
   },
 ];

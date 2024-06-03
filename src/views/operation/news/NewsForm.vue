@@ -9,8 +9,8 @@
       <el-form-item label="描述信息" prop="depict" v-if="showField.includeDepict">
         <el-input v-model="formData.depict" show-word-limit maxlength="50"/>
       </el-form-item>
-      <el-form-item label="图集" prop="image" v-if="showField.includeImage">
-        <UploadImageList v-model="formData.image"></UploadImageList>
+      <el-form-item label="图集" prop="imageList" v-if="showField.includeImage">
+        <UploadImageList v-model="formData.imageList"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input v-model="formData.video" show-word-limit maxlength="200"/>
@@ -50,9 +50,6 @@ const formRules = reactive({
   contentText: [
     {required: true, message: "详细信息不能为空", trigger: 'change'}
   ],
-  depict: [],
-  image: [],
-  video: []
 })
 
 const showField = ref({
@@ -67,8 +64,9 @@ const formData = ref({
   depict: "",
   content: "",
   contentText: "",
-  image: [],
-  video: ""
+  imageList: [],
+  video: "",
+  code: "",
 });
 
 const handleSave = () => {
@@ -103,25 +101,29 @@ onMounted(() => {
     errorMsg("请选择资讯分类");
     return;
   }
+  formData.value.code = query.code;
   configApi({code: query.code}).then(res => {
     const {includeDepict, includeImage, includeVideo} = res.data
     if (includeDepict === true) {
       showField.value.includeDepict = true;
-      formRules.depict.push({required: true, message: "描述信息不能为空", trigger: 'blur'});
     }
     if (includeImage === true) {
       showField.value.includeImage = true;
-      formRules.image.push({required: true, message: "图集不能为空", trigger: 'change'});
     }
     if (includeVideo === true) {
       showField.value.includeVideo = true;
-      formRules.video.push({required: true, message: "视频不能为空", trigger: 'blur'});
     }
     if (params.id) {
       loading.value = true;
       selectApi(params).then(res => {
         formData.value = res.data;
         formData.value.answerText = res.data.answer;
+        const image = res.data.image;
+        if (image) {
+          formData.value.imageList = image.split(",");
+        } else {
+          formData.value.imageList = [];
+        }
       }).finally(() => {
         loading.value = false;
       })

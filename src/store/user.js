@@ -40,18 +40,21 @@ const useUserStore = defineStore(
       if (!isLogin.value) {
         return;
       }
-      logoutApi().then((res) => {
-        user.value = {};
-        isLogin.value = false;
-        window.localStorage.clear();
-        window.sessionStorage.clear();
-        if (redirectUrl) {
-          router.replace("/login?redirect=" + encodeURIComponent(redirectUrl))
-        } else {
-          router.replace("/login");
-        }
-      });
+      user.value = null;
+      isLogin.value = false;
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      // 此处表示被动退出
+      if (redirectUrl) {
+          router.replace("/login?redirect=" + encodeURIComponent(redirectUrl));
+      } else {
+          // 表示主动退出
+          logoutApi().then((res) => {
+              router.replace("/login");
+          });
+      }
     };
+
     // 登录并设置用户信息
     const login = async (loginData) => {
       if (isLogin.value) {

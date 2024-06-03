@@ -93,6 +93,12 @@ const convert = (fileList) => {
   return arr;
 }
 
+watch(fileList, (newVal, oldVal) => {
+  if (Array.isArray(oldVal) && oldVal.length === 0) {
+    localFile.value = convert(newVal);
+  }
+})
+
 onMounted(() => {
   localFile.value = convert(fileList.value);
 })
