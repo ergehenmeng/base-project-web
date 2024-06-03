@@ -24,12 +24,18 @@ body {
 /*三级页面样式(一般为编辑页面)*/
 
 .edit-content {
-  padding: 20px;
+  padding: 20px 80px;
   background-color: white;
   border-radius: 3px;
   min-height: calc(100vh - 120px);
   .el-input, .el-select {
     width: 350px;
+  }
+  .el-input.w100 {
+    width: 100px;
+  }
+  .el-input.w200 {
+    width: 200px;
   }
 }
 

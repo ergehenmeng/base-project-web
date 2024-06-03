@@ -23,7 +23,7 @@ const dialogVisible = ref(false);
 const dialogImageUrl = ref('');
 const route = useRoute();
 const localFile = ref([]);
-const fileList = defineModel({
+const fileList = defineModel("fileList",{
   type: Array,
   required: true,
 });
