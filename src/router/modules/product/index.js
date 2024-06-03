@@ -8,10 +8,32 @@ export default [
       {
         path: "scenic",
         name: "scenic",
-        component: () => import("@/views/product/ticket/scenic/index.vue"),
         meta: {
           title: "景区管理",
         },
+        children: [
+          {
+            path: "",
+            name: "scenicIndex",
+            component: () => import("@/views/product/ticket/scenic/index.vue")
+          },
+          {
+            path: "create",
+            name: "scenicCreate",
+            component: () => import("@/views/product/ticket/scenic/ScenicForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "scenicEdit",
+            component: () => import("@/views/product/ticket/scenic/ScenicForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+        ]
       },
       {
         path: "ticket",
