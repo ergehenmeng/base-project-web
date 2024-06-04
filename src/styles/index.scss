@@ -149,3 +149,8 @@ body {
 .amap-sug-result {
   z-index: 9999 !important;
 }
+
+.amap-icon img, .amap-marker-content img {
+  width: 20px;
+  height: 25px;
+}

@@ -8,9 +8,6 @@ const lng = defineModel("lng");
 const lat = defineModel("lat");
 const marker = ref(null);
 const emit = defineEmits(['reload']);
-const formData = ref({
-  address: "",
-});
 
 watch(showDialog, val => {
   if (val) {
@@ -22,9 +19,10 @@ watch(showDialog, val => {
   }
 })
 
-const openDialog = (lat, lng) => {
+const openDialog = (inLat, inLng) => {
   showDialog.value = true;
-  formData.value.address = "";
+  lng.value = inLng;
+  lat.value = inLat;
 }
 
 const initMap = () => {
@@ -46,7 +44,6 @@ const initMap = () => {
     const autoComplete = new AMap.AutoComplete({input: "searchName"});
     const placeSearch = new AMap.PlaceSearch({map: mapRef.value});
     placeSearch.on("markerClick", (e) => {
-      console.log("大点位了", e)
       lat.value = e.data.location.lat;
       lng.value = e.data.location.lng;
     })
@@ -75,7 +72,7 @@ const addMarker = () => {
   marker.value = new AMap.Marker({
     icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
     position: [lng.value, lat.value],
-    offset: new AMap.Pixel(-25, -55)
+    offset: new AMap.Pixel(-10, -20)
   })
   marker.value.setMap(mapRef.value);
 }
