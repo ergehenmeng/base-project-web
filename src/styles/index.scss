@@ -144,3 +144,8 @@ body {
 .datetime-cell {
   width: 350px;
 }
+
+// 高德地图搜索框层级问题
+.amap-sug-result {
+  z-index: 9999 !important;
+}

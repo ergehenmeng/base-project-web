@@ -3,7 +3,10 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 
 const mapRef = ref(null);
 const showDialog = ref(false);
-
+const searchName = ref("")
+const lng = defineModel("lng");
+const lat = defineModel("lat");
+const marker = ref(null);
 const emit = defineEmits(['reload']);
 const formData = ref({
   address: "",
@@ -40,21 +43,47 @@ const initMap = () => {
       zoom: 11,
       center: [116.397428, 39.90923],
     });
-    const placeSearch = new AMap.PlaceSearch({
-      map: mapRef.value,
-      panel: "result"
+    const autoComplete = new AMap.AutoComplete({input: "searchName"});
+    const placeSearch = new AMap.PlaceSearch({map: mapRef.value});
+    placeSearch.on("markerClick", (e) => {
+      console.log("大点位了", e)
+      lat.value = e.data.location.lat;
+      lng.value = e.data.location.lng;
+    })
+    autoComplete.on("select", (e) => {
+      placeSearch.setCity(e.poi.adcode);
+      placeSearch.search(e.poi.name);
+    })
+    mapRef.value.on("click", (e) => {
+      lat.value = e.lnglat.getLat();
+      lng.value = e.lnglat.getLng();
+      addMarker();
     });
-    AMap.Event.addListener(placeSearch, "complete");
-    placeSearch.search()
-
   }).catch((e) => {
     console.warn(e);
   });
 }
 
+const addMarker = () => {
+  if (!lat.value || !lng.value) {
+    return;
+  }
+  if (marker.value) {
+    marker.value.setPosition([lng.value, lat.value]);
+    return;
+  }
+  marker.value = new AMap.Marker({
+    icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
+    position: [lng.value, lat.value],
+    offset: new AMap.Pixel(-25, -55)
+  })
+  marker.value.setMap(mapRef.value);
+}
 
 const destroyDialog = () => {
   mapRef.value?.destroy();
+  marker.value?.setMap(null);
+  marker.value = null;
 }
 
 const handleSave = () => {
@@ -69,6 +98,13 @@ defineExpose({
 
 <template>
   <el-dialog title="选取点位" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false">
+    <div class="map-header">
+      <el-input id="searchName" v-model="searchName" placeholder="请输入地址" @keyup.enter="handleSave" style="width: 300px !important;" size="small"/>
+      <div class="map-header-show">
+        <el-input v-model="lat" placeholder="经度"  size="small" disabled/>&nbsp;
+        <el-input v-model="lng" placeholder="纬度" size="small" disabled/>
+      </div>
+    </div>
     <div id="mapContainer" class="dialog-map-content">
     </div>
     <template #footer>
@@ -82,7 +118,17 @@ defineExpose({
 
 <style lang="scss" scoped>
 .dialog-map-content {
-  width: 750px;
   height: 500px;
 }
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  .map-header-show {
+    width: 250px;
+    display: flex;
+  }
+}
+
 </style>

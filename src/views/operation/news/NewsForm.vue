@@ -10,7 +10,7 @@
         <el-input v-model="formData.depict" show-word-limit maxlength="50"/>
       </el-form-item>
       <el-form-item label="图集" prop="imageList" v-if="showField.includeImage">
-        <UploadImageList v-model="formData.imageList"></UploadImageList>
+        <UploadImageList v-model:file-list="formData.imageList"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input v-model="formData.video" show-word-limit maxlength="200"/>
