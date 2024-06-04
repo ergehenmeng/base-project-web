@@ -28,15 +28,17 @@
           <el-option label="无" :value="0"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="地址" prop="countyId">
-        <el-input v-model="formData.countyId" show-word-limit maxlength="20"/>
+      <el-form-item label="省市县" prop="countyId">
+        <AreaSelect v-model="formData.countyId"></AreaSelect>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.latitude" show-word-limit readonly class="w100"/> -
-        <el-input v-model="formData.longitude" show-word-limit readonly class="w100"/>
+        <el-input v-model="formData.latitude" show-word-limit disabled class="w100"/> -
+        <el-input v-model="formData.longitude" show-word-limit disabled class="w100"/>
+        &nbsp;
+        <el-button :icon="Search" type="primary">选择</el-button>
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
         <el-input v-model="formData.depict" show-word-limit maxlength="50"/>
@@ -66,6 +68,8 @@ import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import {phoneValidator} from "@/utils/common.js";
 import UploadImageList from "@/components/UploadImageList.vue";
+import AreaSelect from "@/components/AreaSelect.vue";
+import {Search} from "@element-plus/icons-vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -111,6 +115,7 @@ const formData = ref({
   scenicName: "",
   level: 0,
   phone: "",
+  countyId: [],
   detailAddress: null,
   longitude: null,
   latitude: null,

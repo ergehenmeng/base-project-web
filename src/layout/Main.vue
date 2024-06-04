@@ -18,6 +18,10 @@
 import useBreadcrumbStore from '@/store/breadcrumb';
 import { computed } from 'vue';
 import useDictStore from '@/store/dict';
+import useAreaStore from "@/store/area.js";
+
+const areaStore = useAreaStore();
+areaStore.initArea();
 
 const dictStore = useDictStore();
 dictStore.initDict("image_type", "help_type", "feedback_type", "banner_type", "notice_type");
