@@ -45,7 +45,7 @@ const openDialog = async (row) => {
     // 选中的菜单
     const { data } = await roleMenuApi({ id: row.id });
     checkedKeys.value = data;
-    const userType = userStore.user.userType;
+    const userType = userStore.user?.userType;
     let menuResp;
     // 所有菜单
     if (userType === 1) {

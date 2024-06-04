@@ -62,7 +62,7 @@ const useUserStore = defineStore(
       }
       const result = await loginApi(loginData);
       isLogin.value = true;
-      user.value = Object.assign(user.value, result.data);
+      user.value = {...result.data};
     };
     return { user, isLogin, login, hasAuth, logout };
   },

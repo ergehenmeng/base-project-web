@@ -22,7 +22,7 @@ import { confirmMsg } from '@/utils/message';
 
 const userStore = useUserStore();
 
-const nickName = userStore.user.nickName;
+const nickName = userStore.user?.nickName;
 
 const logout = () => {
   confirmMsg("确定要退出系统吗?", () => {

@@ -47,7 +47,7 @@ const activeIndex = computed(() => {
 
 const userStore = useUserStore();
 
-const menuList = userStore.user.menuList;
+const menuList = userStore.user?.menuList;
 
 </script>
 <style lang='scss' scoped>

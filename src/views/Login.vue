@@ -98,7 +98,7 @@ const handleLogin = async () => {
         } else {
           router.replace("/");
         }
-      }).catch(() => getCode())
+      }).catch((e) => {console.log(e); getCode()})
         .finally(() => {
           loading.value = false;
         })

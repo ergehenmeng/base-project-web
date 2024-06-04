@@ -42,7 +42,7 @@ const prop = defineProps({
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
 const headers = {
-  'token': userStore.user.token
+  'token': userStore.user?.token
 }
 
 const handleImageSuccess = (res, file) => {

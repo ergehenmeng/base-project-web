@@ -57,7 +57,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
   maxNumberOfFiles: 9,
   allowedFileTypes: defaultImgType,
   headers: {
-    token: userStore.user.token
+    token: userStore.user?.token
   },
   timeout: 10000,
   customInsert: (res, insertFn) => {

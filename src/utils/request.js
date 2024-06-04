@@ -39,7 +39,7 @@ service.interceptors.request.use(
     config.signal = controller.signal;
     sourceMap.set(config.url, controller);
     const userStore = useUserStore();
-    config.headers["token"] = userStore.user.token;
+    config.headers["token"] = userStore.user?.token;
     return config;
   },
   (error) => {
