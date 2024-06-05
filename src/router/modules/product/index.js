@@ -46,10 +46,40 @@ export default [
       {
         path: "ticket",
         name: "ticket",
-        component: () => import("@/views/product/ticket/index.vue"),
         meta: {
           title: "门票管理",
         },
+        children: [
+          {
+            path: "",
+            name: "ticketIndex",
+            component: () => import("@/views/product/ticket/index.vue")
+          },
+          {
+            path: "create",
+            name: "ticketCreate",
+            component: () => import("@/views/product/ticket/TicketForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "ticketEdit",
+            component: () => import("@/views/product/ticket/TicketForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "ticketDetail",
+            component: () => import("@/views/product/ticket/TicketForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "homestay",

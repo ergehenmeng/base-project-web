@@ -15,9 +15,8 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-<!--     v-has-perm="'MLl0'"   -->
-        <el-form-item class="right-button" >
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
+        <el-form-item class="right-button" v-has-perm="'MLl0'">
+          <el-button type="primary"  :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -61,7 +60,6 @@
                      :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
     </div>
   </div>
-  <MapContainer ref="mapRef"></MapContainer>
 </template>
 <script setup>
 import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/scenic';
@@ -70,7 +68,6 @@ import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
-import MapContainer from "@/components/MapContainer.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -78,7 +75,6 @@ const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth("yLl0");
-const mapRef = ref();
 const queryParams = reactive({
   queryName: "",
   page: 1,
@@ -190,10 +186,6 @@ const handleEdit = (row) => {
 
 const handleDetail = (row) => {
   router.push("/product/scenic/detail/" + row.id);
-}
-
-const handleMap = () => {
-  mapRef.value.openDialog();
 }
 
 </script>
