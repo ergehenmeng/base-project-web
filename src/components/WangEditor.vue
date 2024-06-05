@@ -33,8 +33,16 @@ const route = useRoute();
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
 
-const htmlValue = defineModel('htmlValue')
-const textValue = defineModel("textValue")
+const htmlValue = defineModel('htmlValue', {
+  default: () => '',
+  type: String,
+  required: false
+})
+const textValue = defineModel("textValue", {
+  default: () => '',
+  type: String,
+  required: false
+})
 
 const props = defineProps({
   placeholder: {
@@ -87,8 +95,9 @@ editorConfig.MENU_CONF['uploadImage'] = {
   }
 }
 
-const setTextValue = (editor) => {
+const setTextValue = async (editor) => {
   textValue.value = editor.getText();
+  await nextTick();
 }
 
 onBeforeUnmount(() => {

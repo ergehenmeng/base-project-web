@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="划线价" >
-        <el-input v-model="formData.linePrice" placeholder="大于销售价时不显示" show-word-limit maxlength="6" @keyup="formData.linePrice=numberValidator(formData.linePrice);"/>
+        <el-input v-model="formData.linePrice" placeholder="小于销售价时不显示" show-word-limit maxlength="6" @keyup="formData.linePrice=numberValidator(formData.linePrice);"/>
       </el-form-item>
       <el-form-item label="销售价" prop="salePrice">
         <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice=numberValidator(formData.salePrice);" />
@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi} from '@/api/product/scenic';
+import {createApi, selectApi, updateApi} from '@/api/product/ticket';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
@@ -170,6 +170,7 @@ onMounted(() => {
       disabled.value = route.fullPath.startsWith("/product/ticket/detail");
       selectApi(params).then(res => {
         formData.value = res.data;
+        formData.value.virtualNum = res.data.totalNum - res.data.saleNum;
         formData.value.dueDate = [res.data.startDate, res.data.endDate];
         formData.value.introduceText = res.data.introduce;
       }).finally(() => {

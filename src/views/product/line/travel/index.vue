@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="景区名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="旅行社名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -22,21 +22,27 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="scenicName" label="景区名称" min-width="200" />
-        <el-table-column prop="coverUrl" label="图片" width="100">
+        <el-table-column prop="coverUrl" label="店铺logo" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.coverUrl.split(',')[0]" :preview-src-list="scope.row.coverUrl.split(',')"
+              <el-image fit="contain" :src="scope.row.logoUrl"
                         style="width: 50px;height: 50px;" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="level" label="景区等级" width="150" :formatter="formatter"/>
-        <el-table-column prop="openTime" label="营业时间" width="150" />
-        <el-table-column prop="phone" label="景区电话" width="150" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter"/>
-        <el-table-column prop="score" label="评分" width="100"/>
-        <el-table-column prop="minPrice" label="票价" width="180" :formatter="formatter"/>
+        <el-table-column prop="title" label="旅行社名称" min-width="200" />
+        <el-table-column prop="coverUrl" label="封面图" width="100">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <el-image fit="contain" :src="scope.row.coverUrl?.split(',')[0]" :preview-src-list="scope.row.coverUrl?.split(',')"
+                        style="width: 50px;height: 50px;" preview-teleported hide-on-click-modal />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="phone" label="旅行社电话" width="100" />
+        <el-table-column prop="score" label="评分" width="80"/>
+        <el-table-column prop="detailAddress" label="详细地址" width="250" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">
@@ -62,7 +68,7 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/scenic';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/travel';
 import { onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
@@ -105,87 +111,66 @@ onMounted(() => {
 })
 
 const handleDelete = (row) => {
-  confirmMsg("确定要删除该景区吗?", () => {
+  confirmMsg("确定要删除该旅行社吗?", () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
-      successMsg('景区删除成功');
+      successMsg('旅行社删除成功');
       getPage();
     })
   })
 }
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === "level") {
-    switch (cellValue) {
-      case 5:
-        return "5A";
-      case 4:
-        return "5A";
-      case 3:
-        return "3A";
-      default:
-        return "无";
-    }
-  } else if (column.property === "state") {
+  if (column.property === "state") {
     if (cellValue === 0) {
       return "待上架";
     }
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;' }, '强制下架');
-  } else if (column.property === "minPrice") {
-    const minPrice = parseFloat(cellValue);
-    const maxPrice = parseFloat(row.maxPrice);
-    if (minPrice === 0 && maxPrice === 0) {
-      return "免费"
-    }
-    if (maxPrice === minPrice) {
-      return cellValue;
-    }
-    return cellValue + "~" + row.maxPrice;
   } else {
     return cellValue;
   }
 }
 
 const handleShelves = (row) => {
-  confirmMsg("确定要上架该景区吗?", () => {
+  confirmMsg("确定要上架该旅行社吗?", () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
-      successMsg('景区上架成功');
+      successMsg('旅行社上架成功');
       getPage();
     })
   })
 }
 
 const handleUnShelves = (row) => {
-  confirmMsg("确定要下架该景区吗?", () => {
+  confirmMsg("确定要下架该旅行社吗?", () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
-      successMsg('景区下架成功');
+      successMsg('旅行社下架成功');
       getPage();
     })
   })
 }
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg("确定要强制下架该景区吗?", () => {
+  confirmMsg("确定要强制下架该旅行社吗?", () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
-      successMsg('景区强制下架成功');
+      successMsg('旅行社强制下架成功');
       getPage();
     })
   })
 }
 
 const handleCreate = () => {
-  router.push("/product/scenic/create");
+  router.push("/product/travel/create");
 }
 
 const handleEdit = (row) => {
-  router.push("/product/scenic/edit/" + row.id);
+  router.push("/product/travel/edit/" + row.id);
 }
 
 const handleDetail = (row) => {
-  router.push("/product/scenic/detail/" + row.id);
+  router.push("/product/travel/detail/" + row.id);
 }
 
 </script>

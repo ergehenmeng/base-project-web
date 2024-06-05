@@ -130,12 +130,42 @@ export default [
         },
       },
       {
-        path: "travelAgency",
-        name: "travelAgency",
-        component: () => import("@/views/product/line/travelAgency/index.vue"),
+        path: "travel",
+        name: "travel",
         meta: {
           title: "旅行社",
         },
+        children: [
+          {
+            path: "",
+            name: "travelIndex",
+            component: () => import("@/views/product/line/travel/index.vue")
+          },
+          {
+            path: "create",
+            name: "travelCreate",
+            component: () => import("@/views/product/line/travel/TravelForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "travelEdit",
+            component: () => import("@/views/product/line/travel/TravelForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "travelDetail",
+            component: () => import("@/views/product/line/travel/TravelForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "line",

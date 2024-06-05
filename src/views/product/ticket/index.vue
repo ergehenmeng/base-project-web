@@ -34,12 +34,12 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="门票名称" width="200" />
-        <el-table-column prop="scenicName" label="所属景区" width="200" />
+        <el-table-column prop="title" label="门票名称" min-width="200" />
+        <el-table-column prop="scenicName" label="所属景区" min-width="200"/>
         <el-table-column prop="category" label="票种" width="80" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter"/>
         <el-table-column prop="salePrice" label="销售价" width="80" :formatter="formatter"/>
-        <el-table-column prop="saleNum" label="销量" width="80" />
+        <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter"/>
         <el-table-column prop="stock" label="剩余库存" width="80" />
         <el-table-column prop="advanceDay" label="提前几天购票" width="120" :formatter="formatter"/>

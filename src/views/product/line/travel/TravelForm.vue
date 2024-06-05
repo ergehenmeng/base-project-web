@@ -3,27 +3,14 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
              v-loading="loading" :disabled="disabled">
-      <el-form-item label="景区名称" prop="scenicName">
-        <el-input v-model="formData.scenicName" show-word-limit maxlength="20"/>
+      <el-form-item label="旅行社名称" prop="title">
+        <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
-      <el-form-item label="景区等级" prop="level">
-        <el-select v-model="formData.level">
-          <el-option label="5A" :value="5"/>
-          <el-option label="4A" :value="4"/>
-          <el-option label="3A" :value="3"/>
-          <el-option label="无" :value="0"/>
-        </el-select>
+      <el-form-item label="店铺LOGO" prop="logoUrl">
+        <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
-      <el-form-item label="营业时间" prop="openTime">
-        <el-input v-model="formData.openTime" show-word-limit maxlength="20"/>
-      </el-form-item>
-      <el-form-item label="景区电话" prop="phone">
+      <el-form-item label="旅行社电话" prop="phone">
         <el-input v-model="formData.phone" show-word-limit maxlength="13"/>
-      </el-form-item>
-      <el-form-item label="标签" prop="tagList">
-        <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
-          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
-        </el-select>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -62,7 +49,7 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/product/scenic';
+import {createApi, updateApi, selectApi} from '@/api/product/travel';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
@@ -71,10 +58,8 @@ import {phoneValidator} from "@/utils/common.js";
 import UploadImageList from "@/components/UploadImageList.vue";
 import AreaSelect from "@/components/AreaSelect.vue";
 import MapContainer from "@/components/MapContainer.vue";
-import useDictStore from "@/store/dict.js";
+import UploadImage from "@/components/UploadImage.vue";
 
-const dictStore = useDictStore();
-const dictList = dictStore.getDict("scenic_tag");
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
@@ -84,12 +69,12 @@ const mapRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
-  scenicName: [
-    {required: true, message: "景区名称不能为空", trigger: 'blur'},
+  title: [
+    {required: true, message: "旅行社名称不能为空", trigger: 'blur'},
     {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
   ],
-  level: [
-    {required: true, message: "请选择景区等级", trigger: 'change'}
+  logoUrl: [
+    {required: true, message: "请上传旅行社logo", trigger: 'change'}
   ],
   phone: [
     {required: true, validator: phoneValidator, trigger: 'blur'},
@@ -121,7 +106,7 @@ const formRules = reactive({
 
 const formData = ref({
   id: null,
-  scenicName: null,
+  travelName: null,
   level: 0,
   openTime: null,
   phone: null,
@@ -146,7 +131,7 @@ const handleSave = () => {
       formData.value.tag = formData.value.tagList.join(",");
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("景区信息更新成功");
+          successMsg("旅行社信息更新成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -154,7 +139,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("景区添加成功");
+          successMsg("旅行社添加成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -170,12 +155,15 @@ onMounted(() => {
   if (params.id !== undefined) {
     loading.value = true;
     // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith("/product/scenic/detail");
+    disabled.value = route.fullPath.startsWith("/product/travel/detail");
     selectApi(params).then(res => {
       formData.value = res.data;
-      formData.value.coverList = res.data.coverUrl.split(",");
+      if (res.data.coverUrl) {
+        formData.value.coverList = res.data.coverUrl.split(",");
+      } else {
+        formData.value.coverList = [];
+      }
       formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-      formData.value.tagList = res.data.tag.split(",");
       formData.value.introduceText = res.data.introduce;
     }).finally(() => {
       loading.value = false;
