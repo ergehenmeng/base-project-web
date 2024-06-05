@@ -29,6 +29,7 @@ import {defaultImgType} from '@/utils/image';
 import {errorMsg} from "@/utils/message.js";
 import {useRoute} from "vue-router";
 
+const editorRef = shallowRef();
 const route = useRoute();
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
@@ -55,7 +56,6 @@ const props = defineProps({
   }
 })
 
-const editorRef = shallowRef();
 const toolbarConfig = {};
 const editorConfig = {
   placeholder: props.placeholder,

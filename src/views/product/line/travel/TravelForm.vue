@@ -104,7 +104,7 @@ const formRules = reactive({
   ]
 })
 
-const formData = ref({
+let formData = reactive({
   id: null,
   travelName: null,
   level: 0,
@@ -125,12 +125,12 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.provinceId = formData.value.areaList[0];
-      formData.value.cityId = formData.value.areaList[1];
-      formData.value.countyId = formData.value.areaList[2];
-      formData.value.tag = formData.value.tagList.join(",");
-      if (formData.value.id) {
-        updateApi(formData.value).then(() => {
+      formData.provinceId = formData.areaList[0];
+      formData.cityId = formData.areaList[1];
+      formData.countyId = formData.areaList[2];
+      formData.tag = formData.tagList.join(",");
+      if (formData.id) {
+        updateApi(formData).then(() => {
           successMsg("旅行社信息更新成功");
           showDialog.value = false;
           router.go(-1);
@@ -138,7 +138,7 @@ const handleSave = () => {
           loading.value = false;
         })
       } else {
-        createApi(formData.value).then(() => {
+        createApi(formData).then(() => {
           successMsg("旅行社添加成功");
           showDialog.value = false;
           router.go(-1);
@@ -157,26 +157,26 @@ onMounted(() => {
     // 详情页面进来不可点击
     disabled.value = route.fullPath.startsWith("/product/travel/detail");
     selectApi(params).then(res => {
-      formData.value = res.data;
+      formData = {...res.data};
       if (res.data.coverUrl) {
-        formData.value.coverList = res.data.coverUrl.split(",");
+        formData.coverList = res.data.coverUrl.split(",");
       } else {
-        formData.value.coverList = [];
+        formData.coverList = [];
       }
-      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-      formData.value.introduceText = res.data.introduce;
+      formData.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+      formData.introduceText = res.data.introduce;
     }).finally(() => {
       loading.value = false;
     })
   }
 })
 const handleMap = () => {
-  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
+  mapRef.value.openDialog(formData.longitude, formData.latitude);
 }
 
 const setLocation = (lng, lat) => {
-  formData.value.longitude = lng;
-  formData.value.latitude = lat;
+  formData.longitude = lng;
+  formData.latitude = lat;
 }
 
 </script>
