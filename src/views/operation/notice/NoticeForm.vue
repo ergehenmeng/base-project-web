@@ -12,11 +12,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="公告内容" prop="contentText">
-        <el-input v-model="formData.contentText" type="textarea" style="display: none;"/>
         <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
       </el-form-item>
     </el-form>
-    <div class="edit-footer">
+    <div >
       <div class="edit-button-footer">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>

@@ -1,13 +1,18 @@
 <script setup>
 import AMapLoader from "@amap/amap-jsapi-loader";
+import {errorMsg} from "@/utils/message.js";
 
 const mapRef = ref(null);
 const showDialog = ref(false);
 const searchName = ref("")
-const lng = defineModel("lng");
-const lat = defineModel("lat");
+const lat = ref("");
+const lng = ref("");
 const marker = ref(null);
 const emit = defineEmits(['reload']);
+const secret = import.meta.env.VITE_MAP_SECRET;
+const key = import.meta.env.VITE_MAP_KEY;
+const defaultLng = import.meta.env.VITE_MAP_LNG;
+const defaultLat = import.meta.env.VITE_MAP_LAT;
 
 watch(showDialog, val => {
   if (val) {
@@ -26,8 +31,6 @@ const openDialog = (inLat, inLng) => {
 }
 
 const initMap = () => {
-  const secret = import.meta.env.VITE_AMAP_SERCRET;
-  const key = import.meta.env.VITE_AMAP_KEY;
   window._AMapSecurityConfig = {
     securityJsCode: secret,
   };
@@ -39,30 +42,31 @@ const initMap = () => {
   }).then((AMap) => {
     mapRef.value = new AMap.Map("mapContainer", {
       zoom: 11,
-      center: [116.397428, 39.90923],
+      center: [defaultLng, defaultLat],
     });
     const autoComplete = new AMap.AutoComplete({input: "searchName"});
     const placeSearch = new AMap.PlaceSearch({map: mapRef.value});
     placeSearch.on("markerClick", (e) => {
-      lat.value = e.data.location.lat;
       lng.value = e.data.location.lng;
+      lat.value = e.data.location.lat;
     })
     autoComplete.on("select", (e) => {
       placeSearch.setCity(e.poi.adcode);
       placeSearch.search(e.poi.name);
     })
     mapRef.value.on("click", (e) => {
-      lat.value = e.lnglat.getLat();
       lng.value = e.lnglat.getLng();
+      lat.value = e.lnglat.getLat();
       addMarker();
     });
+    addMarker();
   }).catch((e) => {
     console.warn(e);
   });
 }
 
 const addMarker = () => {
-  if (!lat.value || !lng.value) {
+  if (!lng.value || !lat.value) {
     return;
   }
   if (marker.value) {
@@ -72,7 +76,7 @@ const addMarker = () => {
   marker.value = new AMap.Marker({
     icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png",
     position: [lng.value, lat.value],
-    offset: new AMap.Pixel(-10, -20)
+    offset: new AMap.Pixel(-9, -21)
   })
   marker.value.setMap(mapRef.value);
 }
@@ -84,7 +88,12 @@ const destroyDialog = () => {
 }
 
 const handleSave = () => {
-
+  if (!lat.value || !lng.value) {
+    errorMsg("请点击选择点位信息");
+    return;
+  }
+  showDialog.value = false;
+  emit("reload", lng.value, lat.value);
 }
 
 defineExpose({
@@ -96,10 +105,10 @@ defineExpose({
 <template>
   <el-dialog title="选取点位" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false">
     <div class="map-header">
-      <el-input id="searchName" v-model="searchName" placeholder="请输入地址" @keyup.enter="handleSave" style="width: 300px !important;" size="small"/>
+      <el-input id="searchName" v-model="searchName" placeholder="请输入地址" style="width: 250px !important;" size="small"/>
       <div class="map-header-show">
-        <el-input v-model="lat" placeholder="经度"  size="small" disabled/>&nbsp;
-        <el-input v-model="lng" placeholder="纬度" size="small" disabled/>
+        <el-input v-model="lng" placeholder="经度"  size="small" disabled/>&nbsp;
+        <el-input v-model="lat" placeholder="纬度" size="small" disabled/>
       </div>
     </div>
     <div id="mapContainer" class="dialog-map-content">

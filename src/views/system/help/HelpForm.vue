@@ -18,11 +18,10 @@
         <el-input v-model="formData.ask" show-word-limit maxlength="50"/>
       </el-form-item>
       <el-form-item label="答" prop="answerText">
-        <el-input v-model="formData.answerText" type="textarea" style="display: none;"/>
         <WangEditor v-model:html-value="formData.answer" v-model:text-value="formData.answerText"></WangEditor>
       </el-form-item>
     </el-form>
-    <div class="edit-footer">
+    <div >
       <div class="edit-button-footer">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>

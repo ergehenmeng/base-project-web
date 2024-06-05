@@ -2,9 +2,9 @@
   <el-upload class="image-uploader" :action="uploadUrl" :headers="headers" v-model:file-list="localFile"
              list-type="picture-card" :on-success="handleImageSuccess" :before-upload="beforeImageUpload"
              :disabled="prop.disabled" :on-preview="imagePreview" :multiple="true"
-             :limit="prop.limit" :on-exceed="handleExceed" :class="fileList.length >= prop.limit ? 'upload-image-hide-box' : ''"
+             :limit="prop.limit" :on-exceed="handleExceed" :class="fileList.length >= prop.limit || prop.disabled ? 'upload-image-hide-box' : ''"
               :on-remove="handleRemoveImage">
-    <el-icon v-if="prop.limit " class="image-uploader-icon">
+    <el-icon class="image-uploader-icon">
       <Plus />
     </el-icon>
   </el-upload>

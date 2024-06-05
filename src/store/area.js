@@ -8,13 +8,12 @@ const useAreaStore = defineStore(
     "area",
     () => {
         const areaList = ref([]);
-
         const initArea = () => {
             listApi().then(res => {
                 areaList.value = res.data;
             });
         }
-        return { areaList, initArea };
+        return { areaList, initArea};
     },
     // 开启持久化
     { persist: true }

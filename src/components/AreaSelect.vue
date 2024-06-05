@@ -1,5 +1,5 @@
 <template>
-  <el-cascader v-model="selectedValue" :options="options" :props="selectProps" clearable filterable>
+  <el-cascader v-model="areaList" :options="options" :props="selectProps" clearable filterable :disabled="props.disabled">
 
   </el-cascader>
 </template>
@@ -22,7 +22,7 @@ const props = defineProps({
     default: false,
   }
 });
-const selectedValue = defineModel({
+const areaList = defineModel({
   type: Array,
   required: true
 });

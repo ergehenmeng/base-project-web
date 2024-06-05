@@ -32,6 +32,14 @@ export default [
             meta: {
               title: "编辑",
             },
+          },
+          {
+            path: "detail/:id",
+            name: "scenicDetail",
+            component: () => import("@/views/product/ticket/scenic/ScenicForm.vue"),
+            meta: {
+              title: "查看",
+            },
           }
         ]
       },

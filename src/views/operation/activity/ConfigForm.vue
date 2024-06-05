@@ -32,11 +32,10 @@
         <el-input v-model="formData.address" show-word-limit maxlength="100"/>
       </el-form-item>
       <el-form-item label="公告内容" prop="introduceText">
-        <el-input v-model="formData.introduceText" type="textarea" style="display: none;"/>
         <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
       </el-form-item>
     </el-form>
-    <div class="edit-footer">
+    <div >
       <div class="edit-button-footer">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>

@@ -40,6 +40,10 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: '请输入内容...'
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -93,13 +97,10 @@ onBeforeUnmount(() => {
 })
 
 const handleCreated = (editor) => {
-  editorRef.value = editor
+  editorRef.value = editor;
+  if (props.disabled) {
+    editorRef.value?.disable();
+  }
 }
 
-
-
 </script>
-
-<style lang="scss" scoped>
-
-</style>

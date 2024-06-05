@@ -19,9 +19,6 @@
         <el-form-item class="right-button" >
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
-        <el-form-item class="right-button" >
-          <el-button type="primary" :icon="Plus" @click="handleMap">地图</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -45,7 +42,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button v-has-perm="'sLl0'" type="info" :icon="Document" @click="handleEdit(scope.row)" link title="详情">
+            <el-button v-has-perm="'sLl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
             </el-button>
             <el-button v-has-perm="'sLl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
@@ -189,6 +186,10 @@ const handleCreate = () => {
 
 const handleEdit = (row) => {
   router.push("/product/scenic/edit/" + row.id);
+}
+
+const handleDetail = (row) => {
+  router.push("/product/scenic/detail/" + row.id);
 }
 
 const handleMap = () => {
