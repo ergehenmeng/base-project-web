@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="border: 1px solid #ccc; width: 800px; ">
+    <div :style="{border: '1px solid #ccc', width: props.width + 'px'}">
       <Toolbar
           style="border-bottom: 1px solid #ccc"
           :editor="editorRef"
@@ -8,10 +8,10 @@
           mode="simple"
       />
       <Editor
-          style="height: 400px; overflow-y: hidden;"
+          :style="{'min-height': props.height + 'px' }"
           v-model="htmlValue"
-          :defaultConfig="editorConfig"
           mode="simple"
+          :defaultConfig="editorConfig"
           @onCreated="handleCreated"
           @onChange="setTextValue"
       />
@@ -64,10 +64,19 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  width: {
+    type: Number,
+    default: 800
+  },
+  height: {
+    type: Number,
+    default: 400
   }
 })
 
-const toolbarConfig = {};
+const toolbarConfig = {
+};
 const editorConfig = {
   placeholder: props.placeholder,
   MENU_CONF: {}

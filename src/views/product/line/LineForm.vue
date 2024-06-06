@@ -60,44 +60,37 @@
       </el-form-item>
       <h4>游玩信息</h4>
       <el-divider />
-      <div v-for="(item, index) in configList" :key="index">
-        <el-form-item label="行程排序" prop="routeIndex">
-          <el-input v-model="item.routeIndex" show-word-limit maxlength="2" readonly>
-            <template #prepend>
-              <span>第</span>
-            </template>
-            <template #append>
-              <span>天</span>
-            </template>
-          </el-input>
-        </el-form-item>
-        <el-form-item label="出发地点" prop="startPoint">
-          <el-input v-model="item.startPoint" show-word-limit maxlength="2"/>
-        </el-form-item>
-        <el-form-item label="结束地点" prop="endPoint">
-          <el-input v-model="item.endPoint" show-word-limit maxlength="2"/>
-        </el-form-item>
-        <el-form-item label="交通方式" prop="trafficType">
-          <el-radio-group v-model="formData.trafficType" >
-            <el-radio :value="1" >飞机</el-radio>
-            <el-radio :value="2" >汽车</el-radio>
-            <el-radio :value="3" >轮船</el-radio>
-            <el-radio :value="4" >火车</el-radio>
-            <el-radio :value="5" >其他</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="餐饮" prop="repast">
-          <el-checkbox-group v-model="item.repast">
-            <el-checkbox label="早餐" :value="1" />
-            <el-checkbox label="午餐" :value="2" />
-            <el-checkbox label="晚餐" :value="4" />
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="详细介绍" prop="depictText">
-          <WangEditor v-model:html-value="item.depict" v-model:text-value="item.depictText" ></WangEditor>
-        </el-form-item>
+      <div class="line-day-config">
+        <el-form>
+          <div v-for="(item, index) in configList" :key="index" class="line-day-config-item">
+            <h5 style="margin-bottom: 10px; margin-left: 20px;">第{{ index + 1 }}天行程</h5>
+            <el-form-item label="起始地" :prop="''" :rules="{required: true, message: '起始地不能为空', trigger: 'blur'}">
+              <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" style="width: 200px !important;" />
+              &nbsp;-&nbsp;
+              <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" style="width: 200px !important;"/>
+            </el-form-item>
+            <el-form-item label="交通方式" prop="trafficType" rules="{required: true, message: '交通方式不能为空', trigger: 'blur'}">
+              <el-radio-group v-model="formData.trafficType" >
+                <el-radio :value="1" >飞机</el-radio>
+                <el-radio :value="2" >汽车</el-radio>
+                <el-radio :value="3" >轮船</el-radio>
+                <el-radio :value="4" >火车</el-radio>
+                <el-radio :value="5" >其他</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="餐饮" prop="repast">
+              <el-checkbox-group v-model="item.repast">
+                <el-checkbox label="早餐" :value="1" />
+                <el-checkbox label="午餐" :value="2" />
+                <el-checkbox label="晚餐" :value="4" />
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item label="详细介绍" prop="depictText" rules="{required: true, message: '详细介绍不能为空', trigger: 'blur'}">
+              <WangEditor v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="200"></WangEditor>
+            </el-form-item>
+          </div>
+        </el-form>
       </div>
-
     </el-form>
     <el-backtop :right="100" :bottom="100" />
     <div >
@@ -146,9 +139,6 @@ const formRules = reactive({
   advanceDay: [
     {required: true, message: "提前购票不能为空", trigger: 'blur'}
   ],
-  configList: [
-    {required: true, message: "游玩详情不能为空", trigger: 'blur', type: "array"}
-  ],
   introduceText: [
     {required: true, message: "详细介绍不能为空", trigger: 'change'}
   ]
@@ -175,7 +165,15 @@ const formData = ref({
   refundType: 1,
   refundDescribe: null,
   advanceDay: 1,
-  configList: configList,
+  configList: [{
+    routeIndex: 1,
+    startPoint: null,
+    endPoint: null,
+    trafficType: null,
+    repast: [],
+    depict: null,
+    depictText: null
+  }],
   introduceText: null,
   introduce: null
 });
@@ -202,11 +200,10 @@ const changeDay = (value) => {
 }
 
 const handleSave = () => {
+  console.log(formData.value.configList);
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.startDate = formData.value.dueDate[0];
-      formData.value.endDate = formData.value.dueDate[1];
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
           successMsg("线路信息更新成功");
@@ -253,3 +250,17 @@ onMounted(() => {
 
 </script>
 
+<style lang="scss" scoped>
+
+.line-day-config {
+  .line-day-config-item {
+    width: 800px;
+    border-top: 1px solid #ebeef5;
+    padding-top: 20px;
+  }
+}
+
+.line-day-config :first-child {
+  border-top: none;
+}
+</style>
