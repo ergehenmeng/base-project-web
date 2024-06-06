@@ -27,7 +27,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'MLl0'">
+        <el-form-item class="right-button" v-has-perm="'hTl0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
@@ -49,17 +49,17 @@
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'sLl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
+            <el-button v-has-perm="'iTl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
             </el-button>
-            <el-button v-has-perm="'sLl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
+            <el-button v-has-perm="'XTl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
-            <el-button v-has-perm="'fLl0'" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
+            <el-button v-has-perm="'qTl0'" v-if="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
             </el-button>
-            <el-button v-has-perm="'eLl0'" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
+            <el-button v-has-perm="'8Tl0'" v-if="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
             </el-button>
-            <el-button v-has-perm="'wLl0'" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
+            <el-button v-has-perm="'gTl0'" v-if="scope.row.state !== 2 " type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
             </el-button>
-            <el-button v-has-perm="'1Ll0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
+            <el-button v-has-perm="'2Tl0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
             </el-button>
           </template>
         </el-table-column>
@@ -83,7 +83,7 @@ const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth("yLl0");
+const selectAuth = userStore.hasAuth("pTl0");
 const queryParams = reactive({
   queryName: null,
   page: 1,

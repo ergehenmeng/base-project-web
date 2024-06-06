@@ -32,7 +32,7 @@
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
-        <div v-else v-html="formData.introduceText"></div>
+        <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>
     <div >
@@ -104,13 +104,11 @@ const formRules = reactive({
   ]
 })
 
-let formData = reactive({
+let formData = ref({
   id: null,
-  travelName: null,
-  level: 0,
-  openTime: null,
+  title: null,
+  logoUrl: null,
   phone: null,
-  tagList: [],
   areaList: [],
   detailAddress: null,
   longitude: null,
@@ -125,12 +123,11 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.provinceId = formData.areaList[0];
-      formData.cityId = formData.areaList[1];
-      formData.countyId = formData.areaList[2];
-      formData.tag = formData.tagList.join(",");
-      if (formData.id) {
-        updateApi(formData).then(() => {
+      formData.value.provinceId = formData.value.areaList[0];
+      formData.value.cityId = formData.value.areaList[1];
+      formData.value.countyId = formData.value.areaList[2];
+      if (formData.value.id) {
+        updateApi(formData.value).then(() => {
           successMsg("旅行社信息更新成功");
           showDialog.value = false;
           router.go(-1);
@@ -138,7 +135,7 @@ const handleSave = () => {
           loading.value = false;
         })
       } else {
-        createApi(formData).then(() => {
+        createApi(formData.value).then(() => {
           successMsg("旅行社添加成功");
           showDialog.value = false;
           router.go(-1);
@@ -157,26 +154,26 @@ onMounted(() => {
     // 详情页面进来不可点击
     disabled.value = route.fullPath.startsWith("/product/travel/detail");
     selectApi(params).then(res => {
-      formData = {...res.data};
+      formData.value = {...res.data};
       if (res.data.coverUrl) {
-        formData.coverList = res.data.coverUrl.split(",");
+        formData.value.coverList = res.data.coverUrl.split(",");
       } else {
-        formData.coverList = [];
+        formData.value.coverList = [];
       }
-      formData.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-      formData.introduceText = res.data.introduce;
+      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+      formData.value.introduceText = res.data.introduce;
     }).finally(() => {
       loading.value = false;
     })
   }
 })
 const handleMap = () => {
-  mapRef.value.openDialog(formData.longitude, formData.latitude);
+  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
 }
 
 const setLocation = (lng, lat) => {
-  formData.longitude = lng;
-  formData.latitude = lat;
+  formData.value.longitude = lng;
+  formData.value.latitude = lat;
 }
 
 </script>

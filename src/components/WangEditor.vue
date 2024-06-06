@@ -34,16 +34,27 @@ const route = useRoute();
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
 
+/**
+ * 用于接受编辑器内容, 为什么有get set方法, 是因为在父组件中对编辑器进行赋值操作时,如果值为空,在绑定时Editor内部会使用htmlValue中的值进行处理,导致空指针
+ * htmlValue
+ * @type {ModelRef<unknown | undefined, string>}
+ */
 const htmlValue = defineModel('htmlValue', {
-  default: () => '',
-  type: String,
-  required: false
+  get(val) {
+    if (val) {
+      return val;
+    }
+    return "<p><br></p>";
+  },
+  set(val) {
+    if (val) {
+      return val;
+    }
+    return "<p><br></p>";
+  }
 })
-const textValue = defineModel("textValue", {
-  default: () => '',
-  type: String,
-  required: false
-})
+
+const textValue = defineModel("textValue")
 
 const props = defineProps({
   placeholder: {
@@ -95,9 +106,8 @@ editorConfig.MENU_CONF['uploadImage'] = {
   }
 }
 
-const setTextValue = async (editor) => {
+const setTextValue = (editor) => {
   textValue.value = editor.getText();
-  await nextTick();
 }
 
 onBeforeUnmount(() => {
