@@ -10,7 +10,7 @@
             <el-option v-for="item in travelList" :key="item.id" :value="item.id" :label="item.title" />
           </el-select>
         </el-form-item>
-        <el-form-item label="游玩时间">
+        <el-form-item label="游玩天数">
           <el-select v-model="queryParams.duration" clearable>
             <el-option label="一日游" :value="1" />
             <el-option label="二日游" :value="2" />
@@ -29,7 +29,7 @@
             <el-option label="十五日游" :value="15" />
           </el-select>
         </el-form-item>
-        <el-form-item label="票种">
+        <el-form-item label="出发城市">
           <ProvinceCitySelect v-model="queryParams.areaList"></ProvinceCitySelect>
         </el-form-item>
         <el-form-item>
@@ -42,17 +42,14 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="coverUrl" label="封面图片" min-width="200" />
         <el-table-column prop="title" label="线路名称" min-width="200" />
-        <el-table-column prop="scenicName" label="所属景区" min-width="200"/>
-        <el-table-column prop="category" label="票种" width="80" :formatter="formatter"/>
+        <el-table-column prop="travelAgencyName" label="所属旅行社" min-width="200"/>
+        <el-table-column prop="startProvinceId" label="出发城市" width="80" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter"/>
-        <el-table-column prop="salePrice" label="销售价" width="80" :formatter="formatter"/>
         <el-table-column prop="saleNum" label="真实销量" width="80" />
-        <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter"/>
+        <el-table-column prop="duration" label="游玩天数" width="120" />
         <el-table-column prop="stock" label="剩余库存" width="80" />
-        <el-table-column prop="advanceDay" label="提前几天购票" width="120" :formatter="formatter"/>
-        <el-table-column prop="verificationType" label="核销方式" width="120" :formatter="formatter"/>
-        <el-table-column prop="realBuy" label="是否实名" width="100" :formatter="formatter"/>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">
@@ -99,13 +96,18 @@ const queryParams = reactive({
   pageSize: 10,
   state: null,
   travelAgencyId: null,
-  category: null,
+  startCityId: null,
+  duration: null,
+  areaList: [],
 })
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
+      if (queryParams.areaList.length === 2) {
+        queryParams.startCityId = queryParams.areaList[1];
+      }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
@@ -135,30 +137,13 @@ const handleDelete = (row) => {
 }
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === "category") {
-    switch (cellValue) {
-      case 1:
-        return "成人票";
-      case 2:
-        return "老人票";
-      case 3:
-        return "儿童票";
-      default:
-        return "无";
-    }
+  if (column.property === "startProvinceId") {
+    return row.startProvinceId + "-" + row.startCityId;
   } else if (column.property === "state") {
     if (cellValue === 0) {
       return "待上架";
     }
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;' }, '强制下架');
-  } else if (column.property === "startDate") {
-    return row.startDate + "~" + row.endDate;
-  } else if (column.property === "verificationType") {
-    return cellValue === 1 ? h('span', { style: 'color: green;', title: "核销端核销"}, '手动核销') : h('span', { style: 'color: green;', title: "次日凌晨0点开始核销"}, '自动核销');
-  } else if (column.property === "realBuy") {
-    return cellValue ? "是" : "否";
-  } else if (column.property === "advanceDay") {
-    return cellValue + "天";
   } else {
     return cellValue;
   }

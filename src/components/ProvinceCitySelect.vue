@@ -6,7 +6,7 @@
 import useAreaStore from "@/store/area.js";
 
 const areaStore = useAreaStore();
-const options = areaStore.areaList;
+const options = areaStore.provinceList;
 
 const selectProps = {
   expandTrigger: 'hover',

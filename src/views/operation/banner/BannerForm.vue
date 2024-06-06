@@ -82,7 +82,7 @@ const formRules = reactive({
     { required: true, message: '请选择客户端', trigger: 'change' }
   ],
   bannerType: [
-    { required: true, message: '请选择轮播类型', trigger: 'imgUrl' }
+    { required: true, message: '请选择轮播类型', trigger: 'change' }
   ],
   imgUrl: [
     { required: true, message: '请上传图片', trigger: 'blur' }

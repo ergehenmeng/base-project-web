@@ -74,13 +74,12 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi} from '@/api/product/ticket';
+import {createApi, selectApi, updateApi, scenicListApi} from '@/api/product/ticket';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import { numberValidator } from "@/utils/common.js";
-import {scenicListApi} from "@/api/product/ticket/index.js";
 
 const route = useRoute();
 const router = useRouter();
@@ -107,7 +106,7 @@ const formRules = reactive({
     {required: true, message: "提前购票不能为空", trigger: 'blur'}
   ],
   dueDate: [
-    {required: true, message: "预定日期不能为空", trigger: 'dueDate', type: "array"}
+    {required: true, message: "预定日期不能为空", trigger: 'blur', type: "array"}
   ],
   introduceText: [
     {required: true, message: "详细介绍不能为空", trigger: 'change'}
@@ -170,7 +169,6 @@ onMounted(() => {
       disabled.value = route.fullPath.startsWith("/product/ticket/detail");
       selectApi(params).then(res => {
         formData.value = res.data;
-        formData.value.virtualNum = res.data.totalNum - res.data.saleNum;
         formData.value.dueDate = [res.data.startDate, res.data.endDate];
         formData.value.introduceText = res.data.introduce;
       }).finally(() => {

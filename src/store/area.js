@@ -15,7 +15,9 @@ const useAreaStore = defineStore(
         const initArea = () => {
             listApi().then(res => {
                 areaList.value = res.data;
-                cityList.value = res.data.filter(item => item.parentId === provinceId)[0].children;
+                if (res.data.length > 0) {
+                    cityList.value = res.data.filter(item => item.id === provinceId)[0].children;
+                }
             });
             provinceApi().then(res => {
                 provinceList.value = res.data;

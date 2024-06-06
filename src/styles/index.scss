@@ -28,7 +28,7 @@ body {
   background-color: white;
   border-radius: 3px;
   min-height: calc(100vh - 120px);
-  .el-input, .el-select {
+  .el-input, .el-select, .el-textarea {
     width: 350px;
   }
   .el-input.w100 {
