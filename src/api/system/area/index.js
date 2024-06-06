@@ -6,3 +6,8 @@ export const listApi = () => {
     });
 };
 
+export const provinceApi = () => {
+    return request.get({
+        url: "/manage/area/provinceList"
+    });
+};

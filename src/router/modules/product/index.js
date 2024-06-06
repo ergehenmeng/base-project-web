@@ -170,10 +170,40 @@ export default [
       {
         path: "line",
         name: "line",
-        component: () => import("@/views/product/line/index.vue"),
         meta: {
           title: "线路管理",
         },
+        children: [
+          {
+            path: "",
+            name: "lineIndex",
+            component: () => import("@/views/product/line/index.vue")
+          },
+          {
+            path: "create",
+            name: "lineCreate",
+            component: () => import("@/views/product/line/LineForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "lineEdit",
+            component: () => import("@/views/product/line/LineForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "lineDetail",
+            component: () => import("@/views/product/line/LineForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "restaurant",
