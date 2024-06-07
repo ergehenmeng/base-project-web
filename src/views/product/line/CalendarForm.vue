@@ -160,14 +160,12 @@ const handleConfig = () => {
 }
 
 const handleEdit = (item) => {
-  console.log(item)
   if (editAuth) {
     editRef.value.openDialog(queryParams.lineId, item);
   }
 }
 
 const handleCreate = (date) => {
-  console.log(date)
   if (editAuth) {
     editRef.value.openDialog(queryParams.lineId, {configDate: date});
   }

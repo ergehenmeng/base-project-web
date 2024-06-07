@@ -62,7 +62,6 @@ const formData = ref({
 });
 
 const openDialog = (lineId, item) => {
-  console.log(item);
   showDialog.value = true;
   resetForm();
   formData.value.lineId = lineId;
