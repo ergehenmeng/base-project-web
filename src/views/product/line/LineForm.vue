@@ -54,6 +54,9 @@
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" autosize
                   maxlength="100" show-word-limit />
       </el-form-item>
+      <el-form-item label="封面图" prop="coverList" >
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 8 }" v-model="formData.introduce" autosize
                   maxlength="400" show-word-limit />
@@ -78,14 +81,15 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="餐饮">
-            <el-checkbox-group v-model="item.repast">
+            <el-checkbox-group v-model="item.repastList">
               <el-checkbox label="早餐" :value="1" />
               <el-checkbox label="午餐" :value="2" />
               <el-checkbox label="晚餐" :value="4" />
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="详细介绍" :prop="`configList[${index}].depictText`" :rules="{required: true, message: '详细介绍不能为空', trigger: 'blur'}">
-            <WangEditor v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
+            <WangEditor v-if="!disabled" v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
+            <div v-html="item.depict"></div>
           </el-form-item>
         </div>
       </div>
@@ -110,6 +114,7 @@ import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import ProvinceCitySelect from "@/components/ProvinceCitySelect.vue";
 import WangEditor from "@/components/WangEditor.vue";
+import UploadImageList from "@/components/UploadImageList.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -130,6 +135,9 @@ const formRules = reactive({
   ],
   refundType: [
     {required: true, message: "请选择退款方式", trigger: 'change'},
+  ],
+  coverList: [
+      {required: true, message: "请上传封面图", trigger: 'change', type: "array"}
   ],
   duration: [
     {required: true, message: "游玩天数不能为空", trigger: 'change'},
@@ -158,7 +166,7 @@ const formData = ref({
     startPoint: null,
     endPoint: null,
     trafficType: null,
-    repast: [],
+    repastList: [],
     depict: null,
     depictText: null
   }],
@@ -175,7 +183,7 @@ const changeDay = (value) => {
         startPoint: null,
         endPoint: null,
         trafficType: null,
-        repast: [],
+        repastList: [],
         depict: null,
         depictText: null
       })
@@ -189,9 +197,10 @@ const changeDay = (value) => {
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
-    console.log(formData.value);
     if (valid) {
       loading.value = true;
+      formData.value.startProvinceId = formData.value.startCity[0];
+      formData.value.startCityId = formData.value.startCity[1];
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
           successMsg("线路信息更新成功");
@@ -224,7 +233,10 @@ onMounted(() => {
       disabled.value = route.fullPath.startsWith("/product/line/detail");
       selectApi(params).then(res => {
         formData.value = res.data;
-        formData.value.dueDate = [res.data.startDate, res.data.endDate];
+        formData.value.startCity = [res.data.startProvinceId, res.data.startCityId];
+        if (res.data.coverUrl) {
+          formData.value.coverList = res.data.coverUrl.split(",");
+        }
         formData.value.introduceText = res.data.introduce;
       }).finally(() => {
         loading.value = false;

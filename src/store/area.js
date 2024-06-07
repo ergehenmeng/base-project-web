@@ -23,7 +23,15 @@ const useAreaStore = defineStore(
                 provinceList.value = res.data;
             });
         }
-        return { areaList, provinceList, cityList, initArea};
+        const parseCity = (provinceId, cityId) => {
+            if (provinceList.value.length > 0) {
+                const province = provinceList.value.filter(item => item.id === provinceId)[0];
+                const city = province.children.filter(item => item.id === cityId)[0];
+                return province.title + "-" + city.title;
+            }
+            return null;
+        }
+        return { areaList, provinceList, cityList, initArea, parseCity};
     },
     // 开启持久化
     { persist: true }
