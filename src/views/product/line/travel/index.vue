@@ -125,7 +125,7 @@ const formatter = (row, column, cellValue) => {
     if (cellValue === 0) {
       return "待上架";
     }
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;' }, '强制下架');
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;', title: '被平台强制下级后无法继续上架' }, '强制下架');
   } else {
     return cellValue;
   }

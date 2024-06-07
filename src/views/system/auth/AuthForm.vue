@@ -39,6 +39,7 @@
 import { updateApi, createApi } from '@/api/system/auth';
 import { reactive, ref } from 'vue';
 import { successMsg } from "@/utils/message.js";
+import { disableBeforeDate } from "@/utils/common.js";
 
 const loading = ref(false);
 const dialogTitle = ref("");
@@ -108,10 +109,6 @@ const handleSave = () => {
       }
     }
   })
-}
-
-const disableBeforeDate = (time) => {
-  return time.getTime() < Date.now() - 8.64e7;
 }
 
 defineExpose({

@@ -84,10 +84,40 @@ export default [
       {
         path: "homestay",
         name: "homestay",
-        component: () => import("@/views/product/homestay/index.vue"),
         meta: {
           title: "民宿管理",
         },
+        children: [
+          {
+            path: "",
+            name: "homestayIndex",
+            component: () => import("@/views/product/homestay/index.vue")
+          },
+          {
+            path: "create",
+            name: "homestayCreate",
+            component: () => import("@/views/product/homestay/HomestayForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "homestayEdit",
+            component: () => import("@/views/product/homestay/HomestayForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "homestayDetail",
+            component: () => import("@/views/product/homestay/HomestayForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "room",

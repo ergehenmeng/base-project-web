@@ -89,7 +89,7 @@
           </el-form-item>
           <el-form-item label="详细介绍" :prop="`configList[${index}].depictText`" :rules="{required: true, message: '详细介绍不能为空', trigger: 'blur'}">
             <WangEditor v-if="!disabled" v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
-            <div v-html="item.depict"></div>
+            <div v-html="item.depict" v-else></div>
           </el-form-item>
         </div>
       </div>

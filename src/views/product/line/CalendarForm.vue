@@ -49,7 +49,7 @@
           <div class="item-price" v-else-if="hasSetPrice(data)" @click="handleEdit(dayPrice(data))">
             <div class="item-header">
               <div class="item-date">{{ data.day.split('-')[2] }}</div>
-              <p class="item-price-num">划线价:{{ dayPrice(data)?.salePrice }}</p>
+              <p class="item-price-num">划线价:{{ dayPrice(data)?.linePrice }}</p>
             </div>
             <p class="item-price-num">销售价:{{ dayPrice(data)?.salePrice }}</p>
             <div :class="['item-stock', dayPrice(data)?.state === 0 ? 'item-forbid' : '']">库存:{{ dayPrice(data)?.stock }}</div>
@@ -72,11 +72,10 @@ import {Setting} from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import dayjs from "dayjs";
-import {useRouter, useRoute} from "vue-router";
+import {useRoute} from "vue-router";
 import SetupForm from "./SetupForm.vue";
 import EditForm from "./EditForm.vue";
 
-const router = useRouter();
 const route = useRoute();
 const userStore = useUserStore();
 const setupRef = ref();

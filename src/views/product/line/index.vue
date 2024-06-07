@@ -6,12 +6,12 @@
           <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="旅行社">
-          <el-select v-model="queryParams.travelAgencyId" style="width: 250px !important;" clearable>
+          <el-select v-model="queryParams.travelAgencyId" clearable>
             <el-option v-for="item in travelList" :key="item.id" :value="item.id" :label="item.title" />
           </el-select>
         </el-form-item>
         <el-form-item label="游玩天数">
-          <el-select v-model="queryParams.duration" clearable>
+          <el-select v-model="queryParams.duration" clearable style="width: 130px !important;">
             <el-option label="一日游" :value="1" />
             <el-option label="二日游" :value="2" />
             <el-option label="三日游" :value="3" />
@@ -31,6 +31,13 @@
         </el-form-item>
         <el-form-item label="出发城市">
           <ProvinceCitySelect v-model="queryParams.areaList"></ProvinceCitySelect>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable style="width: 130px !important;">
+            <el-option label="待上架" :value="0" />
+            <el-option label="已上架" :value="1" />
+            <el-option label="强制下架" :value="2" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -154,7 +161,7 @@ const formatter = (row, column, cellValue) => {
     if (cellValue === 0) {
       return "待上架";
     }
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;' }, '强制下架');
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;', title: '被平台强制下级后无法继续上架' }, '强制下架');
   } else {
     return cellValue;
   }

@@ -35,3 +35,12 @@ export const numberValidator = (value) => {
     }
     return value;
 }
+
+/**
+ * 禁用小于当前时间的日期
+ * @param time date
+ * @returns {boolean}
+ */
+export const disableBeforeDate = (time) => {
+    return time.getTime() < Date.now() - 8.64e7;
+}

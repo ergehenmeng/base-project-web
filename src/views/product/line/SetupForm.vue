@@ -4,7 +4,7 @@
              v-loading="loading">
       <el-form-item label="设置日期" prop="configDate">
         <div style="width: 350px;">
-          <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="formData.configDate" style="width: 350px;"></el-date-picker>
+          <el-date-picker type="daterange" value-format="YYYY-MM-DD" :disabled-date="disableBeforeDate" v-model="formData.configDate" style="width: 350px;"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="周期" prop="week">
@@ -47,7 +47,7 @@
 import { setupApi} from '@/api/product/line';
 import {reactive, ref} from 'vue';
 import {successMsg} from '@/utils/message';
-import {numberValidator} from "@/utils/common.js";
+import {numberValidator, disableBeforeDate} from "@/utils/common.js";
 
 const loading = ref(false);
 const formDataRef = ref();
