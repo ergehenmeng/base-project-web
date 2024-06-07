@@ -3,17 +3,8 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="景区">
-          <el-select v-model="queryParams.bannerType" clearable>
-            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="月份">
-          <el-select v-model="queryParams.clientType" clearable>
-            <el-option label="PC" value="PC"/>
-            <el-option label="ANDROID" value="ANDROID"/>
-            <el-option label="IOS" value="IOS"/>
-            <el-option label="H5" value="H5"/>
-            <el-option label="WECHAT" value="WECHAT"/>
+          <el-select v-model="queryParams.scenicId" style="width: 300px !important;" clearable>
+            <el-option v-for="item in scenicList" :key="item.id" :value="item.id" :label="item.scenicName" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -70,18 +61,20 @@
 </template>
 <script setup>
 import {listApi, deleteApi,} from '@/api/operation/activity';
-import { reactive, ref} from 'vue';
+import {onMounted, reactive, ref} from 'vue';
 import {Edit, Delete, Plus} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from "@/store/dict.js";
 import dayjs from "dayjs";
 import {useRouter} from "vue-router";
+import {scenicListApi} from "@/api/product/ticket";
 
 const router = useRouter();
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('banner_type');
+const scenicList = ref([]);
 
 const loading = ref(false);
 const calendar = ref();
@@ -156,6 +149,14 @@ const handleCreate = () => {
 const handleEdit = (item) => {
   router.push("/operation/activity/edit/" + item.id)
 }
+
+onMounted(() => {
+  if (selectAuth) {
+    scenicListApi().then(res => {
+      scenicList.value = res.data;
+    })
+  }
+})
 
 </script>
 <style lang="scss" scoped>

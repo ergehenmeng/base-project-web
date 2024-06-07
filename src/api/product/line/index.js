@@ -61,3 +61,24 @@ export const travelListApi = () => {
         url: "/manage/travel/list"
     });
 }
+
+export const monthApi = (params) => {
+    return request.get({
+        url: "/manage/line/config/month",
+        params
+    });
+}
+
+export const setupApi = (data) => {
+    return request.post({
+        url: "/manage/line/config/setup",
+        data
+    });
+}
+
+export const setDayApi = (data) => {
+    return request.post({
+        url: "/manage/line/config/setDay",
+        data
+    });
+}

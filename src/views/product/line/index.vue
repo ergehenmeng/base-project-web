@@ -58,7 +58,7 @@
         <el-table-column prop="duration" label="游玩天数" width="120" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="250">
           <template #default="scope">
             <el-button v-has-perm="'Kvl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
             </el-button>
@@ -69,6 +69,8 @@
             <el-button v-has-perm="'Zvl0'" v-if="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
             </el-button>
             <el-button v-has-perm="'kvl0'" v-if="scope.row.state !== 2 " type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
+            </el-button>
+            <el-button v-has-perm="'Ovl0'" v-if="scope.row.state !== 2 " type="success" :icon="Calendar" @click="handleCalendar(scope.row)" link title="查看价格日历">
             </el-button>
             <el-button v-has-perm="'lvl0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
             </el-button>
@@ -83,7 +85,7 @@
 <script setup>
 import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, travelListApi } from '@/api/product/line';
 import { onMounted, reactive, ref } from 'vue';
-import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
+import {Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
@@ -186,6 +188,10 @@ const handlePlatformUnShelves = (row) => {
       getPage();
     })
   })
+}
+
+const handleCalendar = (row) => {
+  router.push("/product/line/calendar/" + row.id);
 }
 
 const handleCreate = () => {

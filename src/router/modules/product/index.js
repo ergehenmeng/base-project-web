@@ -202,6 +202,14 @@ export default [
             meta: {
               title: "查看",
             },
+          },
+          {
+            path: "calendar/:id",
+            name: "lineCalendar",
+            component: () => import("@/views/product/line/CalendarForm.vue"),
+            meta: {
+              title: "价格日历",
+            },
           }
         ]
       },
