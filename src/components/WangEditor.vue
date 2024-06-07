@@ -4,12 +4,11 @@
       <Toolbar
           style="border-bottom: 1px solid #ccc"
           :editor="editorRef"
-          :defaultConfig="toolbarConfig"
           mode="simple"
       />
       <Editor
-          :style="{'min-height': props.height + 'px' }"
           v-model="htmlValue"
+          :style="{'overflow-y': 'hidden','height': props.height + 'px'}"
           mode="simple"
           :defaultConfig="editorConfig"
           @onCreated="handleCreated"
@@ -75,8 +74,6 @@ const props = defineProps({
   }
 })
 
-const toolbarConfig = {
-};
 const editorConfig = {
   placeholder: props.placeholder,
   MENU_CONF: {}
@@ -114,6 +111,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
     }
   }
 }
+
 
 const setTextValue = (editor) => {
   textValue.value = editor.getText();

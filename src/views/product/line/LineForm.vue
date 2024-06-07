@@ -61,35 +61,33 @@
       <h4>游玩信息</h4>
       <el-divider />
       <div class="line-day-config">
-        <el-form>
-          <div v-for="(item, index) in configList" :key="index" class="line-day-config-item">
-            <h5 style="margin-bottom: 10px; margin-left: 20px;">第{{ index + 1 }}天行程</h5>
-            <el-form-item label="起始地" :prop="''" :rules="{required: true, message: '起始地不能为空', trigger: 'blur'}">
-              <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" style="width: 200px !important;" />
-              &nbsp;-&nbsp;
-              <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" style="width: 200px !important;"/>
-            </el-form-item>
-            <el-form-item label="交通方式" prop="trafficType" rules="{required: true, message: '交通方式不能为空', trigger: 'blur'}">
-              <el-radio-group v-model="formData.trafficType" >
-                <el-radio :value="1" >飞机</el-radio>
-                <el-radio :value="2" >汽车</el-radio>
-                <el-radio :value="3" >轮船</el-radio>
-                <el-radio :value="4" >火车</el-radio>
-                <el-radio :value="5" >其他</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="餐饮" prop="repast">
-              <el-checkbox-group v-model="item.repast">
-                <el-checkbox label="早餐" :value="1" />
-                <el-checkbox label="午餐" :value="2" />
-                <el-checkbox label="晚餐" :value="4" />
-              </el-checkbox-group>
-            </el-form-item>
-            <el-form-item label="详细介绍" prop="depictText" rules="{required: true, message: '详细介绍不能为空', trigger: 'blur'}">
-              <WangEditor v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="200"></WangEditor>
-            </el-form-item>
-          </div>
-        </el-form>
+        <div v-for="(item, index) in formData.configList" :key="index" class="line-day-config-item">
+          <h5 style="margin-bottom: 10px; margin-left: 20px;">第{{ index + 1 }}天行程</h5>
+          <el-form-item label="起始地" :prop="`configList[${index}].startPoint`" :rules="{required: true, message: '起始地不能为空', trigger: 'blur'}">
+            <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" style="width: 200px !important;" />
+            &nbsp;-&nbsp;
+            <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" style="width: 200px !important;"/>
+          </el-form-item>
+          <el-form-item label="交通方式" :prop="`configList[${index}].trafficType`" :rules="{required: true, message: '交通方式不能为空', trigger: 'change'}">
+            <el-radio-group v-model="item.trafficType" >
+              <el-radio :value="1" >飞机</el-radio>
+              <el-radio :value="2" >汽车</el-radio>
+              <el-radio :value="3" >轮船</el-radio>
+              <el-radio :value="4" >火车</el-radio>
+              <el-radio :value="5" >其他</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="餐饮">
+            <el-checkbox-group v-model="item.repast">
+              <el-checkbox label="早餐" :value="1" />
+              <el-checkbox label="午餐" :value="2" />
+              <el-checkbox label="晚餐" :value="4" />
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item label="详细介绍" :prop="`configList[${index}].depictText`" :rules="{required: true, message: '详细介绍不能为空', trigger: 'blur'}">
+            <WangEditor v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
+          </el-form-item>
+        </div>
       </div>
     </el-form>
     <el-backtop :right="100" :bottom="100" />
@@ -144,16 +142,6 @@ const formRules = reactive({
   ]
 })
 
-const configList = ref([{
-  routeIndex: 1,
-  startPoint: null,
-  endPoint: null,
-  trafficType: null,
-  repast: [],
-  depict: null,
-  depictText: null
-}]);
-
 const formData = ref({
   id: null,
   title: null,
@@ -179,10 +167,10 @@ const formData = ref({
 });
 
 const changeDay = (value) => {
-  const length = configList.value.length;
+  const length = formData.value.configList.length;
   if (value > length) {
     for (let i = 0; i < value - length; i++) {
-      configList.value.push({
+      formData.value.configList.push({
         routeIndex: length + i + 1,
         startPoint: null,
         endPoint: null,
@@ -194,14 +182,14 @@ const changeDay = (value) => {
     }
   } else {
     for (let i = 0; i < length - value; i++) {
-      configList.value.pop();
+      formData.value.configList.pop();
     }
   }
 }
 
 const handleSave = () => {
-  console.log(formData.value.configList);
   formDataRef.value.validate((valid) => {
+    console.log(formData.value);
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
@@ -254,13 +242,13 @@ onMounted(() => {
 
 .line-day-config {
   .line-day-config-item {
-    width: 800px;
+    width: 820px;
     border-top: 1px solid #ebeef5;
     padding-top: 20px;
   }
 }
 
-.line-day-config :first-child {
+.line-day-config > .line-day-config-item:first-child {
   border-top: none;
 }
 </style>
