@@ -198,7 +198,11 @@ onMounted(() => {
     disabled.value = route.fullPath.startsWith("/product/homestay/detail");
     selectApi(params).then(res => {
       formData.value = res.data;
-      formData.value.coverList = res.data.coverUrl.split(",");
+      if (res.data.coverUrl) {
+        formData.value.coverList = res.data.coverUrl.split(",");
+      } else {
+        formData.value.coverList = [];
+      }
       formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
       if (res.data.tag) {
         formData.value.tagList = res.data.tag.split(",");

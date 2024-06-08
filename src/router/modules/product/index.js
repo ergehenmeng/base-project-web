@@ -122,10 +122,48 @@ export default [
       {
         path: "room",
         name: "room",
-        component: () => import("@/views/product/homestay/room/index.vue"),
         meta: {
-          title: "房型管理",
+          title: "民宿房型",
         },
+        children: [
+          {
+            path: "",
+            name: "roomIndex",
+            component: () => import("@/views/product/homestay/room/index.vue")
+          },
+          {
+            path: "create",
+            name: "roomCreate",
+            component: () => import("@/views/product/homestay/room/RoomForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "roomEdit",
+            component: () => import("@/views/product/homestay/room/RoomForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "roomDetail",
+            component: () => import("@/views/product/homestay/room/RoomForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          },
+          {
+            path: "calendar/:id",
+            name: "calendarDetail",
+            component: () => import("@/views/product/homestay/room/CalendarForm.vue"),
+            meta: {
+              title: "价格日历",
+            },
+          }
+        ]
       },
       {
         path: "store",
