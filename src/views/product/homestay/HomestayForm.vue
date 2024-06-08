@@ -6,6 +6,9 @@
       <el-form-item label="民宿名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
+      <el-form-item label="所属商户" prop="merchantId">
+        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
+      </el-form-item>
       <el-form-item label="星级" prop="level">
         <el-select v-model="formData.level">
           <el-option label="五星" :value="5"/>
@@ -36,21 +39,18 @@
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
       <el-form-item label="描述信息" prop="intro">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" autosize
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.intro" autosize
                   maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList  v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="特色服务" prop="keyService">
-        <el-collapse accordion>
-          <el-collapse-item title="Consistency">
-            <div>
-              Consistent with real life: in line with the process and logic of real
-              life, and comply with languages and habits that the users are used to;
-            </div>
-          </el-collapse-item>
-        </el-collapse>
+      <el-form-item label="特色服务" prop="serviceList">
+        <div style="width: 800px;">
+          <el-checkbox-group v-model="formData.serviceList">
+            <el-checkbox v-for="(item) in keyServiceList " :key="item.hiddenValue"  :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+          </el-checkbox-group>
+        </div>
       </el-form-item>
       <el-form-item label="入住须知" prop="notesInText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.notesIn" v-model:text-value="formData.notesInText" ></WangEditor>
@@ -85,9 +85,11 @@ import UploadImageList from "@/components/UploadImageList.vue";
 import AreaSelect from "@/components/AreaSelect.vue";
 import MapContainer from "@/components/MapContainer.vue";
 import useDictStore from "@/store/dict.js";
+import MerchantSelect from "@/components/MerchantSelect.vue";
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict("homestay_tag");
+const keyServiceList = dictStore.getDict("key_service")
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
@@ -100,6 +102,9 @@ const formRules = reactive({
   title: [
     {required: true, message: "民宿名称不能为空", trigger: 'blur'},
     {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+  ],
+  merchantId: [
+      {required: true, message: "请选择商户", trigger: 'change'}
   ],
   level: [
     {required: true, message: "请选择民宿星级", trigger: 'change'}
@@ -139,6 +144,7 @@ const formData = ref({
   id: null,
   homestayName: null,
   level: 0,
+  merchantId: null,
   openTime: null,
   phone: null,
   tagList: [],
@@ -152,7 +158,7 @@ const formData = ref({
   introduce: null,
   notesIn: null,
   notesInText: null,
-  keyService: null
+  serviceList: []
 });
 
 const handleSave = () => {
@@ -194,7 +200,16 @@ onMounted(() => {
       formData.value = res.data;
       formData.value.coverList = res.data.coverUrl.split(",");
       formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-      formData.value.tagList = res.data.tag.split(",");
+      if (res.data.tag) {
+        formData.value.tagList = res.data.tag.split(",");
+      } else {
+        formData.value.tagList = [];
+      }
+      if (res.data.keyService) {
+        formData.value.serviceList = res.data.keyService.split(",");
+      } else {
+        formData.value.serviceList = [];
+      }
       formData.value.introduceText = res.data.introduce;
     }).finally(() => {
       loading.value = false;
