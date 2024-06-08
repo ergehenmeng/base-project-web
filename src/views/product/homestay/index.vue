@@ -79,20 +79,13 @@ const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
-  state: null,
-  travelAgencyId: null,
-  startCityId: null,
-  duration: null,
-  areaList: [],
+  state: null
 })
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.areaList.length === 2) {
-        queryParams.startCityId = queryParams.areaList[1];
-      }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
