@@ -7,7 +7,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
+        <MerchantSelect v-model="formData.merchantId" :clearable="false"></MerchantSelect>
       </el-form-item>
       <el-form-item label="星级" prop="level">
         <el-select v-model="formData.level">
@@ -206,7 +206,7 @@ onMounted(() => {
         formData.value.tagList = [];
       }
       if (res.data.keyService) {
-        formData.value.serviceList = res.data.keyService.split(",");
+        formData.value.serviceList = res.data.keyService.split(",").map(item => parseInt(item));
       } else {
         formData.value.serviceList = [];
       }
