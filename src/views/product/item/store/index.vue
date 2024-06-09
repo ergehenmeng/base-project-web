@@ -30,14 +30,13 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="店铺名称" min-width="200" />
+        <el-table-column prop="title" label="店铺名称" min-width="150" />
         <el-table-column prop="merchantName" label="所属商户" min-width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
-        <el-table-column prop="telephone" label="商家电话" width="150" />
+        <el-table-column prop="telephone" label="商家电话" width="130" />
         <el-table-column prop="score" label="评分" width="80"/>
         <el-table-column prop="openTime" label="营业时间" width="120"/>
-        <el-table-column prop="detailAddress" label="详细地址" width="250" />
+        <el-table-column prop="detailAddress" label="详细地址" width="220" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">

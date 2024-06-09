@@ -6,6 +6,9 @@
       <el-form-item label="旅行社名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
+      <el-form-item label="所属商户" prop="merchantId">
+        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
+      </el-form-item>
       <el-form-item label="店铺LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
@@ -19,8 +22,8 @@
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit disabled class="w100"/>-
-        <el-input v-model="formData.latitude" show-word-limit disabled class="w100"/>
+        <el-input v-model="formData.longitude" show-word-limit readonly class="w100"/>-
+        <el-input v-model="formData.latitude" show-word-limit readonly class="w100"/>
         &nbsp;
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
@@ -59,6 +62,7 @@ import UploadImageList from "@/components/UploadImageList.vue";
 import AreaSelect from "@/components/AreaSelect.vue";
 import MapContainer from "@/components/MapContainer.vue";
 import UploadImage from "@/components/UploadImage.vue";
+import MerchantSelect from "@/components/MerchantSelect.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -75,6 +79,9 @@ const formRules = reactive({
   ],
   logoUrl: [
     {required: true, message: "请上传旅行社logo", trigger: 'change'}
+  ],
+  merchantId: [
+    {required: true, message: "请选择所属商户", trigger: 'change'}
   ],
   phone: [
     {required: true, validator: phoneValidator, trigger: 'blur'},
@@ -108,6 +115,7 @@ let formData = ref({
   id: null,
   title: null,
   logoUrl: null,
+  merchantId: null,
   phone: null,
   areaList: [],
   detailAddress: null,
