@@ -33,8 +33,8 @@
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit disabled class="w100"/>-
-        <el-input v-model="formData.latitude" show-word-limit disabled class="w100"/>
+        <el-input v-model="formData.longitude" show-word-limit readonly class="w100"/>-
+        <el-input v-model="formData.latitude" show-word-limit readonly class="w100"/>
         &nbsp;
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>

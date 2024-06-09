@@ -59,7 +59,7 @@
             </el-button>
             <el-button v-has-perm="'abO0'" v-if="scope.row.state !== 2 " type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
             </el-button>
-            <el-button v-has-perm="'0bO0'" type="warning" :icon="Star" @click="handlePlatformUnShelves(scope.row)" link title="推荐">
+            <el-button v-has-perm="'0bO0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link  title="设置推荐状态">
             </el-button>
             <el-button v-has-perm="'hbO0'" type="success" :icon="Calendar" @click="handleCalendar(scope.row)" link title="房态价格日历">
             </el-button>
@@ -74,7 +74,7 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/room';
+import {listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, recommendApi} from '@/api/product/room';
 import { onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar, Star} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
@@ -188,6 +188,23 @@ const handlePlatformUnShelves = (row) => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('房型强制下架成功');
+      getPage();
+    })
+  })
+}
+
+
+const handleRecommend = (row) => {
+  let msg;
+  if (row.recommend) {
+    msg = "确定要取消推荐该房型吗?";
+  } else {
+    msg = "确定要推荐该房型吗?";
+  }
+  confirmMsg(msg, () => {
+    const data = { id: row.id, recommend: !row.recommend };
+    recommendApi(data).then(() => {
+      successMsg('房型推荐设置成功');
       getPage();
     })
   })

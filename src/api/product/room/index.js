@@ -56,12 +56,6 @@ export const platformUnShelvesApi = (data) => {
     });
 }
 
-export const travelListApi = () => {
-    return request.get({
-        url: "/manage/homestay/room/list"
-    });
-}
-
 export const monthApi = (params) => {
     return request.get({
         url: "/manage/homestay/room/config/month",
@@ -86,5 +80,12 @@ export const setDayApi = (data) => {
 export const homestayListApi = () => {
     return request.get({
         url: "/manage/homestay/list"
+    });
+}
+
+export const recommendApi = (data) => {
+    return request.post({
+        url: "/manage/homestay/room/recommend",
+        data
     });
 }

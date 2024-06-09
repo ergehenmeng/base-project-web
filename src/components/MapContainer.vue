@@ -107,8 +107,8 @@ defineExpose({
     <div class="map-header">
       <el-input id="searchName" v-model="searchName" placeholder="请输入地址" style="width: 250px !important;" size="small"/>
       <div class="map-header-show">
-        <el-input v-model="lng" placeholder="经度"  size="small" disabled/>&nbsp;
-        <el-input v-model="lat" placeholder="纬度" size="small" disabled/>
+        <el-input v-model="lng" placeholder="经度"  size="small" readonly/>&nbsp;
+        <el-input v-model="lat" placeholder="纬度" size="small" readonly/>
       </div>
     </div>
     <div id="mapContainer" class="dialog-map-content">

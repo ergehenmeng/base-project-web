@@ -31,14 +31,6 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="旅行社名称" min-width="200" />
-        <el-table-column prop="coverUrl" label="封面图" width="100">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.coverUrl?.split(',')[0]" :preview-src-list="scope.row.coverUrl?.split(',')"
-                        style="width: 50px;height: 50px;" preview-teleported hide-on-click-modal />
-            </div>
-          </template>
-        </el-table-column>
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
         <el-table-column prop="phone" label="旅行社电话" width="120" />
         <el-table-column prop="score" label="评分" width="80"/>

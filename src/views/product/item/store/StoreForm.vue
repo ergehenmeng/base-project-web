@@ -3,14 +3,17 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
              v-loading="loading" :disabled="disabled">
-      <el-form-item label="旅行社名称" prop="title">
+      <el-form-item label="店铺名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
+      </el-form-item>
+      <el-form-item label="所属商户" prop="merchantId">
+        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
       </el-form-item>
       <el-form-item label="店铺LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
-      <el-form-item label="旅行社电话" prop="phone">
-        <el-input v-model="formData.phone" show-word-limit maxlength="13"/>
+      <el-form-item label="营业时间" prop="openTime">
+        <el-input v-model="formData.openTime" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -19,18 +22,18 @@
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit disabled class="w100"/>-
-        <el-input v-model="formData.latitude" show-word-limit disabled class="w100"/>
+        <el-input v-model="formData.longitude" show-word-limit readonly class="w100"/>-
+        <el-input v-model="formData.latitude" show-word-limit readonly class="w100"/>
         &nbsp;
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
-      <el-form-item label="描述信息" prop="depict">
-        <el-input v-model="formData.depict" show-word-limit maxlength="50"/>
+      <el-form-item label="商家电话" prop="telephone">
+        <el-input v-model="formData.telephone" show-word-limit maxlength="13"/>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList  v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
+      <el-form-item label="商家介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
@@ -49,7 +52,7 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/product/room';
+import {createApi, updateApi, selectApi} from '@/api/product/store';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
@@ -59,6 +62,7 @@ import UploadImageList from "@/components/UploadImageList.vue";
 import AreaSelect from "@/components/AreaSelect.vue";
 import MapContainer from "@/components/MapContainer.vue";
 import UploadImage from "@/components/UploadImage.vue";
+import MerchantSelect from "@/components/MerchantSelect.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -70,14 +74,20 @@ const disabled = ref(false);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "旅行社名称不能为空", trigger: 'blur'},
+    {required: true, message: "店铺名称不能为空", trigger: 'blur'},
     {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
   ],
   logoUrl: [
-    {required: true, message: "请上传旅行社logo", trigger: 'change'}
+    {required: true, message: "请上传店铺logo", trigger: 'change'}
   ],
-  phone: [
+  merchantId: [
+    {required: true, message: "请选择所属商户", trigger: 'change'}
+  ],
+  telephone: [
     {required: true, validator: phoneValidator, trigger: 'blur'},
+  ],
+  openTime: [
+    {required: true, message: "营业时间不能为空", trigger: 'blur'},
   ],
   areaList: [
     {required: true, message: "请选择省市县", trigger: 'change', type: "array"}
@@ -92,15 +102,11 @@ const formRules = reactive({
   latitude: [
     {required: true, message: "请选择经纬度", trigger: 'blur'},
   ],
-  depict: [
-    {required: true, message: "描述信息不能为空", trigger: 'blur'},
-    {min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur'}
-  ],
   coverList: [
     {required: true, message: "请上传封面图", trigger: 'change', type: "array"}
   ],
   introduceText: [
-    {required: true, message: "详细介绍不能为空", trigger: 'change'}
+    {required: true, message: "商家介绍不能为空", trigger: 'change'}
   ]
 })
 
@@ -108,12 +114,13 @@ let formData = ref({
   id: null,
   title: null,
   logoUrl: null,
-  phone: null,
+  merchantId: null,
+  telephone: null,
   areaList: [],
   detailAddress: null,
   longitude: null,
   latitude: null,
-  depict: null,
+  openTime: null,
   coverList: [],
   introduceText: null,
   introduce: null
@@ -128,7 +135,7 @@ const handleSave = () => {
       formData.value.countyId = formData.value.areaList[2];
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("旅行社信息更新成功");
+          successMsg("店铺信息更新成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -136,7 +143,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("旅行社添加成功");
+          successMsg("店铺添加成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -152,7 +159,7 @@ onMounted(() => {
   if (params.id !== undefined) {
     loading.value = true;
     // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith("/product/travel/detail");
+    disabled.value = route.fullPath.startsWith("/product/store/detail");
     selectApi(params).then(res => {
       formData.value = {...res.data};
       if (res.data.coverUrl) {
