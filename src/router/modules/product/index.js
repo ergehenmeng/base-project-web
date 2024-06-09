@@ -168,10 +168,40 @@ export default [
       {
         path: "store",
         name: "store",
-        component: () => import("@/views/product/item/store/index.vue"),
         meta: {
           title: "零售店铺",
         },
+        children: [
+          {
+            path: "",
+            name: "storeIndex",
+            component: () => import("@/views/product/item/store/index.vue")
+          },
+          {
+            path: "create",
+            name: "storeCreate",
+            component: () => import("@/views/product/item/store/StoreForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "storeEdit",
+            component: () => import("@/views/product/item/store/StoreForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "storeDetail",
+            component: () => import("@/views/product/item/store/StoreForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "item",
