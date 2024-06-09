@@ -64,21 +64,21 @@ export const travelListApi = () => {
 
 export const monthApi = (params) => {
     return request.get({
-        url: "/manage/homestay/room/month",
+        url: "/manage/homestay/room/config/month",
         params
     });
 }
 
 export const setupApi = (data) => {
     return request.post({
-        url: "/manage/homestay/room/setup",
+        url: "/manage/homestay/room/config/setup",
         data
     });
 }
 
 export const setDayApi = (data) => {
     return request.post({
-        url: "/manage/homestay/room/setDay",
+        url: "/manage/homestay/room/config/update",
         data
     });
 }

@@ -41,9 +41,10 @@
         <el-table-column prop="homestayTitle" label="所属民宿" min-width="150" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter"/>
         <el-table-column prop="roomType" label="房型" min-width="80" :formatter="formatter"/>
-        <el-table-column prop="level" label="退款方式" min-width="80" :formatter="formatter"/>
-        <el-table-column prop="state" label="面积(m²)" width="80"/>
-        <el-table-column prop="detailAddress" label="居住人数" min-width="80" />
+        <el-table-column prop="recommend" label="平台推荐" min-width="80" :formatter="formatter"/>
+        <el-table-column prop="refundType" label="退款方式" min-width="80" :formatter="formatter"/>
+        <el-table-column prop="dimension" label="面积(m²)" width="80"/>
+        <el-table-column prop="resident" label="居住人数" min-width="80" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="250">
@@ -60,7 +61,7 @@
             </el-button>
             <el-button v-has-perm="'0bO0'" type="warning" :icon="Star" @click="handlePlatformUnShelves(scope.row)" link title="推荐">
             </el-button>
-            <el-button v-has-perm="'hbO0'" type="success" :icon="Calendar" @click="handlePlatformUnShelves(scope.row)" link title="房态价格日历">
+            <el-button v-has-perm="'hbO0'" type="success" :icon="Calendar" @click="handleCalendar(scope.row)" link title="房态价格日历">
             </el-button>
             <el-button v-has-perm="'dbO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
             </el-button>
@@ -155,6 +156,8 @@ const formatter = (row, column, cellValue) => {
       return "不支持";
     }
     return cellValue === 1 ? "直接退款" : "审核后退款";
+  } else if (column.property === "recommend") {
+    return cellValue ? h('span', { style: 'color: green;', title: '被平台推荐的房型会在首页展示' }, '是') : h('span', { title: '被平台推荐的房型会在首页展示' }, '否');
   } else {
     return cellValue;
   }

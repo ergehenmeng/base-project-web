@@ -24,7 +24,7 @@ const areaStore = useAreaStore();
 areaStore.initArea();
 
 const dictStore = useDictStore();
-dictStore.initDict("image_type", "help_type", "feedback_type", "banner_type", "notice_type", "scenic_tag", "homestay_tag", "key_service");
+dictStore.initDict("image_type", "help_type", "feedback_type", "banner_type", "notice_type", "scenic_tag", "homestay_tag", "key_service", "infrastructure_tag");
 
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {

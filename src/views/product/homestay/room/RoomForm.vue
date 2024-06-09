@@ -182,7 +182,7 @@ onMounted(() => {
           formData.value.coverList = [];
         }
         if (res.data.infrastructure) {
-          formData.value.infrastructureList = res.data.infrastructureList.split(",").map(item => parseInt(item));
+          formData.value.infrastructureList = res.data.infrastructure.split(",").map(item => parseInt(item));
         } else {
           formData.value.infrastructureList = [];
         }

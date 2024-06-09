@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { setupApi} from '@/api/product/line';
+import { setupApi} from '@/api/product/room';
 import {reactive, ref} from 'vue';
 import {successMsg} from '@/utils/message';
 import {numberValidator, disableBeforeDate} from "@/utils/common.js";
@@ -70,7 +70,7 @@ const formRules = reactive({
 })
 
 const formData = ref({
-  lineId: null,
+  roomId: null,
   configDate: [],
   week: [],
   state: true,
@@ -79,15 +79,15 @@ const formData = ref({
   stock: null
 });
 
-const openDialog = (lineId) => {
+const openDialog = (roomId) => {
   showDialog.value = true;
   resetForm();
-  formData.value.lineId = lineId;
+  formData.value.roomId = roomId;
 }
 
 const resetForm = () => {
   formData.value = {
-    lineId: null,
+    roomId: null,
     configDate: [],
     week: [],
     state: true,
@@ -105,7 +105,7 @@ const handleSave = () => {
       formData.value.endDate = formData.value.configDate[1];
       loading.value = true;
       setupApi(formData.value).then(() => {
-        successMsg("线路价格配置成功");
+        successMsg("房型价格配置成功");
         showDialog.value = false;
         emit('reload');
       }).finally(() => {
