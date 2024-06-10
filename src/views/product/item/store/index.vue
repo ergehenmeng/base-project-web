@@ -33,9 +33,10 @@
         <el-table-column prop="title" label="店铺名称" min-width="150" />
         <el-table-column prop="merchantName" label="所属商户" min-width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="recommend" label="平台推荐" width="100" :formatter="formatter"/>
         <el-table-column prop="telephone" label="商家电话" width="130" />
-        <el-table-column prop="score" label="评分" width="80"/>
         <el-table-column prop="openTime" label="营业时间" width="120"/>
+        <el-table-column prop="score" label="评分" width="80"/>
         <el-table-column prop="detailAddress" label="详细地址" width="220" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
@@ -124,7 +125,7 @@ const formatter = (row, column, cellValue) => {
     }
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;', title: '被平台强制下级后无法继续上架' }, '强制下架');
   } else if (column.property === "recommend") {
-    return cellValue ? "是" : "否";
+    return cellValue ? h('span', { style: 'color: green;', title: '平台推荐店铺优先在首页展示' }, '是') : h('span', { title: '平台推荐店铺优先在首页展示' }, '否');
   } else {
     return cellValue;
   }

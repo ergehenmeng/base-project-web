@@ -7,7 +7,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
+        <MerchantSelect v-model="formData.merchantId" @change="handleMerchantChange"></MerchantSelect>
       </el-form-item>
       <el-form-item label="店铺LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
@@ -29,6 +29,14 @@
       </el-form-item>
       <el-form-item label="商家电话" prop="telephone">
         <el-input v-model="formData.telephone" show-word-limit maxlength="13"/>
+      </el-form-item>
+      <el-form-item label="退换货地址" prop="depotAddressId">
+        <el-select v-model="formData.depotAddressId" filterable>
+          <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
+            <span style="float: left">{{ item.detailAddress }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}：{{ item.mobile }}</span>
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList  v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
@@ -52,7 +60,7 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/product/store';
+import {createApi, updateApi, selectApi, addressListApi} from '@/api/product/store';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
@@ -71,6 +79,7 @@ const formDataRef = ref();
 const showDialog = ref(false);
 const mapRef = ref();
 const disabled = ref(false);
+const addressList = ref([]);
 
 const formRules = reactive({
   title: [
@@ -95,6 +104,9 @@ const formRules = reactive({
   detailAddress: [
     {required: true, message: "详细地址不能为空", trigger: 'blur'},
     {min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur'}
+  ],
+  depotAddressId: [
+      {required: true, message: "请选择退换货地址", trigger: 'change'}
   ],
   longitude: [
     {required: true, message: "请选择经纬度", trigger: 'blur'},
@@ -123,7 +135,8 @@ let formData = ref({
   openTime: null,
   coverList: [],
   introduceText: null,
-  introduce: null
+  introduce: null,
+  depotAddressId: null
 });
 
 const handleSave = () => {
@@ -169,6 +182,7 @@ onMounted(() => {
       }
       formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
       formData.value.introduceText = res.data.introduce;
+      handleMerchantChange(res.data.merchantId);
     }).finally(() => {
       loading.value = false;
     })
@@ -183,5 +197,18 @@ const setLocation = (lng, lat) => {
   formData.value.latitude = lat;
 }
 
+/**
+ * 选择商户时, 自动获取商户的退货地址
+ * @param val 商户id
+ */
+const handleMerchantChange = (val) => {
+  if (val) {
+    addressListApi({merchantId: val}).then(res => {
+      addressList.value = res.data;
+    })
+  } else {
+    addressList.value = [];
+  }
+}
 </script>
 

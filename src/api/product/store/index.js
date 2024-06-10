@@ -55,3 +55,10 @@ export const platformUnShelvesApi = (data) => {
         data
     });
 }
+
+export const addressListApi = (params) => {
+    return request.get({
+        url: "/manage/merchant/address/list",
+        params,
+    });
+};
