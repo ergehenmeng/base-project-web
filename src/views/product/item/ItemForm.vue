@@ -21,7 +21,7 @@
         <ItemTag v-model="formData.tagId"></ItemTag>
       </el-form-item>
       <el-form-item label="限购数量" prop="quota">
-        <el-input v-model="formData.quota" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.quota" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px;"/>
       </el-form-item>
       <el-form-item label="交付方式" prop="deliveryType">
         <el-radio-group v-model="formData.deliveryType" >
