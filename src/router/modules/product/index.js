@@ -206,10 +206,40 @@ export default [
       {
         path: "item",
         name: "item",
-        component: () => import("@/views/product/item/index.vue"),
         meta: {
           title: "零售商品",
         },
+        children: [
+          {
+            path: "",
+            name: "itemIndex",
+            component: () => import("@/views/product/item/index.vue")
+          },
+          {
+            path: "create",
+            name: "itemCreate",
+            component: () => import("@/views/product/item/ItemForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "itemEdit",
+            component: () => import("@/views/product/item/ItemForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "itemDetail",
+            component: () => import("@/views/product/item/ItemForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "express",

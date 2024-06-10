@@ -2,69 +2,56 @@ import request from "@/utils/request";
 
 export const listPageApi = (params) => {
     return request.get({
-        url: "/manage/item/store/listPage",
+        url: "/manage/item/listPage",
         params,
     });
 };
 
 export const createApi = (data) => {
     return request.post({
-        url: "/manage/item/store/create",
+        url: "/manage/item/create",
         data
     });
 }
 
 export const updateApi = (data) => {
     return request.post({
-        url: "/manage/item/store/update",
+        url: "/manage/item/update",
         data
     });
 }
 
 export const deleteApi = (data) => {
     return request.post({
-        url: "/manage/item/store/delete",
+        url: "/manage/item/delete",
         data
     });
 }
 
 export const selectApi = (params) => {
     return request.get({
-        url: "/manage/item/store/select",
+        url: "/manage/item/select",
         params
     });
 }
 
 export const shelvesApi = (data) => {
     return request.post({
-        url: "/manage/item/store/shelves",
+        url: "/manage/item/shelves",
         data
     });
 }
 
 export const unShelvesApi = (data) => {
     return request.post({
-        url: "/manage/item/store/unShelves",
+        url: "/manage/item/unShelves",
         data
     });
 }
 
 export const platformUnShelvesApi = (data) => {
     return request.post({
-        url: "/manage/item/store/platformUnShelves",
+        url: "/manage/item/platformUnShelves",
         data
     });
 }
-
-export const addressListApi = (params) => {
-    return request.get({
-        url: "/manage/merchant/address/list",
-        params,
-    });
-};
-
-export const storeListApi = () => {
-    return request.get({
-        url: "/manage/item/store/list"
-    });
-};
