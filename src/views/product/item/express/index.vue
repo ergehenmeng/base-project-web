@@ -1,13 +1,69 @@
 <template>
-  <div>
-
+  <div class="content-top">
+    <el-form :inline="true" label-width="70px">
+      <el-form-item style="margin-left: 20px;" v-has-perm="'RfO0'">
+        <el-button type="primary"  :icon="Plus" @click="handleCreate">新增</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+  <div class="content-main" style="padding: 30px;">
+    <el-collapse >
+      <el-collapse-item v-for="item in expressList"  :name="item.id" :key="item.id">
+        <template #title>
+          <div style="width: 100%;">
+            <div style="float: left;">
+              <h3>{{item.title}}</h3>
+            </div>
+            <div style="float: right; margin-right: 30px;">
+              <el-text style="margin-right: 20px;">
+                <span style="margin-right: 20px;">创建时间：{{item.createTime}}</span>
+                <span>更新时间：{{item.updateTime}}</span>
+              </el-text>
+              <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑">
+              </el-button>
+              <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除">
+              </el-button>
+            </div>
+          </div>
+        </template>
+        <div>
+          <el-table :data="item.regionList" stripe show-overflow-tooltip>
+            <el-table-column prop="regionName" label="区域名称" width="400"></el-table-column>
+            <el-table-column prop="firstPart" label="首件或首重" ></el-table-column>
+            <el-table-column prop="firstPrice" label="首件或首重的价格(元)" ></el-table-column>
+            <el-table-column prop="nextPart" label="续重或续件" ></el-table-column>
+            <el-table-column prop="nextUnitPrice" label="续重或续件的单价(元)" ></el-table-column>
+          </el-table>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { listApi } from "@/api/product/express"
+import {Delete, Edit, Plus} from "@element-plus/icons-vue";
+import useUserStore from "@/store/user.js";
 
+const userStore = useUserStore();
+const selectAuth = userStore.hasAuth("rfO0");
+
+const expressList = ref([])
+
+const handleCreate = () => {
+  console.log('handleCreate')
+}
+const handleEdit = (item) => {
+  console.log('handleEdit', item)
+}
+const handleDelete = (item) => {
+  console.log('handleDelete', item)
+}
+onMounted(() => {
+  listApi().then(res => {
+    expressList.value = res.data
+  })
+})
 </script>
 
-<style lang="scss" scoped>
-
-</style>
