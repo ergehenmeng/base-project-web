@@ -6,6 +6,12 @@
       <el-form-item label="模板名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
+      <el-form-item label="状态" prop="state">
+        <el-radio-group v-model="formData.state" >
+          <el-radio :value="1" >启用</el-radio>
+          <el-radio :value="0" >禁用</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="计费方式" prop="chargeMode">
         <el-radio-group v-model="formData.chargeMode" >
           <el-radio :value="1" >按件数</el-radio>
@@ -24,7 +30,15 @@
             </tr>
             <tr v-for="(item, index) in formData.regionList" :key="item.regionId">
               <td>
-                <el-text truncated>{{item.regionName}}</el-text>
+                <div style="display: flex; justify-content: center; align-items: center">
+                  <el-tooltip :content="item.regionName" placement="top" >
+                    <el-text truncated style="width: 250px;">{{item.regionName}}</el-text>
+                  </el-tooltip>
+                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionId)" link title="编辑">
+                  </el-button>
+                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionId)" link title="删除">
+                  </el-button>
+                </div>
               </td>
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
@@ -62,7 +76,7 @@
         <el-button type="primary" @click="handleAddRegion">添加区域</el-button>
       </div>
     </el-form>
-    <AreaTree ref="areaRef"></AreaTree>
+    <AreaTree ref="areaRef" @reload="handleReload"></AreaTree>
     <div >
       <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>
@@ -76,12 +90,13 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi, scenicListApi} from '@/api/product/ticket';
+import {createApi, updateApi, selectApi} from '@/api/product/express';
 import {reactive, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
-import {successMsg} from "@/utils/message.js";
+import {confirmMsg, successMsg} from "@/utils/message.js";
 import {numberValidator} from "@/utils/common.js";
 import AreaTree from "@/components/AreaTree.vue";
+import {Delete, Edit} from "@element-plus/icons-vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -90,7 +105,6 @@ const formDataRef = ref();
 const areaRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
-const scenicList = ref([]);
 
 const formRules = reactive({
   title: [
@@ -104,6 +118,7 @@ const formRules = reactive({
 const formData = ref({
   id: null,
   title: null,
+  state: 1,
   chargeMode: 1,
   regionList: []
 });
@@ -112,15 +127,33 @@ const handleAddRegion = () => {
   areaRef.value.openDialog();
 }
 
+const handleEdit = (regionId) => {
+  console.log(regionId)
+}
+const handleDelete = (regionId) => {
+  confirmMsg("确定要删除该区域配置吗?", () => {
+    formData.value.regionList = formData.value.regionList.filter(item => item.regionId !== regionId);
+  })
+}
+
+const handleReload = (json) => {
+  formData.value.regionList.push({
+    regionId: json.regionId,
+    regionName: json.regionName,
+    firstPart: null,
+    firstPrice: null,
+    nextPart: null,
+    nextUnitPrice: null
+  });
+}
+
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.startDate = formData.value.dueDate[0];
-      formData.value.endDate = formData.value.dueDate[1];
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
-          successMsg("门票信息更新成功");
+          successMsg("快递模板更新成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -128,7 +161,7 @@ const handleSave = () => {
         })
       } else {
         createApi(formData.value).then(() => {
-          successMsg("门票添加成功");
+          successMsg("快递模板添加成功");
           showDialog.value = false;
           router.go(-1);
         }).finally(() => {
@@ -140,25 +173,13 @@ const handleSave = () => {
 }
 
 onMounted(() => {
-  scenicListApi().then(res => {
-    scenicList.value = res.data;
-  }).then(() => {
-    const params = route.params;
-    if (params.id !== undefined) {
-      loading.value = true;
-      // 详情页面进来不可点击
-      disabled.value = route.fullPath.startsWith("/product/ticket/detail");
-      selectApi(params).then(res => {
-        formData.value = res.data;
-        formData.value.dueDate = [res.data.startDate, res.data.endDate];
-        formData.value.introduceText = res.data.introduce;
-      }).finally(() => {
-        loading.value = false;
-      })
-    }
-  })
+  const params = route.params;
+  if (params.id) {
+    selectApi({id: params.id}).then(res => {
+      formData.value = res.data;
+    })
+  }
 })
-
 
 </script>
 
@@ -181,8 +202,8 @@ th.title {
 }
 td {
   height: 50px;
-  padding-bottom: 20px;
-  padding-top: 10px;
+  padding-bottom: 15px;
+  padding-top: 5px;
   text-align: center;
 }
 </style>

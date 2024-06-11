@@ -33,3 +33,9 @@ export const deleteApi = (data) => {
     });
 }
 
+export const selectApi = (params) => {
+    return request.get({
+        url: "/manage/express/template/select",
+        params
+    });
+}

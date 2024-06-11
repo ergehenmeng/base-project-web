@@ -42,10 +42,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import { listApi } from "@/api/product/express"
+import { listApi, deleteApi } from "@/api/product/express"
 import {Delete, Edit, Plus} from "@element-plus/icons-vue";
 import useUserStore from "@/store/user.js";
 import {useRouter} from "vue-router";
+import {confirmMsg, successMsg} from "@/utils/message.js";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -57,17 +58,26 @@ const handleCreate = () => {
   router.push("/product/express/create")
 }
 const handleEdit = (item) => {
-  console.log('handleEdit', item)
+  router.push("/product/express/edit/" + item.id);
 }
 const handleDelete = (item) => {
-  console.log('handleDelete', item)
+  confirmMsg("确定要删除该快递模板吗?", () => {
+    deleteApi({id: item.id}).then(res => {
+      successMsg('快递模板删除成功');
+      getPage();
+    })
+  })
 }
 onMounted(() => {
+  getPage();
+})
+
+const getPage = () => {
   if (selectAuth) {
     listApi().then(res => {
       expressList.value = res.data
     })
   }
-})
+}
 </script>
 
