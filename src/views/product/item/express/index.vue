@@ -45,14 +45,16 @@ import { ref } from 'vue'
 import { listApi } from "@/api/product/express"
 import {Delete, Edit, Plus} from "@element-plus/icons-vue";
 import useUserStore from "@/store/user.js";
+import {useRouter} from "vue-router";
 
+const router = useRouter();
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth("rfO0");
 
 const expressList = ref([])
 
 const handleCreate = () => {
-  console.log('handleCreate')
+  router.push("/product/express/create")
 }
 const handleEdit = (item) => {
   console.log('handleEdit', item)
@@ -61,9 +63,11 @@ const handleDelete = (item) => {
   console.log('handleDelete', item)
 }
 onMounted(() => {
-  listApi().then(res => {
-    expressList.value = res.data
-  })
+  if (selectAuth) {
+    listApi().then(res => {
+      expressList.value = res.data
+    })
+  }
 })
 </script>
 

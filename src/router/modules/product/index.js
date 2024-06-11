@@ -244,10 +244,32 @@ export default [
       {
         path: "express",
         name: "express",
-        component: () => import("@/views/product/item/express/index.vue"),
         meta: {
           title: "快递模板",
         },
+        children: [
+          {
+            path: "",
+            name: "expressIndex",
+            component: () => import("@/views/product/item/express/index.vue")
+          },
+          {
+            path: "create",
+            name: "expressCreate",
+            component: () => import("@/views/product/item/express/ExpressForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "expressEdit",
+            component: () => import("@/views/product/item/express/ExpressForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          }
+        ]
       },
       {
         path: "address",
