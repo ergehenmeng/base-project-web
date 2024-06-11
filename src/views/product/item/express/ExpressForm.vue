@@ -62,6 +62,7 @@
         <el-button type="primary" @click="handleAddRegion">添加区域</el-button>
       </div>
     </el-form>
+    <AreaTree ref="areaRef"></AreaTree>
     <div >
       <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>
@@ -80,11 +81,13 @@ import {reactive, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import {numberValidator} from "@/utils/common.js";
+import AreaTree from "@/components/AreaTree.vue";
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
+const areaRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
 const scenicList = ref([]);
@@ -106,13 +109,7 @@ const formData = ref({
 });
 
 const handleAddRegion = () => {
-  formData.value.regionList.push({
-    regionName: null,
-    firstPart: null,
-    firstPrice: null,
-    nextPart: null,
-    nextUnitPrice: null
-  });
+  areaRef.value.openDialog();
 }
 
 const handleSave = () => {
@@ -168,16 +165,19 @@ onMounted(() => {
 <style lang="scss" scoped>
 table, td, th {
   border-collapse: collapse;
-  border: 1px solid darkgrey;
+  border: 1px solid #dcdfe6;
   text-align: center;
 }
+th {
+  font-weight: 400;
+}
 th.item {
-  width: 200px;
-  height: 50px;
+  width: 180px;
+  height: 40px;
 }
 th.title {
-  width: 300px;
-  height: 50px;
+  width: 350px;
+  height: 40px;
 }
 td {
   height: 50px;

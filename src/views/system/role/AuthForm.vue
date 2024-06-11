@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="角色授权" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-scrollbar height="400px">
-      <el-tree class="role-menu-auth" ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps"
+      <el-tree ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps"
         :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading">
       </el-tree>
     </el-scrollbar>
