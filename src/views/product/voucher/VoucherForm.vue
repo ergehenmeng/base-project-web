@@ -20,17 +20,19 @@
         购买起始日起<el-input style="width: 50px; margin: 0 5px;" onkeyup="this.value=this.value.replace(/\D/g,'')" v-model="formData.validDays" maxlength="3" ></el-input>天有效
         </div>
         <div v-else>
-          <el-date-picker type="daterange" :disabled-date="disableBeforeDate" value-format="YYYY-MM-DD" v-model="formData.activityDate" style="width: 250px;" ></el-date-picker>
+          <el-date-picker type="daterange" :disabled-date="disableBeforeDate" value-format="YYYY-MM-DD" v-model="formData.activityDate" style="width: 350px;" ></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="可用时间段" prop="phone">
-        <el-input v-model="formData.phone" show-word-limit maxlength="13"/>
+      <el-form-item label="可用时间段" prop="timeList">
+        <div style="width: 350px;">
+          <el-time-picker is-range v-model="formData.timeList" style="width: 350px;" format="HH:mm" value-format="HH:mm"></el-time-picker>
+        </div>
       </el-form-item>
       <el-form-item label="划线价" prop="linePrice">
-        <el-input v-model="formData.linePrice" placeholder="划线价小于销售价时不显示" show-word-limit maxlength="5" @keyup="formData.salePrice=numberValidator(formData.salePrice);"/>
+        <el-input v-model="formData.linePrice" placeholder="划线价小于销售价时不显示" show-word-limit maxlength="8" @keyup="formData.linePrice=numberValidator(formData.linePrice);"/>
       </el-form-item>
       <el-form-item label="销售价" prop="salePrice">
-        <el-input v-model="formData.salePrice" show-word-limit maxlength="5" @keyup="formData.salePrice=numberValidator(formData.salePrice);"/>
+        <el-input v-model="formData.salePrice" show-word-limit maxlength="8" @keyup="formData.salePrice=numberValidator(formData.salePrice);"/>
       </el-form-item>
       <el-form-item label="库存" prop="stock">
         <el-input v-model="formData.stock" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="5"/>
@@ -44,6 +46,9 @@
       <el-form-item label="购买说明" prop="depict">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.depict" autosize
                   maxlength="200" show-word-limit />
+      </el-form-item>
+      <el-form-item label="封面图" prop="coverList">
+        <UploadImageList  v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="餐饮券介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
@@ -63,13 +68,14 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi} from '@/api/product/restaurant';
+import {createApi, selectApi, updateApi} from '@/api/product/voucher';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import RestaurantSelect from "@/components/RestaurantSelect.vue";
 import {disableBeforeDate, numberValidator} from "@/utils/common.js";
+import UploadImageList from "@/components/UploadImageList.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -90,8 +96,14 @@ const formRules = reactive({
   salePrice: [
     {required: true, message: "销售价不能为空", trigger: 'blur'},
   ],
+  timeList: [
+    {required: true, message: "可用时间段不能为空", trigger: 'blur', type: 'array'},
+  ],
   stock: [
     {required: true, message: "库存不能为空", trigger: 'blur'}
+  ],
+  coverList: [
+      {required: true, message: "封面图不能为空", trigger: 'change', type: 'array'},
   ],
   quota: [
     {required: true, message: "限购数量不能为空", trigger: 'blur'},
@@ -118,6 +130,7 @@ let formData = ref({
   validDays: null,
   effectDate: null,
   expireDate: null,
+  timeList: [],
   effectTime: null,
   expireTime: null,
   coverList: [],
@@ -137,6 +150,8 @@ const handleSave = () => {
         formData.value.effectDate = null;
         formData.value.expireDate = null;
       }
+      formData.value.effectTime = formData.value.timeList[0];
+      formData.value.expireTime = formData.value.timeList[1];
       if (formData.value.id) {
         updateApi(formData.value).then(() => {
           successMsg("餐饮券信息更新成功");
@@ -171,8 +186,18 @@ onMounted(() => {
       } else {
         formData.value.coverList = [];
       }
-      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+      formData.value.timeList = [res.data.effectTime, res.data.expireTime];
       formData.value.introduceText = res.data.introduce;
+      validTypeChange(formData.value.validType)
+      if (res.data.validDays > 0) {
+        formData.value.validType = 0;
+        formData.value.validDays = res.data.validDays;
+      } else {
+        formData.value.validDays = null;
+        formData.value.validType = 1;
+        formData.value.activityDate = [res.data.effectDate, res.data.expireDate];
+      }
+      console.log(formData.value)
     }).finally(() => {
       loading.value = false;
     })
