@@ -46,11 +46,11 @@
             </el-button>
             <el-button v-has-perm="'E4O0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
-            <el-button v-has-perm="'w4O0'" v-if="scope.row.state === 0"  type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
+            <el-button v-has-perm="'w4O0'" v-show="scope.row.state === 0"  type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
             </el-button>
-            <el-button v-has-perm="'14O0'" v-if="scope.row.state === 1"  type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
+            <el-button v-has-perm="'14O0'" v-show="scope.row.state === 1"  type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
             </el-button>
-            <el-button v-has-perm="'z4O0'" v-if="scope.row.state !== 2"  type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
+            <el-button v-has-perm="'z4O0'" v-show="scope.row.state !== 2"  type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
             </el-button>
             <el-button v-has-perm="'Q4O0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link title="设置推荐状态">
             </el-button>

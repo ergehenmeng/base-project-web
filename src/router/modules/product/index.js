@@ -366,10 +366,40 @@ export default [
       {
         path: "restaurant",
         name: "restaurant",
-        component: () => import("@/views/product/voucher/restaurant/index.vue"),
         meta: {
           title: "餐饮商家",
         },
+        children: [
+          {
+            path: "",
+            name: "restaurantIndex",
+            component: () => import("@/views/product/voucher/restaurant/index.vue")
+          },
+          {
+            path: "create",
+            name: "restaurantCreate",
+            component: () => import("@/views/product/voucher/restaurant/RestaurantForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "restaurantEdit",
+            component: () => import("@/views/product/voucher/restaurant/RestaurantForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "restaurantDetail",
+            component: () => import("@/views/product/voucher/restaurant/RestaurantForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "voucher",

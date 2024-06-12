@@ -37,10 +37,10 @@
             </el-button>
             <el-button v-has-perm="'iqK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
-            <el-button v-has-perm="'qqK0'" v-if="scope.row.state === 1" type="warning" :icon="Lock"
+            <el-button v-has-perm="'qqK0'" v-show="scope.row.state === 1" type="warning" :icon="Lock"
               @click="handleLock(scope.row)" link title="锁定">
             </el-button>
-            <el-button v-has-perm="'8qK0'" v-if="scope.row.state === 0" type="success" :icon="Unlock"
+            <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock"
               @click="handleUnlock(scope.row)" link title="解锁">
             </el-button>
             <el-button v-has-perm="'jqK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link

@@ -62,7 +62,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button v-if="scope.row.grade === 1" v-has-perm="'KjK0'" type="primary" :icon="CirclePlus"
+            <el-button v-has-perm="'KjK0'" v-show="scope.row.grade === 1"  type="primary" :icon="CirclePlus"
               @click="handleCreate(scope.row)" link title="新增">
             </el-button>
             <el-button v-has-perm="'uhK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">

@@ -47,12 +47,12 @@
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button v-has-perm="'dBU0'" v-if="scope.row.state === true" type="primary" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论">
+            <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="primary" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论">
             </el-button>
-            <el-button v-has-perm="'hBU0'" v-if="scope.row.topState === 0" type="success" :icon="Top" @click="handleTop(scope.row)" link
+            <el-button v-has-perm="'hBU0'" v-show="scope.row.topState === 0" type="success" :icon="Top" @click="handleTop(scope.row)" link
                        title="置顶评论">
             </el-button>
-            <el-button v-has-perm="'XBU0'" v-if="scope.row.topState === 1" type="danger" :icon="Bottom" @click="handleUnTop(scope.row)" link
+            <el-button v-has-perm="'XBU0'" v-show="scope.row.topState === 1" type="danger" :icon="Bottom" @click="handleUnTop(scope.row)" link
                        title="取消置顶">
             </el-button>
           </template>

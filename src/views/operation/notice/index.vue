@@ -35,9 +35,9 @@
           <template #default="scope">
             <el-button v-has-perm="'kJU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
-            <el-button v-if="scope.row.state === 0" v-has-perm="'lJU0'" type="primary" :icon="Top" @click="handlePublish(scope.row)" link title="发布">
+            <el-button v-has-perm="'lJU0'" v-show="scope.row.state === 0"  type="primary" :icon="Top" @click="handlePublish(scope.row)" link title="发布">
             </el-button>
-            <el-button v-if="scope.row.state === 1" v-has-perm="'OJU0'" type="primary" :icon="Bottom" @click="handleCancel(scope.row)" link title="下架">
+            <el-button v-has-perm="'OJU0'" v-show="scope.row.state === 1" type="primary" :icon="Bottom" @click="handleCancel(scope.row)" link title="下架">
             </el-button>
             <el-button v-has-perm="'cJU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link
                        title="删除">
