@@ -77,12 +77,6 @@ export const setDayApi = (data) => {
     });
 }
 
-export const homestayListApi = () => {
-    return request.get({
-        url: "/manage/homestay/list"
-    });
-}
-
 export const recommendApi = (data) => {
     return request.post({
         url: "/manage/homestay/room/recommend",

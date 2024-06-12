@@ -74,8 +74,7 @@ const disabled = ref(false);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "旅行社名称不能为空", trigger: 'blur'},
-    {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+    {required: true, message: "旅行社名称不能为空", trigger: 'blur'}
   ],
   logoUrl: [
     {required: true, message: "请上传旅行社logo", trigger: 'change'}

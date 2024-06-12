@@ -8,12 +8,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="所属旅行社" prop="travelAgencyId">
-        <el-select v-model="formData.travelAgencyId">
-          <el-option v-for="item in travelList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 2">
-            <span style="float: left">{{ item.title }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : (item.state === 2 ? '强制下架' :'已上架') }}</span>
-          </el-option>
-        </el-select>
+        <TravelSelect v-model="formData.travelAgencyId" :clearable="false" :disabled="disabled"></TravelSelect>
       </el-form-item>
       <el-form-item label="出发城市" prop="startCity">
         <ProvinceCitySelect v-model="formData.startCity" />
@@ -108,13 +103,14 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi, travelListApi} from '@/api/product/line';
+import {createApi, selectApi, updateApi} from '@/api/product/line';
 import {reactive, ref} from 'vue';
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import ProvinceCitySelect from "@/components/ProvinceCitySelect.vue";
 import WangEditor from "@/components/WangEditor.vue";
 import UploadImageList from "@/components/UploadImageList.vue";
+import TravelSelect from "@/components/TravelSelect.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -122,7 +118,6 @@ const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
-const travelList = ref([]);
 const formRules = reactive({
   title: [
     {required: true, message: "线路名称不能为空", trigger: 'blur'}
@@ -223,30 +218,23 @@ const handleSave = () => {
 }
 
 onMounted(() => {
-  travelListApi().then(res => {
-    travelList.value = res.data;
-  }).then(() => {
-    const params = route.params;
-    if (params.id !== undefined) {
-      loading.value = true;
-      // 详情页面进来不可点击
-      disabled.value = route.fullPath.startsWith("/product/line/detail");
-      selectApi(params).then(res => {
-        formData.value = res.data;
-        formData.value.startCity = [res.data.startProvinceId, res.data.startCityId];
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(",");
-        }
-        formData.value.introduceText = res.data.introduce;
-      }).finally(() => {
-        loading.value = false;
-      })
-    }
-  })
-
-
+  const params = route.params;
+  if (params.id !== undefined) {
+    loading.value = true;
+    // 详情页面进来不可点击
+    disabled.value = route.fullPath.startsWith("/product/line/detail");
+    selectApi(params).then(res => {
+      formData.value = res.data;
+      formData.value.startCity = [res.data.startProvinceId, res.data.startCityId];
+      if (res.data.coverUrl) {
+        formData.value.coverList = res.data.coverUrl.split(",");
+      }
+      formData.value.introduceText = res.data.introduce;
+    }).finally(() => {
+      loading.value = false;
+    })
+  }
 })
-
 
 </script>
 

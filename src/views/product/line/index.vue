@@ -6,9 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="旅行社">
-          <el-select v-model="queryParams.travelAgencyId" clearable>
-            <el-option v-for="item in travelList" :key="item.id" :value="item.id" :label="item.title" />
-          </el-select>
+          <TravelSelect v-model="queryParams.travelAgencyId"></TravelSelect>
         </el-form-item>
         <el-form-item label="游玩天数">
           <el-select v-model="queryParams.duration" clearable style="width: 130px !important;">
@@ -90,7 +88,7 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, travelListApi } from '@/api/product/line';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/line';
 import { onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
@@ -98,9 +96,9 @@ import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
 import ProvinceCitySelect from "@/components/ProvinceCitySelect.vue";
 import useAreaStore from "@/store/area.js";
+import TravelSelect from "@/components/TravelSelect.vue";
 
 const areaStore = useAreaStore();
-const travelList = ref([]);
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -213,13 +211,6 @@ const handleDetail = (row) => {
   router.push("/product/line/detail/" + row.id);
 }
 
-onMounted(() => {
-  if (selectAuth) {
-    travelListApi().then(res => {
-      travelList.value = res.data;
-    })
-  }
-})
 
 </script>
 

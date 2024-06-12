@@ -100,8 +100,7 @@ const disabled = ref(false);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "民宿名称不能为空", trigger: 'blur'},
-    {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+    {required: true, message: "民宿名称不能为空", trigger: 'blur'}
   ],
   merchantId: [
       {required: true, message: "请选择商户", trigger: 'change'}

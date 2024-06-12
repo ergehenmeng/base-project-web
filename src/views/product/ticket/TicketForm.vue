@@ -7,12 +7,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="所属景区" prop="scenicId">
-        <el-select v-model="formData.scenicId">
-          <el-option v-for="item in scenicList" :key="item.id" :value="item.id" :label="item.scenicName" :disabled="item.state === 2">
-            <span style="float: left">{{ item.scenicName }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : (item.state === 2 ? '强制下架' :'已上架') }}</span>
-          </el-option>
-        </el-select>
+        <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled"></ScenicSelect>
       </el-form-item>
       <el-form-item label="票种" prop="category">
         <el-select v-model="formData.category">
@@ -74,12 +69,13 @@
 </template>
 
 <script setup>
-import {createApi, selectApi, updateApi, scenicListApi} from '@/api/product/ticket';
+import {createApi, selectApi, updateApi} from '@/api/product/ticket';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import { numberValidator } from "@/utils/common.js";
+import ScenicSelect from "@/components/ScenicSelect.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -87,7 +83,6 @@ const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
-const scenicList = ref([]);
 
 const formRules = reactive({
   title: [
@@ -159,23 +154,19 @@ const handleSave = () => {
 }
 
 onMounted(() => {
-  scenicListApi().then(res => {
-    scenicList.value = res.data;
-  }).then(() => {
-    const params = route.params;
-    if (params.id !== undefined) {
-      loading.value = true;
-      // 详情页面进来不可点击
-      disabled.value = route.fullPath.startsWith("/product/ticket/detail");
-      selectApi(params).then(res => {
-        formData.value = res.data;
-        formData.value.dueDate = [res.data.startDate, res.data.endDate];
-        formData.value.introduceText = res.data.introduce;
-      }).finally(() => {
-        loading.value = false;
-      })
-    }
-  })
+  const params = route.params;
+  if (params.id !== undefined) {
+    loading.value = true;
+    // 详情页面进来不可点击
+    disabled.value = route.fullPath.startsWith("/product/ticket/detail");
+    selectApi(params).then(res => {
+      formData.value = res.data;
+      formData.value.dueDate = [res.data.startDate, res.data.endDate];
+      formData.value.introduceText = res.data.introduce;
+    }).finally(() => {
+      loading.value = false;
+    })
+  }
 })
 
 

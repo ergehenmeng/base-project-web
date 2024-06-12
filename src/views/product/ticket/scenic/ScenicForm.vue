@@ -85,8 +85,7 @@ const disabled = ref(false);
 
 const formRules = reactive({
   scenicName: [
-    {required: true, message: "景区名称不能为空", trigger: 'blur'},
-    {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+    {required: true, message: "景区名称不能为空", trigger: 'blur'}
   ],
   level: [
     {required: true, message: "请选择景区等级", trigger: 'change'}

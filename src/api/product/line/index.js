@@ -56,12 +56,6 @@ export const platformUnShelvesApi = (data) => {
     });
 }
 
-export const travelListApi = () => {
-    return request.get({
-        url: "/manage/travel/list"
-    });
-}
-
 export const monthApi = (params) => {
     return request.get({
         url: "/manage/line/config/month",

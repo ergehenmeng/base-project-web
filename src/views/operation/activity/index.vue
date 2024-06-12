@@ -3,9 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="景区">
-          <el-select v-model="queryParams.scenicId" style="width: 300px !important;" clearable>
-            <el-option v-for="item in scenicList" :key="item.id" :value="item.id" :label="item.scenicName" />
-          </el-select>
+          <ScenicSelect v-model="queryParams.scenicId" style="width: 300px !important;"></ScenicSelect>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getList">搜索</el-button>
@@ -61,20 +59,19 @@
 </template>
 <script setup>
 import {listApi, deleteApi,} from '@/api/operation/activity';
-import {onMounted, reactive, ref} from 'vue';
+import { reactive, ref} from 'vue';
 import {Edit, Delete, Plus} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from "@/store/dict.js";
 import dayjs from "dayjs";
 import {useRouter} from "vue-router";
-import {scenicListApi} from "@/api/product/ticket";
+import ScenicSelect from "@/components/ScenicSelect.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('banner_type');
-const scenicList = ref([]);
 
 const loading = ref(false);
 const calendar = ref();
@@ -150,13 +147,6 @@ const handleEdit = (item) => {
   router.push("/operation/activity/edit/" + item.id)
 }
 
-onMounted(() => {
-  if (selectAuth) {
-    scenicListApi().then(res => {
-      scenicList.value = res.data;
-    })
-  }
-})
 
 </script>
 <style lang="scss" scoped>

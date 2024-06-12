@@ -404,10 +404,40 @@ export default [
       {
         path: "voucher",
         name: "voucher",
-        component: () => import("@/views/product/voucher/index.vue"),
         meta: {
           title: "餐饮券",
         },
+        children: [
+          {
+            path: "",
+            name: "voucherIndex",
+            component: () => import("@/views/product/voucher/index.vue")
+          },
+          {
+            path: "create",
+            name: "voucherCreate",
+            component: () => import("@/views/product/voucher/VoucherForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "voucherEdit",
+            component: () => import("@/views/product/voucher/VoucherForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "voucherDetail",
+            component: () => import("@/views/product/voucher/VoucherForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "venue",

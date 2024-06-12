@@ -6,9 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="门票名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="景区">
-          <el-select v-model="queryParams.scenicId" style="width: 250px !important;" clearable>
-            <el-option v-for="item in scenicList" :key="item.id" :value="item.id" :label="item.scenicName" />
-          </el-select>
+          <ScenicSelect v-model="queryParams.scenicId" style="width: 250px !important;"></ScenicSelect>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -70,14 +68,14 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, scenicListApi } from '@/api/product/ticket';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/ticket';
 import { onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
+import ScenicSelect from "@/components/ScenicSelect.vue";
 
-const scenicList = ref([]);
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -196,14 +194,6 @@ const handleEdit = (row) => {
 const handleDetail = (row) => {
   router.push("/product/ticket/detail/" + row.id);
 }
-
-onMounted(() => {
-  if (selectAuth) {
-    scenicListApi().then(res => {
-      scenicList.value = res.data;
-    })
-  }
-})
 
 </script>
 

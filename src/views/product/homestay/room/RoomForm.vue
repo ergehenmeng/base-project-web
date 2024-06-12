@@ -7,12 +7,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20"/>
       </el-form-item>
       <el-form-item label="所属民宿" prop="homestayId">
-        <el-select v-model="formData.homestayId">
-          <el-option v-for="item in homestayList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 2">
-            <span style="float: left">{{ item.title }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : (item.state === 2 ? '强制下架' :'已上架') }}</span>
-          </el-option>
-        </el-select>
+        <HomestaySelect v-model="formData.homestayId" :disabled="disabled" :clearable="false"></HomestaySelect>
       </el-form-item>
       <el-form-item label="房型" prop="roomType">
         <el-select v-model="formData.roomType">
@@ -75,13 +70,14 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi, homestayListApi} from '@/api/product/room';
+import {createApi, updateApi, selectApi } from '@/api/product/room';
 import {reactive, ref} from 'vue';
 import WangEditor from "@/components/WangEditor.vue";
 import {useRoute, useRouter} from "vue-router";
 import {successMsg} from "@/utils/message.js";
 import UploadImageList from "@/components/UploadImageList.vue";
 import useDictStore from "@/store/dict.js";
+import HomestaySelect from "@/components/HomestaySelect.vue";
 
 const dictStore = useDictStore();
 const infrastructureTagList = dictStore.getDict("infrastructure_tag")
@@ -91,12 +87,10 @@ const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
-const homestayList = ref([]);
 
 const formRules = reactive({
   title: [
-    {required: true, message: "房型名称不能为空", trigger: 'blur'},
-    {min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur'}
+    {required: true, message: "房型名称不能为空", trigger: 'blur'}
   ],
   homestayId: [
     {required: true, message: "请选择所属民宿", trigger: 'change'}
@@ -166,32 +160,28 @@ const handleSave = () => {
 }
 
 onMounted(() => {
-  homestayListApi().then(res => {
-    homestayList.value = res.data;
-  }).then(ref => {
-    const params = route.params;
-    if (params.id !== undefined) {
-      loading.value = true;
-      // 详情页面进来不可点击
-      disabled.value = route.fullPath.startsWith("/product/room/detail");
-      selectApi(params).then(res => {
-        formData.value = res.data;
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(",");
-        } else {
-          formData.value.coverList = [];
-        }
-        if (res.data.infrastructure) {
-          formData.value.infrastructureList = res.data.infrastructure.split(",").map(item => parseInt(item));
-        } else {
-          formData.value.infrastructureList = [];
-        }
-        formData.value.introduceText = res.data.introduce;
-      }).finally(() => {
-        loading.value = false;
-      })
-    }
-  })
+  const params = route.params;
+  if (params.id !== undefined) {
+    loading.value = true;
+    // 详情页面进来不可点击
+    disabled.value = route.fullPath.startsWith("/product/room/detail");
+    selectApi(params).then(res => {
+      formData.value = res.data;
+      if (res.data.coverUrl) {
+        formData.value.coverList = res.data.coverUrl.split(",");
+      } else {
+        formData.value.coverList = [];
+      }
+      if (res.data.infrastructure) {
+        formData.value.infrastructureList = res.data.infrastructure.split(",").map(item => parseInt(item));
+      } else {
+        formData.value.infrastructureList = [];
+      }
+      formData.value.introduceText = res.data.introduce;
+    }).finally(() => {
+      loading.value = false;
+    })
+  }
 })
 
 </script>

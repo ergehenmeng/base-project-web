@@ -55,3 +55,10 @@ export const platformUnShelvesApi = (data) => {
         data
     });
 }
+
+
+export const listApi = () => {
+    return request.get({
+        url: "/manage/travel/list"
+    });
+}
