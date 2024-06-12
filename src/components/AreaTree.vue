@@ -25,7 +25,7 @@ const showDialog = ref(false);
 const loading = ref(false);
 const checkedKeys = ref([]);
 const expendKeys = ref([]);
-const areaList = areaStore.areaList;
+const areaList = ref([]);
 const emit = defineEmits(['reload']);
 
 const defaultProps = {
@@ -33,8 +33,31 @@ const defaultProps = {
   children: 'children'
 }
 
-const openDialog = async (row) => {
+const openDialog = (shieldList, selectedList) => {
+  areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList);
+  checkedKeys.value = selectedList;
   showDialog.value = true;
+}
+
+const getNoCheckedChildren = (areaList, shieldList) => {
+  if (shieldList.length === 0) {
+    return areaList;
+  }
+  const nodeList = [];
+  areaList.forEach(item => {
+    if (item.children.length > 0) {
+      const children = getNoCheckedChildren(item.children, shieldList)
+      if (children.length > 0) {
+        item.children = children;
+        nodeList.push(item);
+      }
+    } else {
+      if (!shieldList.includes(item.id)) {
+        nodeList.push(item);
+      }
+    }
+  });
+  return nodeList;
 }
 
 const handleSave = () => {
@@ -56,7 +79,7 @@ const handleSave = () => {
     })
   }
   const checkedKeys = treeRef.value?.getCheckedKeys(false);
-  emit('reload', {regionName: regionList.join(','), regionId: checkedKeys.join(',')})
+  emit('reload', {regionName: regionList.join(','), regionCode: checkedKeys.join(',')})
   showDialog.value = false;
 }
 

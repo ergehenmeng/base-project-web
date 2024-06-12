@@ -16,6 +16,8 @@
             </div>
             <div style="float: right; margin-right: 30px;">
               <el-text style="margin-right: 20px;">
+                <span style="margin-right: 20px;" v-if="item.state === 1">状态：<span style="color: #67C23A;">启用</span></span>
+                <span style="margin-right: 20px;" v-else>状态：<span style="color: #F56C6C;">禁用</span></span>
                 <span style="margin-right: 20px;">创建时间：{{item.createTime}}</span>
                 <span>更新时间：{{item.updateTime}}</span>
               </el-text>
@@ -41,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import {computed, h, ref} from 'vue'
 import { listApi, deleteApi } from "@/api/product/express"
 import {Delete, Edit, Plus} from "@element-plus/icons-vue";
 import useUserStore from "@/store/user.js";

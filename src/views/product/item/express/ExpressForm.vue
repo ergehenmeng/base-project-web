@@ -13,7 +13,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="计费方式" prop="chargeMode">
-        <el-radio-group v-model="formData.chargeMode" >
+        <el-radio-group v-model="formData.chargeMode" @change="switchMode">
           <el-radio :value="1" >按件数</el-radio>
           <el-radio :value="2" >按重量</el-radio>
         </el-radio-group>
@@ -23,20 +23,20 @@
           <table>
             <tr>
               <th class="title">配送区域</th>
-              <th class="item">首件或首重</th>
-              <th class="item">首件或首重的价格(元)</th>
-              <th class="item">续重或续件</th>
-              <th class="item">续重或续件的单价(元)</th>
+              <th class="item">{{ title.firstPart }}</th>
+              <th class="item">{{ title.firstPrice }}</th>
+              <th class="item">{{ title.nextPart }}</th>
+              <th class="item">{{ title.nextUnitPrice }}</th>
             </tr>
-            <tr v-for="(item, index) in formData.regionList" :key="item.regionId">
+            <tr v-for="(item, index) in formData.regionList" :key="item.regionCode">
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
                   <el-tooltip :content="item.regionName" placement="top" >
                     <el-text truncated style="width: 250px;">{{item.regionName}}</el-text>
                   </el-tooltip>
-                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionId)" link title="编辑">
+                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionCode)" link title="编辑">
                   </el-button>
-                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionId)" link title="删除">
+                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionCode)" link title="删除">
                   </el-button>
                 </div>
               </td>
@@ -113,6 +113,9 @@ const formRules = reactive({
   chargeMode: [
     {required: true, message: "请选择计费方式", trigger: 'change'}
   ],
+  regionList: [
+      {required: true, message: "请选择配送区域", trigger: 'change'}
+  ]
 })
 
 const formData = ref({
@@ -124,21 +127,23 @@ const formData = ref({
 });
 
 const handleAddRegion = () => {
-  areaRef.value.openDialog();
+  const regionCodes = formData.value.regionList.map(item => item.regionCode).join(',');
+  areaRef.value.openDialog(regionCodes.split(','));
 }
 
-const handleEdit = (regionId) => {
-  console.log(regionId)
+const handleEdit = (regionCode) => {
+  const regionCodes = formData.value.regionList.map(item => item.regionCode).filter(item => item.regionCode !== regionCode).join(',');
+  areaRef.value.openDialog(regionCodes.split(','), regionCode);
 }
-const handleDelete = (regionId) => {
+const handleDelete = (regionCode) => {
   confirmMsg("确定要删除该区域配置吗?", () => {
-    formData.value.regionList = formData.value.regionList.filter(item => item.regionId !== regionId);
+    formData.value.regionList = formData.value.regionList.filter(item => item.regionCode !== regionCode);
   })
 }
 
 const handleReload = (json) => {
   formData.value.regionList.push({
-    regionId: json.regionId,
+    regionCode: json.regionCode,
     regionName: json.regionName,
     firstPart: null,
     firstPrice: null,
@@ -172,12 +177,38 @@ const handleSave = () => {
   })
 }
 
+const title = ref({})
+
+const switchMode = (val) => {
+  if (val === 1) {
+    title.value = {
+      firstPart: '首件',
+      nextPart: '续件',
+      firstPrice: '首件运费(元)',
+      nextUnitPrice: '续件运费(元)'
+    }
+  } else {
+    title.value = {
+      firstPart: '首重(Kg)',
+      nextPart: '续重(Kg)',
+      firstPrice: '首重运费(元)',
+      nextUnitPrice: '续重运费(元)'
+    }
+  }
+}
+
 onMounted(() => {
   const params = route.params;
   if (params.id) {
-    selectApi({id: params.id}).then(res => {
-      formData.value = res.data;
-    })
+    loading.value = true;
+    try {
+      selectApi({id: params.id}).then(res => {
+        formData.value = res.data;
+        switchMode(res.data.chargeMode);
+      })
+    } finally {
+      loading.value = false;
+    }
   }
 })
 
