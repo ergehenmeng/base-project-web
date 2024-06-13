@@ -5,22 +5,8 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="场地名称" clearable @keyup.enter="search" />
         </el-form-item>
-        <el-form-item label="场地类型">
-          <el-select v-model="queryParams.venueType" clearable style="width: 130px !important;">
-            <el-option label="篮球馆" :value="1" />
-            <el-option label="网球馆" :value="2" />
-            <el-option label="羽毛球馆" :value="3" />
-            <el-option label="乒乓球馆" :value="4" />
-            <el-option label="游泳馆" :value="5" />
-            <el-option label="健身馆" :value="6" />
-            <el-option label="瑜伽馆" :value="7" />
-            <el-option label="保龄馆" :value="8" />
-            <el-option label="足球馆" :value="9" />
-            <el-option label="排球馆" :value="10" />
-            <el-option label="田径馆" :value="11" />
-            <el-option label="综合馆" :value="12" />
-            <el-option label="跆拳道馆" :value="13" />
-          </el-select>
+        <el-form-item label="场馆名称">
+          <VenueSelect v-model="queryParams.venueId" style="width: 250px;"></VenueSelect>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable style="width: 130px !important;">
@@ -32,7 +18,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'mwO0'">
+        <el-form-item class="right-button" v-has-perm="'OCO0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
@@ -48,26 +34,26 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="场地名称" min-width="180" />
-        <el-table-column prop="venueType" label="场地类型" min-width="100" :formatter="formatter"/>
+        <el-table-column prop="venueName" label="所属场馆" min-width="100" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
-        <el-table-column prop="openTime" label="营业时间" width="150" />
-        <el-table-column prop="telephone" label="商家电话" width="150" />
-        <el-table-column prop="detailAddress" label="详细地址" width="200" />
+        <el-table-column prop="sort" label="排序" width="75">
+          <template #default="scope">
+            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'LwO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
+            <el-button v-has-perm="'cCO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
-            <el-button v-has-perm="'BwO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
+            <el-button v-has-perm="'DCO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
             </el-button>
-            <el-button v-has-perm="'7wO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
+            <el-button v-has-perm="'nCO0'" v-show="scope.row.state === 1"  type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
             </el-button>
-            <el-button v-has-perm="'WwO0'" v-show="scope.row.state === 1"  type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架">
+            <el-button v-has-perm="'YCO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
             </el-button>
-            <el-button v-has-perm="'3wO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架">
-            </el-button>
-            <el-button v-has-perm="'TwO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
+            <el-button v-has-perm="'uCO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除">
             </el-button>
           </template>
         </el-table-column>
@@ -76,29 +62,41 @@
                      :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
     </div>
   </div>
+  <SiteForm ref="formRef" @reload="getPage"></SiteForm>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/venue';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, sortApi } from '@/api/product/site';
 import { onMounted, reactive, ref } from 'vue';
 import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
+import VenueSelect from "@/components/VenueSelect.vue";
+import SiteForm from "@/views/product/venue/site/SiteForm.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth("2wO0");
+const selectAuth = userStore.hasAuth("lCO0");
+const sortAuth = userStore.hasAuth("uCO0");
+const formRef = ref();
 
 const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
   state: null,
-  venueType: null
+  venueId: null
 })
+
+const handleSort = (row) => {
+  const data = { id: row.id, sortBy: row.sort };
+  sortApi(data).then(() => {
+    getPage();
+  })
+}
 
 const getPage = async () => {
   loading.value = true;
@@ -205,15 +203,11 @@ const handlePlatformUnShelves = (row) => {
 }
 
 const handleCreate = () => {
-  router.push("/product/site/create");
+  formRef.value.openDialog({})
 }
 
 const handleEdit = (row) => {
-  router.push("/product/site/edit/" + row.id);
-}
-
-const handleDetail = (row) => {
-  router.push("/product/site/detail/" + row.id);
+  formRef.value.openDialog(row)
 }
 
 

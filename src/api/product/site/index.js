@@ -55,3 +55,11 @@ export const platformUnShelvesApi = (data) => {
         data
     });
 }
+
+
+export const sortApi = (data) => {
+    return request.post({
+        url: "/manage/venue/site/sort",
+        data
+    });
+}

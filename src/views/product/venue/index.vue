@@ -78,9 +78,9 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/venue';
-import { onMounted, reactive, ref } from 'vue';
-import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
+import {deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi} from '@/api/product/venue';
+import {onMounted, reactive, ref} from 'vue';
+import {Bottom, Delete, Document, Download, Edit, Plus, Top} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";

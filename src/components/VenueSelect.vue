@@ -25,7 +25,7 @@ const venueId = defineModel();
 
 onMounted(() => {
   listApi().then(res => {
-    listApi.value = res.data
+    venueList.value = res.data
   })
 });
 
