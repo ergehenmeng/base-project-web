@@ -442,10 +442,40 @@ export default [
       {
         path: "venue",
         name: "venue",
-        component: () => import("@/views/product/venue/index.vue"),
         meta: {
           title: "场馆管理",
         },
+        children: [
+          {
+            path: "",
+            name: "venueIndex",
+            component: () => import("@/views/product/venue/index.vue")
+          },
+          {
+            path: "create",
+            name: "venueCreate",
+            component: () => import("@/views/product/venue/VenueForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "venueEdit",
+            component: () => import("@/views/product/venue/VenueForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "venueDetail",
+            component: () => import("@/views/product/venue/VenueForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
       {
         path: "site",
