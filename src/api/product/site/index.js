@@ -2,62 +2,56 @@ import request from "@/utils/request";
 
 export const listPageApi = (params) => {
     return request.get({
-        url: "/manage/venue/listPage",
+        url: "/manage/venue/site/listPage",
         params,
     });
 };
 
 export const createApi = (data) => {
     return request.post({
-        url: "/manage/venue/create",
+        url: "/manage/venue/site/create",
         data
     });
 }
 
 export const updateApi = (data) => {
     return request.post({
-        url: "/manage/venue/update",
+        url: "/manage/venue/site/update",
         data
     });
 }
 
 export const deleteApi = (data) => {
     return request.post({
-        url: "/manage/venue/delete",
+        url: "/manage/venue/site/delete",
         data
     });
 }
 
 export const selectApi = (params) => {
     return request.get({
-        url: "/manage/venue/select",
+        url: "/manage/venue/site/select",
         params
     });
 }
 
 export const shelvesApi = (data) => {
     return request.post({
-        url: "/manage/venue/shelves",
+        url: "/manage/venue/site/shelves",
         data
     });
 }
 
 export const unShelvesApi = (data) => {
     return request.post({
-        url: "/manage/venue/unShelves",
+        url: "/manage/venue/site/unShelves",
         data
     });
 }
 
 export const platformUnShelvesApi = (data) => {
     return request.post({
-        url: "/manage/venue/platformUnShelves",
+        url: "/manage/venue/site/platformUnShelves",
         data
     });
 }
-
-export const listApi = () => {
-    return request.get({
-        url: "/manage/venue/list"
-    });
-};

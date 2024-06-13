@@ -28,10 +28,9 @@ export const deleteApi = (data) => {
     });
 }
 
-export const configListApi = (params) => {
+export const configListApi = () => {
     return request.get({
-        url: "/manage/news/config/list",
-        params
+        url: "/manage/news/config/list"
     });
 }
 

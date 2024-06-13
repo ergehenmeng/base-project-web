@@ -1,9 +1,8 @@
 import request from "@/utils/request";
 
-export const listApi = (params) => {
+export const listApi = () => {
     return request.get({
-        url: "/manage/item/tag/list",
-        params,
+        url: "/manage/item/tag/list"
     });
 };
 

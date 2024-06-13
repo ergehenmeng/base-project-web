@@ -480,10 +480,40 @@ export default [
       {
         path: "site",
         name: "site",
-        component: () => import("@/views/product/venue/site/index.vue"),
         meta: {
           title: "场地管理",
         },
+        children: [
+          {
+            path: "",
+            name: "siteIndex",
+            component: () => import("@/views/product/venue/site/index.vue")
+          },
+          {
+            path: "create",
+            name: "siteCreate",
+            component: () => import("@/views/product/venue/site/SiteForm.vue"),
+            meta: {
+              title: "新增",
+            },
+          },
+          {
+            path: "edit/:id",
+            name: "siteEdit",
+            component: () => import("@/views/product/venue/site/SiteForm.vue"),
+            meta: {
+              title: "编辑",
+            },
+          },
+          {
+            path: "detail/:id",
+            name: "siteDetail",
+            component: () => import("@/views/product/venue/site/SiteForm.vue"),
+            meta: {
+              title: "查看",
+            },
+          }
+        ]
       },
     ],
   },
