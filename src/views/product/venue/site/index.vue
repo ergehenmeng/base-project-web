@@ -38,13 +38,15 @@
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
+            <el-button v-has-perm="'NCO0'" type="info" :icon="ScaleToOriginal" @click="handleDetail(scope.row)" link title="价格设置">
+            </el-button>
             <el-button v-has-perm="'cCO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
             </el-button>
             <el-button v-has-perm="'DCO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架">
@@ -67,7 +69,7 @@
 <script setup>
 import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, sortApi } from '@/api/product/site';
 import { onMounted, reactive, ref } from 'vue';
-import {Edit, Delete, Plus, Top, Bottom, Download, Document} from '@element-plus/icons-vue';
+import {Edit, Delete, Plus, Top, Bottom, Download, ScaleToOriginal} from '@element-plus/icons-vue';
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
@@ -209,7 +211,9 @@ const handleCreate = () => {
 const handleEdit = (row) => {
   formRef.value.openDialog(row)
 }
-
+const handleDetail = (row) => {
+  router.push("/product/site/detail/" + row.id);
+}
 
 </script>
 

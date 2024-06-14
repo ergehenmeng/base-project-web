@@ -508,7 +508,7 @@ export default [
           {
             path: "detail/:id",
             name: "siteDetail",
-            component: () => import("@/views/product/venue/site/SiteForm.vue"),
+            component: () => import("@/views/product/venue/site/SitePriceForm.vue"),
             meta: {
               title: "查看",
             },

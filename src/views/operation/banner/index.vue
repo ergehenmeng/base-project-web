@@ -70,7 +70,7 @@
         <el-table-column prop="jumpUrl" label="跳转地址" width="180"/>
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" width="180"/>

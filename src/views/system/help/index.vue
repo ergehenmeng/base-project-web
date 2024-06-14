@@ -32,7 +32,7 @@
         <el-table-column prop="state" label="状态" :formatter="formatter"/>
         <el-table-column prop="sort" label="排序" width="80">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @blur="handleSort(scope.row)" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
