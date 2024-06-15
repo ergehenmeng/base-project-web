@@ -268,6 +268,14 @@ export default [
             meta: {
               title: "编辑",
             },
+          },
+          {
+            path: "edit/:id",
+            name: "expressEdit",
+            component: () => import("@/views/product/item/express/ExpressForm.vue"),
+            meta: {
+              title: "编辑",
+            },
           }
         ]
       },
@@ -511,6 +519,14 @@ export default [
             component: () => import("@/views/product/venue/site/SitePriceForm.vue"),
             meta: {
               title: "查看",
+            },
+          },
+          {
+            path: "setting/:id",
+            name: "settingDetail",
+            component: () => import("@/views/product/venue/site/SetupForm.vue"),
+            meta: {
+              title: "批量设置",
             },
           }
         ]

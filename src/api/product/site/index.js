@@ -63,3 +63,24 @@ export const sortApi = (data) => {
         data
     });
 }
+
+export const setupApi = (data) => {
+    return request.post({
+        url: "/manage/venue/site/price/setup",
+        data
+    });
+}
+
+export const updatePriceApi = (data) => {
+    return request.post({
+        url: "/manage/venue/site/price/update",
+        data
+    });
+}
+
+export const deletePriceApi = (data) => {
+    return request.post({
+        url: "/manage/venue/site/price/delete",
+        data
+    });
+}
