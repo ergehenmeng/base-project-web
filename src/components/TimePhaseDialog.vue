@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="设置价格" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="设置价格" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" >
       <el-form-item label="日期" >
         {{formData.startTime}} ~ {{formData.endTime}}

@@ -38,7 +38,7 @@
     <div class="item"></div>
     <div class="item">24:00</div>
   </div>
-  <div class="item-content">
+  <div class="item-content" ref="mainContentRef">
     <div class="item" data="06:00" @click="selectHandle('06:00', $event)"></div>
     <div class="item" data="06:30" @click="selectHandle('06:30', $event)"></div>
     <div class="item" data="07:00" @click="selectHandle('07:00', $event)"></div>
@@ -74,35 +74,74 @@
     <div class="item" data="22:00" @click="selectHandle('22:00', $event)"></div>
     <div class="item" data="22:30" @click="selectHandle('22:30', $event)"></div>
     <div class="item" data="23:00" @click="selectHandle('23:00', $event)"></div>
-    <div class="item disable" data="23:30" @click="selectHandle('23:30', $event)"></div>
+    <div class="item" data="23:30" @click="selectHandle('23:30', $event)"></div>
+    <div style="display: flex; justify-content: center; margin-left: 10px;">
+      <el-button type="primary" link :icon="Refresh" title="重置价格配置" @click="resetConfig"></el-button>
+    </div>
   </div>
   <TimePhaseDialog ref="dialogRef" @reload="addPhasePrice" @cancel="cancelChecked"></TimePhaseDialog>
+  <el-popover
+      :virtual-ref="popoverRef"
+      trigger="hover"
+      placement="top"
+      :visible="visible"
+      virtual-triggering width="150">
+    <template #default>
+      <div style="width:130px; display: flex; justify-content: center; align-items: center;">
+        <div>
+          <p class="tips-content">
+            <span class="label-title">时间段:</span><span>{{ startRef }}~{{endRef}}</span>
+          </p>
+          <p class="tips-content">
+            <span class="label-title">价格:</span><span>{{priceRef}}</span>
+          </p>
+        </div>
+      </div>
+    </template>
+  </el-popover>
 </template>
 <script setup>
 import dayjs from "dayjs";
-import {errorMsg} from "@/utils/message.js";
+import {confirmMsg, errorMsg} from "@/utils/message.js";
 import TimePhaseDialog from "@/components/TimePhaseDialog.vue";
+import {Refresh} from "@element-plus/icons-vue";
 
+const popoverRef = ref();
 const dialogRef = ref();
+const startRef = ref('');
+const endRef = ref('');
+const priceRef = ref('')
+const mainContentRef = ref();
 const start = ref('');
 const end = ref('');
 const startItem = ref();
 const endItem = ref();
+const checkedItems = ref([]);
+const visible = ref(false);
 // true:正向 false:反向
 const sequence = ref(true);
 const selectHandle = (value, event) => {
-  if (event.target.classList.contains('checked')) {
+  if (!event.target.classList.contains("item") || event.target.classList.contains('checked')) {
     return;
   }
   if (!start.value && !end.value) {
     start.value = value;
     startItem.value = event.target;
     event.target.classList.add('active')
-  } else if (!end.value){
+  } else if (!end.value) {
     end.value = value;
     const range = activeRange(start.value, value, event);
     if (range) {
-      dialogRef.value.openDialog(start.value, value);
+      let startStr;
+      let endStr;
+      if (sequence.value) {
+        startStr = start.value;
+        endStr = realEndTime(value);
+      } else {
+        startStr = value;
+        endStr = realEndTime(start.value);
+      }
+      dialogRef.value.openDialog(startStr, endStr);
     }
   } else {
     clear(event);
@@ -146,9 +185,11 @@ const activeRange = (startTime, endTime, endEvent) => {
   items.forEach(item => {
     item.classList.add('checked')
   })
+  checkedItems.value = items;
   startItem.value.classList.remove('active');
   startItem.value = startElement;
   endItem.value = endEvent.target;
+  addBorder();
   return true;
 }
 
@@ -158,18 +199,150 @@ const addPhasePrice = (price) => {
     endTime: end.value,
     price: price
   })
-  if (sequence.value) {
-    endItem.value.classList.add("right");
-    if (endItem.value.nextSibling) {
-      endItem.value.nextSibling.classList.add("no-border");
-    }
+  const length = checkedItems.value.length;
+  if (length !== 1) {
+    checkedItems.value.forEach((item, index) => {
+      if (index === 0) {
+        item.style.width = 30 * length + "px";
+        if (length >= 4) {
+          addChildTips(item, price);
+        } else {
+          addTips(item, start.value, end.value, price);
+        }
+      } else {
+        item.style.width = "0px";
+      }
+    });
   } else {
-    startItem.value.classList.add("right");
-    if (startItem.value.nextSibling) {
-      startItem.value.nextSibling.classList.add("no-border");
-    }
+    addTips(checkedItems.value[0], start.value, end.value, price);
   }
   reset();
+}
+
+const addChildTips = (item, price) => {
+  item.innerHTML = generateHtml(price);
+  item.style.display = "flex";
+  item.style.alignItems = "center";
+  item.style.justifyContent = "center";
+}
+
+const addTips = (item, startTime, endTime, price) => {
+  let startStr;
+  let endStr;
+  if (sequence.value) {
+    startStr = startTime;
+    endStr = realEndTime(endTime);
+  } else {
+    startStr = endTime;
+    endStr = realEndTime(startTime);
+  }
+  item.addEventListener("mouseenter", () => {
+    popoverRef.value = item;
+    startRef.value = startStr
+    endRef.value = endStr
+    priceRef.value = parseFloat(price).toFixed(2);
+    visible.value = true;
+  })
+  item.addEventListener("mouseleave", () => {
+    visible.value = false;
+  })
+  const element = document.createElement("div");
+  element.style.width = "100%";
+  element.style.height = "100%";
+  item.appendChild(element);
+  bindDeleteEvent(item, element, startStr, endStr);
+}
+
+const bindDeleteEvent = (parent, item, startTime, endTime) => {
+  item.addEventListener("click", () => {
+    confirmMsg(`确定要删除 ${startTime}~${endTime} 时间的价格配置吗?`, () => {
+      parent.removeChild(item);
+      const data = parent.getAttribute("data");
+      const length = parseInt(parent.style.width.split("px")[0]) / 30;
+      if (data === startTime) {
+        resetAfter(parent, length)
+      } else {
+        resetBefore(parent, length);
+      }
+    });
+  });
+  return () => parent.removeChild(item);
+}
+
+const resetAfter = (item, length) => {
+  let next = item;
+  while (length-- > 0 && next) {
+    next.style.width = "30px";
+    next = next.nextSibling;
+    next.classList.remove("checked");
+    next.classList.remove("right");
+    checkedItems.value = checkedItems.value.filter(i => i !== next);
+  }
+}
+
+const resetBefore = (item, length) => {
+  let before = item;
+  while (length-- > 0 && before) {
+    before.style.width = "30px";
+    before.classList.remove("checked");
+    before.classList.remove("right");
+    before = before.previousSibling;
+    checkedItems.value = checkedItems.value.filter(i => i !== before);
+  }
+}
+
+const resetConfig = () => {
+  confirmMsg("确定要重置价格配置吗?", () => {
+    mainContentRef.value.childNodes.forEach(item => {
+      item.classList.remove("checked");
+      item.classList.remove("right");
+      item.style.width = "30px";
+      start.value = null;
+      end.value = null;
+      item.innerHTML = "";
+      startItem.value = null;
+      endItem.value = null;
+      checkedItems.value = [];
+      phaseList.value = [];
+    })
+  })
+}
+
+
+const generateHtml = (price) => {
+  const formatPrice = parseFloat(price).toFixed(2);
+  let startStr;
+  let endStr;
+
+  if (sequence.value) {
+    startStr = start.value;
+    endStr = realEndTime(end.value);
+  } else {
+    startStr = end.value;
+    endStr = realEndTime(start.value);
+  }
+  return `<div style="pointer-events: none;">
+        <p class="tips-content">
+          <span class="label-title">时间段:</span><span>${startStr}~${endStr}</span>
+        </p>
+        <p class="tips-content">
+          <span class="label-title">价格:</span><span>${formatPrice}</span>
+        </p>
+      </div>`
+}
+
+const realEndTime = (endTime) => {
+  const startDate = dayjs("2018-04-25 " + endTime, "YYYY-MM-DD HH:mm");
+  const endDate = startDate.add(30, 'minute')
+  return endDate.format("HH:mm");
+}
+
+const addBorder = () => {
+  if (sequence.value) {
+    endItem.value.classList.add("right");
+  } else {
+    startItem.value.classList.add("right");
+  }
 }
 
 const cancelChecked = () => {
@@ -219,24 +392,25 @@ const phaseList = defineModel({
 
 </script>
 
-
 <style lang="scss" scoped>
 .item-title {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
   .item {
-    text-indent: 8px;
-    width: 40px;
+    text-indent: 5px;
+    width: 30px;
     font-size: 12px;
   }
 }
+
 .item-content {
   display: flex;
   flex-wrap: wrap;
   margin-left: 20px;
+
   .item {
-    width: 40px;
+    width: 30px;
     height: 60px;
     border-top: 1px solid #cecece;
     border-bottom: 1px solid #cecece;
@@ -245,33 +419,39 @@ const phaseList = defineModel({
     background-color: rgba(0, 0, 0, 0.03);
     cursor: pointer;
   }
+
   .item:hover {
     background-color: #cccccc;
   }
-  .item:nth-child(2n+1) {
-    border-left: 1px solid #cecece;
-  }
-  .item:last-child {
+
+  .item:nth-child(2n) {
     border-right: 1px solid #cecece;
   }
+
+  .item:first-child {
+    border-left: 1px solid #cecece;
+  }
+
   .item.active {
     box-sizing: border-box;
     background-color: #1e90ff;
   }
+
   .item.checked {
     background-color: #74b9ff;
-    cursor: default;
+    cursor: pointer;
     border: none;
   }
+
   .item.checked.left {
     border-left: 1px solid #cecece;
   }
+
   .item.checked.right {
     border-right: 1px solid #cecece;
   }
-  .item.no-border {
-    border-left: none;
-    border-right: none;
-  }
+
 }
+
+
 </style>

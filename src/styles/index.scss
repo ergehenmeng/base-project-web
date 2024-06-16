@@ -160,3 +160,14 @@ body {
   width: 20px;
   height: 25px;
 }
+
+.tips-content {
+  line-height: 20px !important;
+  font-size: 12px;
+  .label-title {
+    display: inline-block;
+    text-align: right;
+    width: 48px;
+    margin-right: 1px;
+  }
+}
