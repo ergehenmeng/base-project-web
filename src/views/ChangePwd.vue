@@ -39,14 +39,22 @@ const formRules = reactive({
   newPwd: [
     { required: true, message: '新密码不能为空', trigger: 'blur' },
     { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
-    { pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/, message: '密码必须包含英文字符、数字、@#&_', trigger: 'blur' }
+    { pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/, message: '密码必须包含英文字符、数字、@#&_', trigger: 'blur' },
+    { validator: (rule, value, callback) => {
+        if (value !== formData.value.confirmPwd) {
+          callback(new Error('两次输入密码不一致'));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
   ],
   confirmPwd: [
     { required: true, message: '确认密码不能为空', trigger: 'blur' },
     { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     { pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/, message: '密码必须包含英文字符、数字、@#&_', trigger: 'blur' },
-    {
-        validator: (rule, value, callback) => {
+    { validator: (rule, value, callback) => {
           if (value !== formData.value.newPwd) {
             callback(new Error('两次输入密码不一致'));
           } else {
