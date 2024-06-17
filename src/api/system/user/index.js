@@ -61,3 +61,10 @@ export const roleListApi = () => {
     url: "/manage/role/list"
   });
 }
+
+export const changePwdApi = (data) => {
+  return request.post({
+    url: "/manage/user/changePwd",
+    data
+  });
+}
