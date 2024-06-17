@@ -16,7 +16,9 @@
     <div style="clear: both;">
       <el-tabs  type="card" v-model="activeDay">
         <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item" >
-          <TimePhase></TimePhase>
+          <div style="padding-top: 20px; display: flex; justify-content: center">
+            <TimePhase></TimePhase>
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>

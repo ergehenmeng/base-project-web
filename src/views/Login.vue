@@ -60,7 +60,12 @@ const route = useRoute();
 const formData = ref({})
 const formDataRef = ref();
 const loading = ref(false)
+const api = import.meta.env.VITE_API_URL;
 const verifyUrl = ref('');
+const getCode = () => {
+  verifyUrl.value = api + "/manage/captcha?t=" + new Date().getTime();
+}
+getCode();
 const formRules = reactive({
   userName: [
     { required: true, message: '账号不能为空', trigger: 'blur' },
@@ -75,12 +80,6 @@ const formRules = reactive({
     { required: true, message: '验证码不能为空', trigger: 'blur' }
   ]
 })
-
-const api = import.meta.env.VITE_API_URL;
-const getCode = () => {
-  verifyUrl.value = api + "/manage/captcha?t=" + new Date().getTime();
-}
-onMounted(() => getCode());
 
 // 登录
 const handleLogin = async () => {
