@@ -6,7 +6,7 @@
         <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="密码" prop="newPwd">
-        <el-input v-model="formData.newPwd" type="password" show-word-limit maxlength="20" />
+        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_"  show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="确认密码" prop="confirmPwd">
         <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" />

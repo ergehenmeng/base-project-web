@@ -102,8 +102,6 @@ const startItem = ref();
 const endItem = ref();
 const checkedItems = ref([]);
 const visible = ref(false);
-// true:正向 false:反向
-const sequence = ref(true);
 
 const selectHandle = (value, event) => {
   if (!event.target.classList.contains("item") || event.target.classList.contains('checked')) {
@@ -124,6 +122,7 @@ const selectHandle = (value, event) => {
   } else {
     clear(event);
     start.value = value;
+    end.value = '';
     event.target.classList.add('active')
   }
 }
@@ -133,10 +132,21 @@ const clear = (event) => {
     item.classList.remove('active')
   })
 }
-
+/**
+ * 设置选中区间的样式
+ * @param startTime 开始时间(包含)
+ * @param endTime 截止时间(包含)
+ * @param endEvent 当前点击的元素
+ * @returns {boolean}  表示选中是否成功
+ */
 const activeRange = (startTime, endTime, endEvent) => {
   const startDate = dayjs("2018-04-25 " + startTime, "YYYY-MM-DD HH:mm");
-  const endDate = dayjs("2018-04-25 " + endTime, "YYYY-MM-DD HH:mm");
+  let endDate;
+  if (endTime === "00:00") {
+    endDate = dayjs("2018-04-26 " + endTime, "YYYY-MM-DD HH:mm");
+  } else {
+    endDate = dayjs("2018-04-25 " + endTime, "YYYY-MM-DD HH:mm")
+  }
   const diff = endDate.diff(startDate, 'minute');
   const range = Math.abs(diff) / 30;
   const items = [];
@@ -144,6 +154,9 @@ const activeRange = (startTime, endTime, endEvent) => {
   let endElement;
   for (let i = 0; i < range; i++) {
     let time = startDate.add(i * 30, 'minute').format("HH:mm");
+    if (time === "00:00") {
+      time = "23:30";
+    }
     const item = endEvent.target.parentNode.querySelector(`[data="${time}"]`);
     if (i === 0) {
       startElement = item;
@@ -163,9 +176,9 @@ const activeRange = (startTime, endTime, endEvent) => {
     item.classList.remove("active");
   })
   checkedItems.value = items;
-  endElement.classList.add("right");
   startItem.value = startElement;
   endItem.value = endElement;
+  endElement.classList.add('right')
   return true;
 }
 
@@ -203,7 +216,6 @@ const addChildTips = (item, startTime, endTime, price) => {
 }
 
 const addTips = (item, startTime, endTime, price) => {
-
   const mouseenterEvent = () => {
     popoverRef.value = item;
     startRef.value = startTime
@@ -230,6 +242,7 @@ const bindDeleteEvent = (parent, item, startTime, endTime, mouseenterEvent, mous
     confirmMsg(`确定要删除 ${startTime}~${endTime} 时间的价格配置吗?`, () => {
       parent.removeChild(item);
       const data = parent.getAttribute("data");
+      phaseList.value = phaseList.value.filter(item => !(item.startTime === startTime && item.endTime === endTime));
       const length = parseInt(parent.style.width.split("px")[0]) / 30;
       if (data === startTime) {
         resetAfter(parent, length)
@@ -253,10 +266,8 @@ const resetAfter = (item, length) => {
     next.style.width = "30px";
     next.classList.remove("checked");
     next.classList.remove("right");
-    checkedItems.value = checkedItems.value.filter(i => i !== next);
     next = next.nextSibling;
   }
-
 }
 
 const resetBefore = (item, length) => {
@@ -266,7 +277,6 @@ const resetBefore = (item, length) => {
     before.classList.remove("checked");
     before.classList.remove("right");
     before = before.previousSibling;
-    checkedItems.value = checkedItems.value.filter(i => i !== before);
   }
 }
 
@@ -287,19 +297,6 @@ const resetConfig = () => {
   })
 }
 
-const calcPhase = (start, end, sequence) => {
-  let startTime;
-  let endTime;
-  if (sequence) {
-    startTime = start;
-    endTime = realEndTime(end);
-  } else {
-    startTime = end;
-    endTime = realEndTime(start);
-  }
-  return {startTime, endTime};
-}
-
 const calcValidFrom = (start, end) => {
   const startDate = dayjs("2018-04-25 " + start, "YYYY-MM-DD HH:mm");
   const endDate = dayjs("2018-04-25 " + end, "YYYY-MM-DD HH:mm");
@@ -317,11 +314,9 @@ const calcValidFrom = (start, end) => {
 
 const generateHtml = (price) => {
   const formatPrice = parseFloat(price).toFixed(2);
-  const {startTime, endTime} = calcPhase(start.value, end.value, sequence.value);
-
   return `<div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;" ><div style="pointer-events: none;">
         <p class="tips-content">
-          <span class="label-title">时间段:</span><span>${startTime}~${endTime}</span>
+          <span class="label-title">时间段:</span><span>${start.value}~${end.value}</span>
         </p>
         <p class="tips-content">
           <span class="label-title">价格:</span><span>${formatPrice}</span>
@@ -329,32 +324,30 @@ const generateHtml = (price) => {
       </div></div>`
 }
 
-const realEndTime = (endTime) => {
-  const startDate = dayjs("2018-04-25 " + endTime, "YYYY-MM-DD HH:mm");
-  const endDate = startDate.add(30, 'minute')
-  return endDate.format("HH:mm");
-}
-
-
 const cancelChecked = () => {
   const startDate = dayjs("2018-04-25 " + start.value, "YYYY-MM-DD HH:mm");
-  const endDate = dayjs("2018-04-25 " + end.value, "YYYY-MM-DD HH:mm");
+  let endDate;
+  if (end.value === "00:00") {
+    endDate = dayjs("2018-04-26 " + end.value, "YYYY-MM-DD HH:mm");
+  } else {
+    endDate = dayjs("2018-04-25 " + end.value, "YYYY-MM-DD HH:mm")
+  }
   const diff = endDate.diff(startDate, 'minute');
-  const range = Math.abs(diff) / 30 + 1;
+  const range = Math.abs(diff) / 30;
   for (let i = 0; i < range; i++) {
-    let time;
-    if (diff < 0) {
-      time = startDate.subtract(i * 30, 'minute').format("HH:mm");
-    } else {
-      time = startDate.add(i * 30, 'minute').format("HH:mm");
+    let time = startDate.add(i * 30, 'minute').format("HH:mm");
+    if (time === "00:00") {
+      time = "23:30";
     }
     const item = endItem.value.parentNode.querySelector(`[data="${time}"]`);
     if (item) {
       item.classList.remove("checked");
     }
   }
+  checkedItems.value = [];
   startItem.value.classList.remove("right");
   endItem.value.classList.remove("right");
+  phaseList.value = phaseList.value.filter(item => !(item.startTime === start.value && item.endTime === end.value));
   reset();
 }
 
@@ -399,7 +392,7 @@ const phaseList = defineModel({
   display: flex;
   flex-wrap: wrap;
   margin-left: 20px;
-
+  box-sizing: border-box;
   .item {
     width: 30px;
     height: 60px;
@@ -426,6 +419,7 @@ const phaseList = defineModel({
   .item.active {
     box-sizing: border-box;
     background-color: #1e90ff;
+    border-right: 1px solid #cecece;
   }
 
   .item.checked {
@@ -434,11 +428,8 @@ const phaseList = defineModel({
     border: none;
   }
 
-  .item.checked.left {
-    border-left: 1px solid #cecece;
-  }
-
   .item.checked.right {
+    box-sizing: border-box;
     border-right: 1px solid #cecece;
   }
 
