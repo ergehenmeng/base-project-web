@@ -20,7 +20,7 @@
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="价格配置" prop="priceList">
-        <TimePhase v-model="formData.priceList"></TimePhase>
+        <TimePhase v-model="formData.priceList" ></TimePhase>
       </el-form-item>
     </el-form>
     <div >
@@ -41,7 +41,10 @@ import {reactive, ref} from 'vue';
 import {successMsg} from '@/utils/message';
 import {disableBeforeDate} from "@/utils/common.js";
 import TimePhase from "@/components/TimePhase.vue";
+import {useRoute, useRouter} from "vue-router";
 
+const router = useRouter();
+const route = useRoute();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
@@ -59,30 +62,11 @@ const formRules = reactive({
 })
 
 const formData = ref({
-  venueSiteId: null,
+  venueSiteId: '',
   configDate: [],
   week: [],
   priceList: []
 });
-
-const openDialog = (lineId) => {
-  showDialog.value = true;
-  resetForm();
-  formData.value.lineId = lineId;
-}
-
-const resetForm = () => {
-  formData.value = {
-    lineId: null,
-    configDate: [],
-    week: [],
-    state: true,
-    linePrice: null,
-    salePrice: null,
-    stock: null
-  }
-  formDataRef.value?.resetFields();
-}
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
@@ -91,9 +75,8 @@ const handleSave = () => {
       formData.value.endDate = formData.value.configDate[1];
       loading.value = true;
       setupApi(formData.value).then(() => {
-        successMsg("线路价格配置成功");
-        showDialog.value = false;
-        emit('reload');
+        successMsg("场地价格配置成功");
+        router.go(-1);
       }).finally(() => {
         loading.value = false;
       })
@@ -101,9 +84,12 @@ const handleSave = () => {
   })
 }
 
-
-defineExpose({
-  openDialog
+onMounted(() => {
+  const id = route.params.id;
+  if (id) {
+    formData.value.venueSiteId = id;
+  }
 })
+
 
 </script>

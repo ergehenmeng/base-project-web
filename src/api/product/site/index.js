@@ -56,11 +56,17 @@ export const platformUnShelvesApi = (data) => {
     });
 }
 
-
 export const sortApi = (data) => {
     return request.post({
         url: "/manage/venue/site/sort",
         data
+    });
+}
+
+export const priceListApi = (params) => {
+    return request.get({
+        url: "/manage/venue/site/priceList",
+        params
     });
 }
 

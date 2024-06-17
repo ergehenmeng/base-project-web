@@ -14,10 +14,10 @@
       </div>
     </div>
     <div style="clear: both;">
-      <el-tabs  type="card" v-model="activeDay">
+      <el-tabs type="card" v-model="activeDay" @tab-change="handleTabChange">
         <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item" >
           <div style="padding-top: 20px; display: flex; justify-content: center">
-            <TimePhase></TimePhase>
+            <TimePhase v-model:phase-list="phaseList"></TimePhase>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -25,6 +25,7 @@
   </div>
 </template>
 <script setup>
+import { priceListApi } from "@/api/product/site";
 import dayjs from "dayjs";
 import {Setting} from "@element-plus/icons-vue";
 import {useRouter, useRoute} from "vue-router";
@@ -34,9 +35,11 @@ const router = useRouter();
 const route = useRoute();
 const dayList = ref([]);
 const activeDay = ref(dayjs().format("YYYY-MM-DD"));
+const phaseList = ref([]);
 
 onMounted(() => {
   generateDayList(dayjs());
+  handleTabChange(dayjs().format("YYYY-MM-DD"))
 })
 
 const changeMonth = (value) => {
@@ -64,6 +67,12 @@ const generateDayList = (date) => {
 const handleSetting = () => {
   const params = route.params;
   router.push("/product/site/setting/" + params.id);
+}
+
+const handleTabChange = (value) => {
+  priceListApi({"venueSiteId": route.params.id, "nowDate": value}).then(res => {
+    phaseList.value = res.data;
+  })
 }
 
 </script>
