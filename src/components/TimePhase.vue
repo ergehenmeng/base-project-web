@@ -21,8 +21,8 @@
       <div class="item">23:00</div>
       <div class="item">24:00</div>
     </div>
-    <div class="item-content" ref="mainContentRef">
-      <div class="item" data="06:00" @click="selectHandle('06:00', $event)"></div>
+    <div class="item-content" ref="mainContentRef" >
+      <div class="item" data="06:00" @click="selectHandle('06:00', $event)" ></div>
       <div class="item" data="06:30" @click="selectHandle('06:30', $event)"></div>
       <div class="item" data="07:00" @click="selectHandle('07:00', $event)"></div>
       <div class="item" data="07:30" @click="selectHandle('07:30', $event)"></div>
@@ -171,15 +171,27 @@ const activeRange = (startTime, endTime, endEvent) => {
     }
     items.push(item)
   }
-  items.forEach(item => {
+  items.forEach((item, index) => {
+    if (index === 0) {
+      item.style.width = 30 * range + "px";
+    } else {
+      item.style.width = "0px";
+    }
     item.classList.add('checked')
     item.classList.remove("active");
-  })
+  });
   checkedItems.value = items;
   startItem.value = startElement;
   endItem.value = endElement;
-  endElement.classList.add('right')
+  tryAddBorder(startElement);
   return true;
+}
+
+const tryAddBorder = (startElement) => {
+  const value = window.getComputedStyle(startElement)["borderRightWidth"];
+  if (value === "0px") {
+    startElement.classList.add("right");
+  }
 }
 
 const addPhasePrice = (price) => {
@@ -189,29 +201,16 @@ const addPhasePrice = (price) => {
     price: price
   })
   const length = checkedItems.value.length;
-  if (length !== 1) {
-    checkedItems.value.forEach((item, index) => {
-      if (index === 0) {
-        item.style.width = 30 * length + "px";
-        if (length >= 4) {
-          addChildTips(item, start.value, end.value, price);
-        } else {
-          addTips(item, start.value, end.value, price);
-        }
-      } else {
-        item.style.width = "0px";
-      }
-    });
+  if (length >= 4) {
+    addChildTips(startItem.value, start.value, end.value, price);
   } else {
-    const item = checkedItems.value[0]
-    item.style.width = 30 * length + "px";
-    addTips(item, start.value, end.value, price);
+    addTips(startItem.value, start.value, end.value, price);
   }
   reset();
 }
 
 const addChildTips = (item, startTime, endTime, price) => {
-  item.innerHTML = generateHtml(price);
+  item.innerHTML = generateHtml(startTime, endTime, price);
   bindDeleteEvent(item, item.childNodes[0], startTime, endTime);
 }
 
@@ -312,11 +311,11 @@ const calcValidFrom = (start, end) => {
   return {startTime, endTime};
 }
 
-const generateHtml = (price) => {
+const generateHtml = (startTime, endTime, price) => {
   const formatPrice = parseFloat(price).toFixed(2);
   return `<div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;" ><div style="pointer-events: none;">
         <p class="tips-content">
-          <span class="label-title">时间段:</span><span>${start.value}~${end.value}</span>
+          <span class="label-title">时间段:</span><span>${startTime}~${endTime}</span>
         </p>
         <p class="tips-content">
           <span class="label-title">价格:</span><span>${formatPrice}</span>
@@ -325,28 +324,12 @@ const generateHtml = (price) => {
 }
 
 const cancelChecked = () => {
-  const startDate = dayjs("2018-04-25 " + start.value, "YYYY-MM-DD HH:mm");
-  let endDate;
-  if (end.value === "00:00") {
-    endDate = dayjs("2018-04-26 " + end.value, "YYYY-MM-DD HH:mm");
-  } else {
-    endDate = dayjs("2018-04-25 " + end.value, "YYYY-MM-DD HH:mm")
-  }
-  const diff = endDate.diff(startDate, 'minute');
-  const range = Math.abs(diff) / 30;
-  for (let i = 0; i < range; i++) {
-    let time = startDate.add(i * 30, 'minute').format("HH:mm");
-    if (time === "00:00") {
-      time = "23:30";
-    }
-    const item = endItem.value.parentNode.querySelector(`[data="${time}"]`);
-    if (item) {
-      item.classList.remove("checked");
-    }
-  }
+  checkedItems.value.forEach(item => {
+    item.classList.remove('checked');
+    item.classList.remove('right');
+    item.style.width = "30px";
+  })
   checkedItems.value = [];
-  startItem.value.classList.remove("right");
-  endItem.value.classList.remove("right");
   phaseList.value = phaseList.value.filter(item => !(item.startTime === start.value && item.endTime === end.value));
   reset();
 }
@@ -369,10 +352,57 @@ const props = defineProps({
   }
 });
 
-const phaseList = defineModel({
+const phaseList = defineModel("phaseList", {
   type: Array,
   default: () => []
 });
+
+watch(() => phaseList.value, () => {
+  if (phaseList.value.length > 0) {
+    phaseList.value.forEach(item => {
+      const {startTime, endTime, price} = item;
+      const startDate = dayjs("2018-04-25 " + startTime, "YYYY-MM-DD HH:mm");
+      let endDate;
+      if (endTime === "00:00") {
+        endDate = dayjs("2018-04-26 " + endTime, "YYYY-MM-DD HH:mm");
+      } else {
+        endDate = dayjs("2018-04-25 " + endTime, "YYYY-MM-DD HH:mm")
+      }
+      const diff = endDate.diff(startDate, 'minute');
+      const range = Math.abs(diff) / 30;
+      let startElement;
+      for (let i = 0; i < range; i++) {
+        let time = startDate.add(i * 30, 'minute').format("HH:mm");
+        if (time === "00:00") {
+          time = "23:30";
+        }
+        const item = mainContentRef.value.querySelector(`[data="${time}"]`);
+        if (i === 0) {
+          startElement = item;
+          item.style.width = 30 * range + "px";
+          tryAddBorder(item);
+        } else {
+          item.style.width = "0px";
+        }
+        item.classList.add('checked')
+      }
+      if (range >= 4) {
+        addChildTips(startElement, startTime, endTime, price);
+      } else {
+        addTips(startElement, startTime, endTime, price);
+      }
+    })
+  }
+})
+
+onMounted(() => {
+  console.log("phaseList2", phaseList.value)
+  if (props.disabled) {
+    mainContentRef.value.addEventListener("click", (e) => {
+      e.stopPropagation();
+    }, true);
+  }
+})
 
 </script>
 
@@ -380,14 +410,15 @@ const phaseList = defineModel({
 .item-title {
   display: flex;
   flex-wrap: wrap;
-
   .item {
     text-indent: 5px;
     width: 60px;
     font-size: 12px;
   }
 }
-
+.disable-click {
+  pointer-events: none;
+}
 .item-content {
   display: flex;
   flex-wrap: wrap;
@@ -425,7 +456,7 @@ const phaseList = defineModel({
   .item.checked {
     background-color: #74b9ff;
     cursor: pointer;
-    border: none;
+    border-right: none;
   }
 
   .item.checked.right {
