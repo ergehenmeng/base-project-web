@@ -61,3 +61,10 @@ export const listApi = () => {
         url: "/manage/homestay/list"
     });
 }
+
+export const exportApi = (params) => {
+    return request.download({
+        url: "/manage/homestay/recommend",
+        params
+    });
+}
