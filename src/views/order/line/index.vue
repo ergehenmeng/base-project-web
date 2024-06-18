@@ -3,14 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px" >
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" style="width: 280px;"/>
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、线路名称、旅行社名称、手机号" clearable @keyup.enter="search" style="width: 300px;"/>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="待上架" :value="0" />
-            <el-option label="已上架" :value="1" />
-            <el-option label="强制下架" :value="2" />
-          </el-select>
+        <el-form-item label="订单状态">
+          <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="订单日期">
           <div style="width: 220px;">
@@ -21,13 +17,6 @@
           <el-select v-model="queryParams.useVoucher" clearable style="width: 100px;">
             <el-option label="使用" :value="true" />
             <el-option label="不使用" :value="false" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="关闭类型">
-          <el-select v-model="queryParams.closeType" clearable>
-            <el-option label="过期自动关闭" :value="1" />
-            <el-option label="用户取消" :value="2" />
-            <el-option label="退款完成" :value="3" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -69,6 +58,7 @@ import { Document } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
 import {closeTypeFormat, orderStateFormat, payTypeFormat} from "@/utils/common.js";
+import OrderStateSelect from "@/components/OrderStateSelect.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
