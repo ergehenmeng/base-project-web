@@ -17,6 +17,65 @@ export const checkTel = (value) => {
     return /^(010|02\d|0[3-9]\d{2})-?(\d{6,8})$/.test(value)
 }
 
+export const orderStateFormat = (state) => {
+    switch (state) {
+        case 0:
+            return "待支付";
+        case 1:
+            return "支付中";
+        case 2:
+            return "待使用";
+        case 3:
+            return "待自提";
+        case 4:
+            return "待发货";
+        case 5:
+            return "部分发货";
+        case 6:
+            return "待收货";
+        case 7:
+            return "退款中";
+        case 8:
+            return "订单完成";
+        case 9:
+            return "已关闭";
+        case 10:
+            return "支付异常";
+        case 11:
+            return "退款异常";
+        default:
+            return "";
+    }
+}
+
+export const closeTypeFormat = (cellValue) => {
+    if (cellValue === 1) {
+        return "订单自动过期";
+    }
+    return cellValue === 2 ? "用户取消" : "退款成功";
+}
+
+export const payTypeFormat = (cellValue) => {
+    switch (cellValue) {
+        case "WECHAT_APP":
+            return "微信APP";
+        case "WECHAT_JSAPI":
+            return "微信小程序";
+        case "WECHAT_MINI":
+            return "微信小程序";
+        case "WECHAT_NATIVE":
+            return "微信扫码";
+        case "WECHAT_H5":
+            return "微信H5";
+        case "ALI_PAY":
+            return "支付宝";
+        case "ZERO":
+            return "零元付";
+        default:
+            return "";
+    }
+}
+
 /**
  * 只能输入整数或包含两位的小数
  *

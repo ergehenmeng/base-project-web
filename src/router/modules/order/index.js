@@ -7,15 +7,19 @@ export default [
     children: [
       {
         path: "homestay",
-        name: "homestay",
-        component: () => import("@/views/order/homestay/index.vue"),
+        name: "homestayOrder",
         meta: {
           title: "民宿订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "homestayOrderIndex",
+            component: () => import("@/views/order/homestay/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "homestayOrderDetail",
             component: () => import("@/views/order/homestay/detail/index.vue"),
             meta: {
               title: "详情",
@@ -25,15 +29,19 @@ export default [
       },
       {
         path: "line",
-        name: "line",
-        component: () => import("@/views/order/line/index.vue"),
+        name: "lineOrder",
         meta: {
           title: "线路订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "lineOrderIndex",
+            component: () => import("@/views/order/line/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "lineOrderDetail",
             component: () => import("@/views/order/line/detail/index.vue"),
             meta: {
               title: "详情",
@@ -43,15 +51,19 @@ export default [
       },
       {
         path: "ticket",
-        name: "ticket",
-        component: () => import("@/views/order/ticket/index.vue"),
+        name: "ticketOrder",
         meta: {
           title: "门票订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "ticketOrderIndex",
+            component: () => import("@/views/order/ticket/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "ticketOrderDetail",
             component: () => import("@/views/order/ticket/detail/index.vue"),
             meta: {
               title: "详情",
@@ -61,15 +73,19 @@ export default [
       },
       {
         path: "voucher",
-        name: "voucher",
-        component: () => import("@/views/order/voucher/index.vue"),
+        name: "voucherOrder",
         meta: {
           title: "餐饮订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "voucherOrderIndex",
+            component: () => import("@/views/order/voucher/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "voucherOrderDetail",
             component: () => import("@/views/order/voucher/detail/index.vue"),
             meta: {
               title: "详情",
@@ -79,15 +95,19 @@ export default [
       },
       {
         path: "venue",
-        name: "venue",
-        component: () => import("@/views/order/venue/index.vue"),
+        name: "venueOrder",
         meta: {
-          title: "场馆预约订单",
+          title: "场馆订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "venueOrderIndex",
+            component: () => import("@/views/order/venue/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "venueOrderDetail",
             component: () => import("@/views/order/venue/detail/index.vue"),
             meta: {
               title: "详情",
@@ -97,15 +117,19 @@ export default [
       },
       {
         path: "item",
-        name: "item",
-        component: () => import("@/views/order/item/index.vue"),
+        name: "itemOrder",
         meta: {
           title: "零售订单",
         },
         children: [
           {
-            path: "detail",
-            name: "detail",
+            path: "",
+            name: "itemOrderIndex",
+            component: () => import("@/views/order/item/index.vue")
+          },
+          {
+            path: "detail/:id",
+            name: "itemOrderDetail",
             component: () => import("@/views/order/item/detail/index.vue"),
             meta: {
               title: "详情",

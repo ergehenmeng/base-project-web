@@ -1,13 +1,131 @@
 <template>
   <div>
-
+    <div class="content-top">
+      <el-form :inline="true" label-width="70px" >
+        <el-form-item label="搜索">
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" style="width: 280px;"/>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="待上架" :value="0" />
+            <el-option label="已上架" :value="1" />
+            <el-option label="强制下架" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="订单日期">
+          <div style="width: 220px;">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px;"></el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="优惠券" >
+          <el-select v-model="queryParams.useVoucher" clearable style="width: 100px;">
+            <el-option label="使用" :value="true" />
+            <el-option label="不使用" :value="false" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="关闭类型">
+          <el-select v-model="queryParams.closeType" clearable>
+            <el-option label="过期自动关闭" :value="1" />
+            <el-option label="用户取消" :value="2" />
+            <el-option label="退款完成" :value="3" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="search">搜索</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="content-main">
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="orderNo" label="订单编号" min-width="150" />
+        <el-table-column prop="title" label="门票名称" min-width="150" />
+        <el-table-column prop="scenicName" label="景区名称" min-width="150" />
+        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter"/>
+        <el-table-column prop="num" label="购买数量" min-width="80" />
+        <el-table-column prop="mobile" label="订单联系人" min-width="100" />
+        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="payAmount" label="付款金额" width="100" />
+        <el-table-column prop="discountAmount" label="总优惠金额" width="100" />
+        <el-table-column prop="payTime" label="支付时间" width="180" />
+        <el-table-column prop="createTime" label="创建时间" width="180" />
+        <el-table-column prop="closeTime" label="订单关闭时间" width="180"/>
+        <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter"/>
+        <el-table-column label="操作" fixed="right" width="200">
+          <template #default="scope">
+            <el-button v-has-perm="'kYD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize"
+                     :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+    </div>
   </div>
 </template>
-
 <script setup>
+import { listPageApi } from '@/api/order/ticket';
+import { onMounted, reactive, ref } from 'vue';
+import { Document } from '@element-plus/icons-vue';
+import useUserStore from '@/store/user';
+import {useRouter} from "vue-router";
+import {closeTypeFormat, orderStateFormat, payTypeFormat} from "@/utils/common.js";
+
+const router = useRouter();
+const userStore = useUserStore();
+const loading = ref(false);
+const total = ref(0);
+const pageData = ref([]);
+const selectAuth = userStore.hasAuth("5YD0");
+const queryParams = reactive({
+  queryName: "",
+  page: 1,
+  pageSize: 10,
+  state: null,
+  activityDate: [],
+  useVoucher: null,
+  closeType: null
+})
+
+const getPage = async () => {
+  loading.value = true;
+  try {
+    if (selectAuth) {
+      queryParams.startDate = queryParams.activityDate[0];
+      queryParams.endDate = queryParams.activityDate[1];
+      const { data } = await listPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+const search = () => {
+  queryParams.page = 1;
+  getPage()
+}
+
+onMounted(() => {
+  getPage()
+})
+
+const formatter = (row, column, cellValue) => {
+  if (column.property === "state") {
+    return orderStateFormat(cellValue);
+  } else if (column.property === "closeType") {
+    closeTypeFormat(cellValue);
+  }  else if (column.property === "payType") {
+    payTypeFormat(cellValue);
+  } else {
+    return cellValue;
+  }
+}
+
+const handleDetail = (row) => {
+  router.push("/order/ticket/detail/" + row.id);
+}
+
 
 </script>
 
-<style lang="scss" scoped>
-
-</style>

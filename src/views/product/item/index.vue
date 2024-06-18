@@ -72,7 +72,6 @@ import {Edit, Delete, Plus, Top, Bottom, Download, Document, Star, Link} from '@
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
-import {recommendApi} from "@/api/product/room/index.js";
 
 const router = useRouter();
 const userStore = useUserStore();
