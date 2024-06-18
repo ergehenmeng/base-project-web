@@ -6,10 +6,10 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" style="width: 220px;"/>
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.orderState" style="width: 100px;"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
-          <el-select v-model="queryParams.refundState" clearable>
+          <el-select v-model="queryParams.refundState" clearable style="width: 100px;">
             <el-option label="未退款" :value="0" />
             <el-option label="退款申请中" :value="1" />
             <el-option label="退款中" :value="2" />
@@ -58,7 +58,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter"/>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'kYD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
+            <el-button v-has-perm="'mRD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
             </el-button>
           </template>
         </el-table-column>
@@ -82,7 +82,7 @@ const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth("5YD0");
+const selectAuth = userStore.hasAuth("2RD0");
 const queryParams = reactive({
   queryName: "",
   page: 1,

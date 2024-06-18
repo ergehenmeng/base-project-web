@@ -48,7 +48,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter"/>
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'kYD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
+            <el-button v-has-perm="'dpD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情">
             </el-button>
           </template>
         </el-table-column>
@@ -72,12 +72,12 @@ const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth("5YD0");
+const selectAuth = userStore.hasAuth("0pD0");
 const queryParams = reactive({
   queryName: "",
   page: 1,
   pageSize: 10,
-  state: null,
+  orderState: null,
   activityDate: [],
   useVoucher: null,
   closeType: null

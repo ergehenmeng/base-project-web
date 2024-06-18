@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" style="width: 280px;"/>
         </el-form-item>
         <el-form-item label="状态">
-          <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.state"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="订单日期">
           <div style="width: 220px;">
