@@ -51,6 +51,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     sourceMap.delete(response.config.url);
+    if (response.config.responseType === "blob") {
+      return response;
+    }
     const res = response.data;
     const { code, msg } = res;
     if (code === 200) {

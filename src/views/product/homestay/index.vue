@@ -18,6 +18,9 @@
         <el-form-item class="right-button" v-has-perm="'TIO0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
+        <el-form-item class="right-button" >
+          <el-button type="primary" :icon="Plus" @click="handleExcel">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -30,11 +33,11 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="民宿名称" min-width="200" />
-        <el-table-column prop="merchantName" label="所属商户" min-width="200" />
+        <el-table-column prop="title" label="民宿名称" min-width="180" />
+        <el-table-column prop="merchantName" label="所属商户" min-width="180" />
         <el-table-column prop="level" label="星级" min-width="80" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
-        <el-table-column prop="detailAddress" label="详细地址" min-width="150" />
+        <el-table-column prop="detailAddress" label="详细地址" min-width="250" />
         <el-table-column prop="phone" label="联系电话" width="120" />
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
@@ -67,6 +70,7 @@ import {Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar} from '@el
 import {confirmMsg, successMsg} from '@/utils/message';
 import useUserStore from '@/store/user';
 import {useRouter} from "vue-router";
+import {downloadExcel} from "@/utils/common.js";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -170,8 +174,8 @@ const handlePlatformUnShelves = (row) => {
   })
 }
 
-const handleCalendar = (row) => {
-  router.push("/product/homestay/calendar/" + row.id);
+const handleExcel = () => {
+  downloadExcel("/manage/homestay/export", queryParams);
 }
 
 const handleCreate = () => {

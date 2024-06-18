@@ -1,3 +1,7 @@
+import request from "@/utils/request";
+import {errorMsg} from "@/utils/message.js";
+import dayjs from "dayjs";
+
 export const phoneValidator = (rule, value, callback) => {
     if (!value) {
         return callback(new Error("电话号码不能为空"));
@@ -102,4 +106,31 @@ export const numberValidator = (value) => {
  */
 export const disableBeforeDate = (time) => {
     return time.getTime() < Date.now() - 8.64e7;
+}
+/**
+ * 下载excel
+ * @param url url地址
+ * @param params 参数
+ * @param fileName 文件名
+ */
+export const downloadExcel = (url, params, fileName) => {
+    request.download({
+        url, params
+    }).then(response => {
+        const url = window.URL.createObjectURL(new Blob([response.data], { type: '.xlsx' }));
+        const link = document.createElement('a');
+        link.href = url;
+        const time = dayjs().format("YYYY-MM-DD HH_mm_ss");
+        link.style.display = 'none';
+        if (fileName) {
+            link.download = fileName + time + ".xlsx";
+        } else {
+            link.download = time + ".xlsx";
+        }
+        link.click();
+        URL.revokeObjectURL(link.href)
+    }).catch(error => {
+        console.log("excel文件下载失败", error)
+        errorMsg("文件下载失败")
+    })
 }
