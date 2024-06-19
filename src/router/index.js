@@ -1,44 +1,44 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import useUserStore from "@/store/user";
-import useBreadcrumbStore from "@/store/breadcrumb";
+import { createRouter, createWebHashHistory } from 'vue-router';
+import useUserStore from '@/store/user';
+import useBreadcrumbStore from '@/store/breadcrumb';
 
 export const routes = [
   {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     components: {
-      fullScreen: () => import("@/views/Login.vue")
-    },
+      fullScreen: () => import('@/views/Login.vue')
+    }
   },
   {
-    path: "/",
-    redirect: "/home"
+    path: '/',
+    redirect: '/home'
   },
   {
-    path: "/home",
-    name: "home",
-    component: () => import("@/views/Home.vue"),
+    path: '/home',
+    name: 'home',
+    component: () => import('@/views/Home.vue')
   },
   {
-    path: "/403",
-    name: "forbidden",
-    component: () => import("@/views/error/403.vue"),
+    path: '/403',
+    name: 'forbidden',
+    component: () => import('@/views/error/403.vue')
   },
   {
-    path: "/:pathMatch(.*)*",
-    name: "notFound",
-    component: () => import("@/views/error/404.vue"),
-  },
+    path: '/:pathMatch(.*)*',
+    name: 'notFound',
+    component: () => import('@/views/error/404.vue')
+  }
 ];
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
   // 严格模式，默认为true 即匹配/user/detail而不是/user/detail/
-  strict: true,
+  strict: true
 });
 
-const whiteList = ["/login"];
+const whiteList = ['/login'];
 
 router.beforeEach((to, from, next) => {
   const breadcrumbStore = useBreadcrumbStore();
@@ -49,11 +49,11 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     // 未登录, 且不在白名单中, 需要跳转到登录页
-    next("/login?redirect=" + to.path);
+    next('/login?redirect=' + to.path);
   }
 });
 
-const modules = import.meta.glob("./modules/*/*.*", { eager: true });
+const modules = import.meta.glob('./modules/*/*.*', { eager: true });
 
 for (const path in modules) {
   modules[path].default.forEach((item) => {

@@ -1,23 +1,23 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "@/router";
-import "@/styles/index.scss";
-import { createPinia } from "pinia";
-import { createPersistedState } from "pinia-plugin-persistedstate";
-import hasPerm from "@/directive/hasPerm.js";
-import * as ElementPlusIconsVue from "@element-plus/icons-vue";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from '@/router';
+import '@/styles/index.scss';
+import { createPinia } from 'pinia';
+import { createPersistedState } from 'pinia-plugin-persistedstate';
+import hasPerm from '@/directive/hasPerm.js';
+import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 
 const app = createApp(App);
 // 绑定路由
 app.use(router);
 // 绑定指令
-app.directive("hasPerm", hasPerm);
+app.directive('hasPerm', hasPerm);
 // 创建pinia
 const pinia = createPinia();
 pinia.use(
   createPersistedState({
     key: (id) => `__persisted__${id}`,
-    storage: window.sessionStorage,
+    storage: window.sessionStorage
   })
 );
 // 绑定状态管理
@@ -28,4 +28,4 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 // 挂载
-app.mount("#app");
+app.mount('#app');

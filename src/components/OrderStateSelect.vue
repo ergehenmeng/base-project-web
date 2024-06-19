@@ -15,14 +15,11 @@
   </el-select>
 </template>
 <script setup>
-
 const props = defineProps({
   clearable: {
     type: Boolean,
-    default: true,
+    default: true
   }
 });
 const orderState = defineModel();
-
-
 </script>

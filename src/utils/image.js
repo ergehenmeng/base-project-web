@@ -1,4 +1,4 @@
-import { errorMsg } from "./message";
+import { errorMsg } from './message'
 
 /**
  * 校验上传的图片格式及大小
@@ -11,15 +11,14 @@ export const imageCheck = (file, maxSize = 2048, ...imageType) => {
   const type = imageType.length !== 0 ? imageType : defaultImgType;
   const isImage = type.includes(file.type);
   if (!isImage) {
-    errorMsg("图片格式不正确");
+    errorMsg('图片格式不正确');
     return false;
   }
   if (file.size / 1024 > maxSize) {
-    errorMsg("图片大小不能超过" + (maxSize / 1024).toFixed(1) + "MB");
+    errorMsg('图片大小不能超过' + (maxSize / 1024).toFixed(1) + 'MB');
     return false;
   }
   return true;
-}
+};
 
-
-export const defaultImgType = ["image/jpeg", "image/jpg", "image/png", "image/svg"];
+export const defaultImgType = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg'];

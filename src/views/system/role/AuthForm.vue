@@ -1,30 +1,44 @@
 <template>
-  <el-dialog title="角色授权" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog
+    title="角色授权"
+    v-model="showDialog"
+    width="550px"
+    draggable
+    align-center
+    :close-on-click-modal="false"
+  >
     <el-scrollbar height="400px">
-      <el-tree ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps"
-        :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading">
+      <el-tree
+        ref="treeRef"
+        show-checkbox
+        :data="menuList"
+        node-key="id"
+        :props="defaultProps"
+        :default-checked-keys="checkedKeys"
+        :default-expanded-keys="expendKeys"
+        v-loading="loading"
+      >
       </el-tree>
     </el-scrollbar>
     <template #footer>
       <span>
-        <el-button @click=" showDialog = false">取消</el-button>
+        <el-button @click="showDialog = false">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </span>
     </template>
   </el-dialog>
-
 </template>
 
 <script setup>
-import { merchantMenuApi, roleMenuApi, systemMenuApi, authApi } from '@/api/system/role';
+import { authApi, merchantMenuApi, roleMenuApi, systemMenuApi } from '@/api/system/role';
 import useUserStore from '@/store/user';
 import { ref } from 'vue';
-import {successMsg} from "@/utils/message.js";
+import { successMsg } from '@/utils/message.js';
 
 const defaultProps = {
   label: 'title',
   children: 'children'
-}
+};
 const treeRef = ref();
 const showDialog = ref(false);
 const loading = ref(false);
@@ -56,14 +70,14 @@ const openDialog = async (row) => {
     menuList.value = menuResp.data;
     // 默认展开第一个选项
     if (data.length > 0) {
-      expendKeys.value = [data[0]]
+      expendKeys.value = [data[0]];
     } else {
       expendKeys.value = [];
     }
   } finally {
     loading.value = false;
   }
-}
+};
 
 const handleSave = () => {
   const checkedKeys = treeRef.value?.getCheckedKeys(false);
@@ -72,17 +86,18 @@ const handleSave = () => {
   authApi({
     roleId: roleIdRef.value,
     menuIds: [...checkedKeys, ...checkedHalfKeys]
-  }).then(() => {
-    successMsg("角色授权成功");
-    showDialog.value = false;
-    emit('reload');
-  }).finally(() => {
-    loading.value = false;
   })
-}
+    .then(() => {
+      successMsg('角色授权成功');
+      showDialog.value = false;
+      emit('reload');
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+};
 
 defineExpose({
   openDialog
-})
-
+});
 </script>

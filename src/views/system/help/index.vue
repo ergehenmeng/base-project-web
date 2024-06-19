@@ -1,14 +1,24 @@
 <template>
-  <router-view ></router-view>
-  <div >
+  <router-view></router-view>
+  <div>
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="问" clearable @keyup.enter="search" />
+          <el-input
+            v-model="queryParams.queryName"
+            placeholder="问"
+            clearable
+            @keyup.enter="search"
+          />
         </el-form-item>
         <el-form-item label="问题分类">
           <el-select v-model="queryParams.helpType" clearable>
-            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
+            <el-option
+              v-for="item in dictList"
+              :key="item.id"
+              :label="item.showValue"
+              :value="item.hiddenValue"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
@@ -26,58 +36,89 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table
+        :data="pageData"
+        style="width: 100%"
+        stripe
+        v-loading="loading"
+        max-height="670"
+        show-overflow-tooltip
+      >
         <el-table-column prop="ask" label="问" width="300" />
-        <el-table-column prop="helpType" label="问题分类" :formatter="formatter"/>
-        <el-table-column prop="state" label="状态" :formatter="formatter"/>
+        <el-table-column prop="helpType" label="问题分类" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" :formatter="formatter" />
         <el-table-column prop="sort" label="排序" width="80">
           <template #default="scope">
-            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+            <el-input
+              v-model="scope.row.sort"
+              @change="handleSort(scope.row)"
+              maxlength="3"
+              onkeyup="this.value=this.value.replace(/\D/g,'')"
+            ></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button v-has-perm="'VF50'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑">
+            <el-button
+              v-has-perm="'VF50'"
+              type="primary"
+              :icon="Edit"
+              @click="handleEdit(scope.row)"
+              link
+              title="编辑"
+            >
             </el-button>
-            <el-button v-has-perm="'6F50'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link
-                       title="删除">
+            <el-button
+              v-has-perm="'6F50'"
+              type="danger"
+              :icon="Delete"
+              @click="handleDelete(scope.row)"
+              link
+              title="删除"
+            >
             </el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize"
-                     :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+      <el-pagination
+        v-model:current-page="queryParams.page"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20, 50]"
+        layout="->, total, sizes, prev, pager, next"
+        :total="total"
+        @change="getPage"
+      />
     </div>
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, sortApi } from '@/api/system/help';
+import { deleteApi, listPageApi, sortApi } from '@/api/system/help';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus } from '@element-plus/icons-vue';
-import {confirmMsg, successMsg} from '@/utils/message';
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
+import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
-import useDictStore from "@/store/dict.js";
-import { useRouter } from "vue-router";
+import useDictStore from '@/store/dict.js';
+import { useRouter } from 'vue-router';
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('zF50');
 const sortAuth = userStore.hasAuth('xF50');
-const loading = ref(false)
+const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const router = useRouter();
 
 const queryParams = reactive({
-  queryName: "",
+  queryName: '',
   page: 1,
   pageSize: 10,
   state: null,
   helpType: null
-})
+});
 
 const getPage = async () => {
   loading.value = true;
@@ -90,30 +131,30 @@ const getPage = async () => {
   } finally {
     loading.value = false;
   }
-}
+};
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === "helpType") {
-    return dictStore.parseDict("help_type", cellValue);
-  } else if (column.property === "state") {
-    return cellValue === 1 ? "显示" : "隐藏"
+  if (column.property === 'helpType') {
+    return dictStore.parseDict('help_type', cellValue);
+  } else if (column.property === 'state') {
+    return cellValue === 1 ? '显示' : '隐藏';
   } else {
     return cellValue;
   }
-}
+};
 
 const search = () => {
   queryParams.page = 1;
-  getPage()
-}
+  getPage();
+};
 
 onMounted(() => {
-  getPage()
-})
+  getPage();
+});
 
 const handleEdit = (row) => {
-  router.push("/sys/help/edit/" + row.id);
-}
+  router.push('/sys/help/edit/' + row.id);
+};
 
 const handleSort = (row) => {
   if (!sortAuth) {
@@ -123,22 +164,20 @@ const handleSort = (row) => {
   sortApi(data).then(() => {
     successMsg('排序更新成功');
     getPage();
-  })
-}
+  });
+};
 
 const handleDelete = (row) => {
-  confirmMsg("确定要删除该问答吗?", () => {
+  confirmMsg('确定要删除该问答吗?', () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('问答删除成功');
       getPage();
-    })
-  })
-}
+    });
+  });
+};
 
 const handleCreate = () => {
-  router.push("/sys/help/create");
-}
-
+  router.push('/sys/help/create');
+};
 </script>
-

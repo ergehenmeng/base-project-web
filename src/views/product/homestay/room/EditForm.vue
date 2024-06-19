@@ -62,20 +62,20 @@
 </template>
 
 <script setup>
-import { setDayApi } from '@/api/product/room'
-import { reactive, ref } from 'vue'
-import { successMsg } from '@/utils/message'
-import { numberValidator } from '@/utils/common.js'
+import { setDayApi } from '@/api/product/room';
+import { reactive, ref } from 'vue';
+import { successMsg } from '@/utils/message';
+import { numberValidator } from '@/utils/common.js';
 
-const loading = ref(false)
-const formDataRef = ref()
-const showDialog = ref(false)
-const emit = defineEmits(['reload'])
+const loading = ref(false);
+const formDataRef = ref();
+const showDialog = ref(false);
+const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   salePrice: [{ required: true, message: '销售价格不能为空', trigger: 'blur' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }]
-})
+});
 
 const formData = ref({
   roomId: null,
@@ -84,20 +84,20 @@ const formData = ref({
   linePrice: null,
   salePrice: null,
   stock: null
-})
+});
 
 const openDialog = (roomId, item) => {
-  showDialog.value = true
-  resetForm()
-  formData.value.roomId = roomId
-  formData.value.linePrice = item.linePrice
-  formData.value.configDate = item.configDate
-  formData.value.salePrice = item.salePrice
-  formData.value.stock = item.stock
+  showDialog.value = true;
+  resetForm();
+  formData.value.roomId = roomId;
+  formData.value.linePrice = item.linePrice;
+  formData.value.configDate = item.configDate;
+  formData.value.salePrice = item.salePrice;
+  formData.value.stock = item.stock;
   if (item.state !== undefined) {
-    formData.value.state = item.state
+    formData.value.state = item.state;
   }
-}
+};
 
 const resetForm = () => {
   formData.value = {
@@ -107,28 +107,28 @@ const resetForm = () => {
     linePrice: null,
     salePrice: null,
     stock: null
-  }
-  formDataRef.value?.resetFields()
-}
+  };
+  formDataRef.value?.resetFields();
+};
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
-      loading.value = true
+      loading.value = true;
       setDayApi(formData.value)
         .then(() => {
-          successMsg('房型价格修改成功')
-          showDialog.value = false
-          emit('reload')
+          successMsg('房型价格修改成功');
+          showDialog.value = false;
+          emit('reload');
         })
         .finally(() => {
-          loading.value = false
-        })
+          loading.value = false;
+        });
     }
-  })
-}
+  });
+};
 
 defineExpose({
   openDialog
-})
+});
 </script>

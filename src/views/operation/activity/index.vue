@@ -3,7 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="景区">
-          <ScenicSelect v-model="queryParams.scenicId" style="width: 300px !important;"></ScenicSelect>
+          <ScenicSelect
+            v-model="queryParams.scenicId"
+            style="width: 300px !important"
+          ></ScenicSelect>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getList">搜索</el-button>
@@ -21,13 +24,9 @@
         <template #header="{ date }">
           <span>{{ date }}</span>
           <el-button-group>
-            <el-button size="small" @click="selectDate('prev-month')">
-              上一月
-            </el-button>
+            <el-button size="small" @click="selectDate('prev-month')"> 上一月 </el-button>
             <el-button size="small" @click="selectDate('today')">今天</el-button>
-            <el-button size="small" @click="selectDate('next-month')">
-              下一月
-            </el-button>
+            <el-button size="small" @click="selectDate('next-month')"> 下一月 </el-button>
           </el-button-group>
         </template>
         <template #date-cell="{ data }">
@@ -40,12 +39,25 @@
                     <el-text truncated>{{ item.title }}</el-text>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'kdU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑">
+                    <el-button
+                      v-has-perm="'kdU0'"
+                      type="primary"
+                      :icon="Edit"
+                      @click="handleEdit(item)"
+                      link
+                      title="编辑"
+                    >
                     </el-button>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'OdU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link
-                               title="删除">
+                    <el-button
+                      v-has-perm="'OdU0'"
+                      type="danger"
+                      :icon="Delete"
+                      @click="handleDelete(item)"
+                      link
+                      title="删除"
+                    >
                     </el-button>
                   </el-col>
                 </el-row>
@@ -58,15 +70,15 @@
   </div>
 </template>
 <script setup>
-import {listApi, deleteApi,} from '@/api/operation/activity';
-import { reactive, ref} from 'vue';
-import {Edit, Delete, Plus} from '@element-plus/icons-vue';
-import {confirmMsg, successMsg} from '@/utils/message';
+import { listApi, deleteApi } from '@/api/operation/activity';
+import { reactive, ref } from 'vue';
+import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
-import useDictStore from "@/store/dict.js";
-import dayjs from "dayjs";
-import {useRouter} from "vue-router";
-import ScenicSelect from "@/components/ScenicSelect.vue";
+import useDictStore from '@/store/dict.js';
+import dayjs from 'dayjs';
+import { useRouter } from 'vue-router';
+import ScenicSelect from '@/components/ScenicSelect.vue';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -75,42 +87,42 @@ const dictList = dictStore.getDict('banner_type');
 
 const loading = ref(false);
 const calendar = ref();
-const nowDate = ref(new Date())
+const nowDate = ref(new Date());
 
 const dataMap = ref({});
-const selectAuth = userStore.hasAuth("5dU0");
+const selectAuth = userStore.hasAuth('5dU0');
 
 const queryParams = reactive({
   scenicId: null,
-  month: dayjs().format("YYYY-MM")
-})
+  month: dayjs().format('YYYY-MM')
+});
 
 const getList = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      const {data} = await listApi(queryParams);
+      const { data } = await listApi(queryParams);
       data.forEach((item) => {
         dataMap.value[item.nowDate] = item.activityList;
-      })
+      });
     }
   } finally {
     loading.value = false;
   }
-}
+};
 
 onBeforeMount(() => {
-  getList()
-})
+  getList();
+});
 
 const selectDate = (val) => {
   if (!calendar.value) {
-    return
+    return;
   }
-  calendar.value.selectDate(val)
-  queryParams.month = dayjs(nowDate.value).format("YYYY-MM")
+  calendar.value.selectDate(val);
+  queryParams.month = dayjs(nowDate.value).format('YYYY-MM');
   getList();
-}
+};
 
 const activityList = (data) => {
   for (let key in dataMap.value) {
@@ -118,36 +130,34 @@ const activityList = (data) => {
       return dataMap.value[key];
     }
   }
-}
+};
 
 const handleDelete = (row) => {
-  confirmMsg("确定要删除该活动吗?", () => {
-    const data = {id: row.id};
+  confirmMsg('确定要删除该活动吗?', () => {
+    const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('活动删除成功');
       getList();
-    })
-  })
-}
+    });
+  });
+};
 
 const handleConfig = () => {
-  router.push("/operation/activity/config")
-}
+  router.push('/operation/activity/config');
+};
 
 const handleCreate = () => {
   router.push({
-    name: "activityCreate",
+    name: 'activityCreate',
     query: {
-      "nowDate": dayjs(nowDate.value).format("YYYY-MM-DD")
+      nowDate: dayjs(nowDate.value).format('YYYY-MM-DD')
     }
-  })
-}
+  });
+};
 
 const handleEdit = (item) => {
-  router.push("/operation/activity/edit/" + item.id)
-}
-
-
+  router.push('/operation/activity/edit/' + item.id);
+};
 </script>
 <style lang="scss" scoped>
 .calender-msg-list {

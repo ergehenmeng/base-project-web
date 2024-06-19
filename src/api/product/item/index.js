@@ -1,57 +1,57 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 export const listPageApi = (params) => {
-    return request.get({
-        url: "/manage/item/listPage",
-        params,
-    });
+  return request.get({
+    url: '/manage/item/listPage',
+    params
+  });
 };
 
 export const createApi = (data) => {
-    return request.post({
-        url: "/manage/item/create",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/create',
+    data
+  });
+};
 
 export const updateApi = (data) => {
-    return request.post({
-        url: "/manage/item/update",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/update',
+    data
+  });
+};
 
 export const deleteApi = (data) => {
-    return request.post({
-        url: "/manage/item/delete",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/delete',
+    data
+  });
+};
 
 export const selectApi = (params) => {
-    return request.get({
-        url: "/manage/item/select",
-        params
-    });
-}
+  return request.get({
+    url: '/manage/item/select',
+    params
+  });
+};
 
 export const shelvesApi = (data) => {
-    return request.post({
-        url: "/manage/item/shelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/shelves',
+    data
+  });
+};
 
 export const unShelvesApi = (data) => {
-    return request.post({
-        url: "/manage/item/unShelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/unShelves',
+    data
+  });
+};
 
 export const platformUnShelvesApi = (data) => {
-    return request.post({
-        url: "/manage/item/platformUnShelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/item/platformUnShelves',
+    data
+  });
+};

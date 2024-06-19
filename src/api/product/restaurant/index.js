@@ -1,63 +1,63 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
 export const listPageApi = (params) => {
-    return request.get({
-        url: "/manage/restaurant/listPage",
-        params,
-    });
+  return request.get({
+    url: '/manage/restaurant/listPage',
+    params
+  });
 };
 
 export const listApi = () => {
-    return request.get({
-        url: "/manage/restaurant/list"
-    });
+  return request.get({
+    url: '/manage/restaurant/list'
+  });
 };
 
 export const createApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/create",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/create',
+    data
+  });
+};
 
 export const updateApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/update",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/update',
+    data
+  });
+};
 
 export const deleteApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/delete",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/delete',
+    data
+  });
+};
 
 export const selectApi = (params) => {
-    return request.get({
-        url: "/manage/restaurant/select",
-        params
-    });
-}
+  return request.get({
+    url: '/manage/restaurant/select',
+    params
+  });
+};
 
 export const shelvesApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/shelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/shelves',
+    data
+  });
+};
 
 export const unShelvesApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/unShelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/unShelves',
+    data
+  });
+};
 
 export const platformUnShelvesApi = (data) => {
-    return request.post({
-        url: "/manage/restaurant/platformUnShelves",
-        data
-    });
-}
+  return request.post({
+    url: '/manage/restaurant/platformUnShelves',
+    data
+  });
+};

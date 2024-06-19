@@ -1,5 +1,5 @@
 <template>
-  <el-menu router unique-opened :default-active="activeIndex" >
+  <el-menu router unique-opened :default-active="activeIndex">
     <el-menu-item index="/home">
       <el-icon>
         <HomeFilled />
@@ -7,14 +7,15 @@
       <template #title>首页</template>
     </el-menu-item>
     <el-scrollbar height="calc(100vh - 120px)">
-      <template v-for="(item) in menuList" :key="item.id">
+      <template v-for="item in menuList" :key="item.id">
         <el-sub-menu :index="item.path ? item.path : item.code">
           <template #title>
             <el-icon v-if="item.icon">
               <component :is="item.icon"></component>
             </el-icon>
-            {{ item.title }}</template>
-          <template v-for="(subItem) in item.children" :key="subItem.id">
+            {{ item.title }}
+          </template>
+          <template v-for="subItem in item.children" :key="subItem.id">
             <el-menu-item :index="subItem.path ? subItem.path : subItem.code">
               <template #title>
                 <el-icon v-if="subItem.icon">
@@ -31,7 +32,8 @@
 </template>
 <script setup>
 import useUserStore from '@/store/user';
-import { useRoute } from "vue-router";
+import { useRoute } from 'vue-router';
+
 const route = useRoute();
 
 // 获取当前要激活的菜单, 注意:如果url有3级,例如 /sys/help/create, 则激活的是 /sys/help,
@@ -43,14 +45,13 @@ const activeIndex = computed(() => {
     return `${pathList[0]}/${pathList[1]}/${pathList[2]}`;
   }
   return route.path;
-})
+});
 
 const userStore = useUserStore();
 
 const menuList = userStore.user?.menuList;
-
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 .el-menu-item.is-active {
   background-color: #ecf5ff;
 }

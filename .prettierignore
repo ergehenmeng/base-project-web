@@ -1,7 +1,8 @@
 /node_modules/**
-/dist/
 /dist*
 /public/*
+**/*.svg
+/.vscode/*
 /vite.config.js
 /jsconfig.json
 /package.json

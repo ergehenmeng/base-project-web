@@ -1,7 +1,7 @@
-import axios from "axios";
-import useUserStore from "@/store/user";
-import qs from "qs";
-import { errorMsg } from "@/utils/message";
+import axios from 'axios';
+import useUserStore from '@/store/user';
+import qs from 'qs';
+import { errorMsg } from '@/utils/message';
 
 const sourceMap = new Map();
 
@@ -14,11 +14,11 @@ const errorCallback = {
     errorMsg(data.msg);
     const userStore = useUserStore();
     userStore.logout(response.config.url);
-  },
+  }
 };
 
 const cancelRequest = () => {
-  sourceMap.forEach(item => {
+  sourceMap.forEach((item) => {
     item.abort();
   });
 };
@@ -28,7 +28,7 @@ const service = axios.create({
   // 基础路径前缀
   baseURL: import.meta.env.VITE_API_URL,
   // 请求超时时间：30s
-  timeout: 30000,
+  timeout: 30000
 });
 
 // 请求拦截器
@@ -39,7 +39,7 @@ service.interceptors.request.use(
     config.signal = controller.signal;
     sourceMap.set(config.url, controller);
     const userStore = useUserStore();
-    config.headers["token"] = userStore.user?.token;
+    config.headers['token'] = userStore.user?.token;
     return config;
   },
   (error) => {
@@ -51,7 +51,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     sourceMap.delete(response.config.url);
-    if (response.config.responseType === "blob") {
+    if (response.config.responseType === 'blob') {
       return response;
     }
     const res = response.data;
@@ -60,12 +60,12 @@ service.interceptors.response.use(
       return res;
     } else {
       errorHandle(res, response);
-      return Promise.reject(new Error(msg || "Error"));
+      return Promise.reject(new Error(msg || 'Error'));
     }
   },
   (error) => {
     if (!axios.isCancel(error)) {
-      ElMessage.error("接口请求超时，请重试");
+      ElMessage.error('接口请求超时，请重试');
     }
     return Promise.reject(new Error(error));
   }
@@ -74,45 +74,45 @@ service.interceptors.response.use(
 const get = ({ url, params, ...config }) => {
   return service({
     url: url,
-    method: "get",
+    method: 'get',
     params: params,
     ...config,
     paramsSerializer: function (params) {
-      return qs.stringify(params, { arrayFormat: "repeat" });
-    },
+      return qs.stringify(params, { arrayFormat: 'repeat' });
+    }
   });
 };
 
 const post = ({ url, data, ...config }) => {
   return service({
     url: url,
-    method: "post",
+    method: 'post',
     data: data,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json'
     },
-    ...config,
+    ...config
   });
 };
 
 const upload = ({ url, data, ...config }) => {
   return service({
     url: url,
-    method: "post",
+    method: 'post',
     data: data,
     headers: {
-      "Content-Type": "multipart/form-data",
-    },
+      'Content-Type': 'multipart/form-data'
+    }
   });
 };
 
 const download = ({ url, params, ...config }) => {
   return service({
     url: url,
-    method: "get",
+    method: 'get',
     params: params,
-    responseType: "blob",
-    ...config,
+    responseType: 'blob',
+    ...config
   });
 };
 
@@ -129,7 +129,7 @@ const errorHandle = (data, response) => {
   } else {
     errorMsg(data.msg);
   }
-}
+};
 
 // 导出实例
 export default {
@@ -137,5 +137,5 @@ export default {
   post,
   upload,
   download,
-  service,
+  service
 };

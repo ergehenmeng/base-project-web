@@ -1,67 +1,102 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
-             v-loading="loading" :disabled="disabled">
+    <el-form
+      :model="formData"
+      ref="formDataRef"
+      :rules="formRules"
+      label-position="right"
+      label-width="auto"
+      v-loading="loading"
+      :disabled="disabled"
+    >
       <el-form-item label="民宿名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20"/>
+        <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属商户" prop="merchantId">
         <MerchantSelect v-model="formData.merchantId" :clearable="false"></MerchantSelect>
       </el-form-item>
       <el-form-item label="星级" prop="level">
         <el-select v-model="formData.level">
-          <el-option label="五星" :value="5"/>
-          <el-option label="四星" :value="4"/>
-          <el-option label="三星" :value="3"/>
-          <el-option label="二星" :value="2"/>
-          <el-option label="无" :value="0"/>
+          <el-option label="五星" :value="5" />
+          <el-option label="四星" :value="4" />
+          <el-option label="三星" :value="3" />
+          <el-option label="二星" :value="2" />
+          <el-option label="无" :value="0" />
         </el-select>
       </el-form-item>
       <el-form-item label="民宿电话" prop="phone">
-        <el-input v-model="formData.phone" show-word-limit maxlength="13"/>
+        <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
         <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
-          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
+          <el-option
+            v-for="item in dictList"
+            :label="item.showValue"
+            :value="item.showValue"
+            :key="item.hiddenValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress">
-        <el-input v-model="formData.detailAddress" show-word-limit maxlength="100"/>
+        <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit readonly class="w120"/>-
-        <el-input v-model="formData.latitude" show-word-limit readonly class="w120"/>
+        <el-input v-model="formData.longitude" show-word-limit readonly class="w120" />
+        -
+        <el-input v-model="formData.latitude" show-word-limit readonly class="w120" />
         &nbsp;
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
       <el-form-item label="描述信息" prop="intro">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.intro" autosize
-                  maxlength="100" show-word-limit />
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 4 }"
+          v-model="formData.intro"
+          autosize
+          maxlength="100"
+          show-word-limit
+        />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList  v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+        <UploadImageList
+          v-model:file-list="formData.coverList"
+          :disabled="disabled"
+        ></UploadImageList>
       </el-form-item>
       <el-form-item label="特色服务" prop="serviceList">
-        <div style="width: 800px;">
+        <div style="width: 800px">
           <el-checkbox-group v-model="formData.serviceList">
-            <el-checkbox v-for="(item) in keyServiceList " :key="item.hiddenValue"  :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+            <el-checkbox
+              v-for="item in keyServiceList"
+              :key="item.hiddenValue"
+              :label="item.showValue"
+              :value="item.hiddenValue"
+            ></el-checkbox>
           </el-checkbox-group>
         </div>
       </el-form-item>
       <el-form-item label="入住须知" prop="notesInText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.notesIn" v-model:text-value="formData.notesInText" ></WangEditor>
+        <WangEditor
+          v-if="!disabled"
+          v-model:html-value="formData.notesIn"
+          v-model:text-value="formData.notesInText"
+        ></WangEditor>
         <div v-else v-html="formData.notesIn"></div>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
+        <WangEditor
+          v-if="!disabled"
+          v-model:html-value="formData.introduce"
+          v-model:text-value="formData.introduceText"
+        ></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>
-    <div >
+    <div>
       <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
@@ -75,21 +110,21 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/product/homestay';
-import {reactive, ref} from 'vue';
-import WangEditor from "@/components/WangEditor.vue";
-import {useRoute, useRouter} from "vue-router";
-import {successMsg} from "@/utils/message.js";
-import {phoneValidator} from "@/utils/common.js";
-import UploadImageList from "@/components/UploadImageList.vue";
-import AreaSelect from "@/components/AreaSelect.vue";
-import MapContainer from "@/components/MapContainer.vue";
-import useDictStore from "@/store/dict.js";
-import MerchantSelect from "@/components/MerchantSelect.vue";
+import { createApi, updateApi, selectApi } from '@/api/product/homestay';
+import { reactive, ref } from 'vue';
+import WangEditor from '@/components/WangEditor.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { successMsg } from '@/utils/message.js';
+import { phoneValidator } from '@/utils/common.js';
+import UploadImageList from '@/components/UploadImageList.vue';
+import AreaSelect from '@/components/AreaSelect.vue';
+import MapContainer from '@/components/MapContainer.vue';
+import useDictStore from '@/store/dict.js';
+import MerchantSelect from '@/components/MerchantSelect.vue';
 
 const dictStore = useDictStore();
-const dictList = dictStore.getDict("homestay_tag");
-const keyServiceList = dictStore.getDict("key_service")
+const dictList = dictStore.getDict('homestay_tag');
+const keyServiceList = dictStore.getDict('key_service');
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
@@ -99,45 +134,25 @@ const mapRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
-  title: [
-    {required: true, message: "民宿名称不能为空", trigger: 'blur'}
-  ],
-  merchantId: [
-      {required: true, message: "请选择商户", trigger: 'change'}
-  ],
-  level: [
-    {required: true, message: "请选择民宿星级", trigger: 'change'}
-  ],
-  phone: [
-    {required: true, validator: phoneValidator, trigger: 'blur'},
-  ],
-  areaList: [
-    {required: true, message: "请选择省市县", trigger: 'change', type: "array"}
-  ],
+  title: [{ required: true, message: '民宿名称不能为空', trigger: 'blur' }],
+  merchantId: [{ required: true, message: '请选择商户', trigger: 'change' }],
+  level: [{ required: true, message: '请选择民宿星级', trigger: 'change' }],
+  phone: [{ required: true, validator: phoneValidator, trigger: 'blur' }],
+  areaList: [{ required: true, message: '请选择省市县', trigger: 'change', type: 'array' }],
   detailAddress: [
-    {required: true, message: "详细地址不能为空", trigger: 'blur'},
-    {min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur'}
+    { required: true, message: '详细地址不能为空', trigger: 'blur' },
+    { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
   ],
-  longitude: [
-    {required: true, message: "请选择经纬度", trigger: 'blur'},
-  ],
-  latitude: [
-    {required: true, message: "请选择经纬度", trigger: 'blur'},
-  ],
+  longitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
+  latitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
   depict: [
-    {required: true, message: "描述信息不能为空", trigger: 'blur'},
-    {min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur'}
+    { required: true, message: '描述信息不能为空', trigger: 'blur' },
+    { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
   ],
-  coverList: [
-    {required: true, message: "请上传封面图", trigger: 'change', type: "array"}
-  ],
-  introduceText: [
-    {required: true, message: "详细介绍不能为空", trigger: 'change'}
-  ],
-  notesInText: [
-      {required: true, message: "入住须知不能为空", trigger: 'change'}
-  ]
-})
+  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }],
+  notesInText: [{ required: true, message: '入住须知不能为空', trigger: 'change' }]
+});
 
 const formData = ref({
   id: null,
@@ -167,66 +182,70 @@ const handleSave = () => {
       formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
-      formData.value.tag = formData.value.tagList.join(",");
+      formData.value.tag = formData.value.tagList.join(',');
       if (formData.value.id) {
-        updateApi(formData.value).then(() => {
-          successMsg("民宿信息更新成功");
-          showDialog.value = false;
-          router.go(-1);
-        }).finally(() => {
-          loading.value = false;
-        })
+        updateApi(formData.value)
+          .then(() => {
+            successMsg('民宿信息更新成功');
+            showDialog.value = false;
+            router.go(-1);
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       } else {
-        createApi(formData.value).then(() => {
-          successMsg("民宿添加成功");
-          showDialog.value = false;
-          router.go(-1);
-        }).finally(() => {
-          loading.value = false;
-        })
+        createApi(formData.value)
+          .then(() => {
+            successMsg('民宿添加成功');
+            showDialog.value = false;
+            router.go(-1);
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       }
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
   const params = route.params;
   if (params.id !== undefined) {
     loading.value = true;
     // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith("/product/homestay/detail");
-    selectApi(params).then(res => {
-      formData.value = res.data;
-      if (res.data.coverUrl) {
-        formData.value.coverList = res.data.coverUrl.split(",");
-      } else {
-        formData.value.coverList = [];
-      }
-      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-      if (res.data.tag) {
-        formData.value.tagList = res.data.tag.split(",");
-      } else {
-        formData.value.tagList = [];
-      }
-      if (res.data.keyService) {
-        formData.value.serviceList = res.data.keyService.split(",").map(item => parseInt(item));
-      } else {
-        formData.value.serviceList = [];
-      }
-      formData.value.introduceText = res.data.introduce;
-    }).finally(() => {
-      loading.value = false;
-    })
+    disabled.value = route.fullPath.startsWith('/product/homestay/detail');
+    selectApi(params)
+      .then((res) => {
+        formData.value = res.data;
+        if (res.data.coverUrl) {
+          formData.value.coverList = res.data.coverUrl.split(',');
+        } else {
+          formData.value.coverList = [];
+        }
+        formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+        if (res.data.tag) {
+          formData.value.tagList = res.data.tag.split(',');
+        } else {
+          formData.value.tagList = [];
+        }
+        if (res.data.keyService) {
+          formData.value.serviceList = res.data.keyService.split(',').map((item) => parseInt(item));
+        } else {
+          formData.value.serviceList = [];
+        }
+        formData.value.introduceText = res.data.introduce;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   }
-})
+});
 const handleMap = () => {
   mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
-}
+};
 
 const setLocation = (lng, lat) => {
   formData.value.longitude = lng;
   formData.value.latitude = lat;
-}
-
+};
 </script>
-

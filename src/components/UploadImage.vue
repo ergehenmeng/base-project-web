@@ -1,6 +1,14 @@
 <template>
-  <el-upload class="image-uploader" :action="uploadUrl" :headers="headers"
-             :show-file-list="false" :on-success="handleImageSuccess" :before-upload="beforeImageUpload" :disabled="prop.disabled" accept="image/*">
+  <el-upload
+    class="image-uploader"
+    :action="uploadUrl"
+    :headers="headers"
+    :show-file-list="false"
+    :on-success="handleImageSuccess"
+    :before-upload="beforeImageUpload"
+    :disabled="prop.disabled"
+    accept="image/*"
+  >
     <img v-if="imgUrl" :src="imgUrl" class="image-uploader-preview" alt="预览" />
     <el-icon v-else class="image-uploader-icon">
       <Plus />
@@ -9,24 +17,24 @@
 </template>
 
 <script setup>
-import useUserStore from "@/store/user.js";
-import { errorMsg } from "@/utils/message.js";
-import { imageCheck } from "@/utils/image.js";
-import { useRoute } from "vue-router";
+import useUserStore from '@/store/user.js';
+import { errorMsg } from '@/utils/message.js';
+import { imageCheck } from '@/utils/image.js';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const imgUrl = defineModel();
 const prop = defineProps({
   disabled: {
     type: Boolean,
-    default: false,
+    default: false
   }
-})
+});
 const userStore = useUserStore();
-const uploadUrl = import.meta.env.VITE_API_URL + "/manage/file/upload";
+const uploadUrl = import.meta.env.VITE_API_URL + '/manage/file/upload';
 const headers = {
-  'token': userStore.user?.token
-}
+  token: userStore.user?.token
+};
 
 const handleImageSuccess = (res) => {
   if (res.code !== 200) {
@@ -37,11 +45,10 @@ const handleImageSuccess = (res) => {
     return;
   }
   const { data } = res;
-  imgUrl.value = data.address + data.path
-}
+  imgUrl.value = data.address + data.path;
+};
 
 const beforeImageUpload = (rawFile) => {
   return imageCheck(rawFile);
-}
+};
 </script>
-

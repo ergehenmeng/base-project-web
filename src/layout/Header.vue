@@ -2,23 +2,28 @@
   <div class="main-header">
     <span class="main-header-title">欢迎您: {{ nickName }}</span>
     <ul>
-      <li><el-icon title="个人中心" @click="handleUser">
+      <li>
+        <el-icon title="个人中心" @click="handleUser">
           <UserFilled />
         </el-icon>
       </li>
-      <li><el-icon title="修改密码" @click="handleChangePwd">
+      <li>
+        <el-icon title="修改密码" @click="handleChangePwd">
           <Unlock />
-        </el-icon></li>
-      <li><el-icon title="退出系统" @click="handleLogout">
+        </el-icon>
+      </li>
+      <li>
+        <el-icon title="退出系统" @click="handleLogout">
           <CircleCloseFilled />
-        </el-icon></li>
+        </el-icon>
+      </li>
     </ul>
-    <ChangePwd ref="changePwdRef" ></ChangePwd>
+    <ChangePwd ref="changePwdRef"></ChangePwd>
   </div>
 </template>
 <script setup>
 import useUserStore from '@/store/user';
-import ChangePwd from "@/views/ChangePwd.vue";
+import ChangePwd from '@/views/ChangePwd.vue';
 import { confirmMsg } from '@/utils/message';
 
 const userStore = useUserStore();
@@ -26,26 +31,25 @@ const changePwdRef = ref();
 const nickName = userStore.user?.nickName;
 
 const handleLogout = () => {
-  confirmMsg("确定要退出系统吗?", () => {
+  confirmMsg('确定要退出系统吗?', () => {
     userStore.logout();
   });
-}
+};
 
-const handleUser = () => {
-
-}
+const handleUser = () => {};
 
 const handleChangePwd = () => {
   changePwdRef.value.openDialog();
-}
-
+};
 </script>
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import '@/styles/index.scss';
 
 .main-header {
   height: 60px;
-  background: url($main-header-logo-url) no-repeat 50px 5px, $main-header-color;
+  background:
+    url($main-header-logo-url) no-repeat 50px 5px,
+    $main-header-color;
   display: flex;
   justify-content: flex-end;
   align-items: center;

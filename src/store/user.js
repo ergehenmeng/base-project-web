@@ -1,23 +1,23 @@
-import { loginApi, logoutApi } from "@/api/login";
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import router from "@/router";
+import { loginApi, logoutApi } from '@/api/login';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import router from '@/router';
 
 /**
  * 用户登录信息
  */
 const useUserStore = defineStore(
-  "user",
+  'user',
   () => {
     const user = ref({
       // 登录token
-      token: "",
+      token: '',
       // 用户类型 1:系统用户 2:商户用户
       userType: null,
       // 昵称
-      nickName: "",
+      nickName: '',
       // 按钮权限
-      permList: [],
+      permList: []
     });
     // 用户是否登陆
     const isLogin = ref(false);
@@ -25,11 +25,7 @@ const useUserStore = defineStore(
     // 判断是否有指定的按钮权限
     const hasAuth = (authCode) => {
       const permList = user.value.permList;
-      return (
-        permList !== null &&
-        Array.isArray(permList) &&
-        permList.includes(authCode)
-      );
+      return permList !== null && Array.isArray(permList) && permList.includes(authCode);
     };
     /**
      * 退出登录
@@ -46,12 +42,12 @@ const useUserStore = defineStore(
       window.sessionStorage.clear();
       // 此处表示被动退出
       if (router.hasRoute(redirectUrl)) {
-          router.replace("/login?redirect=" + encodeURIComponent(redirectUrl));
+        router.replace('/login?redirect=' + encodeURIComponent(redirectUrl));
       } else {
-          // 表示主动退出
-          logoutApi().then((res) => {
-              router.replace("/login");
-          });
+        // 表示主动退出
+        logoutApi().then((res) => {
+          router.replace('/login');
+        });
       }
     };
 
@@ -62,7 +58,7 @@ const useUserStore = defineStore(
       }
       const result = await loginApi(loginData);
       isLogin.value = true;
-      user.value = {...result.data};
+      user.value = { ...result.data };
     };
     return { user, isLogin, login, hasAuth, logout };
   },

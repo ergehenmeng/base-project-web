@@ -1,21 +1,35 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto"
-             v-loading="loading">
+    <el-form
+      :model="formData"
+      ref="formDataRef"
+      :rules="formRules"
+      label-position="right"
+      label-width="auto"
+      v-loading="loading"
+    >
       <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20"/>
+        <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="公告类型" prop="noticeType">
         <el-select v-model="formData.noticeType">
-          <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue"/>
+          <el-option
+            v-for="item in dictList"
+            :key="item.id"
+            :label="item.showValue"
+            :value="item.hiddenValue"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="公告内容" prop="contentText">
-        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
+        <WangEditor
+          v-model:html-value="formData.content"
+          v-model:text-value="formData.contentText"
+        ></WangEditor>
       </el-form-item>
     </el-form>
-    <div >
+    <div>
       <div class="edit-button-footer">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
@@ -25,12 +39,12 @@
 </template>
 
 <script setup>
-import {createApi, updateApi, selectApi} from '@/api/operation/notice';
-import {reactive, ref} from 'vue';
-import useDictStore from "@/store/dict.js";
-import WangEditor from "@/components/WangEditor.vue";
-import {useRoute, useRouter} from "vue-router";
-import {successMsg} from "@/utils/message.js";
+import { createApi, updateApi, selectApi } from '@/api/operation/notice';
+import { reactive, ref } from 'vue';
+import useDictStore from '@/store/dict.js';
+import WangEditor from '@/components/WangEditor.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { successMsg } from '@/utils/message.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,22 +55,16 @@ const formDataRef = ref();
 const showDialog = ref(false);
 
 const formRules = reactive({
-  title: [
-    {required: true, message: "标题不能为空", trigger: 'blur'}
-  ],
-  contentText: [
-    {required: true, message: "内容不能为空", trigger: 'change'}
-  ],
-  noticeType: [
-    {required: true, message: '请选择公告类型', trigger: 'change'}
-  ]
-})
+  title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
+  contentText: [{ required: true, message: '内容不能为空', trigger: 'change' }],
+  noticeType: [{ required: true, message: '请选择公告类型', trigger: 'change' }]
+});
 
 const formData = ref({
   id: null,
-  title: "",
-  content: "",
-  contentText: "",
+  title: '',
+  content: '',
+  contentText: '',
   noticeType: null
 });
 
@@ -65,38 +73,42 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi(formData.value).then(() => {
-          successMsg("公告更新成功");
-          showDialog.value = false;
-          router.go(-1);
-        }).finally(() => {
-          loading.value = false;
-        })
+        updateApi(formData.value)
+          .then(() => {
+            successMsg('公告更新成功');
+            showDialog.value = false;
+            router.go(-1);
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       } else {
-        createApi(formData.value).then(() => {
-          successMsg("公告添加成功");
-          showDialog.value = false;
-          router.go(-1);
-        }).finally(() => {
-          loading.value = false;
-        })
+        createApi(formData.value)
+          .then(() => {
+            successMsg('公告添加成功');
+            showDialog.value = false;
+            router.go(-1);
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       }
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
   const params = route.params;
   if (params.id !== undefined) {
     loading.value = true;
-    selectApi(params).then(res => {
-      formData.value = res.data;
-      formData.value.answerText = res.data.answer;
-    }).finally(() => {
-      loading.value = false;
-    })
+    selectApi(params)
+      .then((res) => {
+        formData.value = res.data;
+        formData.value.answerText = res.data.answer;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   }
-})
-
+});
 </script>
-

@@ -1,8 +1,8 @@
 export const confirmMsg = (msg, fn, type) => {
-  type = type || "warning";
+  type = type || 'warning';
   ElMessageBox.confirm(msg, {
     autofocus: false,
-    type: type,
+    type: type
   })
     .then(() => {
       fn();
@@ -13,25 +13,25 @@ export const confirmMsg = (msg, fn, type) => {
 export const errorMsg = (msg, func) => {
   ElMessage({
     message: msg,
-    type: "error",
+    type: 'error',
     duration: 3000,
     onClose: () => {
       if (func) {
         func();
       }
-    },
+    }
   });
 };
 
 export const successMsg = (msg, func) => {
   ElMessage({
     message: msg,
-    type: "success",
+    type: 'success',
     duration: 3000,
     onClose: () => {
       if (func) {
         func();
       }
-    },
+    }
   });
 };

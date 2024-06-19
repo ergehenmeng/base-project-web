@@ -1,6 +1,6 @@
-import { dictListApi } from "@/api/system/dict";
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { dictListApi } from '@/api/system/dict';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
 /**
  * 数据字典
@@ -10,7 +10,7 @@ import { ref } from "vue";
  * }]
  */
 const useDictStore = defineStore(
-  "dict",
+  'dict',
   () => {
     const dictMap = ref({});
 
@@ -30,7 +30,7 @@ const useDictStore = defineStore(
       if (dictList) {
         return dictList;
       } else {
-        console.warn("数据字典未初始化", nid)
+        console.warn('数据字典未初始化', nid);
         return [];
       }
     };
@@ -46,9 +46,9 @@ const useDictStore = defineStore(
       }
       const nidList = [...nid];
       const { data } = await dictListApi({ nidList });
-      data.forEach(item => {
+      data.forEach((item) => {
         dictMap.value[item.nid] = item.itemList;
-      })
+      });
     };
     return { dictMap, parseDict, getDict, initDict };
   },
