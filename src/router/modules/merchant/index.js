@@ -17,6 +17,32 @@ export default [
             component: () => import('@/views/merchant/user/index.vue')
           }
         ]
+      },
+      {
+        path: 'role',
+        meta: {
+          title: '商户角色'
+        },
+        children: [
+          {
+            path: '',
+            name: 'merchantRoleIndex',
+            component: () => import('@/views/merchant/role/index.vue')
+          }
+        ]
+      },
+      {
+        path: 'detail',
+        meta: {
+          title: '商户信息'
+        },
+        children: [
+          {
+            path: '',
+            name: 'merchantDetailIndex',
+            component: () => import('@/views/merchant/detail/index.vue')
+          }
+        ]
       }
     ]
   }

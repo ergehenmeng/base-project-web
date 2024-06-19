@@ -38,11 +38,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="level" label="景区等级" width="150" :formatter="formatter" />
-        <el-table-column prop="openTime" label="营业时间" width="150" />
-        <el-table-column prop="phone" label="景区电话" width="150" />
+        <el-table-column prop="openTime" label="营业时间" width="120" />
+        <el-table-column prop="phone" label="景区电话" width="140" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="score" label="评分" width="100" />
-        <el-table-column prop="minPrice" label="票价" width="180" :formatter="formatter" />
+        <el-table-column prop="score" label="评分" width="80" />
+        <el-table-column prop="minPrice" label="票价" width="150" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">

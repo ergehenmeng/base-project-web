@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { authApi, roleMenuApi, systemMenuApi } from '@/api/system/role';
+import { authApi, merchantMenuApi, roleMenuApi } from '@/api/merchant/role';
 import useUserStore from '@/store/user';
 import { ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
@@ -42,7 +42,7 @@ const openDialog = async (row) => {
     // 选中的菜单
     const { data } = await roleMenuApi({ id: row.id });
     checkedKeys.value = data;
-    const menuResp = await systemMenuApi();
+    let menuResp = await merchantMenuApi();
     menuList.value = menuResp.data;
     // 默认展开第一个选项
     if (data.length > 0) {
