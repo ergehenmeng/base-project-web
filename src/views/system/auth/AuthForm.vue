@@ -1,20 +1,6 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="单位名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
       </el-form-item>
@@ -25,23 +11,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="过期时间" prop="expireDate">
-        <el-date-picker
-          v-model="formData.expireDate"
-          type="date"
-          value-format="YYYY-MM-DD"
-          placeholder="默认有效期一年"
-          :disabled-date="disableBeforeDate"
-        />
+        <el-date-picker v-model="formData.expireDate" type="date" value-format="YYYY-MM-DD" placeholder="默认有效期一年" :disabled-date="disableBeforeDate" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 2 }"
-          v-model="formData.remark"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

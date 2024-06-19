@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="昵称、手机号"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -25,14 +20,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="nickName" label="昵称" width="120" />
         <el-table-column prop="mobile" label="登录账号" width="150" />
         <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
@@ -44,62 +32,12 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button
-              v-has-perm="'mqK0'"
-              type="info"
-              :icon="Document"
-              @click="handleDetail(scope.row)"
-              link
-              title="详情"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'iqK0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'qqK0'"
-              v-show="scope.row.state === 1"
-              type="warning"
-              :icon="Lock"
-              @click="handleLock(scope.row)"
-              link
-              title="锁定"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'8qK0'"
-              v-show="scope.row.state === 0"
-              type="success"
-              :icon="Unlock"
-              @click="handleUnlock(scope.row)"
-              link
-              title="解锁"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'jqK0'"
-              type="primary"
-              :icon="Refresh"
-              @click="handleReset(scope.row)"
-              link
-              title="重置密码"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'2qK0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'mqK0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'iqK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'qqK0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"> </el-button>
+            <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"> </el-button>
+            <el-button v-has-perm="'jqK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"> </el-button>
+            <el-button v-has-perm="'2qK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -152,9 +90,7 @@ const getPage = async () => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
-    return cellValue === 1
-      ? h('span', { style: 'color: green;' }, '正常')
-      : h('span', { style: 'color: #ff3d3d;' }, '锁定');
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '锁定');
   } else if (column.property === 'userType') {
     if (cellValue === 1) {
       return '系统用户';

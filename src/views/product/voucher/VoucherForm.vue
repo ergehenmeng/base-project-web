@@ -1,24 +1,12 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="餐饮券名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="restaurantId">
-        <RestaurantSelect
-          v-model="formData.restaurantId"
-          :disabled="disabled"
-          :clearable="false"
-        ></RestaurantSelect>
+        <RestaurantSelect v-model="formData.restaurantId" :disabled="disabled" :clearable="false"></RestaurantSelect>
       </el-form-item>
       <el-form-item label="有效日期">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
@@ -29,98 +17,41 @@
       <el-form-item label="有效期" :prop="validTypeProp" :rules="validTypeRules">
         <div v-if="formData.validType === 0">
           购买起始日起
-          <el-input
-            style="width: 50px; margin: 0 5px"
-            onkeyup="this.value=this.value.replace(/\D/g,'')"
-            v-model="formData.validDays"
-            maxlength="3"
-          ></el-input>
+          <el-input style="width: 50px; margin: 0 5px" onkeyup="this.value=this.value.replace(/\D/g,'')" v-model="formData.validDays" maxlength="3"></el-input>
           天有效
         </div>
         <div v-else>
-          <el-date-picker
-            type="daterange"
-            :disabled-date="disableBeforeDate"
-            value-format="YYYY-MM-DD"
-            v-model="formData.activityDate"
-            style="width: 350px"
-          ></el-date-picker>
+          <el-date-picker type="daterange" :disabled-date="disableBeforeDate" value-format="YYYY-MM-DD" v-model="formData.activityDate" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="可用时间段" prop="timeList">
         <div style="width: 350px">
-          <el-time-picker
-            is-range
-            v-model="formData.timeList"
-            style="width: 350px"
-            format="HH:mm"
-            value-format="HH:mm"
-          ></el-time-picker>
+          <el-time-picker is-range v-model="formData.timeList" style="width: 350px" format="HH:mm" value-format="HH:mm"></el-time-picker>
         </div>
       </el-form-item>
       <el-form-item label="划线价" prop="linePrice">
-        <el-input
-          v-model="formData.linePrice"
-          placeholder="划线价小于销售价时不显示"
-          show-word-limit
-          maxlength="8"
-          @keyup="formData.linePrice = numberValidator(formData.linePrice)"
-        />
+        <el-input v-model="formData.linePrice" placeholder="划线价小于销售价时不显示" show-word-limit maxlength="8" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
       </el-form-item>
       <el-form-item label="销售价" prop="salePrice">
-        <el-input
-          v-model="formData.salePrice"
-          show-word-limit
-          maxlength="8"
-          @keyup="formData.salePrice = numberValidator(formData.salePrice)"
-        />
+        <el-input v-model="formData.salePrice" show-word-limit maxlength="8" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input
-          v-model="formData.stock"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-          show-word-limit
-          maxlength="5"
-        />
+        <el-input v-model="formData.stock" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="5" />
       </el-form-item>
       <el-form-item label="虚拟销量" prop="virtualNum">
-        <el-input
-          v-model="formData.virtualNum"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-          show-word-limit
-          maxlength="5"
-        />
+        <el-input v-model="formData.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="5" />
       </el-form-item>
       <el-form-item label="限购数量" prop="quota">
-        <el-input
-          v-model="formData.quota"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-          show-word-limit
-          maxlength="2"
-        />
+        <el-input v-model="formData.quota" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="2" />
       </el-form-item>
       <el-form-item label="购买说明" prop="depict">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4 }"
-          v-model="formData.depict"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.depict" autosize maxlength="200" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="餐饮券介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

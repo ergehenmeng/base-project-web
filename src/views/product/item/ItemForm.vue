@@ -1,34 +1,15 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="商品名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="storeId">
         <el-select v-model="formData.storeId" filterable>
-          <el-option
-            v-for="item in storeList"
-            :key="item.storeId"
-            :label="item.storeName"
-            :value="item.storeId"
-          >
+          <el-option v-for="item in storeList" :key="item.storeId" :label="item.storeName" :value="item.storeId">
             <span style="float: left">{{ item.storeName }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{
-              item.state === 0
-                ? '未上架'
-                : item.state === 2
-                  ? h('span', { style: 'color: red' }, '强制下架')
-                  : '已上架'
-            }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? h('span', { style: 'color: red' }, '强制下架') : '已上架' }}</span>
           </el-option>
         </el-select>
       </el-form-item>
@@ -39,13 +20,7 @@
         <ItemTag v-model="formData.tagId"></ItemTag>
       </el-form-item>
       <el-form-item label="限购数量" prop="quota">
-        <el-input
-          v-model="formData.quota"
-          show-word-limit
-          maxlength="4"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-          style="width: 100px"
-        />
+        <el-input v-model="formData.quota" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" />
       </el-form-item>
       <el-form-item label="交付方式" prop="deliveryType">
         <el-radio-group v-model="formData.deliveryType">
@@ -63,27 +38,13 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotes">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4 }"
-          v-model="formData.purchaseNotes"
-          autosize
-          maxlength="400"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.purchaseNotes" autosize maxlength="400" show-word-limit />
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

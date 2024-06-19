@@ -3,10 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="景区">
-          <ScenicSelect
-            v-model="queryParams.scenicId"
-            style="width: 300px !important"
-          ></ScenicSelect>
+          <ScenicSelect v-model="queryParams.scenicId" style="width: 300px !important"></ScenicSelect>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="getList">搜索</el-button>
@@ -24,9 +21,9 @@
         <template #header="{ date }">
           <span>{{ date }}</span>
           <el-button-group>
-            <el-button size="small" @click="selectDate('prev-month')"> 上一月 </el-button>
+            <el-button size="small" @click="selectDate('prev-month')"> 上一月</el-button>
             <el-button size="small" @click="selectDate('today')">今天</el-button>
-            <el-button size="small" @click="selectDate('next-month')"> 下一月 </el-button>
+            <el-button size="small" @click="selectDate('next-month')"> 下一月</el-button>
           </el-button-group>
         </template>
         <template #date-cell="{ data }">
@@ -39,26 +36,10 @@
                     <el-text truncated>{{ item.title }}</el-text>
                   </el-col>
                   <el-col :span="2">
-                    <el-button
-                      v-has-perm="'kdU0'"
-                      type="primary"
-                      :icon="Edit"
-                      @click="handleEdit(item)"
-                      link
-                      title="编辑"
-                    >
-                    </el-button>
+                    <el-button v-has-perm="'kdU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑"> </el-button>
                   </el-col>
                   <el-col :span="2">
-                    <el-button
-                      v-has-perm="'OdU0'"
-                      type="danger"
-                      :icon="Delete"
-                      @click="handleDelete(item)"
-                      link
-                      title="删除"
-                    >
-                    </el-button>
+                    <el-button v-has-perm="'OdU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除"> </el-button>
                   </el-col>
                 </el-row>
               </li>

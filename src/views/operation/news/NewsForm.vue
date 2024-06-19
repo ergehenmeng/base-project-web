@@ -1,14 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="资讯标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -22,10 +15,7 @@
         <el-input v-model="formData.video" show-word-limit maxlength="200" />
       </el-form-item>
       <el-form-item label="详细信息" prop="contentText">
-        <WangEditor
-          v-model:html-value="formData.content"
-          v-model:text-value="formData.contentText"
-        ></WangEditor>
+        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
       </el-form-item>
     </el-form>
     <div>

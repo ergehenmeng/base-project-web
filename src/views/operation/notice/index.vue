@@ -3,21 +3,11 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="标题"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="标题" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="公告类型">
           <el-select v-model="queryParams.noticeType" clearable>
-            <el-option
-              v-for="item in dictList"
-              :key="item.id"
-              :label="item.showValue"
-              :value="item.hiddenValue"
-            />
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
           </el-select>
         </el-form-item>
         <el-form-item label="发布状态">
@@ -35,14 +25,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="标题" />
         <el-table-column prop="noticeType" label="公告类型" :formatter="formatter" />
         <el-table-column prop="state" label="发布状态" :formatter="formatter" />
@@ -50,44 +33,10 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button
-              v-has-perm="'kJU0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'lJU0'"
-              v-show="scope.row.state === 0"
-              type="primary"
-              :icon="Top"
-              @click="handlePublish(scope.row)"
-              link
-              title="发布"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'OJU0'"
-              v-show="scope.row.state === 1"
-              type="primary"
-              :icon="Bottom"
-              @click="handleCancel(scope.row)"
-              link
-              title="下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'cJU0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'kJU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'lJU0'" v-show="scope.row.state === 0" type="primary" :icon="Top" @click="handlePublish(scope.row)" link title="发布"> </el-button>
+            <el-button v-has-perm="'OJU0'" v-show="scope.row.state === 1" type="primary" :icon="Bottom" @click="handleCancel(scope.row)" link title="下架"> </el-button>
+            <el-button v-has-perm="'cJU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -189,9 +138,7 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'noticeType') {
     return dictStore.parseDict('notice_type', cellValue);
   } else if (column.property === 'state') {
-    return cellValue === 0
-      ? h('span', { style: 'color: red;' }, '未发布')
-      : h('span', { style: 'color: green;' }, '已发布');
+    return cellValue === 0 ? h('span', { style: 'color: red;' }, '未发布') : h('span', { style: 'color: green;' }, '已发布');
   } else {
     return cellValue;
   }

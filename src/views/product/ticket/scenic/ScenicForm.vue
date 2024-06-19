@@ -1,15 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="景区名称" prop="scenicName">
         <el-input v-model="formData.scenicName" show-word-limit maxlength="20" />
       </el-form-item>
@@ -29,12 +21,7 @@
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
         <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
-          <el-option
-            v-for="item in dictList"
-            :label="item.showValue"
-            :value="item.showValue"
-            :key="item.hiddenValue"
-          />
+          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
         </el-select>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
@@ -54,17 +41,10 @@
         <el-input v-model="formData.depict" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

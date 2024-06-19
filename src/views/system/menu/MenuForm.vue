@@ -1,30 +1,11 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-    :before-close="handleClose"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false" :before-close="handleClose">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="菜单名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="菜单类型" prop="grade">
-        <el-radio-group
-          v-model="formData.grade"
-          :disabled="formData.id !== null || formData.pid.length === 6"
-          @change="changeGrade"
-        >
+        <el-radio-group v-model="formData.grade" :disabled="formData.id !== null || formData.pid.length === 6" @change="changeGrade">
           <el-radio :value="1">导航</el-radio>
           <el-radio :value="2">按钮</el-radio>
         </el-radio-group>
@@ -37,27 +18,14 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="图标" prop="icon">
-        <el-input
-          v-model="formData.icon"
-          ref="inputRef"
-          readonly
-          :disabled="disabledIcon || (formData.id !== null && formData.grade === 2)"
-        >
+        <el-input v-model="formData.icon" ref="inputRef" readonly :disabled="disabledIcon || (formData.id !== null && formData.grade === 2)">
           <template #prefix v-if="formData.icon">
             <el-icon :size="18">
               <component :is="formData.icon"></component>
             </el-icon>
           </template>
         </el-input>
-        <el-popover
-          placement="bottom"
-          :width="350"
-          trigger="click"
-          :virtual-ref="inputRef"
-          ref="popoverRef"
-          virtual-triggering
-          :hide-after="0"
-        >
+        <el-popover placement="bottom" :width="350" trigger="click" :virtual-ref="inputRef" ref="popoverRef" virtual-triggering :hide-after="0">
           <IconSelect v-model="formData.icon"></IconSelect>
         </el-popover>
       </el-form-item>
@@ -65,26 +33,11 @@
         <el-input v-model="formData.path" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="权限URL" prop="subPath">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 3, maxRows: 5 }"
-          v-model="formData.subPath"
-          autosize
-          maxlength="300"
-          show-word-limit
-          placeholder="多个逗号分割"
-        />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.subPath" autosize maxlength="300" show-word-limit placeholder="多个逗号分割" />
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 2 }"
-          v-model="formData.remark"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

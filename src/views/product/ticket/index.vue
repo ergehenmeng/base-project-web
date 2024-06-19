@@ -3,18 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="门票名称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="门票名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="景区">
-          <ScenicSelect
-            v-model="queryParams.scenicId"
-            style="width: 250px !important"
-          ></ScenicSelect>
+          <ScenicSelect v-model="queryParams.scenicId" style="width: 250px !important"></ScenicSelect>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -39,14 +31,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="门票名称" min-width="200" />
         <el-table-column prop="scenicName" label="所属景区" min-width="200" />
         <el-table-column prop="category" label="票种" width="80" :formatter="formatter" />
@@ -55,80 +40,19 @@
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter" />
         <el-table-column prop="stock" label="剩余库存" width="80" />
-        <el-table-column
-          prop="advanceDay"
-          label="提前几天购票"
-          width="120"
-          :formatter="formatter"
-        />
-        <el-table-column
-          prop="verificationType"
-          label="核销方式"
-          width="120"
-          :formatter="formatter"
-        />
+        <el-table-column prop="advanceDay" label="提前几天购票" width="120" :formatter="formatter" />
+        <el-table-column prop="verificationType" label="核销方式" width="120" :formatter="formatter" />
         <el-table-column prop="realBuy" label="是否实名" width="100" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button
-              v-has-perm="'iTl0'"
-              type="info"
-              :icon="Document"
-              @click="handleDetail(scope.row)"
-              link
-              title="详情"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'XTl0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'qTl0'"
-              v-show="scope.row.state === 0"
-              type="success"
-              :icon="Top"
-              @click="handleShelves(scope.row)"
-              link
-              title="上架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'8Tl0'"
-              v-show="scope.row.state === 1"
-              type="warning"
-              :icon="Bottom"
-              @click="handleUnShelves(scope.row)"
-              link
-              title="下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'gTl0'"
-              v-show="scope.row.state !== 2"
-              type="danger"
-              :icon="Download"
-              @click="handlePlatformUnShelves(scope.row)"
-              link
-              title="强制下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'2Tl0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'iTl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'XTl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'qTl0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"> </el-button>
+            <el-button v-has-perm="'8Tl0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"> </el-button>
+            <el-button v-has-perm="'gTl0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"> </el-button>
+            <el-button v-has-perm="'2Tl0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -144,13 +68,7 @@
   </div>
 </template>
 <script setup>
-import {
-  listPageApi,
-  deleteApi,
-  shelvesApi,
-  unShelvesApi,
-  platformUnShelvesApi
-} from '@/api/product/ticket';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/ticket';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete, Plus, Top, Bottom, Download, Document } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';

@@ -1,12 +1,6 @@
 <template>
   <el-select v-model="merchantId" :clearable="props.clearable" filterable>
-    <el-option
-      v-for="item in merchantList"
-      :key="item.id"
-      :label="item.merchantName"
-      :value="item.id"
-      :disabled="props.disabled"
-    >
+    <el-option v-for="item in merchantList" :key="item.id" :label="item.merchantName" :value="item.id" :disabled="props.disabled">
       <span style="float: left">{{ item.merchantName }}</span>
       <span style="float: right; color: #8492a6; font-size: 13px">法人：{{ item.legalName }}</span>
     </el-option>

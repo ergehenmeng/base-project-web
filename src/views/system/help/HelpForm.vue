@@ -1,22 +1,10 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="问题分类" prop="helpType">
         <el-select v-model="formData.helpType">
-          <el-option
-            v-for="item in dictList"
-            :key="item.id"
-            :label="item.showValue"
-            :value="item.hiddenValue"
-          />
+          <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
         </el-select>
       </el-form-item>
       <el-form-item label="状态" prop="state">
@@ -29,10 +17,7 @@
         <el-input v-model="formData.ask" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="答" prop="answerText">
-        <WangEditor
-          v-model:html-value="formData.answer"
-          v-model:text-value="formData.answerText"
-        ></WangEditor>
+        <WangEditor v-model:html-value="formData.answer" v-model:text-value="formData.answerText"></WangEditor>
       </el-form-item>
     </el-form>
     <div>

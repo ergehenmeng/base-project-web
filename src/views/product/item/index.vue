@@ -16,7 +16,7 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'oSO0'">
-          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'jSO0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
@@ -28,7 +28,14 @@
         <el-table-column prop="coverUrl" label="封面图片" min-width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.coverUrl?.split(',')[0]" :preview-src-list="scope.row.coverUrl?.split(',')" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image
+                fit="contain"
+                :src="scope.row.coverUrl?.split(',')[0]"
+                :preview-src-list="scope.row.coverUrl?.split(',')"
+                style="width: 50px; height: 50px"
+                preview-teleported
+                hide-on-click-modal
+              />
             </div>
           </template>
         </el-table-column>
@@ -43,18 +50,25 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'2SO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
-            <el-button v-has-perm="'gSO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'mSO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"> </el-button>
-            <el-button v-has-perm="'BSO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"> </el-button>
-            <el-button v-has-perm="'WSO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"> </el-button>
-            <el-button v-has-perm="'vSO0'" type="primary" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"> </el-button>
-            <el-button v-has-perm="'3SO0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link title="设置推荐状态"> </el-button>
-            <el-button v-has-perm="'TSO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'2SO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'gSO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'mSO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
+            <el-button v-has-perm="'BSO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
+            <el-button v-has-perm="'WSO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
+            <el-button v-has-perm="'vSO0'" type="primary" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
+            <el-button v-has-perm="'3SO0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link title="设置推荐状态"></el-button>
+            <el-button v-has-perm="'TSO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination v-model:current-page="queryParams.page" v-model:page-size="queryParams.pageSize" :page-sizes="[10, 20, 50]" layout="->, total, sizes, prev, pager, next" :total="total" @change="getPage" />
+      <el-pagination
+        v-model:current-page="queryParams.page"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20, 50]"
+        layout="->, total, sizes, prev, pager, next"
+        :total="total"
+        @change="getPage"
+      />
     </div>
   </div>
 </template>

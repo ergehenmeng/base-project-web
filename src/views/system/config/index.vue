@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="参数名称、标示符、备注"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="参数名称、标示符、备注" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.locked" clearable>
@@ -22,14 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
         <el-table-column prop="content" label="配置信息" width="300" />
@@ -38,7 +26,7 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button type="primary" :icon="Edit" @click="handleEdit(scope.row)" link> </el-button>
+            <el-button type="primary" :icon="Edit" @click="handleEdit(scope.row)" link></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -3,21 +3,11 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="反馈人手机号、昵称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="反馈人手机号、昵称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="问题分类">
           <el-select v-model="queryParams.feedbackType" clearable>
-            <el-option
-              v-for="item in dictList"
-              :key="item.id"
-              :label="item.showValue"
-              :value="item.hiddenValue"
-            />
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
@@ -32,14 +22,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="content" label="反馈内容" width="200" />
         <el-table-column prop="imageUrl" label="图片" width="100">
           <template #default="scope">
@@ -71,15 +54,7 @@
         <el-table-column prop="deviceModel" label="设备型号" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button
-              v-has-perm="'7b50'"
-              type="primary"
-              :icon="ChatLineSquare"
-              @click="handleDispose(scope.row)"
-              link
-              title="回复"
-            >
-            </el-button>
+            <el-button v-has-perm="'7b50'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"> </el-button>
           </template>
         </el-table-column>
       </el-table>

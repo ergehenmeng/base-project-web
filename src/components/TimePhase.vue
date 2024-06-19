@@ -58,32 +58,12 @@
       <div class="item" data="22:30" @click="selectHandle('22:30', $event)"></div>
       <div class="item" data="23:00" @click="selectHandle('23:00', $event)"></div>
       <div class="item" data="23:30" @click="selectHandle('23:30', $event)"></div>
-      <div
-        style="display: flex; justify-content: center; margin-left: 10px"
-        v-show="!props.disabled"
-      >
-        <el-button
-          type="primary"
-          link
-          :icon="Refresh"
-          title="重置价格配置"
-          @click="resetConfig"
-        ></el-button>
+      <div style="display: flex; justify-content: center; margin-left: 10px" v-show="!props.disabled">
+        <el-button type="primary" link :icon="Refresh" title="重置价格配置" @click="resetConfig"></el-button>
       </div>
     </div>
-    <TimePhaseDialog
-      ref="dialogRef"
-      @reload="addPhasePrice"
-      @cancel="cancelChecked"
-    ></TimePhaseDialog>
-    <el-popover
-      :virtual-ref="popoverRef"
-      trigger="hover"
-      placement="top"
-      :visible="visible"
-      virtual-triggering
-      width="150"
-    >
+    <TimePhaseDialog ref="dialogRef" @reload="addPhasePrice" @cancel="cancelChecked"></TimePhaseDialog>
+    <el-popover :virtual-ref="popoverRef" trigger="hover" placement="top" :visible="visible" virtual-triggering width="150">
       <template #default>
         <div style="width: 130px; display: flex; justify-content: center; align-items: center">
           <div>
@@ -256,9 +236,7 @@ const bindDeleteEvent = (parent, item, startTime, endTime, mouseenterEvent, mous
     confirmMsg(`确定要删除 ${startTime}~${endTime} 时间的价格配置吗?`, () => {
       parent.removeChild(item);
       const data = parent.getAttribute('data');
-      phaseList.value = phaseList.value.filter(
-        (item) => !(item.startTime === startTime && item.endTime === endTime)
-      );
+      phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
       const length = parseInt(parent.style.width.split('px')[0]) / 30;
       if (data === startTime) {
         resetAfter(parent, length);
@@ -347,9 +325,7 @@ const cancelChecked = () => {
     item.style.width = '30px';
   });
   checkedItems.value = [];
-  phaseList.value = phaseList.value.filter(
-    (item) => !(item.startTime === start.value && item.endTime === end.value)
-  );
+  phaseList.value = phaseList.value.filter((item) => !(item.startTime === start.value && item.endTime === end.value));
   reset();
 };
 

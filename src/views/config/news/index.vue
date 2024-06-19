@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="分类标题"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="分类标题" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -19,14 +14,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="分类标题" />
         <el-table-column prop="code" label="资讯编码" />
         <el-table-column prop="includeTitle" label="包含标题" :formatter="formatter" />
@@ -38,24 +26,8 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button
-              v-has-perm="'ocR0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'vcR0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'ocR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'vcR0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>

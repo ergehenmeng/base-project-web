@@ -1,20 +1,6 @@
 <template>
-  <el-dialog
-    title="新增黑名单"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog title="新增黑名单" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="开始IP" prop="startIp">
         <el-input v-model="formData.startIp" show-word-limit maxlength="15" />
       </el-form-item>
@@ -22,14 +8,7 @@
         <el-input v-model="formData.endIp" show-word-limit maxlength="15" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 2 }"
-          v-model="formData.remark"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -56,8 +35,7 @@ const formRules = reactive({
   startIp: [
     { required: true, message: '开始IP不能为空', trigger: 'blur' },
     {
-      pattern:
-        /^([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}$/,
+      pattern: /^([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}$/,
       message: '请输入正确的IP地址',
       trigger: 'blur'
     }
@@ -65,8 +43,7 @@ const formRules = reactive({
   endIp: [
     { required: true, message: '截止IP不能为空', trigger: 'blur' },
     {
-      pattern:
-        /^([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}$/,
+      pattern: /^([1-9]|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])(.(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])){3}$/,
       message: '请输入正确的IP地址',
       trigger: 'blur'
     }

@@ -1,14 +1,5 @@
 <template>
-  <el-cascader
-    v-model="tagId"
-    :options="options"
-    :props="selectProps"
-    clearable
-    filterable
-    :disabled="props.disabled"
-    :show-all-levels="false"
-  >
-  </el-cascader>
+  <el-cascader v-model="tagId" :options="options" :props="selectProps" clearable filterable :disabled="props.disabled" :show-all-levels="false"> </el-cascader>
 </template>
 <script setup>
 import { listApi } from '@/api/config/tag/index.js';

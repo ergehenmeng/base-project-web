@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="字典名称、字典编码"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="字典名称、字典编码" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="分类">
           <el-select v-model="queryParams.dictType" clearable>
@@ -25,14 +20,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 0 55px">
@@ -42,24 +30,8 @@
                 <el-table-column label="隐藏值" prop="hiddenValue" title="保存数据库的值" />
                 <el-table-column label="操作">
                   <template #default="scope">
-                    <el-button
-                      v-has-perm="'rmK0'"
-                      type="primary"
-                      :icon="Edit"
-                      @click="handleItemEdit(scope.row)"
-                      link
-                      title="编辑"
-                    >
-                    </el-button>
-                    <el-button
-                      v-has-perm="'RmK0'"
-                      type="danger"
-                      :icon="Delete"
-                      @click="handleItemDelete(scope.row)"
-                      link
-                      title="删除"
-                    >
-                    </el-button>
+                    <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleItemEdit(scope.row)" link title="编辑"> </el-button>
+                    <el-button v-has-perm="'RmK0'" type="danger" :icon="Delete" @click="handleItemDelete(scope.row)" link title="删除"> </el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -73,33 +45,9 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作">
           <template #default="scope">
-            <el-button
-              v-has-perm="'9mK0'"
-              type="success"
-              :icon="CirclePlus"
-              @click="handleItemCreate(scope.row)"
-              link
-              title="添加数据字典子项"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'rmK0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'RmK0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'9mK0'" type="success" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项"> </el-button>
+            <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'RmK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>

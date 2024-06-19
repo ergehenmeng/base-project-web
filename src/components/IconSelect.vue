@@ -2,2980 +2,1515 @@
   <el-scrollbar height="200px">
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Plus' }"
-          title="Plus"
-          @click="selectIcon('Plus')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Plus' }" title="Plus" @click="selectIcon('Plus')">
           <Plus />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Minus' }"
-          title="Minus"
-          @click="selectIcon('Minus')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Minus' }" title="Minus" @click="selectIcon('Minus')">
           <Minus />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CirclePlus' }"
-          title="CirclePlus"
-          @click="selectIcon('CirclePlus')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CirclePlus' }" title="CirclePlus" @click="selectIcon('CirclePlus')">
           <CirclePlus />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Search' }"
-          title="Search"
-          @click="selectIcon('Search')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Search' }" title="Search" @click="selectIcon('Search')">
           <Search />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Female' }"
-          title="Female"
-          @click="selectIcon('Female')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Female' }" title="Female" @click="selectIcon('Female')">
           <Female />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Male' }"
-          title="Male"
-          @click="selectIcon('Male')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Male' }" title="Male" @click="selectIcon('Male')">
           <Male />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Aim' }"
-          title="Aim"
-          @click="selectIcon('Aim')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Aim' }" title="Aim" @click="selectIcon('Aim')">
           <Aim />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'House' }"
-          title="House"
-          @click="selectIcon('House')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'House' }" title="House" @click="selectIcon('House')">
           <House />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FullScreen' }"
-          title="FullScreen"
-          @click="selectIcon('FullScreen')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FullScreen' }" title="FullScreen" @click="selectIcon('FullScreen')">
           <FullScreen />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Loading' }"
-          title="Loading"
-          @click="selectIcon('Loading')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Loading' }" title="Loading" @click="selectIcon('Loading')">
           <Loading />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Link' }"
-          title="Link"
-          @click="selectIcon('Link')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Link' }" title="Link" @click="selectIcon('Link')">
           <Link />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Service' }"
-          title="Service"
-          @click="selectIcon('Service')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Service' }" title="Service" @click="selectIcon('Service')">
           <Service />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Pointer' }"
-          title="Pointer"
-          @click="selectIcon('Pointer')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Pointer' }" title="Pointer" @click="selectIcon('Pointer')">
           <Pointer />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Star' }"
-          title="Star"
-          @click="selectIcon('Star')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Star' }" title="Star" @click="selectIcon('Star')">
           <Star />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Notification' }"
-          title="Notification"
-          @click="selectIcon('Notification')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Notification' }" title="Notification" @click="selectIcon('Notification')">
           <Notification />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Connection' }"
-          title="Connection"
-          @click="selectIcon('Connection')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Connection' }" title="Connection" @click="selectIcon('Connection')">
           <Connection />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatDotRound' }"
-          title="ChatDotRound"
-          @click="selectIcon('ChatDotRound')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatDotRound' }" title="ChatDotRound" @click="selectIcon('ChatDotRound')">
           <ChatDotRound />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Setting' }"
-          title="Setting"
-          @click="selectIcon('Setting')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Setting' }" title="Setting" @click="selectIcon('Setting')">
           <Setting />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Clock' }"
-          title="Clock"
-          @click="selectIcon('Clock')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Clock' }" title="Clock" @click="selectIcon('Clock')">
           <Clock />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Position' }"
-          title="Position"
-          @click="selectIcon('Position')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Position' }" title="Position" @click="selectIcon('Position')">
           <Position />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Discount' }"
-          title="Discount"
-          @click="selectIcon('Discount')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Discount' }" title="Discount" @click="selectIcon('Discount')">
           <Discount />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Odometer' }"
-          title="Odometer"
-          @click="selectIcon('Odometer')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Odometer' }" title="Odometer" @click="selectIcon('Odometer')">
           <Odometer />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatSquare' }"
-          title="ChatSquare"
-          @click="selectIcon('ChatSquare')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatSquare' }" title="ChatSquare" @click="selectIcon('ChatSquare')">
           <ChatSquare />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatRound' }"
-          title="ChatRound"
-          @click="selectIcon('ChatRound')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatRound' }" title="ChatRound" @click="selectIcon('ChatRound')">
           <ChatRound />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatLineRound' }"
-          title="ChatLineRound"
-          @click="selectIcon('ChatLineRound')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatLineRound' }" title="ChatLineRound" @click="selectIcon('ChatLineRound')">
           <ChatLineRound />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatLineSquare' }"
-          title="ChatLineSquare"
-          @click="selectIcon('ChatLineSquare')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatLineSquare' }" title="ChatLineSquare" @click="selectIcon('ChatLineSquare')">
           <ChatLineSquare />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChatDotSquare' }"
-          title="ChatDotSquare"
-          @click="selectIcon('ChatDotSquare')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChatDotSquare' }" title="ChatDotSquare" @click="selectIcon('ChatDotSquare')">
           <ChatDotSquare />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'View' }"
-          title="View"
-          @click="selectIcon('View')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'View' }" title="View" @click="selectIcon('View')">
           <View />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Hide' }"
-          title="Hide"
-          @click="selectIcon('Hide')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Hide' }" title="Hide" @click="selectIcon('Hide')">
           <Hide />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Unlock' }"
-          title="Unlock"
-          @click="selectIcon('Unlock')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Unlock' }" title="Unlock" @click="selectIcon('Unlock')">
           <Unlock />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Lock' }"
-          title="Lock"
-          @click="selectIcon('Lock')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Lock' }" title="Lock" @click="selectIcon('Lock')">
           <Lock />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'RefreshRight' }"
-          title="RefreshRight"
-          @click="selectIcon('RefreshRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'RefreshRight' }" title="RefreshRight" @click="selectIcon('RefreshRight')">
           <RefreshRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'RefreshLeft' }"
-          title="RefreshLeft"
-          @click="selectIcon('RefreshLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'RefreshLeft' }" title="RefreshLeft" @click="selectIcon('RefreshLeft')">
           <RefreshLeft />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Refresh' }"
-          title="Refresh"
-          @click="selectIcon('Refresh')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Refresh' }" title="Refresh" @click="selectIcon('Refresh')">
           <Refresh />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Bell' }"
-          title="Bell"
-          @click="selectIcon('Bell')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Bell' }" title="Bell" @click="selectIcon('Bell')">
           <Bell />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MuteNotification' }"
-          title="MuteNotification"
-          @click="selectIcon('MuteNotification')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MuteNotification' }" title="MuteNotification" @click="selectIcon('MuteNotification')">
           <MuteNotification />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'User' }"
-          title="User"
-          @click="selectIcon('User')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'User' }" title="User" @click="selectIcon('User')">
           <User />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Check' }"
-          title="Check"
-          @click="selectIcon('Check')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Check' }" title="Check" @click="selectIcon('Check')">
           <Check />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CircleCheck' }"
-          title="CircleCheck"
-          @click="selectIcon('CircleCheck')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CircleCheck' }" title="CircleCheck" @click="selectIcon('CircleCheck')">
           <CircleCheck />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Warning' }"
-          title="Warning"
-          @click="selectIcon('Warning')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Warning' }" title="Warning" @click="selectIcon('Warning')">
           <Warning />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CircleClose' }"
-          title="CircleClose"
-          @click="selectIcon('CircleClose')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CircleClose' }" title="CircleClose" @click="selectIcon('CircleClose')">
           <CircleClose />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Close' }"
-          title="Close"
-          @click="selectIcon('Close')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Close' }" title="Close" @click="selectIcon('Close')">
           <Close />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PieChart' }"
-          title="PieChart"
-          @click="selectIcon('PieChart')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PieChart' }" title="PieChart" @click="selectIcon('PieChart')">
           <PieChart />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'More' }"
-          title="More"
-          @click="selectIcon('More')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'More' }" title="More" @click="selectIcon('More')">
           <More />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Compass' }"
-          title="Compass"
-          @click="selectIcon('Compass')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Compass' }" title="Compass" @click="selectIcon('Compass')">
           <Compass />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Filter' }"
-          title="Filter"
-          @click="selectIcon('Filter')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Filter' }" title="Filter" @click="selectIcon('Filter')">
           <Filter />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Switch' }"
-          title="Switch"
-          @click="selectIcon('Switch')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Switch' }" title="Switch" @click="selectIcon('Switch')">
           <Switch />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Select' }"
-          title="Select"
-          @click="selectIcon('Select')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Select' }" title="Select" @click="selectIcon('Select')">
           <Select></Select>
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SemiSelect' }"
-          title="SemiSelect"
-          @click="selectIcon('SemiSelect')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SemiSelect' }" title="SemiSelect" @click="selectIcon('SemiSelect')">
           <SemiSelect />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CloseBold' }"
-          title="CloseBold"
-          @click="selectIcon('CloseBold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CloseBold' }" title="CloseBold" @click="selectIcon('CloseBold')">
           <CloseBold />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'EditPen' }"
-          title="EditPen"
-          @click="selectIcon('EditPen')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'EditPen' }" title="EditPen" @click="selectIcon('EditPen')">
           <EditPen />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Edit' }"
-          title="Edit"
-          @click="selectIcon('Edit')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Edit' }" title="Edit" @click="selectIcon('Edit')">
           <Edit />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Message' }"
-          title="Message"
-          @click="selectIcon('Message')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Message' }" title="Message" @click="selectIcon('Message')">
           <Message />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MessageBox' }"
-          title="MessageBox"
-          @click="selectIcon('MessageBox')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MessageBox' }" title="MessageBox" @click="selectIcon('MessageBox')">
           <MessageBox />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TurnOff' }"
-          title="TurnOff"
-          @click="selectIcon('TurnOff')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TurnOff' }" title="TurnOff" @click="selectIcon('TurnOff')">
           <TurnOff />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Finished' }"
-          title="Finished"
-          @click="selectIcon('Finished')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Finished' }" title="Finished" @click="selectIcon('Finished')">
           <Finished />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Delete' }"
-          title="Delete"
-          @click="selectIcon('Delete')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Delete' }" title="Delete" @click="selectIcon('Delete')">
           <Delete />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Crop' }"
-          title="Crop"
-          @click="selectIcon('Crop')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Crop' }" title="Crop" @click="selectIcon('Crop')">
           <Crop />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SwitchButton' }"
-          title="SwitchButton"
-          @click="selectIcon('SwitchButton')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SwitchButton' }" title="SwitchButton" @click="selectIcon('SwitchButton')">
           <SwitchButton />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Operation' }"
-          title="Operation"
-          @click="selectIcon('Operation')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Operation' }" title="Operation" @click="selectIcon('Operation')">
           <Operation />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Open' }"
-          title="Open"
-          @click="selectIcon('Open')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Open' }" title="Open" @click="selectIcon('Open')">
           <Open />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Remove' }"
-          title="Remove"
-          @click="selectIcon('Remove')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Remove' }" title="Remove" @click="selectIcon('Remove')">
           <Remove />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ZoomOut' }"
-          title="ZoomOut"
-          @click="selectIcon('ZoomOut')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ZoomOut' }" title="ZoomOut" @click="selectIcon('ZoomOut')">
           <ZoomOut />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ZoomIn' }"
-          title="ZoomIn"
-          @click="selectIcon('ZoomIn')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ZoomIn' }" title="ZoomIn" @click="selectIcon('ZoomIn')">
           <ZoomIn />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'InfoFilled' }"
-          title="InfoFilled"
-          @click="selectIcon('InfoFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'InfoFilled' }" title="InfoFilled" @click="selectIcon('InfoFilled')">
           <InfoFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CircleCheckFilled' }"
-          title="CircleCheckFilled"
-          @click="selectIcon('CircleCheckFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CircleCheckFilled' }" title="CircleCheckFilled" @click="selectIcon('CircleCheckFilled')">
           <CircleCheckFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SuccessFilled' }"
-          title="SuccessFilled"
-          @click="selectIcon('SuccessFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SuccessFilled' }" title="SuccessFilled" @click="selectIcon('SuccessFilled')">
           <SuccessFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'WarningFilled' }"
-          title="WarningFilled"
-          @click="selectIcon('WarningFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'WarningFilled' }" title="WarningFilled" @click="selectIcon('WarningFilled')">
           <WarningFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CircleCloseFilled' }"
-          title="CircleCloseFilled"
-          @click="selectIcon('CircleCloseFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CircleCloseFilled' }" title="CircleCloseFilled" @click="selectIcon('CircleCloseFilled')">
           <CircleCloseFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'QuestionFilled' }"
-          title="QuestionFilled"
-          @click="selectIcon('QuestionFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'QuestionFilled' }" title="QuestionFilled" @click="selectIcon('QuestionFilled')">
           <QuestionFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'WarnTriangleFilled' }"
-          title="WarnTriangleFilled"
-          @click="selectIcon('WarnTriangleFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'WarnTriangleFilled' }" title="WarnTriangleFilled" @click="selectIcon('WarnTriangleFilled')">
           <WarnTriangleFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'UserFilled' }"
-          title="UserFilled"
-          @click="selectIcon('UserFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'UserFilled' }" title="UserFilled" @click="selectIcon('UserFilled')">
           <UserFilled />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MoreFilled' }"
-          title="MoreFilled"
-          @click="selectIcon('MoreFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MoreFilled' }" title="MoreFilled" @click="selectIcon('MoreFilled')">
           <MoreFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Tools' }"
-          title="Tools"
-          @click="selectIcon('Tools')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Tools' }" title="Tools" @click="selectIcon('Tools')">
           <Tools />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'HomeFilled' }"
-          title="HomeFilled"
-          @click="selectIcon('HomeFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'HomeFilled' }" title="HomeFilled" @click="selectIcon('HomeFilled')">
           <HomeFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Menu' }"
-          title="Menu"
-          @click="selectIcon('Menu')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Menu' }" title="Menu" @click="selectIcon('Menu')">
           <Menu></Menu>
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'UploadFilled' }"
-          title="UploadFilled"
-          @click="selectIcon('UploadFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'UploadFilled' }" title="UploadFilled" @click="selectIcon('UploadFilled')">
           <UploadFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Avatar' }"
-          title="Avatar"
-          @click="selectIcon('Avatar')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Avatar' }" title="Avatar" @click="selectIcon('Avatar')">
           <Avatar />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'HelpFilled' }"
-          title="HelpFilled"
-          @click="selectIcon('HelpFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'HelpFilled' }" title="HelpFilled" @click="selectIcon('HelpFilled')">
           <HelpFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Share' }"
-          title="Share"
-          @click="selectIcon('Share')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Share' }" title="Share" @click="selectIcon('Share')">
           <Share />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'StarFilled' }"
-          title="StarFilled"
-          @click="selectIcon('StarFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'StarFilled' }" title="StarFilled" @click="selectIcon('StarFilled')">
           <StarFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Comment' }"
-          title="Comment"
-          @click="selectIcon('Comment')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Comment' }" title="Comment" @click="selectIcon('Comment')">
           <Comment />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Histogram' }"
-          title="Histogram"
-          @click="selectIcon('Histogram')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Histogram' }" title="Histogram" @click="selectIcon('Histogram')">
           <Histogram />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Grid' }"
-          title="Grid"
-          @click="selectIcon('Grid')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Grid' }" title="Grid" @click="selectIcon('Grid')">
           <Grid />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Promotion' }"
-          title="Promotion"
-          @click="selectIcon('Promotion')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Promotion' }" title="Promotion" @click="selectIcon('Promotion')">
           <Promotion />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DeleteFilled' }"
-          title="DeleteFilled"
-          @click="selectIcon('DeleteFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DeleteFilled' }" title="DeleteFilled" @click="selectIcon('DeleteFilled')">
           <DeleteFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'RemoveFilled' }"
-          title="RemoveFilled"
-          @click="selectIcon('RemoveFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'RemoveFilled' }" title="RemoveFilled" @click="selectIcon('RemoveFilled')">
           <RemoveFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CirclePlusFilled' }"
-          title="CirclePlusFilled"
-          @click="selectIcon('CirclePlusFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CirclePlusFilled' }" title="CirclePlusFilled" @click="selectIcon('CirclePlusFilled')">
           <CirclePlusFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowLeft' }"
-          title="ArrowLeft"
-          @click="selectIcon('ArrowLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowLeft' }" title="ArrowLeft" @click="selectIcon('ArrowLeft')">
           <ArrowLeft />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowUp' }"
-          title="ArrowUp"
-          @click="selectIcon('ArrowUp')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowUp' }" title="ArrowUp" @click="selectIcon('ArrowUp')">
           <ArrowUp />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowRight' }"
-          title="ArrowRight"
-          @click="selectIcon('ArrowRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowRight' }" title="ArrowRight" @click="selectIcon('ArrowRight')">
           <ArrowRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowDown' }"
-          title="ArrowDown"
-          @click="selectIcon('ArrowDown')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowDown' }" title="ArrowDown" @click="selectIcon('ArrowDown')">
           <ArrowDown />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowLeftBold' }"
-          title="ArrowLeftBold"
-          @click="selectIcon('ArrowLeftBold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowLeftBold' }" title="ArrowLeftBold" @click="selectIcon('ArrowLeftBold')">
           <ArrowLeftBold />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowUpBold' }"
-          title="ArrowUpBold"
-          @click="selectIcon('ArrowUpBold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowUpBold' }" title="ArrowUpBold" @click="selectIcon('ArrowUpBold')">
           <ArrowUpBold />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowRightBold' }"
-          title="ArrowRightBold"
-          @click="selectIcon('ArrowRightBold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowRightBold' }" title="ArrowRightBold" @click="selectIcon('ArrowRightBold')">
           <ArrowRightBold />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ArrowDownBold' }"
-          title="ArrowDownBold"
-          @click="selectIcon('ArrowDownBold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ArrowDownBold' }" title="ArrowDownBold" @click="selectIcon('ArrowDownBold')">
           <ArrowDownBold />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DArrowRight' }"
-          title="DArrowRight"
-          @click="selectIcon('DArrowRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DArrowRight' }" title="DArrowRight" @click="selectIcon('DArrowRight')">
           <DArrowRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DArrowLeft' }"
-          title="DArrowLeft"
-          @click="selectIcon('DArrowLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DArrowLeft' }" title="DArrowLeft" @click="selectIcon('DArrowLeft')">
           <DArrowLeft />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Download' }"
-          title="Download"
-          @click="selectIcon('Download')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Download' }" title="Download" @click="selectIcon('Download')">
           <Download />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Upload' }"
-          title="Upload"
-          @click="selectIcon('Upload')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Upload' }" title="Upload" @click="selectIcon('Upload')">
           <Upload />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Top' }"
-          title="Top"
-          @click="selectIcon('Top')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Top' }" title="Top" @click="selectIcon('Top')">
           <Top />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Bottom' }"
-          title="Bottom"
-          @click="selectIcon('Bottom')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Bottom' }" title="Bottom" @click="selectIcon('Bottom')">
           <Bottom />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Back' }"
-          title="Back"
-          @click="selectIcon('Back')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Back' }" title="Back" @click="selectIcon('Back')">
           <Back />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Right' }"
-          title="Right"
-          @click="selectIcon('Right')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Right' }" title="Right" @click="selectIcon('Right')">
           <Right />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TopRight' }"
-          title="TopRight"
-          @click="selectIcon('TopRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TopRight' }" title="TopRight" @click="selectIcon('TopRight')">
           <TopRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TopLeft' }"
-          title="TopLeft"
-          @click="selectIcon('TopLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TopLeft' }" title="TopLeft" @click="selectIcon('TopLeft')">
           <TopLeft />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'BottomRight' }"
-          title="BottomRight"
-          @click="selectIcon('BottomRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'BottomRight' }" title="BottomRight" @click="selectIcon('BottomRight')">
           <BottomRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'BottomLeft' }"
-          title="BottomLeft"
-          @click="selectIcon('BottomLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'BottomLeft' }" title="BottomLeft" @click="selectIcon('BottomLeft')">
           <BottomLeft />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sort' }"
-          title="Sort"
-          @click="selectIcon('Sort')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sort' }" title="Sort" @click="selectIcon('Sort')">
           <Sort />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SortUp' }"
-          title="SortUp"
-          @click="selectIcon('SortUp')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SortUp' }" title="SortUp" @click="selectIcon('SortUp')">
           <SortUp />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SortDown' }"
-          title="SortDown"
-          @click="selectIcon('SortDown')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SortDown' }" title="SortDown" @click="selectIcon('SortDown')">
           <SortDown />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Rank' }"
-          title="Rank"
-          @click="selectIcon('Rank')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Rank' }" title="Rank" @click="selectIcon('Rank')">
           <Rank />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CaretLeft' }"
-          title="CaretLeft"
-          @click="selectIcon('CaretLeft')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CaretLeft' }" title="CaretLeft" @click="selectIcon('CaretLeft')">
           <CaretLeft />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CaretTop' }"
-          title="CaretTop"
-          @click="selectIcon('CaretTop')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CaretTop' }" title="CaretTop" @click="selectIcon('CaretTop')">
           <CaretTop />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CaretRight' }"
-          title="CaretRight"
-          @click="selectIcon('CaretRight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CaretRight' }" title="CaretRight" @click="selectIcon('CaretRight')">
           <CaretRight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CaretBottom' }"
-          title="CaretBottom"
-          @click="selectIcon('CaretBottom')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CaretBottom' }" title="CaretBottom" @click="selectIcon('CaretBottom')">
           <CaretBottom />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DCaret' }"
-          title="DCaret"
-          @click="selectIcon('DCaret')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DCaret' }" title="DCaret" @click="selectIcon('DCaret')">
           <DCaret />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Expand' }"
-          title="Expand"
-          @click="selectIcon('Expand')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Expand' }" title="Expand" @click="selectIcon('Expand')">
           <Expand />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Fold' }"
-          title="Fold"
-          @click="selectIcon('Fold')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Fold' }" title="Fold" @click="selectIcon('Fold')">
           <Fold />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DocumentAdd' }"
-          title="DocumentAdd"
-          @click="selectIcon('DocumentAdd')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DocumentAdd' }" title="DocumentAdd" @click="selectIcon('DocumentAdd')">
           <DocumentAdd />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Document' }"
-          title="Document"
-          @click="selectIcon('Document')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Document' }" title="Document" @click="selectIcon('Document')">
           <Document />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Notebook' }"
-          title="Notebook"
-          @click="selectIcon('Notebook')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Notebook' }" title="Notebook" @click="selectIcon('Notebook')">
           <Notebook />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Tickets' }"
-          title="Tickets"
-          @click="selectIcon('Tickets')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Tickets' }" title="Tickets" @click="selectIcon('Tickets')">
           <Tickets />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Memo' }"
-          title="Memo"
-          @click="selectIcon('Memo')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Memo' }" title="Memo" @click="selectIcon('Memo')">
           <Memo />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Collection' }"
-          title="Collection"
-          @click="selectIcon('Collection')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Collection' }" title="Collection" @click="selectIcon('Collection')">
           <Collection />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Postcard' }"
-          title="Postcard"
-          @click="selectIcon('Postcard')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Postcard' }" title="Postcard" @click="selectIcon('Postcard')">
           <Postcard />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ScaleToOriginal' }"
-          title="ScaleToOriginal"
-          @click="selectIcon('ScaleToOriginal')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ScaleToOriginal' }" title="ScaleToOriginal" @click="selectIcon('ScaleToOriginal')">
           <ScaleToOriginal />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SetUp' }"
-          title="SetUp"
-          @click="selectIcon('SetUp')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SetUp' }" title="SetUp" @click="selectIcon('SetUp')">
           <SetUp />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DocumentDelete' }"
-          title="DocumentDelete"
-          @click="selectIcon('DocumentDelete')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DocumentDelete' }" title="DocumentDelete" @click="selectIcon('DocumentDelete')">
           <DocumentDelete />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DocumentChecked' }"
-          title="DocumentChecked"
-          @click="selectIcon('DocumentChecked')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DocumentChecked' }" title="DocumentChecked" @click="selectIcon('DocumentChecked')">
           <DocumentChecked />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DataBoard' }"
-          title="DataBoard"
-          @click="selectIcon('DataBoard')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DataBoard' }" title="DataBoard" @click="selectIcon('DataBoard')">
           <DataBoard />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DataAnalysis' }"
-          title="DataAnalysis"
-          @click="selectIcon('DataAnalysis')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DataAnalysis' }" title="DataAnalysis" @click="selectIcon('DataAnalysis')">
           <DataAnalysis />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CopyDocument' }"
-          title="CopyDocument"
-          @click="selectIcon('CopyDocument')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CopyDocument' }" title="CopyDocument" @click="selectIcon('CopyDocument')">
           <CopyDocument />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FolderChecked' }"
-          title="FolderChecked"
-          @click="selectIcon('FolderChecked')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FolderChecked' }" title="FolderChecked" @click="selectIcon('FolderChecked')">
           <FolderChecked />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Files' }"
-          title="Files"
-          @click="selectIcon('Files')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Files' }" title="Files" @click="selectIcon('Files')">
           <Files />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Folder' }"
-          title="Folder"
-          @click="selectIcon('Folder')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Folder' }" title="Folder" @click="selectIcon('Folder')">
           <Folder />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FolderDelete' }"
-          title="FolderDelete"
-          @click="selectIcon('FolderDelete')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FolderDelete' }" title="FolderDelete" @click="selectIcon('FolderDelete')">
           <FolderDelete />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FolderRemove' }"
-          title="FolderRemove"
-          @click="selectIcon('FolderRemove')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FolderRemove' }" title="FolderRemove" @click="selectIcon('FolderRemove')">
           <FolderRemove />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FolderOpened' }"
-          title="FolderOpened"
-          @click="selectIcon('FolderOpened')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FolderOpened' }" title="FolderOpened" @click="selectIcon('FolderOpened')">
           <FolderOpened />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DocumentCopy' }"
-          title="DocumentCopy"
-          @click="selectIcon('DocumentCopy')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DocumentCopy' }" title="DocumentCopy" @click="selectIcon('DocumentCopy')">
           <DocumentCopy />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DocumentRemove' }"
-          title="DocumentRemove"
-          @click="selectIcon('DocumentRemove')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DocumentRemove' }" title="DocumentRemove" @click="selectIcon('DocumentRemove')">
           <DocumentRemove />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FolderAdd' }"
-          title="FolderAdd"
-          @click="selectIcon('FolderAdd')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FolderAdd' }" title="FolderAdd" @click="selectIcon('FolderAdd')">
           <FolderAdd />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'FirstAidKit' }"
-          title="FirstAidKit"
-          @click="selectIcon('FirstAidKit')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'FirstAidKit' }" title="FirstAidKit" @click="selectIcon('FirstAidKit')">
           <FirstAidKit />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Reading' }"
-          title="Reading"
-          @click="selectIcon('Reading')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Reading' }" title="Reading" @click="selectIcon('Reading')">
           <Reading />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DataLine' }"
-          title="DataLine"
-          @click="selectIcon('DataLine')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DataLine' }" title="DataLine" @click="selectIcon('DataLine')">
           <DataLine />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Management' }"
-          title="Management"
-          @click="selectIcon('Management')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Management' }" title="Management" @click="selectIcon('Management')">
           <Management />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Checked' }"
-          title="Checked"
-          @click="selectIcon('Checked')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Checked' }" title="Checked" @click="selectIcon('Checked')">
           <Checked />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Ticket' }"
-          title="Ticket"
-          @click="selectIcon('Ticket')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Ticket' }" title="Ticket" @click="selectIcon('Ticket')">
           <Ticket />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Failed' }"
-          title="Failed"
-          @click="selectIcon('Failed')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Failed' }" title="Failed" @click="selectIcon('Failed')">
           <Failed />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TrendCharts' }"
-          title="TrendCharts"
-          @click="selectIcon('TrendCharts')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TrendCharts' }" title="TrendCharts" @click="selectIcon('TrendCharts')">
           <TrendCharts />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'List' }"
-          title="List"
-          @click="selectIcon('List')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'List' }" title="List" @click="selectIcon('List')">
           <List />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Microphone' }"
-          title="Microphone"
-          @click="selectIcon('Microphone')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Microphone' }" title="Microphone" @click="selectIcon('Microphone')">
           <Microphone />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Mute' }"
-          title="Mute"
-          @click="selectIcon('Mute')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Mute' }" title="Mute" @click="selectIcon('Mute')">
           <Mute />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Mic' }"
-          title="Mic"
-          @click="selectIcon('Mic')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Mic' }" title="Mic" @click="selectIcon('Mic')">
           <Mic />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'VideoPause' }"
-          title="VideoPause"
-          @click="selectIcon('VideoPause')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'VideoPause' }" title="VideoPause" @click="selectIcon('VideoPause')">
           <VideoPause />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'VideoCamera' }"
-          title="VideoCamera"
-          @click="selectIcon('VideoCamera')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'VideoCamera' }" title="VideoCamera" @click="selectIcon('VideoCamera')">
           <VideoCamera />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'VideoPlay' }"
-          title="VideoPlay"
-          @click="selectIcon('VideoPlay')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'VideoPlay' }" title="VideoPlay" @click="selectIcon('VideoPlay')">
           <VideoPlay />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Headset' }"
-          title="Headset"
-          @click="selectIcon('Headset')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Headset' }" title="Headset" @click="selectIcon('Headset')">
           <Headset />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Monitor' }"
-          title="Monitor"
-          @click="selectIcon('Monitor')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Monitor' }" title="Monitor" @click="selectIcon('Monitor')">
           <Monitor />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Film' }"
-          title="Film"
-          @click="selectIcon('Film')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Film' }" title="Film" @click="selectIcon('Film')">
           <Film />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Camera' }"
-          title="Camera"
-          @click="selectIcon('Camera')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Camera' }" title="Camera" @click="selectIcon('Camera')">
           <Camera />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Picture' }"
-          title="Picture"
-          @click="selectIcon('Picture')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Picture' }" title="Picture" @click="selectIcon('Picture')">
           <Picture></Picture>
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PictureRounded' }"
-          title="PictureRounded"
-          @click="selectIcon('PictureRounded')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PictureRounded' }" title="PictureRounded" @click="selectIcon('PictureRounded')">
           <PictureRounded />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Iphone' }"
-          title="Iphone"
-          @click="selectIcon('Iphone')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Iphone' }" title="Iphone" @click="selectIcon('Iphone')">
           <Iphone />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Cellphone' }"
-          title="Cellphone"
-          @click="selectIcon('Cellphone')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Cellphone' }" title="Cellphone" @click="selectIcon('Cellphone')">
           <Cellphone />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'VideoCameraFilled' }"
-          title="VideoCameraFilled"
-          @click="selectIcon('VideoCameraFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'VideoCameraFilled' }" title="VideoCameraFilled" @click="selectIcon('VideoCameraFilled')">
           <VideoCameraFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PictureFilled' }"
-          title="PictureFilled"
-          @click="selectIcon('PictureFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PictureFilled' }" title="PictureFilled" @click="selectIcon('PictureFilled')">
           <PictureFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Platform' }"
-          title="Platform"
-          @click="selectIcon('Platform')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Platform' }" title="Platform" @click="selectIcon('Platform')">
           <Platform />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CameraFilled' }"
-          title="CameraFilled"
-          @click="selectIcon('CameraFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CameraFilled' }" title="CameraFilled" @click="selectIcon('CameraFilled')">
           <CameraFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'BellFilled' }"
-          title="BellFilled"
-          @click="selectIcon('BellFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'BellFilled' }" title="BellFilled" @click="selectIcon('BellFilled')">
           <BellFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Location' }"
-          title="Location"
-          @click="selectIcon('Location')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Location' }" title="Location" @click="selectIcon('Location')">
           <Location />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'LocationInformation' }"
-          title="LocationInformation"
-          @click="selectIcon('LocationInformation')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'LocationInformation' }" title="LocationInformation" @click="selectIcon('LocationInformation')">
           <LocationInformation />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DeleteLocation' }"
-          title="DeleteLocation"
-          @click="selectIcon('DeleteLocation')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DeleteLocation' }" title="DeleteLocation" @click="selectIcon('DeleteLocation')">
           <DeleteLocation />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Coordinate' }"
-          title="Coordinate"
-          @click="selectIcon('Coordinate')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Coordinate' }" title="Coordinate" @click="selectIcon('Coordinate')">
           <Coordinate />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Bicycle' }"
-          title="Bicycle"
-          @click="selectIcon('Bicycle')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Bicycle' }" title="Bicycle" @click="selectIcon('Bicycle')">
           <Bicycle />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'OfficeBuilding' }"
-          title="OfficeBuilding"
-          @click="selectIcon('OfficeBuilding')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'OfficeBuilding' }" title="OfficeBuilding" @click="selectIcon('OfficeBuilding')">
           <OfficeBuilding />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'School' }"
-          title="School"
-          @click="selectIcon('School')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'School' }" title="School" @click="selectIcon('School')">
           <School />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Guide' }"
-          title="Guide"
-          @click="selectIcon('Guide')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Guide' }" title="Guide" @click="selectIcon('Guide')">
           <Guide />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'AddLocation' }"
-          title="AddLocation"
-          @click="selectIcon('AddLocation')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'AddLocation' }" title="AddLocation" @click="selectIcon('AddLocation')">
           <AddLocation />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MapLocation' }"
-          title="MapLocation"
-          @click="selectIcon('MapLocation')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MapLocation' }" title="MapLocation" @click="selectIcon('MapLocation')">
           <MapLocation />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Place' }"
-          title="Place"
-          @click="selectIcon('Place')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Place' }" title="Place" @click="selectIcon('Place')">
           <Place />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'LocationFilled' }"
-          title="LocationFilled"
-          @click="selectIcon('LocationFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'LocationFilled' }" title="LocationFilled" @click="selectIcon('LocationFilled')">
           <LocationFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Van' }"
-          title="Van"
-          @click="selectIcon('Van')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Van' }" title="Van" @click="selectIcon('Van')">
           <Van />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Watermelon' }"
-          title="Watermelon"
-          @click="selectIcon('Watermelon')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Watermelon' }" title="Watermelon" @click="selectIcon('Watermelon')">
           <Watermelon />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Pear' }"
-          title="Pear"
-          @click="selectIcon('Pear')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Pear' }" title="Pear" @click="selectIcon('Pear')">
           <Pear />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'NoSmoking' }"
-          title="NoSmoking"
-          @click="selectIcon('NoSmoking')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'NoSmoking' }" title="NoSmoking" @click="selectIcon('NoSmoking')">
           <NoSmoking />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Smoking' }"
-          title="Smoking"
-          @click="selectIcon('Smoking')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Smoking' }" title="Smoking" @click="selectIcon('Smoking')">
           <Smoking />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Mug' }"
-          title="Mug"
-          @click="selectIcon('Mug')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Mug' }" title="Mug" @click="selectIcon('Mug')">
           <Mug />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'GobletSquareFull' }"
-          title="GobletSquareFull"
-          @click="selectIcon('GobletSquareFull')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'GobletSquareFull' }" title="GobletSquareFull" @click="selectIcon('GobletSquareFull')">
           <GobletSquareFull />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'GobletFull' }"
-          title="GobletFull"
-          @click="selectIcon('GobletFull')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'GobletFull' }" title="GobletFull" @click="selectIcon('GobletFull')">
           <GobletFull />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'KnifeFork' }"
-          title="KnifeFork"
-          @click="selectIcon('KnifeFork')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'KnifeFork' }" title="KnifeFork" @click="selectIcon('KnifeFork')">
           <KnifeFork />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sugar' }"
-          title="Sugar"
-          @click="selectIcon('Sugar')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sugar' }" title="Sugar" @click="selectIcon('Sugar')">
           <Sugar />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Bowl' }"
-          title="Bowl"
-          @click="selectIcon('Bowl')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Bowl' }" title="Bowl" @click="selectIcon('Bowl')">
           <Bowl />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MilkTea' }"
-          title="MilkTea"
-          @click="selectIcon('MilkTea')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MilkTea' }" title="MilkTea" @click="selectIcon('MilkTea')">
           <MilkTea />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Lollipop' }"
-          title="Lollipop"
-          @click="selectIcon('Lollipop')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Lollipop' }" title="Lollipop" @click="selectIcon('Lollipop')">
           <Lollipop />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Coffee' }"
-          title="Coffee"
-          @click="selectIcon('Coffee')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Coffee' }" title="Coffee" @click="selectIcon('Coffee')">
           <Coffee />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Chicken' }"
-          title="Chicken"
-          @click="selectIcon('Chicken')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Chicken' }" title="Chicken" @click="selectIcon('Chicken')">
           <Chicken />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Dish' }"
-          title="Dish"
-          @click="selectIcon('Dish')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Dish' }" title="Dish" @click="selectIcon('Dish')">
           <Dish />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'IceTea' }"
-          title="IceTea"
-          @click="selectIcon('IceTea')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'IceTea' }" title="IceTea" @click="selectIcon('IceTea')">
           <IceTea />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ColdDrink' }"
-          title="ColdDrink"
-          @click="selectIcon('ColdDrink')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ColdDrink' }" title="ColdDrink" @click="selectIcon('ColdDrink')">
           <ColdDrink />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CoffeeCup' }"
-          title="CoffeeCup"
-          @click="selectIcon('CoffeeCup')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CoffeeCup' }" title="CoffeeCup" @click="selectIcon('CoffeeCup')">
           <CoffeeCup />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'DishDot' }"
-          title="DishDot"
-          @click="selectIcon('DishDot')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'DishDot' }" title="DishDot" @click="selectIcon('DishDot')">
           <DishDot />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'IceDrink' }"
-          title="IceDrink"
-          @click="selectIcon('IceDrink')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'IceDrink' }" title="IceDrink" @click="selectIcon('IceDrink')">
           <IceDrink />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'IceCream' }"
-          title="IceCream"
-          @click="selectIcon('IceCream')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'IceCream' }" title="IceCream" @click="selectIcon('IceCream')">
           <IceCream />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Dessert' }"
-          title="Dessert"
-          @click="selectIcon('Dessert')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Dessert' }" title="Dessert" @click="selectIcon('Dessert')">
           <Dessert />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'IceCreamSquare' }"
-          title="IceCreamSquare"
-          @click="selectIcon('IceCreamSquare')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'IceCreamSquare' }" title="IceCreamSquare" @click="selectIcon('IceCreamSquare')">
           <IceCreamSquare />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ForkSpoon' }"
-          title="ForkSpoon"
-          @click="selectIcon('ForkSpoon')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ForkSpoon' }" title="ForkSpoon" @click="selectIcon('ForkSpoon')">
           <ForkSpoon />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'IceCreamRound' }"
-          title="IceCreamRound"
-          @click="selectIcon('IceCreamRound')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'IceCreamRound' }" title="IceCreamRound" @click="selectIcon('IceCreamRound')">
           <IceCreamRound />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Food' }"
-          title="Food"
-          @click="selectIcon('Food')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Food' }" title="Food" @click="selectIcon('Food')">
           <Food />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'HotWater' }"
-          title="HotWater"
-          @click="selectIcon('HotWater')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'HotWater' }" title="HotWater" @click="selectIcon('HotWater')">
           <HotWater />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Grape' }"
-          title="Grape"
-          @click="selectIcon('Grape')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Grape' }" title="Grape" @click="selectIcon('Grape')">
           <Grape />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Fries' }"
-          title="Fries"
-          @click="selectIcon('Fries')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Fries' }" title="Fries" @click="selectIcon('Fries')">
           <Fries />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Apple' }"
-          title="Apple"
-          @click="selectIcon('Apple')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Apple' }" title="Apple" @click="selectIcon('Apple')">
           <Apple />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Burger' }"
-          title="Burger"
-          @click="selectIcon('Burger')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Burger' }" title="Burger" @click="selectIcon('Burger')">
           <Burger />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Goblet' }"
-          title="Goblet"
-          @click="selectIcon('Goblet')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Goblet' }" title="Goblet" @click="selectIcon('Goblet')">
           <Goblet />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'GobletSquare' }"
-          title="GobletSquare"
-          @click="selectIcon('GobletSquare')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'GobletSquare' }" title="GobletSquare" @click="selectIcon('GobletSquare')">
           <GobletSquare />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Orange' }"
-          title="Orange"
-          @click="selectIcon('Orange')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Orange' }" title="Orange" @click="selectIcon('Orange')">
           <Orange />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Cherry' }"
-          title="Cherry"
-          @click="selectIcon('Cherry')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Cherry' }" title="Cherry" @click="selectIcon('Cherry')">
           <Cherry />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Printer' }"
-          title="Printer"
-          @click="selectIcon('Printer')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Printer' }" title="Printer" @click="selectIcon('Printer')">
           <Printer />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Calendar' }"
-          title="Calendar"
-          @click="selectIcon('Calendar')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Calendar' }" title="Calendar" @click="selectIcon('Calendar')">
           <Calendar />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CreditCard' }"
-          title="CreditCard"
-          @click="selectIcon('CreditCard')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CreditCard' }" title="CreditCard" @click="selectIcon('CreditCard')">
           <CreditCard />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Box' }"
-          title="Box"
-          @click="selectIcon('Box')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Box' }" title="Box" @click="selectIcon('Box')">
           <Box />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Money' }"
-          title="Money"
-          @click="selectIcon('Money')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Money' }" title="Money" @click="selectIcon('Money')">
           <Money />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Refrigerator' }"
-          title="Refrigerator"
-          @click="selectIcon('Refrigerator')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Refrigerator' }" title="Refrigerator" @click="selectIcon('Refrigerator')">
           <Refrigerator />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Cpu' }"
-          title="Cpu"
-          @click="selectIcon('Cpu')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Cpu' }" title="Cpu" @click="selectIcon('Cpu')">
           <Cpu />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Football' }"
-          title="Football"
-          @click="selectIcon('Football')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Football' }" title="Football" @click="selectIcon('Football')">
           <Football />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Brush' }"
-          title="Brush"
-          @click="selectIcon('Brush')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Brush' }" title="Brush" @click="selectIcon('Brush')">
           <Brush />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Suitcase' }"
-          title="Suitcase"
-          @click="selectIcon('Suitcase')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Suitcase' }" title="Suitcase" @click="selectIcon('Suitcase')">
           <Suitcase />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SuitcaseLine' }"
-          title="SuitcaseLine"
-          @click="selectIcon('SuitcaseLine')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SuitcaseLine' }" title="SuitcaseLine" @click="selectIcon('SuitcaseLine')">
           <SuitcaseLine />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Umbrella' }"
-          title="Umbrella"
-          @click="selectIcon('Umbrella')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Umbrella' }" title="Umbrella" @click="selectIcon('Umbrella')">
           <Umbrella />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'AlarmClock' }"
-          title="AlarmClock"
-          @click="selectIcon('AlarmClock')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'AlarmClock' }" title="AlarmClock" @click="selectIcon('AlarmClock')">
           <AlarmClock />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Medal' }"
-          title="Medal"
-          @click="selectIcon('Medal')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Medal' }" title="Medal" @click="selectIcon('Medal')">
           <Medal />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'GoldMedal' }"
-          title="GoldMedal"
-          @click="selectIcon('GoldMedal')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'GoldMedal' }" title="GoldMedal" @click="selectIcon('GoldMedal')">
           <GoldMedal />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Present' }"
-          title="Present"
-          @click="selectIcon('Present')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Present' }" title="Present" @click="selectIcon('Present')">
           <Present />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Mouse' }"
-          title="Mouse"
-          @click="selectIcon('Mouse')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Mouse' }" title="Mouse" @click="selectIcon('Mouse')">
           <Mouse />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Watch' }"
-          title="Watch"
-          @click="selectIcon('Watch')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Watch' }" title="Watch" @click="selectIcon('Watch')">
           <Watch />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'QuartzWatch' }"
-          title="QuartzWatch"
-          @click="selectIcon('QuartzWatch')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'QuartzWatch' }" title="QuartzWatch" @click="selectIcon('QuartzWatch')">
           <QuartzWatch />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Magnet' }"
-          title="Magnet"
-          @click="selectIcon('Magnet')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Magnet' }" title="Magnet" @click="selectIcon('Magnet')">
           <Magnet />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Help' }"
-          title="Help"
-          @click="selectIcon('Help')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Help' }" title="Help" @click="selectIcon('Help')">
           <Help />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Soccer' }"
-          title="Soccer"
-          @click="selectIcon('Soccer')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Soccer' }" title="Soccer" @click="selectIcon('Soccer')">
           <Soccer />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ToiletPaper' }"
-          title="ToiletPaper"
-          @click="selectIcon('ToiletPaper')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ToiletPaper' }" title="ToiletPaper" @click="selectIcon('ToiletPaper')">
           <ToiletPaper />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ReadingLamp' }"
-          title="ReadingLamp"
-          @click="selectIcon('ReadingLamp')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ReadingLamp' }" title="ReadingLamp" @click="selectIcon('ReadingLamp')">
           <ReadingLamp />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Paperclip' }"
-          title="Paperclip"
-          @click="selectIcon('Paperclip')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Paperclip' }" title="Paperclip" @click="selectIcon('Paperclip')">
           <Paperclip />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MagicStick' }"
-          title="MagicStick"
-          @click="selectIcon('MagicStick')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MagicStick' }" title="MagicStick" @click="selectIcon('MagicStick')">
           <MagicStick />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Basketball' }"
-          title="Basketball"
-          @click="selectIcon('Basketball')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Basketball' }" title="Basketball" @click="selectIcon('Basketball')">
           <Basketball />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Baseball' }"
-          title="Baseball"
-          @click="selectIcon('Baseball')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Baseball' }" title="Baseball" @click="selectIcon('Baseball')">
           <Baseball />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Coin' }"
-          title="Coin"
-          @click="selectIcon('Coin')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Coin' }" title="Coin" @click="selectIcon('Coin')">
           <Coin />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Goods' }"
-          title="Goods"
-          @click="selectIcon('Goods')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Goods' }" title="Goods" @click="selectIcon('Goods')">
           <Goods />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sell' }"
-          title="Sell"
-          @click="selectIcon('Sell')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sell' }" title="Sell" @click="selectIcon('Sell')">
           <Sell />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SoldOut' }"
-          title="SoldOut"
-          @click="selectIcon('SoldOut')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SoldOut' }" title="SoldOut" @click="selectIcon('SoldOut')">
           <SoldOut />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Key' }"
-          title="Key"
-          @click="selectIcon('Key')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Key' }" title="Key" @click="selectIcon('Key')">
           <Key />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ShoppingCart' }"
-          title="ShoppingCart"
-          @click="selectIcon('ShoppingCart')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ShoppingCart' }" title="ShoppingCart" @click="selectIcon('ShoppingCart')">
           <ShoppingCart />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ShoppingCartFull' }"
-          title="ShoppingCartFull"
-          @click="selectIcon('ShoppingCartFull')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ShoppingCartFull' }" title="ShoppingCartFull" @click="selectIcon('ShoppingCartFull')">
           <ShoppingCartFull />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ShoppingTrolley' }"
-          title="ShoppingTrolley"
-          @click="selectIcon('ShoppingTrolley')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ShoppingTrolley' }" title="ShoppingTrolley" @click="selectIcon('ShoppingTrolley')">
           <ShoppingTrolley />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Phone' }"
-          title="Phone"
-          @click="selectIcon('Phone')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Phone' }" title="Phone" @click="selectIcon('Phone')">
           <Phone />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Scissor' }"
-          title="Scissor"
-          @click="selectIcon('Scissor')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Scissor' }" title="Scissor" @click="selectIcon('Scissor')">
           <Scissor />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Handbag' }"
-          title="Handbag"
-          @click="selectIcon('Handbag')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Handbag' }" title="Handbag" @click="selectIcon('Handbag')">
           <Handbag />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ShoppingBag' }"
-          title="ShoppingBag"
-          @click="selectIcon('ShoppingBag')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ShoppingBag' }" title="ShoppingBag" @click="selectIcon('ShoppingBag')">
           <ShoppingBag />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Trophy' }"
-          title="Trophy"
-          @click="selectIcon('Trophy')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Trophy' }" title="Trophy" @click="selectIcon('Trophy')">
           <Trophy />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TrophyBase' }"
-          title="TrophyBase"
-          @click="selectIcon('TrophyBase')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TrophyBase' }" title="TrophyBase" @click="selectIcon('TrophyBase')">
           <TrophyBase />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Stopwatch' }"
-          title="Stopwatch"
-          @click="selectIcon('Stopwatch')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Stopwatch' }" title="Stopwatch" @click="selectIcon('Stopwatch')">
           <Stopwatch />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Timer' }"
-          title="Timer"
-          @click="selectIcon('Timer')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Timer' }" title="Timer" @click="selectIcon('Timer')">
           <Timer />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'CollectionTag' }"
-          title="CollectionTag"
-          @click="selectIcon('CollectionTag')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'CollectionTag' }" title="CollectionTag" @click="selectIcon('CollectionTag')">
           <CollectionTag />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'TakeawayBox' }"
-          title="TakeawayBox"
-          @click="selectIcon('TakeawayBox')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'TakeawayBox' }" title="TakeawayBox" @click="selectIcon('TakeawayBox')">
           <TakeawayBox />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PriceTag' }"
-          title="PriceTag"
-          @click="selectIcon('PriceTag')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PriceTag' }" title="PriceTag" @click="selectIcon('PriceTag')">
           <PriceTag />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Wallet' }"
-          title="Wallet"
-          @click="selectIcon('Wallet')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Wallet' }" title="Wallet" @click="selectIcon('Wallet')">
           <Wallet />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Opportunity' }"
-          title="Opportunity"
-          @click="selectIcon('Opportunity')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Opportunity' }" title="Opportunity" @click="selectIcon('Opportunity')">
           <Opportunity />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PhoneFilled' }"
-          title="PhoneFilled"
-          @click="selectIcon('PhoneFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PhoneFilled' }" title="PhoneFilled" @click="selectIcon('PhoneFilled')">
           <PhoneFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'WalletFilled' }"
-          title="WalletFilled"
-          @click="selectIcon('WalletFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'WalletFilled' }" title="WalletFilled" @click="selectIcon('WalletFilled')">
           <WalletFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'GoodsFilled' }"
-          title="GoodsFilled"
-          @click="selectIcon('GoodsFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'GoodsFilled' }" title="GoodsFilled" @click="selectIcon('GoodsFilled')">
           <GoodsFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Flag' }"
-          title="Flag"
-          @click="selectIcon('Flag')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Flag' }" title="Flag" @click="selectIcon('Flag')">
           <Flag />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'BrushFilled' }"
-          title="BrushFilled"
-          @click="selectIcon('BrushFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'BrushFilled' }" title="BrushFilled" @click="selectIcon('BrushFilled')">
           <BrushFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Briefcase' }"
-          title="Briefcase"
-          @click="selectIcon('Briefcase')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Briefcase' }" title="Briefcase" @click="selectIcon('Briefcase')">
           <Briefcase />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Stamp' }"
-          title="Stamp"
-          @click="selectIcon('Stamp')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Stamp' }" title="Stamp" @click="selectIcon('Stamp')">
           <Stamp />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sunrise' }"
-          title="Sunrise"
-          @click="selectIcon('Sunrise')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sunrise' }" title="Sunrise" @click="selectIcon('Sunrise')">
           <Sunrise />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sunny' }"
-          title="Sunny"
-          @click="selectIcon('Sunny')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sunny' }" title="Sunny" @click="selectIcon('Sunny')">
           <Sunny />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Ship' }"
-          title="Ship"
-          @click="selectIcon('Ship')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Ship' }" title="Ship" @click="selectIcon('Ship')">
           <Ship />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MostlyCloudy' }"
-          title="MostlyCloudy"
-          @click="selectIcon('MostlyCloudy')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MostlyCloudy' }" title="MostlyCloudy" @click="selectIcon('MostlyCloudy')">
           <MostlyCloudy />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'PartlyCloudy' }"
-          title="PartlyCloudy"
-          @click="selectIcon('PartlyCloudy')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'PartlyCloudy' }" title="PartlyCloudy" @click="selectIcon('PartlyCloudy')">
           <PartlyCloudy />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Sunset' }"
-          title="Sunset"
-          @click="selectIcon('Sunset')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Sunset' }" title="Sunset" @click="selectIcon('Sunset')">
           <Sunset />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Drizzling' }"
-          title="Drizzling"
-          @click="selectIcon('Drizzling')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Drizzling' }" title="Drizzling" @click="selectIcon('Drizzling')">
           <Drizzling />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Pouring' }"
-          title="Pouring"
-          @click="selectIcon('Pouring')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Pouring' }" title="Pouring" @click="selectIcon('Pouring')">
           <Pouring />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Cloudy' }"
-          title="Cloudy"
-          @click="selectIcon('Cloudy')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Cloudy' }" title="Cloudy" @click="selectIcon('Cloudy')">
           <Cloudy />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Moon' }"
-          title="Moon"
-          @click="selectIcon('Moon')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Moon' }" title="Moon" @click="selectIcon('Moon')">
           <Moon />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'MoonNight' }"
-          title="MoonNight"
-          @click="selectIcon('MoonNight')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'MoonNight' }" title="MoonNight" @click="selectIcon('MoonNight')">
           <MoonNight />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Lightning' }"
-          title="Lightning"
-          @click="selectIcon('Lightning')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Lightning' }" title="Lightning" @click="selectIcon('Lightning')">
           <Lightning />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ChromeFilled' }"
-          title="ChromeFilled"
-          @click="selectIcon('ChromeFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ChromeFilled' }" title="ChromeFilled" @click="selectIcon('ChromeFilled')">
           <ChromeFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Eleme' }"
-          title="Eleme"
-          @click="selectIcon('Eleme')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Eleme' }" title="Eleme" @click="selectIcon('Eleme')">
           <Eleme />
         </el-icon>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ElemeFilled' }"
-          title="ElemeFilled"
-          @click="selectIcon('ElemeFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ElemeFilled' }" title="ElemeFilled" @click="selectIcon('ElemeFilled')">
           <ElemeFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'ElementPlus' }"
-          title="ElementPlus"
-          @click="selectIcon('ElementPlus')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'ElementPlus' }" title="ElementPlus" @click="selectIcon('ElementPlus')">
           <ElementPlus />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'Shop' }"
-          title="Shop"
-          @click="selectIcon('Shop')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'Shop' }" title="Shop" @click="selectIcon('Shop')">
           <Shop />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'SwitchFilled' }"
-          title="SwitchFilled"
-          @click="selectIcon('SwitchFilled')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'SwitchFilled' }" title="SwitchFilled" @click="selectIcon('SwitchFilled')">
           <SwitchFilled />
         </el-icon>
       </el-col>
       <el-col :span="2">
-        <el-icon
-          :size="20"
-          :class="{ 'icon-item-selected': selected === 'WindPower' }"
-          title="WindPower"
-          @click="selectIcon('WindPower')"
-        >
+        <el-icon :size="20" :class="{ 'icon-item-selected': selected === 'WindPower' }" title="WindPower" @click="selectIcon('WindPower')">
           <WindPower />
         </el-icon>
       </el-col>

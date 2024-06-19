@@ -3,27 +3,12 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item v-has-perm="'w7K0'" style="margin-left: 30px">
-          <el-button
-            type="primary"
-            :icon="Refresh"
-            @click="handeClear"
-            :disabled="selected.length === 0"
-            >清除缓存
-          </el-button>
+          <el-button type="primary" :icon="Refresh" @click="handeClear" :disabled="selected.length === 0">清除缓存 </el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :row-class-name="tableRowClass"
-        :data="pageData"
-        ref="tableRef"
-        @selection-change="handleSelected"
-        style="width: 100%"
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :row-class-name="tableRowClass" :data="pageData" ref="tableRef" @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="selection" width="50" />
         <el-table-column prop="cacheName" label="缓存名称" />
         <el-table-column prop="updateTime" label="最近一次更新时间" />

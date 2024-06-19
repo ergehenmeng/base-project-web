@@ -104,28 +104,15 @@ defineExpose({
 </script>
 
 <template>
-  <el-dialog
-    title="选取点位"
-    v-model="showDialog"
-    width="800px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
+  <el-dialog title="选取点位" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false">
     <div class="map-header">
-      <el-input
-        id="searchName"
-        v-model="searchName"
-        placeholder="请输入地址"
-        style="width: 250px !important"
-        size="small"
-      />
+      <el-input id="searchName" v-model="searchName" placeholder="请输入地址" style="width: 250px !important" size="small" />
       <div class="map-header-show">
         <el-input v-model="lng" placeholder="经度" size="small" readonly />&nbsp;
         <el-input v-model="lat" placeholder="纬度" size="small" readonly />
       </div>
     </div>
-    <div id="mapContainer" class="dialog-map-content"> </div>
+    <div id="mapContainer" class="dialog-map-content"></div>
     <template #footer>
       <span>
         <el-button @click="showDialog = false">取消</el-button>

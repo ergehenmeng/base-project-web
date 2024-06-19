@@ -32,9 +32,9 @@
         <template #header="{ date }">
           <span>{{ date }}</span>
           <el-button-group>
-            <el-button size="small" @click="selectDate('prev-month')"> 上一月 </el-button>
+            <el-button size="small" @click="selectDate('prev-month')"> 上一月</el-button>
             <el-button size="small" @click="selectDate('today')">今天</el-button>
-            <el-button size="small" @click="selectDate('next-month')"> 下一月 </el-button>
+            <el-button size="small" @click="selectDate('next-month')"> 下一月</el-button>
           </el-button-group>
         </template>
         <template #date-cell="{ data }">
@@ -48,9 +48,7 @@
               <p class="item-price-num">划线价:{{ dayPrice(data)?.linePrice }}</p>
             </div>
             <p class="item-price-num">销售价:{{ dayPrice(data)?.salePrice }}</p>
-            <div :class="['item-stock', dayPrice(data)?.state === 0 ? 'item-forbid' : '']"
-              >库存:{{ dayPrice(data)?.stock }}
-            </div>
+            <div :class="['item-stock', dayPrice(data)?.state === 0 ? 'item-forbid' : '']">库存:{{ dayPrice(data)?.stock }} </div>
           </div>
           <div class="item-no-price" v-else @click="handleCreate(data.day)">
             <div class="item-date">{{ data.day.split('-')[2] }}</div>

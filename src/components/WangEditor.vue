@@ -2,14 +2,7 @@
   <div>
     <div :style="{ border: '1px solid #ccc', width: props.width + 'px' }">
       <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" mode="simple" />
-      <Editor
-        v-model="htmlValue"
-        :style="{ 'overflow-y': 'hidden', height: props.height + 'px' }"
-        mode="simple"
-        :defaultConfig="editorConfig"
-        @onCreated="handleCreated"
-        @onChange="setTextValue"
-      />
+      <Editor v-model="htmlValue" :style="{ 'overflow-y': 'hidden', height: props.height + 'px' }" mode="simple" :defaultConfig="editorConfig" @onCreated="handleCreated" @onChange="setTextValue" />
       <textarea v-model="textValue" style="display: none"></textarea>
     </div>
   </div>

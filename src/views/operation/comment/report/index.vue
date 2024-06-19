@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="举报原因"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="举报原因" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="举报类型">
           <el-select v-model="queryParams.reportType" clearable>
@@ -28,14 +23,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="commentContent" label="原评论信息" />
         <el-table-column prop="nickName" label="举报人昵称" />
         <el-table-column prop="reportType" label="举报类型" :formatter="formatter" />

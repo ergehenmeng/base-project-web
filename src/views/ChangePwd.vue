@@ -1,31 +1,11 @@
 <template>
-  <el-dialog
-    title="修改密码"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog title="修改密码" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="旧密码" prop="oldPwd">
         <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="密码" prop="newPwd">
-        <el-input
-          v-model="formData.newPwd"
-          type="password"
-          placeholder="密码必须包含英文字符、数字、@#&_"
-          show-word-limit
-          maxlength="20"
-        />
+        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="确认密码" prop="confirmPwd">
         <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" />

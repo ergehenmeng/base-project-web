@@ -1,15 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="民宿名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -30,12 +22,7 @@
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
         <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
-          <el-option
-            v-for="item in dictList"
-            :label="item.showValue"
-            :value="item.showValue"
-            :key="item.hiddenValue"
-          />
+          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
         </el-select>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
@@ -52,47 +39,24 @@
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
       <el-form-item label="描述信息" prop="intro">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 4 }"
-          v-model="formData.intro"
-          autosize
-          maxlength="100"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.intro" autosize maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="特色服务" prop="serviceList">
         <div style="width: 800px">
           <el-checkbox-group v-model="formData.serviceList">
-            <el-checkbox
-              v-for="item in keyServiceList"
-              :key="item.hiddenValue"
-              :label="item.showValue"
-              :value="item.hiddenValue"
-            ></el-checkbox>
+            <el-checkbox v-for="item in keyServiceList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
           </el-checkbox-group>
         </div>
       </el-form-item>
       <el-form-item label="入住须知" prop="notesInText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.notesIn"
-          v-model:text-value="formData.notesInText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.notesIn" v-model:text-value="formData.notesInText"></WangEditor>
         <div v-else v-html="formData.notesIn"></div>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

@@ -3,21 +3,11 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="标题"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="标题" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="轮播类型">
           <el-select v-model="queryParams.bannerType" clearable>
-            <el-option
-              v-for="item in dictList"
-              :key="item.id"
-              :label="item.showValue"
-              :value="item.hiddenValue"
-            />
+            <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
           </el-select>
         </el-form-item>
         <el-form-item label="客户端">
@@ -36,12 +26,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="播放时间">
-          <el-date-picker
-            v-model="queryParams.middleTime"
-            value-format="YYYY-MM-DD HH:mm:ss"
-            type="datetime"
-            placeholder="在此时间段内有效的轮播图"
-          />
+          <el-date-picker v-model="queryParams.middleTime" value-format="YYYY-MM-DD HH:mm:ss" type="datetime" placeholder="在此时间段内有效的轮播图" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -52,26 +37,12 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="标题" width="150" />
         <el-table-column prop="imgUrl" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image
-                fit="contain"
-                :src="scope.row.imgUrl"
-                :preview-src-list="[scope.row.imgUrl]"
-                style="width: 50px; height: 50px"
-                preview-teleported
-                hide-on-click-modal
-              />
+              <el-image fit="contain" :src="scope.row.imgUrl" :preview-src-list="[scope.row.imgUrl]" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
@@ -96,25 +67,13 @@
         <el-table-column prop="endTime" label="截止时间" width="180" />
         <el-table-column prop="click" label="是否点击" width="80">
           <template #default="scope">
-            <el-switch
-              v-model="scope.row.click"
-              inline-prompt
-              active-text="是"
-              inactive-text="否"
-              disabled
-            />
+            <el-switch v-model="scope.row.click" inline-prompt active-text="是" inactive-text="否" disabled />
           </template>
         </el-table-column>
         <el-table-column prop="jumpUrl" label="跳转地址" width="180" />
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
-            <el-input
-              v-model="scope.row.sort"
-              @change="handleSort(scope.row)"
-              maxlength="3"
-              :readonly="!sortAuth"
-              onkeyup="this.value=this.value.replace(/\D/g,'')"
-            ></el-input>
+            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" width="180" />
@@ -122,24 +81,8 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button
-              v-has-perm="'2xU0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'mxU0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'2xU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'mxU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>

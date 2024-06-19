@@ -2,24 +2,12 @@
   <div class="edit-content">
     <h4>基础信息</h4>
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="线路名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属旅行社" prop="travelAgencyId">
-        <TravelSelect
-          v-model="formData.travelAgencyId"
-          :clearable="false"
-          :disabled="disabled"
-        ></TravelSelect>
+        <TravelSelect v-model="formData.travelAgencyId" :clearable="false" :disabled="disabled"></TravelSelect>
       </el-form-item>
       <el-form-item label="出发城市" prop="startCity">
         <ProvinceCitySelect v-model="formData.startCity" />
@@ -44,21 +32,10 @@
         </el-select>
       </el-form-item>
       <el-form-item label="虚拟销量" prop="virtualNum">
-        <el-input
-          v-model="formData.virtualNum"
-          placeholder="不填写默认为0"
-          show-word-limit
-          maxlength="4"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.virtualNum" placeholder="不填写默认为0" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="提前购票(天)" prop="advanceDay">
-        <el-input
-          v-model="formData.advanceDay"
-          show-word-limit
-          maxlength="2"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.advanceDay" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="退款方式" prop="refundType">
         <el-radio-group v-model="formData.refundType">
@@ -68,62 +45,25 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款说明" prop="refundDescribe">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 3 }"
-          v-model="formData.refundDescribe"
-          autosize
-          maxlength="100"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" autosize maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 5, maxRows: 8 }"
-          v-model="formData.introduce"
-          autosize
-          maxlength="400"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 8 }" v-model="formData.introduce" autosize maxlength="400" show-word-limit />
       </el-form-item>
       <h4>游玩信息</h4>
       <el-divider />
       <div class="line-day-config">
         <div v-for="(item, index) in formData.configList" :key="index" class="line-day-config-item">
           <h5 style="margin-bottom: 10px; margin-left: 20px">第{{ index + 1 }}天行程</h5>
-          <el-form-item
-            label="起始地"
-            :prop="`configList[${index}].startPoint`"
-            :rules="{ required: true, message: '起始地不能为空', trigger: 'blur' }"
-          >
-            <el-input
-              v-model="item.startPoint"
-              placeholder="出发地"
-              show-word-limit
-              maxlength="10"
-              style="width: 200px !important"
-            />
+          <el-form-item label="起始地" :prop="`configList[${index}].startPoint`" :rules="{ required: true, message: '起始地不能为空', trigger: 'blur' }">
+            <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" style="width: 200px !important" />
             &nbsp;-&nbsp;
-            <el-input
-              v-model="item.endPoint"
-              placeholder="目的地"
-              show-word-limit
-              maxlength="10"
-              style="width: 200px !important"
-            />
+            <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" style="width: 200px !important" />
           </el-form-item>
-          <el-form-item
-            label="交通方式"
-            :prop="`configList[${index}].trafficType`"
-            :rules="{ required: true, message: '交通方式不能为空', trigger: 'change' }"
-          >
+          <el-form-item label="交通方式" :prop="`configList[${index}].trafficType`" :rules="{ required: true, message: '交通方式不能为空', trigger: 'change' }">
             <el-radio-group v-model="item.trafficType">
               <el-radio :value="1">飞机</el-radio>
               <el-radio :value="2">汽车</el-radio>
@@ -139,18 +79,8 @@
               <el-checkbox label="晚餐" :value="4" />
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item
-            label="详细介绍"
-            :prop="`configList[${index}].depictText`"
-            :rules="{ required: true, message: '详细介绍不能为空', trigger: 'blur' }"
-          >
-            <WangEditor
-              v-if="!disabled"
-              v-model:html-value="item.depict"
-              v-model:text-value="item.depictText"
-              :width="570"
-              :height="300"
-            ></WangEditor>
+          <el-form-item label="详细介绍" :prop="`configList[${index}].depictText`" :rules="{ required: true, message: '详细介绍不能为空', trigger: 'blur' }">
+            <WangEditor v-if="!disabled" v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
             <div v-html="item.depict" v-else></div>
           </el-form-item>
         </div>

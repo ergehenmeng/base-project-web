@@ -1,16 +1,8 @@
 <template>
   <el-select v-model="expressId" :clearable="props.clearable" filterable>
-    <el-option
-      v-for="item in expressList"
-      :key="item.id"
-      :label="item.title"
-      :value="item.id"
-      :disabled="props.disabled"
-    >
+    <el-option v-for="item in expressList" :key="item.id" :label="item.title" :value="item.id" :disabled="props.disabled">
       <span style="float: left">{{ item.title }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px"
-        >计费方式: {{ item.chargeMode === 1 ? '按件数' : '按重量' }}</span
-      >
+      <span style="float: right; color: #8492a6; font-size: 13px">计费方式: {{ item.chargeMode === 1 ? '按件数' : '按重量' }}</span>
     </el-option>
   </el-select>
 </template>

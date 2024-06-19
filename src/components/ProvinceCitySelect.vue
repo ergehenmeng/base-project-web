@@ -1,13 +1,5 @@
 <template>
-  <el-cascader
-    v-model="areaList"
-    :options="options"
-    :props="selectProps"
-    clearable
-    filterable
-    :disabled="props.disabled"
-  >
-  </el-cascader>
+  <el-cascader v-model="areaList" :options="options" :props="selectProps" clearable filterable :disabled="props.disabled"> </el-cascader>
 </template>
 <script setup>
 import useAreaStore from '@/store/area.js';

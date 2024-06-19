@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="单位名称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="单位名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="签名方式">
           <el-select v-model="queryParams.signType" clearable>
@@ -25,14 +20,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="单位名称" width="200" />
         <el-table-column prop="signType" label="签名方式" width="100" />
         <el-table-column prop="appKey" label="appKey" width="300" />
@@ -43,33 +31,9 @@
         <el-table-column prop="updateTime" label="更新时间" width="200" />
         <el-table-column label="操作" width="200">
           <template #default="scope">
-            <el-button
-              v-has-perm="'0vK0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'pvK0'"
-              type="primary"
-              :icon="Refresh"
-              @click="handleReset(scope.row)"
-              link
-              title="重置秘钥"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'dvK0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"> </el-button>
+            <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>

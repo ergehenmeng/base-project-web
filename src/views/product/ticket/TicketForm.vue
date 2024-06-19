@@ -1,24 +1,12 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="门票名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属景区" prop="scenicId">
-        <ScenicSelect
-          v-model="formData.scenicId"
-          :clearable="false"
-          :disabled="disabled"
-        ></ScenicSelect>
+        <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled"></ScenicSelect>
       </el-form-item>
       <el-form-item label="票种" prop="category">
         <el-select v-model="formData.category">
@@ -28,64 +16,26 @@
         </el-select>
       </el-form-item>
       <el-form-item label="划线价">
-        <el-input
-          v-model="formData.linePrice"
-          placeholder="小于销售价时不显示"
-          show-word-limit
-          maxlength="6"
-          @keyup="formData.linePrice = numberValidator(formData.linePrice)"
-        />
+        <el-input v-model="formData.linePrice" placeholder="小于销售价时不显示" show-word-limit maxlength="6" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
       </el-form-item>
       <el-form-item label="销售价" prop="salePrice">
-        <el-input
-          v-model="formData.salePrice"
-          show-word-limit
-          maxlength="6"
-          @keyup="formData.salePrice = numberValidator(formData.salePrice)"
-        />
+        <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
       </el-form-item>
       <el-form-item label="虚拟销量" prop="virtualNum">
-        <el-input
-          v-model="formData.virtualNum"
-          placeholder="不填写默认为0"
-          show-word-limit
-          maxlength="4"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.virtualNum" placeholder="不填写默认为0" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input
-          v-model="formData.stock"
-          show-word-limit
-          maxlength="5"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="提前购票(天)" prop="advanceDay">
-        <el-input
-          v-model="formData.advanceDay"
-          show-word-limit
-          maxlength="2"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.advanceDay" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="单次限购(张)" prop="quota">
-        <el-input
-          v-model="formData.quota"
-          placeholder="默认限购99张"
-          show-word-limit
-          maxlength="2"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.quota" placeholder="默认限购99张" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="预定时间" prop="dueDate">
         <div style="width: 350px">
-          <el-date-picker
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            v-model="formData.dueDate"
-            style="width: 350px"
-          ></el-date-picker>
+          <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="formData.dueDate" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="核销方式" prop="verificationType">
@@ -101,11 +51,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

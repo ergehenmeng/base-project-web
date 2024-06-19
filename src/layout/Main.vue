@@ -2,11 +2,7 @@
   <div class="main-center">
     <div class="main-navigation">
       <el-breadcrumb>
-        <el-breadcrumb-item
-          v-for="(breadcrumb, index) in breadcrumbList"
-          :key="index"
-          :to="{ path: breadcrumb?.path }"
-        >
+        <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="index" :to="{ path: breadcrumb?.path }">
           {{ breadcrumb.meta?.title }}
         </el-breadcrumb-item>
       </el-breadcrumb>
@@ -28,17 +24,7 @@ const areaStore = useAreaStore();
 areaStore.initArea();
 
 const dictStore = useDictStore();
-dictStore.initDict(
-  'image_type',
-  'help_type',
-  'feedback_type',
-  'banner_type',
-  'notice_type',
-  'scenic_tag',
-  'homestay_tag',
-  'key_service',
-  'infrastructure_tag'
-);
+dictStore.initDict('image_type', 'help_type', 'feedback_type', 'banner_type', 'notice_type', 'scenic_tag', 'homestay_tag', 'key_service', 'infrastructure_tag');
 
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {

@@ -1,24 +1,10 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="设置日期" prop="configDate">
         <div style="width: 350px">
-          <el-date-picker
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            :disabled-date="disableBeforeDate"
-            v-model="formData.configDate"
-            style="width: 350px"
-          ></el-date-picker>
+          <el-date-picker type="daterange" value-format="YYYY-MM-DD" :disabled-date="disableBeforeDate" v-model="formData.configDate" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="周期" prop="week">

@@ -1,30 +1,11 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="分类标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="资讯编码" prop="code">
-        <el-input
-          v-model="formData.code"
-          show-word-limit
-          maxlength="20"
-          :disabled="formData.id !== null"
-        />
+        <el-input v-model="formData.code" show-word-limit maxlength="20" :disabled="formData.id !== null" />
       </el-form-item>
       <el-form-item label="包含标题" prop="includeTitle">
         <el-radio-group v-model="formData.includeTitle" disabled>

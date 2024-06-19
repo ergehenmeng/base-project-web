@@ -3,25 +3,14 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="订单编号、房型、民宿名称、手机号"
-            clearable
-            @keyup.enter="search"
-            style="width: 250px"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、房型、民宿名称、手机号" clearable @keyup.enter="search" style="width: 250px" />
         </el-form-item>
         <el-form-item label="状态">
           <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="订单日期">
           <div style="width: 220px">
-            <el-date-picker
-              type="daterange"
-              value-format="YYYY-MM-DD"
-              v-model="queryParams.activityDate"
-              style="width: 220px"
-            ></el-date-picker>
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item label="优惠券">
@@ -34,21 +23,12 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'DaD0'">
-          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">
-            导出
-          </el-button>
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"> 导出 </el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="orderNo" label="订单编号" min-width="150" />
         <el-table-column prop="title" label="门票名称" min-width="150" />
         <el-table-column prop="scenicName" label="景区名称" min-width="150" />
@@ -64,14 +44,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button
-              v-has-perm="'OaD0'"
-              type="info"
-              :icon="Document"
-              @click="handleDetail(scope.row)"
-              link
-              title="详情"
-            ></el-button>
+            <el-button v-has-perm="'OaD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -87,7 +60,7 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, exportApi } from '@/api/order/homestay';
+import { exportApi, listPageApi } from '@/api/order/homestay';
 import { onMounted, reactive, ref } from 'vue';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';

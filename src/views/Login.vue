@@ -6,12 +6,7 @@
         <h3>后台管理系统</h3>
         <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData">
           <el-form-item prop="userName">
-            <el-input
-              placeholder="请输入账号"
-              maxlength="20"
-              v-model="formData.userName"
-              size="large"
-            >
+            <el-input placeholder="请输入账号" maxlength="20" v-model="formData.userName" size="large">
               <template #prefix>
                 <el-icon :size="20">
                   <User />
@@ -20,15 +15,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="pwd">
-            <el-input
-              placeholder="请输入密码"
-              v-model="formData.pwd"
-              maxlength="20"
-              size="large"
-              type="password"
-              show-password
-              autocomplete="off"
-            >
+            <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="20" size="large" type="password" show-password autocomplete="off">
               <template #prefix>
                 <el-icon :size="20">
                   <Lock />
@@ -37,14 +24,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="verifyCode">
-            <el-input
-              placeholder="验证码"
-              v-model="formData.verifyCode"
-              maxlength="4"
-              size="large"
-              @keyup.enter="handleLogin"
-              style="width: 60%"
-            >
+            <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
               <template #prefix>
                 <el-icon :size="20">
                   <CircleCheck />
@@ -56,13 +36,7 @@
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button
-              style="width: 100%"
-              size="large"
-              type="primary"
-              @click="handleLogin()"
-              :loading="loading"
-            >
+            <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading">
               <span v-if="!loading">登录</span>
               <span v-else>登录中</span>
             </el-button>

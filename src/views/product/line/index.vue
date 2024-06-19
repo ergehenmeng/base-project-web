@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="线路名称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="旅行社">
           <TravelSelect v-model="queryParams.travelAgencyId"></TravelSelect>
@@ -46,9 +41,7 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'nvl0'">
-          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"
-          >导出</el-button
-          >
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'tvl0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
@@ -56,14 +49,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="coverUrl" label="封面图片" min-width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -80,12 +66,7 @@
         </el-table-column>
         <el-table-column prop="title" label="线路名称" min-width="200" />
         <el-table-column prop="travelAgencyName" label="所属旅行社" min-width="200" />
-        <el-table-column
-          prop="startProvinceId"
-          label="出发城市"
-          width="120"
-          :formatter="formatter"
-        />
+        <el-table-column prop="startProvinceId" label="出发城市" width="120" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="duration" label="游玩天数" width="120" />
@@ -93,72 +74,13 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="250">
           <template #default="scope">
-            <el-button
-              v-has-perm="'Kvl0'"
-              type="info"
-              :icon="Document"
-              @click="handleDetail(scope.row)"
-              link
-              title="详情"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'Jvl0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'5vl0'"
-              v-show="scope.row.state === 0"
-              type="success"
-              :icon="Top"
-              @click="handleShelves(scope.row)"
-              link
-              title="上架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'Zvl0'"
-              v-show="scope.row.state === 1"
-              type="warning"
-              :icon="Bottom"
-              @click="handleUnShelves(scope.row)"
-              link
-              title="下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'kvl0'"
-              v-show="scope.row.state !== 2"
-              type="danger"
-              :icon="Download"
-              @click="handlePlatformUnShelves(scope.row)"
-              link
-              title="强制下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'Ovl0'"
-              type="success"
-              :icon="Calendar"
-              @click="handleCalendar(scope.row)"
-              link
-              title="查看价格日历"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'lvl0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'Kvl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'Jvl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'5vl0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"> </el-button>
+            <el-button v-has-perm="'Zvl0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"> </el-button>
+            <el-button v-has-perm="'kvl0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"> </el-button>
+            <el-button v-has-perm="'Ovl0'" type="success" :icon="Calendar" @click="handleCalendar(scope.row)" link title="查看价格日历"> </el-button>
+            <el-button v-has-perm="'lvl0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -174,32 +96,16 @@
   </div>
 </template>
 <script setup>
-import {
-  listPageApi,
-  deleteApi,
-  shelvesApi,
-  unShelvesApi,
-  platformUnShelvesApi,
-  exportApi
-} from '@/api/product/line';
+import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, exportApi } from '@/api/product/line';
 import { onMounted, reactive, ref } from 'vue';
-import {
-  Edit,
-  Delete,
-  Plus,
-  Top,
-  Bottom,
-  Download,
-  Document,
-  Calendar
-} from '@element-plus/icons-vue';
+import { Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
 import useAreaStore from '@/store/area.js';
 import TravelSelect from '@/components/TravelSelect.vue';
-import { downloadExcel } from '@/utils/common.js'
+import { downloadExcel } from '@/utils/common.js';
 
 const areaStore = useAreaStore();
 const router = useRouter();

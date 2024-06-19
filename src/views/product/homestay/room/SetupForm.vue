@@ -1,29 +1,9 @@
 <template>
-  <el-dialog
-    title="批量设置"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog title="批量设置" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="设置日期" prop="configDate">
         <div style="width: 350px">
-          <el-date-picker
-            type="daterange"
-            value-format="YYYY-MM-DD"
-            :disabled-date="disableBeforeDate"
-            v-model="formData.configDate"
-            style="width: 350px"
-          ></el-date-picker>
+          <el-date-picker type="daterange" value-format="YYYY-MM-DD" :disabled-date="disableBeforeDate" v-model="formData.configDate" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="周期" prop="week">
@@ -44,29 +24,13 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="划线价">
-        <el-input
-          v-model="formData.linePrice"
-          placeholder="小于销售价时不显示"
-          show-word-limit
-          maxlength="6"
-          @keyup="formData.linePrice = numberValidator(formData.linePrice)"
-        />
+        <el-input v-model="formData.linePrice" placeholder="小于销售价时不显示" show-word-limit maxlength="6" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
       </el-form-item>
       <el-form-item label="销售价" prop="salePrice">
-        <el-input
-          v-model="formData.salePrice"
-          show-word-limit
-          maxlength="6"
-          @keyup="formData.salePrice = numberValidator(formData.salePrice)"
-        />
+        <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input
-          v-model="formData.stock"
-          show-word-limit
-          maxlength="5"
-          onkeyup="this.value=this.value.replace(/\D/g,'')"
-        />
+        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
     </el-form>
     <template #footer>

@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="资讯标题、活动名称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="资讯标题、活动名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="类型">
           <el-select v-model="queryParams.objectType" clearable>
@@ -34,26 +29,13 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="objectName" label="文章名称" width="300" />
         <el-table-column prop="nickName" label="留言昵称" width="120" />
         <el-table-column prop="avatar" label="头像" width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image
-                fit="contain"
-                :src="scope.row.avatar"
-                style="width: 50px; height: 50px"
-                preview-teleported
-                hide-on-click-modal
-              />
+              <el-image fit="contain" :src="scope.row.avatar" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
@@ -65,36 +47,9 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button
-              v-has-perm="'dBU0'"
-              v-show="scope.row.state === true"
-              type="primary"
-              :icon="Hide"
-              @click="handleShield(scope.row)"
-              link
-              title="屏蔽评论"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'hBU0'"
-              v-show="scope.row.topState === 0"
-              type="success"
-              :icon="Top"
-              @click="handleTop(scope.row)"
-              link
-              title="置顶评论"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'XBU0'"
-              v-show="scope.row.topState === 1"
-              type="danger"
-              :icon="Bottom"
-              @click="handleUnTop(scope.row)"
-              link
-              title="取消置顶"
-            >
-            </el-button>
+            <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="primary" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论"> </el-button>
+            <el-button v-has-perm="'hBU0'" v-show="scope.row.topState === 0" type="success" :icon="Top" @click="handleTop(scope.row)" link title="置顶评论"> </el-button>
+            <el-button v-has-perm="'XBU0'" v-show="scope.row.topState === 1" type="danger" :icon="Bottom" @click="handleUnTop(scope.row)" link title="取消置顶"> </el-button>
           </template>
         </el-table-column>
       </el-table>

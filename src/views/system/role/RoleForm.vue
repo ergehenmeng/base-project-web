@@ -1,32 +1,11 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="角色名称" prop="roleName">
         <el-input v-model="formData.roleName" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 2 }"
-          v-model="formData.remark"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

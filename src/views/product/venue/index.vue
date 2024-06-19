@@ -3,12 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input
-            v-model="queryParams.queryName"
-            placeholder="场馆名称"
-            clearable
-            @keyup.enter="search"
-          />
+          <el-input v-model="queryParams.queryName" placeholder="场馆名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="场馆类型">
           <el-select v-model="queryParams.venueType" clearable style="width: 130px !important">
@@ -43,14 +38,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table
-        :data="pageData"
-        style="width: 100%"
-        stripe
-        v-loading="loading"
-        max-height="670"
-        show-overflow-tooltip
-      >
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="coverUrl" label="封面图片" min-width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -75,63 +63,12 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button
-              v-has-perm="'LwO0'"
-              type="info"
-              :icon="Document"
-              @click="handleDetail(scope.row)"
-              link
-              title="详情"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'BwO0'"
-              type="primary"
-              :icon="Edit"
-              @click="handleEdit(scope.row)"
-              link
-              title="编辑"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'7wO0'"
-              v-show="scope.row.state === 0"
-              type="success"
-              :icon="Top"
-              @click="handleShelves(scope.row)"
-              link
-              title="上架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'WwO0'"
-              v-show="scope.row.state === 1"
-              type="warning"
-              :icon="Bottom"
-              @click="handleUnShelves(scope.row)"
-              link
-              title="下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'3wO0'"
-              v-show="scope.row.state !== 2"
-              type="danger"
-              :icon="Download"
-              @click="handlePlatformUnShelves(scope.row)"
-              link
-              title="强制下架"
-            >
-            </el-button>
-            <el-button
-              v-has-perm="'TwO0'"
-              type="danger"
-              :icon="Delete"
-              @click="handleDelete(scope.row)"
-              link
-              title="删除"
-            >
-            </el-button>
+            <el-button v-has-perm="'LwO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'BwO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'7wO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"> </el-button>
+            <el-button v-has-perm="'WwO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"> </el-button>
+            <el-button v-has-perm="'3wO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"> </el-button>
+            <el-button v-has-perm="'TwO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -147,13 +84,7 @@
   </div>
 </template>
 <script setup>
-import {
-  deleteApi,
-  listPageApi,
-  platformUnShelvesApi,
-  shelvesApi,
-  unShelvesApi
-} from '@/api/product/venue';
+import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/venue';
 import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Delete, Document, Download, Edit, Plus, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';

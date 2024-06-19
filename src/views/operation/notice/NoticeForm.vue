@@ -1,32 +1,17 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="公告类型" prop="noticeType">
         <el-select v-model="formData.noticeType">
-          <el-option
-            v-for="item in dictList"
-            :key="item.id"
-            :label="item.showValue"
-            :value="item.hiddenValue"
-          />
+          <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
         </el-select>
       </el-form-item>
       <el-form-item label="公告内容" prop="contentText">
-        <WangEditor
-          v-model:html-value="formData.content"
-          v-model:text-value="formData.contentText"
-        ></WangEditor>
+        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
       </el-form-item>
     </el-form>
     <div>

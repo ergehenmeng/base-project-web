@@ -1,23 +1,12 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="店铺名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect
-          v-model="formData.merchantId"
-          @change="handleMerchantChange"
-        ></MerchantSelect>
+        <MerchantSelect v-model="formData.merchantId" @change="handleMerchantChange"></MerchantSelect>
       </el-form-item>
       <el-form-item label="店铺LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
@@ -43,32 +32,17 @@
       </el-form-item>
       <el-form-item label="退换货地址" prop="depotAddressId">
         <el-select v-model="formData.depotAddressId" filterable>
-          <el-option
-            v-for="item in addressList"
-            :key="item.id"
-            :label="item.detailAddress"
-            :value="item.id"
-            :disabled="disabled"
-          >
+          <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
             <span style="float: left">{{ item.detailAddress }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px"
-              >{{ item.nickName }}：{{ item.mobile }}</span
-            >
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}：{{ item.mobile }}</span>
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
-        <UploadImageList
-          v-model:file-list="formData.coverList"
-          :disabled="disabled"
-        ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="商家介绍" prop="introduceText">
-        <WangEditor
-          v-if="!disabled"
-          v-model:html-value="formData.introduce"
-          v-model:text-value="formData.introduceText"
-        ></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce"></div>
       </el-form-item>
     </el-form>

@@ -1,15 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-      :disabled="disabled"
-    >
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="模板名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -41,79 +33,35 @@
                   <el-tooltip :content="item.regionName" placement="top">
                     <el-text truncated style="width: 250px">{{ item.regionName }}</el-text>
                   </el-tooltip>
-                  <el-button
-                    v-has-perm="'9fO0'"
-                    type="primary"
-                    :icon="Edit"
-                    @click="handleEdit(item.regionCode)"
-                    link
-                    title="编辑"
-                  >
-                  </el-button>
-                  <el-button
-                    v-has-perm="'afO0'"
-                    type="danger"
-                    :icon="Delete"
-                    @click="handleDelete(item.regionCode)"
-                    link
-                    title="删除"
-                  >
-                  </el-button>
+                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionCode)" link title="编辑"> </el-button>
+                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionCode)" link title="删除"> </el-button>
                 </div>
               </td>
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
-                  <el-form-item
-                    :prop="`regionList[${index}].firstPart`"
-                    :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }"
-                  >
-                    <el-input
-                      v-model="item.firstPart"
-                      onkeyup="this.value=this.value.replace(/\D/g,'')"
-                      style="width: 100px"
-                    />
+                  <el-form-item :prop="`regionList[${index}].firstPart`" :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }">
+                    <el-input v-model="item.firstPart" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" />
                   </el-form-item>
                 </div>
               </td>
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
-                  <el-form-item
-                    :prop="`regionList[${index}].firstPrice`"
-                    :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }"
-                  >
-                    <el-input
-                      v-model="item.firstPrice"
-                      @keyup="item.firstPrice = numberValidator(item.firstPrice)"
-                      style="width: 100px"
-                    />
+                  <el-form-item :prop="`regionList[${index}].firstPrice`" :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }">
+                    <el-input v-model="item.firstPrice" @keyup="item.firstPrice = numberValidator(item.firstPrice)" style="width: 100px" />
                   </el-form-item>
                 </div>
               </td>
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
-                  <el-form-item
-                    :prop="`regionList[${index}].nextPart`"
-                    :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }"
-                  >
-                    <el-input
-                      v-model="item.nextPart"
-                      onkeyup="this.value=this.value.replace(/\D/g,'')"
-                      style="width: 100px"
-                    />
+                  <el-form-item :prop="`regionList[${index}].nextPart`" :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }">
+                    <el-input v-model="item.nextPart" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" />
                   </el-form-item>
                 </div>
               </td>
               <td>
                 <div style="display: flex; justify-content: center; align-items: center">
-                  <el-form-item
-                    :prop="`regionList[${index}].nextUnitPrice`"
-                    :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }"
-                  >
-                    <el-input
-                      v-model="item.nextUnitPrice"
-                      @keyup="item.nextUnitPrice = numberValidator(item.nextUnitPrice)"
-                      style="width: 100px"
-                    />
+                  <el-form-item :prop="`regionList[${index}].nextUnitPrice`" :rules="{ required: true, message: '该项不能为空', trigger: 'blur' }">
+                    <el-input v-model="item.nextUnitPrice" @keyup="item.nextUnitPrice = numberValidator(item.nextUnitPrice)" style="width: 100px" />
                   </el-form-item>
                 </div>
               </td>
@@ -183,9 +131,7 @@ const handleEdit = (regionCode) => {
 };
 const handleDelete = (regionCode) => {
   confirmMsg('确定要删除该区域配置吗?', () => {
-    formData.value.regionList = formData.value.regionList.filter(
-      (item) => item.regionCode !== regionCode
-    );
+    formData.value.regionList = formData.value.regionList.filter((item) => item.regionCode !== regionCode);
   });
 };
 

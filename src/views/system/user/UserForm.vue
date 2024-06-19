@@ -1,20 +1,6 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    v-model="showDialog"
-    width="550px"
-    draggable
-    align-center
-    :close-on-click-modal="false"
-  >
-    <el-form
-      :model="formData"
-      ref="formDataRef"
-      :rules="formRules"
-      label-position="right"
-      label-width="auto"
-      v-loading="loading"
-    >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="用户名称" prop="nickName">
         <el-input v-model="formData.nickName" show-word-limit maxlength="20" />
       </el-form-item>
@@ -22,22 +8,8 @@
         <el-input v-model="formData.mobile" maxlength="11" />
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
-        <el-select
-          v-model="formData.roleIds"
-          filterable
-          multiple
-          collapse-tags
-          collapse-tags-tooltip
-          :max-collapse-tags="3"
-          clearable
-          title="注意:此处只显示系统角色,不显示商户角色"
-        >
-          <el-option
-            v-for="role in roleList"
-            :label="role.desc"
-            :value="role.value"
-            :key="role.value"
-          ></el-option>
+        <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
+          <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门" prop="deptCode">
@@ -57,14 +29,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2, maxRows: 2 }"
-          v-model="formData.remark"
-          autosize
-          maxlength="200"
-          show-word-limit
-        />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

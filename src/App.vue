@@ -1,10 +1,5 @@
 <template>
-  <el-config-provider
-    :locale="zhCn"
-    :zIndex="zIndex"
-    :value-on-clear="null"
-    :empty-values="[undefined, null]"
-  >
+  <el-config-provider :locale="zhCn" :zIndex="zIndex" :value-on-clear="null" :empty-values="[undefined, null]">
     <layout />
   </el-config-provider>
 </template>
