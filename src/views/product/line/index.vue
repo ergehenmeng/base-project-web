@@ -45,6 +45,11 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'nvl0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"
+          >导出</el-button
+          >
+        </el-form-item>
         <el-form-item class="right-button" v-has-perm="'tvl0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
@@ -174,7 +179,8 @@ import {
   deleteApi,
   shelvesApi,
   unShelvesApi,
-  platformUnShelvesApi
+  platformUnShelvesApi,
+  exportApi
 } from '@/api/product/line';
 import { onMounted, reactive, ref } from 'vue';
 import {
@@ -193,6 +199,7 @@ import { useRouter } from 'vue-router';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
 import useAreaStore from '@/store/area.js';
 import TravelSelect from '@/components/TravelSelect.vue';
+import { downloadExcel } from '@/utils/common.js'
 
 const areaStore = useAreaStore();
 const router = useRouter();
@@ -298,6 +305,22 @@ const handlePlatformUnShelves = (row) => {
       getPage();
     });
   });
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '民宿订单列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const handleCalendar = (row) => {

@@ -55,3 +55,17 @@ export const platformUnShelvesApi = (data) => {
     data
   });
 };
+
+export const recommendApi = (data) => {
+  return request.post({
+    url: '/manage/item/recommend',
+    data
+  });
+};
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/item/export',
+    params
+  });
+};

@@ -68,3 +68,10 @@ export const storeListApi = () => {
     url: '/manage/item/store/list'
   });
 };
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/item/store/export',
+    params
+  });
+};

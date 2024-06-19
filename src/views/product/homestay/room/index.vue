@@ -27,6 +27,11 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'ibO0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"
+          >导出</el-button
+          >
+        </el-form-item>
         <el-form-item class="right-button" v-has-perm="'NbO0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
@@ -163,7 +168,8 @@ import {
   shelvesApi,
   unShelvesApi,
   platformUnShelvesApi,
-  recommendApi
+  recommendApi,
+  exportApi
 } from '@/api/product/room';
 import { onMounted, reactive, ref } from 'vue';
 import {
@@ -180,6 +186,7 @@ import {
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
+import { downloadExcel } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -326,6 +333,24 @@ const handleRecommend = (row) => {
     });
   });
 };
+
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '民宿订单列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
+};
+
 
 const handleCalendar = (row) => {
   router.push('/product/room/calendar/' + row.id);

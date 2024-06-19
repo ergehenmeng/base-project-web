@@ -83,3 +83,10 @@ export const recommendApi = (data) => {
     data
   });
 };
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/homestay/room/export',
+    params
+  });
+};

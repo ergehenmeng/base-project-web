@@ -33,6 +33,11 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'ydD0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"
+            >导出</el-button
+          >
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -83,13 +88,14 @@
   </div>
 </template>
 <script setup>
-import { listPageApi } from '@/api/order/line';
+import { exportApi, listPageApi } from '@/api/order/line';
 import { onMounted, reactive, ref } from 'vue';
-import { Document } from '@element-plus/icons-vue';
+import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { closeTypeFormat, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
+import { successMsg } from '@/utils/message.js';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -141,6 +147,22 @@ const formatter = (row, column, cellValue) => {
   } else {
     return cellValue;
   }
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '民宿订单列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const handleDetail = (row) => {

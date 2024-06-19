@@ -20,7 +20,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button">
+        <el-form-item class="right-button" v-has-perm="'4FO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading"
             >导出</el-button
           >
