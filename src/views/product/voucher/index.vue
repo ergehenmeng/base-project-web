@@ -18,6 +18,9 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item class="right-button" v-has-perm="'owO0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
+        </el-form-item>
         <el-form-item class="right-button" v-has-perm="'FPO0'">
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
@@ -56,13 +59,14 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/voucher';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/voucher';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus, Top, Bottom, Download, Document } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Download, Edit, Plus, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
+import { downloadExcel } from '@/utils/common.js';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -158,6 +162,22 @@ const handlePlatformUnShelves = (row) => {
       getPage();
     });
   });
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '餐饮券列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const handleCreate = () => {

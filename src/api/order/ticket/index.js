@@ -13,3 +13,10 @@ export const selectApi = (params) => {
     params
   });
 };
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/ticket/order/export',
+    params
+  });
+};
