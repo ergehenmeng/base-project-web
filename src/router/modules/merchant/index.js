@@ -43,6 +43,26 @@ export default [
             component: () => import('@/views/merchant/detail/index.vue')
           }
         ]
+      },
+      {
+        path: 'account',
+        meta: {
+          title: '商户账户'
+        },
+        children: [
+          {
+            path: '',
+            name: 'merchantAccountIndex',
+            component: () => import('@/views/merchant/account/index.vue')
+          }
+        ]
+      },
+      {
+        path: 'accountLog',
+        meta: {
+          title: '资金变动记录'
+        },
+        component: () => import('@/views/merchant/accountLog/index.vue')
       }
     ]
   }
