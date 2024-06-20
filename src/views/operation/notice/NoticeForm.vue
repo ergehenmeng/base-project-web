@@ -37,7 +37,6 @@ const dictStore = useDictStore();
 const dictList = dictStore.getDict('notice_type');
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 
 const formRules = reactive({
   title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
@@ -61,7 +60,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('公告更新成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -71,7 +69,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('公告添加成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

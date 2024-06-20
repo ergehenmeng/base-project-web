@@ -81,7 +81,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 const disabled = ref(false);
 const validTypeProp = ref('validDays');
 const validTypeRules = ref({});
@@ -138,7 +137,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('餐饮券信息更新成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -148,7 +146,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('餐饮券添加成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

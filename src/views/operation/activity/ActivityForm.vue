@@ -44,7 +44,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -73,7 +72,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('活动更新成功');
-            showDialog.value = false;
             router.back();
           })
           .finally(() => {
@@ -83,7 +81,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('活动添加成功');
-            showDialog.value = false;
             router.back();
           })
           .finally(() => {

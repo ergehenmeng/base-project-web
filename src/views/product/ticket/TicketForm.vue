@@ -80,7 +80,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 const disabled = ref(false);
 
 const formRules = reactive({
@@ -121,7 +120,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('门票信息更新成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -131,7 +129,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('门票添加成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

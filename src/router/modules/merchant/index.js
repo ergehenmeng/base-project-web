@@ -77,6 +77,27 @@ export default [
           title: '冻结记录'
         },
         component: () => import('@/views/merchant/freezeLog/index.vue')
+      },
+      {
+        path: 'score',
+        meta: {
+          title: '积分账户'
+        },
+        children: [
+          {
+            path: '',
+            name: 'merchantScoreIndex',
+            component: () => import('@/views/merchant/score/index.vue')
+          },
+          {
+            path: 'recharge',
+            name: 'scoreRechargeIndex',
+            component: () => import('@/views/merchant/score/RechargeForm.vue'),
+            meta: {
+              title: '积分充值'
+            }
+          }
+        ]
       }
     ]
   }

@@ -78,7 +78,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 const mapRef = ref();
 const disabled = ref(false);
 const storeList = ref([]);
@@ -128,7 +127,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('店铺信息更新成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -138,7 +136,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('店铺添加成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

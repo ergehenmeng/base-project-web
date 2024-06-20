@@ -43,7 +43,6 @@ const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 
 const formRules = reactive({
   ask: [{ required: true, message: "'问'不能为空", trigger: 'blur' }],
@@ -68,7 +67,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('修改问答成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -78,7 +76,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('新增问答成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

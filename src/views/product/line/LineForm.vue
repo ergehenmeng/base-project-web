@@ -113,7 +113,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 const disabled = ref(false);
 const formRules = reactive({
   title: [{ required: true, message: '线路名称不能为空', trigger: 'blur' }],
@@ -183,7 +182,6 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('线路信息更新成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {
@@ -193,7 +191,6 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('线路添加成功');
-            showDialog.value = false;
             router.go(-1);
           })
           .finally(() => {

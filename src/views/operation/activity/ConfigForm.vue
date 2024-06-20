@@ -54,7 +54,6 @@ import UploadImage from '@/components/UploadImage.vue';
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const showDialog = ref(false);
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -86,7 +85,6 @@ const handleSave = () => {
       configApi(formData.value)
         .then(() => {
           successMsg('活动添加成功');
-          showDialog.value = false;
           router.go(-1);
         })
         .finally(() => {
