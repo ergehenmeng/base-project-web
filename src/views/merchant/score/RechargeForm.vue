@@ -26,9 +26,8 @@
     </el-form>
   </div>
 </template>
-
 <script setup>
-import { balanceDetailApi, balanceRechargeApi, scanRechargeApi } from '@/api/merchant/score';
+import { balanceRechargeApi, rechargeDetailApi, scanRechargeApi } from '@/api/merchant/score';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
@@ -81,7 +80,7 @@ const handleSave = () => {
       } else {
         scanRechargeApi(formData.value)
           .then(({ data }) => {
-            console.log("待完成扫码展示", data);
+            console.log('待完成扫码展示', data);
           })
           .finally(() => {
             loading.value = false;
@@ -92,7 +91,7 @@ const handleSave = () => {
 };
 
 onMounted(async () => {
-  const { data } = await balanceDetailApi();
+  const { data } = await rechargeDetailApi();
   amount.value = data.amount;
   minRecharge.value = parseFloat(data.minRecharge);
 });

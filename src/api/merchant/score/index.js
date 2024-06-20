@@ -6,7 +6,7 @@ export const accountApi = () => {
     });
 };
 
-export const balanceDetailApi = () => {
+export const rechargeDetailApi = () => {
     return request.get({
         url: '/manage/merchant/score/recharge/detail'
     });
@@ -30,5 +30,12 @@ export const withdrawApplyApi = (data) => {
     return request.post({
         url: '/manage/merchant/score/withdraw/apply',
         data
+    });
+};
+
+
+export const withdrawDetailApi = () => {
+    return request.get({
+        url: '/manage/merchant/score/withdraw/detail'
     });
 };

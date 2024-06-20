@@ -14,6 +14,7 @@ export const errorMsg = (msg, func) => {
   ElMessage({
     message: msg,
     type: 'error',
+    grouping: true,
     duration: 3000,
     onClose: () => {
       if (func) {
@@ -27,6 +28,7 @@ export const successMsg = (msg, func) => {
   ElMessage({
     message: msg,
     type: 'success',
+    grouping: true,
     duration: 3000,
     onClose: () => {
       if (func) {

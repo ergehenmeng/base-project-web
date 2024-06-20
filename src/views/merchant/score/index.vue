@@ -19,12 +19,14 @@
       </el-col>
     </el-row>
   </div>
+  <WithdrawForm ref="withdrawFormRef" @reload="reload"></WithdrawForm>
 </template>
 <script setup>
 import { accountApi } from '@/api/merchant/score';
 import { useTransition } from '@vueuse/core'
 import useUserStore from '@/store/user.js'
 import { useRouter } from 'vue-router'
+import WithdrawForm from "@/views/merchant/score/WithdrawForm.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -32,6 +34,8 @@ const selectAuth = userStore.hasAuth('JVu0');
 const amount = ref(0.00);
 const payFreeze = ref(0);
 const withdrawFreeze = ref(0);
+const withdrawFormRef = ref();
+
 const amountValue = useTransition(amount, {
   duration: 500,
 })
@@ -47,11 +51,15 @@ onMounted(async () => {
 })
 
 const handleWithdraw = () => {
-  console.log("提现逻辑待补全")
+  withdrawFormRef.value.openDialog({useAmount: amount.value});
 }
 
 const handleRecharge = () => {
   router.push("/merchant/score/recharge")
+}
+
+const reload = () => {
+  router.go(0);
 }
 
 </script>
