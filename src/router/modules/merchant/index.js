@@ -70,6 +70,13 @@ export default [
           title: '提现记录'
         },
         component: () => import('@/views/merchant/withdraw/index.vue')
+      },
+      {
+        path: 'freezeLog',
+        meta: {
+          title: '冻结记录'
+        },
+        component: () => import('@/views/merchant/freezeLog/index.vue')
       }
     ]
   }

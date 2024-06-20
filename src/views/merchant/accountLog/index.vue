@@ -31,7 +31,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item v-has-perm="'64O0'">
+        <el-form-item v-has-perm="'PCu0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
       </el-form>
@@ -68,7 +68,7 @@ import { successMsg } from '@/utils/message.js';
 import MerchantSelect from "@/components/MerchantSelect.vue";
 
 const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('Weu0');
+const selectAuth = userStore.hasAuth('sCu0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

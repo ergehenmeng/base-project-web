@@ -54,7 +54,7 @@
         {{detail.mobile}}
       </el-form-item>
       <el-form-item label="微信授权手机号：">
-        <div v-if="detail.authMobile" style="display: flex; align-items: center;"><span>{{detail.authMobile}}</span>&nbsp;<el-button type="primary" :icon="Unlock" @click="handleUnBind" link style="font-size: 18px;" title="解绑微信手机号"></el-button></div>
+        <div v-if="detail.authMobile" style="display: flex; align-items: center;"><span>{{detail.authMobile}}</span>&nbsp;<el-button v-has-perm="'Ywu0'" type="primary" :icon="Unlock" @click="handleUnBind" link style="font-size: 18px;" title="解绑微信手机号"></el-button></div>
         <div v-else>
           <el-button type="primary" :icon="Connection" @click="handleBind" style="font-size: 18px;" link title="绑定微信手机号"></el-button>
         </div>
@@ -71,7 +71,10 @@ import { detailApi, generateApi } from '@/api/merchant/detail';
 import { Connection, Unlock } from '@element-plus/icons-vue'
 import UnbindForm from './UnbindForm.vue'
 import { useRouter } from 'vue-router'
+import useUserStore from '@/store/user.js'
 
+const userStore = useUserStore();
+const selectAuth = userStore.hasAuth('nwu0');
 const router = useRouter();
 const formRef = ref();
 
@@ -91,6 +94,9 @@ const detail = ref({
 })
 
 onMounted(async () => {
+  if (!selectAuth) {
+    return;
+  }
   const { data } = await detailApi();
   detail.value = data;
 })
