@@ -63,6 +63,13 @@ export default [
           title: '资金变动记录'
         },
         component: () => import('@/views/merchant/accountLog/index.vue')
+      },
+      {
+        path: 'withdraw',
+        meta: {
+          title: '提现记录'
+        },
+        component: () => import('@/views/merchant/withdraw/index.vue')
       }
     ]
   }

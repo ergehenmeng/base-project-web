@@ -3,27 +3,22 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" style="width: 280px;" maxlength="30"/>
+          <el-input v-model="queryParams.queryName" placeholder="提现单号" clearable @keyup.enter="search" style="width: 280px;" maxlength="30"/>
         </el-form-item>
-        <el-form-item label="资金类型">
-          <el-select v-model="queryParams.accountType" clearable >
-            <el-option label="订单收入" value="1" />
-            <el-option label="订单退款" value="2" />
-            <el-option label="积分提现收入" value="3" />
-            <el-option label="提现支出" value="4" />
-            <el-option label="积分充值支出" value="5" />
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable style="width: 130px;">
+            <el-option label="提现中" value="0" />
+            <el-option label="提现成功" value="1" />
+            <el-option label="提现失败" value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="收支类型">
-          <el-select v-model="queryParams.direction" clearable style="width: 100px;">
-            <el-option label="收入" value="1" />
-            <el-option label="支出" value="2" />
+        <el-form-item label="提现方式">
+          <el-select v-model="queryParams.withdrawWay" clearable style="width: 90px;">
+            <el-option label="手动提现" value="1" />
+            <el-option label="自动提现" value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="商户名称">
-          <MerchantSelect v-model="queryParams.merchantId"></MerchantSelect>
-        </el-form-item>
-        <el-form-item label="订单日期">
+        <el-form-item label="日期">
           <div style="width: 220px">
             <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
           </div>
@@ -77,9 +72,8 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  accountType: null,
-  merchantId: null,
-  direction: null,
+  state: null,
+  withdrawWay: null,
   activityDate: []
 });
 
@@ -87,6 +81,10 @@ const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
+      if (queryParams.activityDate.length === 2) {
+        queryParams.startDate = queryParams.activityDate[0];
+        queryParams.endDate = queryParams.activityDate[1];
+      }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
