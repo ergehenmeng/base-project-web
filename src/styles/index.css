@@ -78,7 +78,7 @@ body {
 }
 
 /*搜索框右边距*/
-.el-form-item {
+.el-form--inline .el-form-item {
   margin-right: 20px !important;
 }
 

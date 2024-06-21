@@ -23,7 +23,7 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item prop="verifyCode">
+          <el-form-item prop="verifyCode" >
             <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
               <template #prefix>
                 <el-icon :size="20">

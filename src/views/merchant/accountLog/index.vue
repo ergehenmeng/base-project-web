@@ -41,7 +41,7 @@
         <el-table-column prop="amount" label="变动金额" />
         <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
         <el-table-column prop="surplusAmount" label="变动后余额" />
-        <el-table-column prop="tradeNo" label="交易单号" />
+        <el-table-column prop="tradeNo" label="交易单号" width="250"/>
         <el-table-column prop="createTime" label="操作时间" />
         <el-table-column prop="remark" label="备注信息" />
       </el-table>
