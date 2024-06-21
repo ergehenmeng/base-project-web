@@ -3,14 +3,15 @@
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="可用积分">
         <span style="font-size: 20px">{{ formData.useAmount }}</span
-        ><span style="margin-left: 10px">
-          <el-tooltip effect="dark" content="100积分可以兑换1元" placement="top">
-            <el-button type="primary" :icon="More" link></el-button>
-          </el-tooltip>
-        </span>
+        >
       </el-form-item>
-      <el-form-item label="提现金额" prop="amount" style="width: 350px">
-        <el-input v-model="formData.amount" @keyup="formData.amount = numberValidator(formData.amount)" maxlength="6" :placeholder="`最低提现金额为${minWithdraw}元`" />
+      <el-form-item label="提现金额" prop="amount" style="width: 330px">
+        <el-input v-model="formData.amount" @keyup="formData.amount = numberValidator(formData.amount)" maxlength="6" :placeholder="`最低提现金额为${minWithdraw}元`" >
+          <template #suffix>
+            <QuestionTip content="100积分可以兑换1元"></QuestionTip>
+          </template>
+        </el-input>
+
       </el-form-item>
     </el-form>
     <template #footer>
@@ -27,7 +28,7 @@ import { reactive, ref } from 'vue';
 import { withdrawApplyApi, withdrawDetailApi } from '@/api/merchant/score';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
-import { More } from '@element-plus/icons-vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);

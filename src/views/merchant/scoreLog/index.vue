@@ -3,15 +3,17 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" style="width: 250px;" maxlength="30"/>
+          <el-input v-model="queryParams.queryName" placeholder="关联单号" clearable @keyup.enter="search" style="width: 250px;" maxlength="30"/>
         </el-form-item>
-        <el-form-item label="资金类型">
+        <el-form-item label="变动类型">
           <el-select v-model="queryParams.accountType" clearable style="width: 130px;">
-            <el-option label="订单收入" value="1" />
-            <el-option label="订单退款" value="2" />
-            <el-option label="积分提现收入" value="3" />
-            <el-option label="提现支出" value="4" />
-            <el-option label="积分充值支出" value="5" />
+            <el-option label="充值" value="1" />
+            <el-option label="支付收入" value="2" />
+            <el-option label="支付退款" value="3" />
+            <el-option label="抽奖支出" value="4" />
+            <el-option label="提现支出" value="5" />
+            <el-option label="关注赠送" value="6" />
+            <el-option label="提现失败" value="7" />
           </el-select>
         </el-form-item>
         <el-form-item label="收支类型">
@@ -19,9 +21,6 @@
             <el-option label="收入" value="1" />
             <el-option label="支出" value="2" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="商户名称">
-          <MerchantSelect v-model="queryParams.merchantId"></MerchantSelect>
         </el-form-item>
         <el-form-item label="订单日期">
           <div style="width: 220px">
@@ -39,12 +38,12 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" />
-        <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter"/>
-        <el-table-column prop="amount" label="变动金额" />
+        <el-table-column prop="chargeType" label="变动类型" :formatter="formatter"/>
+        <el-table-column prop="amount" label="变动积分" />
         <el-table-column prop="direction" label="收支类型" :formatter="formatter"/>
-        <el-table-column prop="surplusAmount" label="变动后余额" />
-        <el-table-column prop="tradeNo" label="交易单号" />
-        <el-table-column prop="createTime" label="操作时间" />
+        <el-table-column prop="surplusAmount" label="变动后积分" />
+        <el-table-column prop="tradeNo" label="关联单号" />
+        <el-table-column prop="createTime" label="变动时间" />
         <el-table-column prop="remark" label="备注信息" />
       </el-table>
       <el-pagination
@@ -59,7 +58,7 @@
   </div>
 </template>
 <script setup>
-import { exportApi, listPageApi } from '@/api/merchant/accountLog';
+import { exportApi, listPageApi } from '@/api/merchant/scoreLog';
 import { onMounted, reactive, ref } from 'vue';
 import { Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
@@ -106,7 +105,7 @@ const handleExcel = () => {
   exportLoading.value = true;
   exportApi(queryParams)
     .then((res) => {
-      downloadExcel(res, '资金变动记录');
+      downloadExcel(res, '积分变动记录');
     })
     .catch((error) => {
       successMsg('导出失败', error);
@@ -118,18 +117,22 @@ const handleExcel = () => {
 
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === 'accountType') {
+  if (column.property === 'chargeType') {
     switch (cellValue) {
       case 1:
-        return '订单收入';
+        return '充值';
       case 2:
-        return '订单退款';
+        return '支付收入';
       case 3:
-        return '积分提现收入';
+        return '支付退款';
       case 4:
-        return '提现支出';
+        return '抽奖支出';
       case 5:
-        return '积分充值支出';
+        return '提现支出';
+      case 6:
+        return '关注赠送';
+      case 7:
+        return '提现失败';
       default:
         return '未知';
     }

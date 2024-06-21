@@ -10,52 +10,32 @@ export default [
         meta: {
           title: '商户用户'
         },
-        children: [
-          {
-            path: '',
-            name: 'merchantUserIndex',
-            component: () => import('@/views/merchant/user/index.vue')
-          }
-        ]
+        name: 'merchantUserIndex',
+        component: () => import('@/views/merchant/user/index.vue')
       },
       {
         path: 'role',
         meta: {
           title: '商户角色'
         },
-        children: [
-          {
-            path: '',
-            name: 'merchantRoleIndex',
-            component: () => import('@/views/merchant/role/index.vue')
-          }
-        ]
+        name: 'merchantRoleIndex',
+        component: () => import('@/views/merchant/role/index.vue')
       },
       {
         path: 'detail',
         meta: {
           title: '商户信息'
         },
-        children: [
-          {
-            path: '',
-            name: 'merchantDetailIndex',
-            component: () => import('@/views/merchant/detail/index.vue')
-          }
-        ]
+        name: 'merchantDetailIndex',
+        component: () => import('@/views/merchant/detail/index.vue')
       },
       {
         path: 'account',
         meta: {
           title: '商户账户'
         },
-        children: [
-          {
-            path: '',
-            name: 'merchantAccountIndex',
-            component: () => import('@/views/merchant/account/index.vue')
-          }
-        ]
+        name: 'merchantAccountIndex',
+        component: () => import('@/views/merchant/account/index.vue')
       },
       {
         path: 'accountLog',
@@ -98,7 +78,14 @@ export default [
             }
           }
         ]
-      }
+      },
+      {
+        path: 'scoreLog',
+        meta: {
+          title: '积分变动记录'
+        },
+        component: () => import('@/views/merchant/scoreLog/index.vue')
+      },
     ]
   }
 ];
