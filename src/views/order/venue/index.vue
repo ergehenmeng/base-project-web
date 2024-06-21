@@ -51,7 +51,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'Y8D0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'Y8D0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
         </el-table-column>
       </el-table>

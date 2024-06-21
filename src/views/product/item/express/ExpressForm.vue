@@ -33,8 +33,8 @@
                   <el-tooltip :content="item.regionName" placement="top">
                     <el-text truncated style="width: 250px">{{ item.regionName }}</el-text>
                   </el-tooltip>
-                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionCode)" link title="编辑"> </el-button>
-                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionCode)" link title="删除"> </el-button>
+                  <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item.regionCode)" link title="编辑"></el-button>
+                  <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item.regionCode)" link title="删除"></el-button>
                 </div>
               </td>
               <td>

@@ -19,7 +19,7 @@ const props = defineProps({
   clearable: {
     type: Boolean,
     default: true
-  },
+  }
 });
 const scenicId = defineModel();
 

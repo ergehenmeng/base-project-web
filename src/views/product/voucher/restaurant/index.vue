@@ -12,7 +12,7 @@
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
-        <MerchantSelect v-model="queryParams.merchantId" ></MerchantSelect>
+        <MerchantSelect v-model="queryParams.merchantId"></MerchantSelect>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
@@ -40,7 +40,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'ZMO0'" title="新增餐饮店" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
@@ -72,8 +72,8 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { downloadExcel } from '@/utils/common.js';
-import MerchantSelect from '@/components/MerchantSelect.vue'
-import CreateButton from '@/components/CreateButton.vue'
+import MerchantSelect from '@/components/MerchantSelect.vue';
+import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

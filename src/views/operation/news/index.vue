@@ -42,12 +42,12 @@
             <el-table-column prop="updateTime" label="更新时间" />
             <el-table-column label="操作" fixed="right">
               <template #header>
-                <span style="margin-right: 5px;">操作</span>
+                <span style="margin-right: 5px">操作</span>
                 <CreateButton v-has-perm="'SmU0'" title="新增新闻资讯" @click="handleCreate"></CreateButton>
               </template>
               <template #default="scope">
-                <el-button v-has-perm="'ymU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-                <el-button v-has-perm="'MmU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+                <el-button v-has-perm="'ymU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+                <el-button v-has-perm="'MmU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -65,13 +65,13 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, configListApi, sortApi } from '@/api/operation/news';
+import { configListApi, deleteApi, listPageApi, sortApi } from '@/api/operation/news';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, errorMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const activeName = ref('');
 const configList = ref([]);

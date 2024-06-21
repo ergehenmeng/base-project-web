@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { updateApi, createApi, selectApi } from '@/api/operation/activity';
+import { createApi, selectApi, updateApi } from '@/api/operation/activity';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

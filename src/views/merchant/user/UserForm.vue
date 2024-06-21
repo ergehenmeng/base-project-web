@@ -11,7 +11,7 @@
         <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="16" />
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
-        <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable >
+        <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable>
           <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"></el-option>
         </el-select>
       </el-form-item>
@@ -127,7 +127,7 @@ const loadingRoleList = () => {
 };
 onMounted(() => {
   loadingRoleList();
-})
+});
 
 defineExpose({
   openDialog

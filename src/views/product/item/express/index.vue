@@ -21,8 +21,8 @@
                 <span style="margin-right: 20px">创建时间：{{ item.createTime }}</span>
                 <span>更新时间：{{ item.updateTime }}</span>
               </el-text>
-              <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑"> </el-button>
-              <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除"> </el-button>
+              <el-button v-has-perm="'9fO0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑"></el-button>
+              <el-button v-has-perm="'afO0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除"></el-button>
             </div>
           </div>
         </template>

@@ -54,7 +54,7 @@
         <el-table-column prop="deviceModel" label="设备型号" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button v-has-perm="'7b50'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"> </el-button>
+            <el-button v-has-perm="'7b50'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -2,9 +2,9 @@
   <el-dialog title="解绑手机号" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="验证码" prop="smsCode">
-        <el-input v-model="formData.smsCode" maxlength="6" >
+        <el-input v-model="formData.smsCode" maxlength="6">
           <template #append>
-            <el-button type="info" @click="handleSendSms" style="width: 120px;" :disabled="disabled">{{buttonName}}</el-button>
+            <el-button type="info" @click="handleSendSms" style="width: 120px" :disabled="disabled">{{ buttonName }} </el-button>
           </template>
         </el-input>
       </el-form-item>
@@ -29,7 +29,7 @@ const formDataRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
 const emit = defineEmits(['reload']);
-const buttonName = ref('发送验证码')
+const buttonName = ref('发送验证码');
 
 const formRules = reactive({
   smsCode: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
@@ -52,21 +52,20 @@ const resetForm = () => {
 };
 
 const handleSendSms = () => {
-  sendSmsApi()
-    .then(() => {
-      let time = 60
-      let timer = setInterval(() => {
-        disabled.value = true;
-        time--
-        buttonName.value = '重新发送(' + time + 'S)'
-        if (time === 0) {
-          clearInterval(timer)
-          buttonName.value = '发送验证码'
-          disabled.value = false;
-        }
-      }, 1000)
-    });
-}
+  sendSmsApi().then(() => {
+    let time = 60;
+    let timer = setInterval(() => {
+      disabled.value = true;
+      time--;
+      buttonName.value = '重新发送(' + time + 'S)';
+      if (time === 0) {
+        clearInterval(timer);
+        buttonName.value = '发送验证码';
+        disabled.value = false;
+      }
+    }, 1000);
+  });
+};
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {

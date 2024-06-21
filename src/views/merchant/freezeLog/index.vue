@@ -3,16 +3,16 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" style="width: 250px;" maxlength="30"/>
+          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
         </el-form-item>
         <el-form-item label="冻结状态">
-          <el-select v-model="queryParams.state" clearable style="width: 100px;">
+          <el-select v-model="queryParams.state" clearable style="width: 100px">
             <el-option label="冻结中" value="1" />
             <el-option label="已解冻" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="变更类型">
-          <el-select v-model="queryParams.changeType" clearable style="width: 130px;">
+          <el-select v-model="queryParams.changeType" clearable style="width: 130px">
             <el-option label="支付冻结" value="1" />
             <el-option label="退款解冻" value="2" />
             <el-option label="订单完成解冻" value="3" />
@@ -36,8 +36,8 @@
         <el-table-column prop="merchantName" label="商户名称" />
         <el-table-column prop="orderNo" label="订单编号" />
         <el-table-column prop="amount" label="冻结金额" />
-        <el-table-column prop="state" label="状态" :formatter="formatter"/>
-        <el-table-column prop="changeType" label="变更类型" :formatter="formatter"/>
+        <el-table-column prop="state" label="状态" :formatter="formatter" />
+        <el-table-column prop="changeType" label="变更类型" :formatter="formatter" />
         <el-table-column prop="createTime" label="冻结时间" />
         <el-table-column prop="unfreezeTime" label="解冻时间" />
         <el-table-column prop="remark" label="备注信息" />
@@ -108,7 +108,6 @@ const handleExcel = () => {
       exportLoading.value = false;
     });
 };
-
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'changeType') {

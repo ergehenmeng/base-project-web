@@ -35,16 +35,16 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'FPO0'" title="新增餐饮券" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'MPO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
-            <el-button v-has-perm="'bPO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'HPO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"> </el-button>
-            <el-button v-has-perm="'4PO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"> </el-button>
-            <el-button v-has-perm="'yPO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"> </el-button>
-            <el-button v-has-perm="'sPO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'MPO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'bPO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'HPO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
+            <el-button v-has-perm="'4PO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
+            <el-button v-has-perm="'yPO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
+            <el-button v-has-perm="'sPO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,7 +68,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
 import { downloadExcel } from '@/utils/common.js';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

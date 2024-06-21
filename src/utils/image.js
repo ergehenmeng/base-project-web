@@ -1,4 +1,4 @@
-import { errorMsg } from './message'
+import {errorMsg} from './message';
 
 /**
  * 校验上传的图片格式及大小

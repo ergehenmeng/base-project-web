@@ -18,13 +18,13 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'KjK0'" title="新增角色" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'5jK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'ZjK0'" type="primary" :icon="Connection" @click="handleAuth(scope.row)" link title="菜单授权"> </el-button>
-            <el-button v-has-perm="'UjK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'5jK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'ZjK0'" type="primary" :icon="Connection" @click="handleAuth(scope.row)" link title="菜单授权"></el-button>
+            <el-button v-has-perm="'UjK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,12 +44,12 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/system/role';
 import { onMounted, reactive, ref } from 'vue';
-import { Connection, Delete, Edit, Plus } from '@element-plus/icons-vue';
+import { Connection, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('JjK0');

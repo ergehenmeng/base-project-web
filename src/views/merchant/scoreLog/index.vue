@@ -3,10 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="关联单号" clearable @keyup.enter="search" style="width: 250px;" maxlength="30"/>
+          <el-input v-model="queryParams.queryName" placeholder="关联单号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
         </el-form-item>
         <el-form-item label="变动类型">
-          <el-select v-model="queryParams.accountType" clearable style="width: 130px;">
+          <el-select v-model="queryParams.accountType" clearable style="width: 130px">
             <el-option label="充值" value="1" />
             <el-option label="支付收入" value="2" />
             <el-option label="支付退款" value="3" />
@@ -17,7 +17,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="收支类型">
-          <el-select v-model="queryParams.direction" clearable style="width: 90px;">
+          <el-select v-model="queryParams.direction" clearable style="width: 90px">
             <el-option label="收入" value="1" />
             <el-option label="支出" value="2" />
           </el-select>
@@ -38,9 +38,9 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" />
-        <el-table-column prop="chargeType" label="变动类型" :formatter="formatter"/>
+        <el-table-column prop="chargeType" label="变动类型" :formatter="formatter" />
         <el-table-column prop="amount" label="变动积分" />
-        <el-table-column prop="direction" label="收支类型" :formatter="formatter"/>
+        <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
         <el-table-column prop="surplusAmount" label="变动后积分" />
         <el-table-column prop="tradeNo" label="关联单号" />
         <el-table-column prop="createTime" label="变动时间" />
@@ -64,7 +64,6 @@ import { Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
-import MerchantSelect from "@/components/MerchantSelect.vue";
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('sCu0');
@@ -114,7 +113,6 @@ const handleExcel = () => {
       exportLoading.value = false;
     });
 };
-
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'chargeType') {

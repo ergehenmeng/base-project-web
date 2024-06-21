@@ -8,7 +8,7 @@
         <el-input v-model="formData.nid" show-word-limit maxlength="20" disabled />
       </el-form-item>
       <el-form-item label="状态" prop="state">
-        <el-radio-group v-model="formData.state" >
+        <el-radio-group v-model="formData.state">
           <el-radio label="开启" :value="true"></el-radio>
           <el-radio label="关闭" :value="false"></el-radio>
         </el-radio-group>

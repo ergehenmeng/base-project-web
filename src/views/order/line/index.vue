@@ -23,7 +23,7 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item v-has-perm="'ydD0'">
-          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -44,7 +44,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'SdD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'SdD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
         </el-table-column>
       </el-table>

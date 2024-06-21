@@ -10,7 +10,7 @@
 </template>
 <script setup>
 import { listApi } from '@/api/system/merchant';
-import useUserStore from '@/store/user.js'
+import useUserStore from '@/store/user.js';
 
 const userStore = useUserStore();
 const merchantList = ref([]);
@@ -30,20 +30,20 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: "所属商户"
+    default: '所属商户'
   },
   width: {
     type: String,
-    default: "250"
+    default: '250'
   }
 });
 const merchantId = defineModel();
 
-const emits = defineEmits(['change'])
+const emits = defineEmits(['change']);
 
 const handleChange = (value) => {
-  emits("change", value);
-}
+  emits('change', value);
+};
 
 onMounted(() => {
   if (show) {

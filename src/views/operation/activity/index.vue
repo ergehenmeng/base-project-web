@@ -25,7 +25,6 @@
             <el-button size="small" @click="selectDate('today')">今天</el-button>
             <el-button size="small" @click="selectDate('next-month')"> 下一月</el-button>
           </el-button-group>
-
         </template>
         <template #date-cell="{ data }">
           <span style="display: block">{{ data.day.split('-')[2] }}</span>
@@ -37,10 +36,10 @@
                     <el-text truncated>{{ item.title }}</el-text>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'kdU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑"> </el-button>
+                    <el-button v-has-perm="'kdU0'" type="primary" :icon="Edit" @click="handleEdit(item)" link title="编辑"></el-button>
                   </el-col>
                   <el-col :span="2">
-                    <el-button v-has-perm="'OdU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除"> </el-button>
+                    <el-button v-has-perm="'OdU0'" type="danger" :icon="Delete" @click="handleDelete(item)" link title="删除"></el-button>
                   </el-col>
                 </el-row>
               </li>
@@ -52,16 +51,15 @@
   </div>
 </template>
 <script setup>
-import { listApi, deleteApi } from '@/api/operation/activity';
+import { deleteApi, listApi } from '@/api/operation/activity';
 import { reactive, ref } from 'vue';
-import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import dayjs from 'dayjs';
 import { useRouter } from 'vue-router';
 import ScenicSelect from '@/components/ScenicSelect.vue';
-import CreateButton from '@/components/CreateButton.vue'
 
 const router = useRouter();
 const userStore = useUserStore();

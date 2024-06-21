@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="70px" >
+      <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
@@ -19,10 +19,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input style="width: 80px;" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"  ></el-input>~<el-input style="width: 80px;" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)" ></el-input>
+          <el-input style="width: 80px" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
+          ~
+          <el-input style="width: 80px" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
         </el-form-item>
         <el-form-item label="所属店铺">
-          <StoreSelect v-model="queryParams.storeId" style="width: 220px;"></StoreSelect>
+          <StoreSelect v-model="queryParams.storeId" style="width: 220px"></StoreSelect>
         </el-form-item>
         <el-form-item label="标签">
           <ItemTag v-model="queryParams.tagId"></ItemTag>
@@ -62,7 +64,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'jSO0'" title="新增零售商品" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
@@ -91,14 +93,14 @@
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/item';
 import { onMounted, reactive, ref } from 'vue';
-import { Bottom, Delete, Document, Download, Edit, Link, Plus, Star, Top } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Download, Edit, Link, Star, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel, numberValidator } from '@/utils/common.js'
-import ItemTag from '@/components/ItemTag.vue'
-import StoreSelect from '@/components/StoreSelect.vue'
-import CreateButton from '@/components/CreateButton.vue'
+import { downloadExcel, numberValidator } from '@/utils/common.js';
+import ItemTag from '@/components/ItemTag.vue';
+import StoreSelect from '@/components/StoreSelect.vue';
+import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

@@ -18,13 +18,13 @@
         <el-table-column prop="startIp" label="IP段" :formatter="formatter" />
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column label="操作" >
+        <el-table-column label="操作">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'4oK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'4oK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -43,11 +43,11 @@
 <script setup>
 import { deleteApi, listPageApi, reloadApi } from '@/api/system/black';
 import { onMounted, reactive, ref } from 'vue';
-import { Delete, Plus, Refresh } from '@element-plus/icons-vue';
+import { Delete, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const loading = ref(false);
 const total = ref(0);

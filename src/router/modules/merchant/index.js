@@ -85,7 +85,7 @@ export default [
           title: '积分变动记录'
         },
         component: () => import('@/views/merchant/scoreLog/index.vue')
-      },
+      }
     ]
   }
 ];

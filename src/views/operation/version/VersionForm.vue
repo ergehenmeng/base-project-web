@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { createApi, updateApi } from '@/api/operation/version';
 import { successMsg } from '@/utils/message.js';
 

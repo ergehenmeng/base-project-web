@@ -20,12 +20,12 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'SQO0'" title="新增店铺地址" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'yQO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'MQO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'yQO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'MQO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -44,12 +44,12 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/product/address';
 import { onMounted, reactive, ref } from 'vue';
-import { Delete, Edit, Plus } from '@element-plus/icons-vue';
+import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import AddressForm from '@/views/product/item/address/AddressForm.vue';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

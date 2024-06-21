@@ -21,5 +21,4 @@ const props = defineProps({
     default: 'top'
   }
 });
-
 </script>

@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { createApi, updateApi, configApi, selectApi } from '@/api/operation/news';
+import { configApi, createApi, selectApi, updateApi } from '@/api/operation/news';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

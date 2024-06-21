@@ -29,16 +29,16 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'gqK0'" title="新增用户" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'mqK0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
-            <el-button v-has-perm="'iqK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'qqK0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"> </el-button>
-            <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"> </el-button>
-            <el-button v-has-perm="'jqK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"> </el-button>
-            <el-button v-has-perm="'2qK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'mqK0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'iqK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'qqK0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"></el-button>
+            <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
+            <el-button v-has-perm="'jqK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
+            <el-button v-has-perm="'2qK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -57,11 +57,11 @@
 <script setup>
 import { deleteApi, listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/system/user';
 import { h, onMounted, reactive, ref } from 'vue';
-import { Delete, Document, Edit, Lock, Plus, Refresh, Unlock } from '@element-plus/icons-vue';
+import { Delete, Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const loading = ref(false);
 const total = ref(0);

@@ -23,7 +23,7 @@
               </template>
             </el-input>
           </el-form-item>
-          <el-form-item prop="verifyCode" >
+          <el-form-item prop="verifyCode">
             <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
               <template #prefix>
                 <el-icon :size="20">
@@ -49,7 +49,7 @@
 <script setup>
 import useUserStore from '@/store/user';
 import md5 from 'md5';
-import { reactive, ref, onMounted } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();

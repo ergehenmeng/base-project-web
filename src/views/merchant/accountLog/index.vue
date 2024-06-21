@@ -20,7 +20,7 @@
             <el-option label="支出" value="2" />
           </el-select>
         </el-form-item>
-        <MerchantSelect v-model="queryParams.merchantId" label="商户名称" ></MerchantSelect>
+        <MerchantSelect v-model="queryParams.merchantId" label="商户名称"></MerchantSelect>
         <el-form-item label="订单日期">
           <div style="width: 220px">
             <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
@@ -41,7 +41,7 @@
         <el-table-column prop="amount" label="变动金额" />
         <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
         <el-table-column prop="surplusAmount" label="变动后余额" />
-        <el-table-column prop="tradeNo" label="交易单号" width="250"/>
+        <el-table-column prop="tradeNo" label="交易单号" width="250" />
         <el-table-column prop="createTime" label="操作时间" />
         <el-table-column prop="remark" label="备注信息" />
       </el-table>

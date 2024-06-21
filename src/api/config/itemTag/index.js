@@ -1,8 +1,9 @@
 import request from '@/utils/request';
 
-export const listApi = () => {
+export const listApi = (params) => {
   return request.get({
-    url: '/manage/item/tag/list'
+    url: '/manage/item/tag/list',
+    params
   });
 };
 
@@ -23,6 +24,13 @@ export const updateApi = (data) => {
 export const deleteApi = (data) => {
   return request.post({
     url: '/manage/item/tag/delete',
+    data
+  });
+};
+
+export const sortApi = (data) => {
+  return request.post({
+    url: '/manage/item/tag/sort',
     data
   });
 };

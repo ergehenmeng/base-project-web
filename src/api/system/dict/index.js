@@ -1,8 +1,8 @@
 import request from '@/utils/request';
 
-export const listPageApi = (params) => {
+export const listApi = (params) => {
   return request.get({
-    url: '/manage/dict/listPage',
+    url: '/manage/dict/list',
     params
   });
 };

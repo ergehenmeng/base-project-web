@@ -20,6 +20,14 @@ export default [
         meta: {
           title: '推送模板'
         }
+      },
+      {
+        path: 'itemTag',
+        name: 'itemTagConfig',
+        component: () => import('@/views/config/itemTag/index.vue'),
+        meta: {
+          title: '零售标签'
+        }
       }
     ]
   }

@@ -61,7 +61,7 @@
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #default="scope">
-            <el-button v-has-perm="'mRD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
+            <el-button v-has-perm="'mRD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -77,14 +77,14 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, exportApi } from '@/api/order/item';
+import { exportApi, listPageApi } from '@/api/order/item';
 import { onMounted, reactive, ref } from 'vue';
-import { Document, Download } from '@element-plus/icons-vue'
+import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js'
+import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
-import { successMsg } from '@/utils/message.js'
+import { successMsg } from '@/utils/message.js';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -140,7 +140,6 @@ const formatter = (row, column, cellValue) => {
     return cellValue;
   }
 };
-
 
 const exportLoading = ref(false);
 

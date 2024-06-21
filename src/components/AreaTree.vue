@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="选择区域" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-scrollbar height="400px">
-      <el-tree ref="treeRef" show-checkbox :data="areaList" node-key="id" :props="defaultProps" :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading"> </el-tree>
+      <el-tree ref="treeRef" show-checkbox :data="areaList" node-key="id" :props="defaultProps" :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading"></el-tree>
     </el-scrollbar>
     <template #footer>
       <span>

@@ -28,13 +28,13 @@
         <el-table-column prop="updateTime" label="更新时间" width="200" />
         <el-table-column label="操作" width="200">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"> </el-button>
-            <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"></el-button>
+            <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,11 +53,11 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/system/auth';
 import { onMounted, reactive, ref } from 'vue';
-import { Delete, Edit, Plus, Refresh } from '@element-plus/icons-vue';
+import { Delete, Edit, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const loading = ref(false);
 const total = ref(0);

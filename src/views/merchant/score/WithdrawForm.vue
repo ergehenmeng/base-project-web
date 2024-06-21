@@ -2,16 +2,14 @@
   <el-dialog title="编辑" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="可用积分">
-        <span style="font-size: 20px">{{ formData.useAmount }}</span
-        >
+        <span style="font-size: 20px">{{ formData.useAmount }}</span>
       </el-form-item>
       <el-form-item label="提现金额" prop="amount" style="width: 330px">
-        <el-input v-model="formData.amount" @keyup="formData.amount = numberValidator(formData.amount)" maxlength="6" :placeholder="`最低提现金额为${minWithdraw}元`" >
+        <el-input v-model="formData.amount" @keyup="formData.amount = numberValidator(formData.amount)" maxlength="6" :placeholder="`最低提现金额为${minWithdraw}元`">
           <template #suffix>
             <QuestionTip content="100积分可以兑换1元"></QuestionTip>
           </template>
         </el-input>
-
       </el-form-item>
     </el-form>
     <template #footer>
@@ -28,10 +26,13 @@ import { reactive, ref } from 'vue';
 import { withdrawApplyApi, withdrawDetailApi } from '@/api/merchant/score';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
-import QuestionTip from '@/components/QuestionTip.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
+import useUserStore from '@/store/user.js';
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
+const userStore = useUserStore();
+const withdrawAuth = userStore.hasAuth('5Vu0');
 
 const formRules = reactive({
   amount: [
@@ -89,8 +90,10 @@ const handleApply = () => {
 };
 
 onMounted(async () => {
-  const { data } = await withdrawDetailApi();
-  minWithdraw.value = parseFloat(data);
+  if (withdrawAuth) {
+    const { data } = await withdrawDetailApi();
+    minWithdraw.value = parseFloat(data);
+  }
 });
 
 defineExpose({

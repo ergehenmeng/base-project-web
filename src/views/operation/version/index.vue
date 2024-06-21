@@ -48,12 +48,12 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="150">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'QkU0'" title="新增版本" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'VkU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'tkU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
+            <el-button v-has-perm="'VkU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'tkU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,15 +70,15 @@
   <VersionForm ref="formRef" @reload="getPage"></VersionForm>
 </template>
 <script setup>
-import { listPageApi, deleteApi, stateApi } from '@/api/operation/version';
+import { deleteApi, listPageApi, stateApi } from '@/api/operation/version';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus } from '@element-plus/icons-vue';
+import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import VersionForm from './VersionForm.vue';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

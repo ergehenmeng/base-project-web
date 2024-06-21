@@ -27,7 +27,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
-            <el-button v-has-perm="'QtR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
+            <el-button v-has-perm="'QtR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -49,7 +49,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import PushForm from '@/views/config/push/PushForm.vue'
+import PushForm from '@/views/config/push/PushForm.vue';
 
 const router = useRouter();
 const userStore = useUserStore();

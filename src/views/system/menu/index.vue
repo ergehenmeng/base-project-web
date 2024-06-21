@@ -32,7 +32,7 @@
     <div class="content-main">
       <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="菜单名称" width="150" />
-        <el-table-column prop="icon" label="图标" :formatter="formatter" width="80">
+        <el-table-column prop="icon" label="图标" width="80">
           <template #default="scope">
             <el-icon :size="18">
               <component :is="scope.row.icon"></component>
@@ -67,13 +67,13 @@
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作">
           <template #header>
-            <span style="margin-right: 5px;">操作</span>
+            <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'KjK0'" title="新增菜单" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'KjK0'" v-show="scope.row.grade === 1" type="primary" :icon="CirclePlus" @click="handleCreate(scope.row)" link title="新增"> </el-button>
-            <el-button v-has-perm="'uhK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
-            <el-button v-has-perm="'NhK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row.id)" link title="删除"> </el-button>
+            <el-button v-has-perm="'KjK0'" v-show="scope.row.grade === 1" type="primary" :icon="CirclePlus" @click="handleCreate(scope.row)" link title="新增"></el-button>
+            <el-button v-has-perm="'uhK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'NhK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row.id)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -84,11 +84,11 @@
 <script setup>
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
 import { onMounted, reactive, ref } from 'vue';
-import { CirclePlus, Delete, Edit, Plus } from '@element-plus/icons-vue';
+import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import MenuForm from './MenuForm.vue';
-import CreateButton from '@/components/CreateButton.vue'
+import CreateButton from '@/components/CreateButton.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('YhK0');

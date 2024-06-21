@@ -180,7 +180,7 @@ const setLocation = (lng, lat) => {
  * @param val 商户id
  */
 const handleMerchantChange = (val) => {
-  console.log(val)
+  console.log(val);
   if (val) {
     addressListApi({ merchantId: val }).then((res) => {
       addressList.value = res.data;
