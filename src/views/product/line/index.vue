@@ -6,10 +6,10 @@
           <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="旅行社">
-          <TravelSelect v-model="queryParams.travelAgencyId"></TravelSelect>
+          <TravelSelect v-model="queryParams.travelAgencyId" style="width: 250px;"></TravelSelect>
         </el-form-item>
         <el-form-item label="游玩天数">
-          <el-select v-model="queryParams.duration" clearable style="width: 130px !important">
+          <el-select v-model="queryParams.duration" clearable style="width: 120px !important">
             <el-option label="一日游" :value="1" />
             <el-option label="二日游" :value="2" />
             <el-option label="三日游" :value="3" />
@@ -31,7 +31,7 @@
           <ProvinceCitySelect v-model="queryParams.areaList"></ProvinceCitySelect>
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable style="width: 130px !important">
+          <el-select v-model="queryParams.state" clearable style="width: 120px !important">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />
@@ -42,9 +42,6 @@
         </el-form-item>
         <el-form-item v-has-perm="'nvl0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
-        </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'tvl0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -73,6 +70,10 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="250">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'tvl0'" title="新增线路" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'Kvl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
             <el-button v-has-perm="'Jvl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
@@ -106,6 +107,7 @@ import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
 import useAreaStore from '@/store/area.js';
 import TravelSelect from '@/components/TravelSelect.vue';
 import { downloadExcel } from '@/utils/common.js';
+import CreateButton from '@/components/CreateButton.vue'
 
 const areaStore = useAreaStore();
 const router = useRouter();

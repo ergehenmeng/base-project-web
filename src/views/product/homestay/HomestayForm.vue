@@ -5,9 +5,7 @@
       <el-form-item label="民宿名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect v-model="formData.merchantId" :clearable="false"></MerchantSelect>
-      </el-form-item>
+      <MerchantSelect v-model="formData.merchantId" prop="merchantId" :clearable="false" width="350"></MerchantSelect>
       <el-form-item label="星级" prop="level">
         <el-select v-model="formData.level">
           <el-option label="五星" :value="5" />

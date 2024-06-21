@@ -11,9 +11,6 @@
         <el-form-item v-has-perm="'HoK0'">
           <el-button type="primary" :icon="Refresh" @click="handleReload">刷新黑名单</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'HoK0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -21,7 +18,11 @@
         <el-table-column prop="startIp" label="IP段" :formatter="formatter" />
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column label="操作">
+        <el-table-column label="操作" >
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'4oK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
           </template>
@@ -46,6 +47,7 @@ import { Delete, Plus, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue';
+import CreateButton from '@/components/CreateButton.vue'
 
 const loading = ref(false);
 const total = ref(0);

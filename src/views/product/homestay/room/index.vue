@@ -5,6 +5,9 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="房型名称" clearable @keyup.enter="search" />
         </el-form-item>
+        <el-form-item label="所属民宿">
+          <HomestaySelect v-model="queryParams.homestayId" style="width: 250px;"></HomestaySelect>
+        </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
             <el-option label="待上架" :value="0" />
@@ -24,9 +27,6 @@
         </el-form-item>
         <el-form-item v-has-perm="'ibO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
-        </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'NbO0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -57,6 +57,10 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="250">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'NbO0'" title="新增房型" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'AbO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
             <el-button v-has-perm="'GbO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
@@ -88,6 +92,8 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { downloadExcel } from '@/utils/common.js';
+import HomestaySelect from '@/components/HomestaySelect.vue'
+import CreateButton from '@/components/CreateButton.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -101,7 +107,8 @@ const queryParams = reactive({
   page: 1,
   pageSize: 10,
   state: null,
-  refundType: null
+  refundType: null,
+  homestayId: null
 });
 
 const getPage = async () => {

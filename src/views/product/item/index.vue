@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="70px">
+      <el-form :inline="true" label-width="70px" >
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="店铺名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -12,14 +12,26 @@
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item>
+        <el-form-item label="交付方式">
+          <el-select v-model="queryParams.deliveryType" clearable>
+            <el-option label="快递包邮" :value="1" />
+            <el-option label="自提" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="价格">
+          <el-input style="width: 80px;" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"  ></el-input>~<el-input style="width: 80px;" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)" ></el-input>
+        </el-form-item>
+        <el-form-item label="所属店铺">
+          <StoreSelect v-model="queryParams.storeId" style="width: 220px;"></StoreSelect>
+        </el-form-item>
+        <el-form-item label="标签">
+          <ItemTag v-model="queryParams.tagId"></ItemTag>
+        </el-form-item>
+        <el-form-item label=" ">
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item v-has-perm="'oSO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
-        </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'jSO0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -49,6 +61,10 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'jSO0'" title="新增零售商品" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'2SO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'gSO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
@@ -79,7 +95,10 @@ import { Bottom, Delete, Document, Download, Edit, Link, Plus, Star, Top } from 
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, numberValidator } from '@/utils/common.js'
+import ItemTag from '@/components/ItemTag.vue'
+import StoreSelect from '@/components/StoreSelect.vue'
+import CreateButton from '@/components/CreateButton.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -92,7 +111,12 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  state: null
+  state: null,
+  minPrice: null,
+  maxPrice: null,
+  deliveryType: null,
+  tagId: null,
+  storeId: null
 });
 
 const getPage = async () => {

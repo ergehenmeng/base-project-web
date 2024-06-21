@@ -25,6 +25,7 @@
             <el-button size="small" @click="selectDate('today')">今天</el-button>
             <el-button size="small" @click="selectDate('next-month')"> 下一月</el-button>
           </el-button-group>
+
         </template>
         <template #date-cell="{ data }">
           <span style="display: block">{{ data.day.split('-')[2] }}</span>
@@ -60,6 +61,7 @@ import useDictStore from '@/store/dict.js';
 import dayjs from 'dayjs';
 import { useRouter } from 'vue-router';
 import ScenicSelect from '@/components/ScenicSelect.vue';
+import CreateButton from '@/components/CreateButton.vue'
 
 const router = useRouter();
 const userStore = useUserStore();

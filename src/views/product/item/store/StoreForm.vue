@@ -5,9 +5,7 @@
       <el-form-item label="店铺名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect v-model="formData.merchantId" @change="handleMerchantChange"></MerchantSelect>
-      </el-form-item>
+      <MerchantSelect v-model="formData.merchantId" @change="handleMerchantChange" prop="merchantId" width="350"></MerchantSelect>
       <el-form-item label="店铺LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
@@ -182,6 +180,7 @@ const setLocation = (lng, lat) => {
  * @param val 商户id
  */
 const handleMerchantChange = (val) => {
+  console.log(val)
   if (val) {
     addressListApi({ merchantId: val }).then((res) => {
       addressList.value = res.data;

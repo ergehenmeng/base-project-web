@@ -18,7 +18,6 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
-          <el-button type="primary" :icon="Refresh" @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -64,15 +63,6 @@ const queryParams = reactive({
   commentId: null,
   reportType: null
 });
-
-const reset = () => {
-  queryParams.queryName = '';
-  queryParams.commentId = null;
-  queryParams.reportType = null;
-  queryParams.objectType = null;
-  queryParams.page = 1;
-  queryParams.pageSize = 10;
-};
 
 const getPage = async () => {
   loading.value = true;

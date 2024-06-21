@@ -13,9 +13,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'vgK0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -35,6 +32,10 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'vgK0'" title="新增图片" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'I2K0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
             <el-button v-has-perm="'F2K0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
@@ -61,6 +62,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import ImageForm from './ImageForm.vue';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
+import CreateButton from '@/components/CreateButton.vue'
 
 const userStore = useUserStore();
 const dictStore = useDictStore();

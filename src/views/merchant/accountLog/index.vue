@@ -3,10 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" style="width: 250px;" maxlength="30"/>
+          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
         </el-form-item>
         <el-form-item label="资金类型">
-          <el-select v-model="queryParams.accountType" clearable style="width: 130px;">
+          <el-select v-model="queryParams.accountType" clearable style="width: 130px">
             <el-option label="订单收入" value="1" />
             <el-option label="订单退款" value="2" />
             <el-option label="积分提现收入" value="3" />
@@ -15,14 +15,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="收支类型">
-          <el-select v-model="queryParams.direction" clearable style="width: 90px;">
+          <el-select v-model="queryParams.direction" clearable style="width: 90px">
             <el-option label="收入" value="1" />
             <el-option label="支出" value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="商户名称">
-          <MerchantSelect v-model="queryParams.merchantId"></MerchantSelect>
-        </el-form-item>
+        <MerchantSelect v-model="queryParams.merchantId" label="商户名称" ></MerchantSelect>
         <el-form-item label="订单日期">
           <div style="width: 220px">
             <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
@@ -39,9 +37,9 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" />
-        <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter"/>
+        <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter" />
         <el-table-column prop="amount" label="变动金额" />
-        <el-table-column prop="direction" label="收支类型" :formatter="formatter"/>
+        <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
         <el-table-column prop="surplusAmount" label="变动后余额" />
         <el-table-column prop="tradeNo" label="交易单号" />
         <el-table-column prop="createTime" label="操作时间" />
@@ -65,7 +63,7 @@ import { Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
-import MerchantSelect from "@/components/MerchantSelect.vue";
+import MerchantSelect from '@/components/MerchantSelect.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('sCu0');
@@ -115,7 +113,6 @@ const handleExcel = () => {
       exportLoading.value = false;
     });
 };
-
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'accountType') {

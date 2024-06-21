@@ -12,14 +12,12 @@
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
+        <MerchantSelect v-model="queryParams.merchantId" ></MerchantSelect>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item v-has-perm="'4FO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出 </el-button>
-        </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'TIO0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -48,6 +46,10 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="250">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'TIO0'" title="新增民宿" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'SFO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"> </el-button>
             <el-button v-has-perm="'oIO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
@@ -77,6 +79,8 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { downloadExcel } from '@/utils/common.js';
+import MerchantSelect from '@/components/MerchantSelect.vue'
+import CreateButton from '@/components/CreateButton.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -90,7 +94,8 @@ const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
-  state: null
+  state: null,
+  merchantId: null
 });
 
 const getPage = async () => {

@@ -5,9 +5,7 @@
       <el-form-item label="商家名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属商户" prop="merchantId">
-        <MerchantSelect v-model="formData.merchantId"></MerchantSelect>
-      </el-form-item>
+      <MerchantSelect v-model="formData.merchantId" prop="merchantId" :clearable="false" width="350"></MerchantSelect>
       <el-form-item label="商家LOGO" prop="logoUrl">
         <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>

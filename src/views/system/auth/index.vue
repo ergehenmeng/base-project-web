@@ -14,9 +14,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'avK0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -30,6 +27,10 @@
         <el-table-column prop="createTime" label="创建时间" width="200" />
         <el-table-column prop="updateTime" label="更新时间" width="200" />
         <el-table-column label="操作" width="200">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
             <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"> </el-button>
@@ -56,6 +57,7 @@ import { Delete, Edit, Plus, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
+import CreateButton from '@/components/CreateButton.vue'
 
 const loading = ref(false);
 const total = ref(0);

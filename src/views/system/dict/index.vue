@@ -14,9 +14,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'AmK0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -44,6 +41,10 @@
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'AmK0'" title="新增数据字典" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'9mK0'" type="success" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项"> </el-button>
             <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
@@ -72,6 +73,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import DictForm from './DictForm.vue';
 import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
+import CreateButton from '@/components/CreateButton.vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('GmK0');

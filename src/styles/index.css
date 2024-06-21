@@ -77,6 +77,11 @@ body {
   width: 150px;
 }
 
+/*搜索框右边距*/
+.el-form-item {
+  margin-right: 20px !important;
+}
+
 /*列表中间内容样式*/
 .content-main {
   margin-top: 18px;

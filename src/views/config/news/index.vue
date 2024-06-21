@@ -8,9 +8,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-button" v-has-perm="'TcR0'">
-          <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -25,6 +22,10 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right">
+          <template #header>
+            <span style="margin-right: 5px;">操作</span>
+            <CreateButton v-has-perm="'TcR0'" title="新增资讯配置" @click="handleCreate"></CreateButton>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'ocR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"> </el-button>
             <el-button v-has-perm="'vcR0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"> </el-button>
@@ -50,6 +51,7 @@ import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import NewsForm from './NewsForm.vue';
 import useUserStore from '@/store/user';
+import CreateButton from '@/components/CreateButton.vue'
 
 const userStore = useUserStore();
 
