@@ -44,6 +44,14 @@ export default [
         meta: {
           title: '邮件模板'
         }
+      },
+      {
+        path: 'sms',
+        name: 'smsConfig',
+        component: () => import('@/views/config/sms/index.vue'),
+        meta: {
+          title: '短信模板'
+        }
       }
     ]
   }

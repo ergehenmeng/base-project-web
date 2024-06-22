@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="消息标题、消息内容" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="邮件标题、邮件内容" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -12,9 +12,9 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="模板标题" width="200" />
-        <el-table-column prop="nid" label="模板编号" width="150" />
-        <el-table-column prop="content" label="模板内容" min-width="250" />
+        <el-table-column prop="title" label="邮件标题" width="200" />
+        <el-table-column prop="nid" label="邮件编号" width="150" />
+        <el-table-column prop="content" label="邮件内容" min-width="250" />
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right">
