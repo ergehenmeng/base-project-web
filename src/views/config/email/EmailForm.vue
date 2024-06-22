@@ -1,13 +1,13 @@
 <template>
   <el-dialog title="编辑模板" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="消息标题" prop="title">
+      <el-form-item label="模板标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="消息编号" prop="code">
-        <el-input v-model="formData.code" show-word-limit maxlength="20" disabled />
+      <el-form-item label="模板编号" prop="nid">
+        <el-input v-model="formData.nid" show-word-limit maxlength="20" disabled />
       </el-form-item>
-      <el-form-item label="消息内容" prop="content">
+      <el-form-item label="模板内容" prop="content">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.content" autosize maxlength="200" show-word-limit />
       </el-form-item>
       <el-form-item label="备注信息" prop="remark">
@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { updateApi } from '@/api/config/notice';
+import { updateApi } from '@/api/config/email';
 import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 
@@ -34,8 +34,8 @@ const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  title: [{ required: true, message: '消息标题不能为空', trigger: 'blur' }],
-  content: [{ required: true, message: '消息内容不能为空', trigger: 'blur' }]
+  title: [{ required: true, message: '模板标题不能为空', trigger: 'blur' }],
+  content: [{ required: true, message: '模板内容不能为空', trigger: 'blur' }]
 });
 
 const formData = ref({
@@ -67,7 +67,7 @@ const handleSave = () => {
       loading.value = true;
       updateApi(formData.value)
         .then(() => {
-          successMsg('模板更新成功');
+          successMsg('邮件模板更新成功');
           showDialog.value = false;
           emit('reload');
         })

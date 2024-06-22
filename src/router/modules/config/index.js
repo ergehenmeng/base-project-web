@@ -36,6 +36,14 @@ export default [
         meta: {
           title: '站内性模板'
         }
+      },
+      {
+        path: 'email',
+        name: 'emailConfig',
+        component: () => import('@/views/config/email/index.vue'),
+        meta: {
+          title: '邮件模板'
+        }
       }
     ]
   }
