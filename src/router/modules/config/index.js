@@ -28,6 +28,14 @@ export default [
         meta: {
           title: '零售标签'
         }
+      },
+      {
+        path: 'notice',
+        name: 'noticeConfig',
+        component: () => import('@/views/config/notice/index.vue'),
+        meta: {
+          title: '站内性模板'
+        }
       }
     ]
   }

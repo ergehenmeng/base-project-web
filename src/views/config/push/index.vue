@@ -18,8 +18,8 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="消息标题" width="150" />
-        <el-table-column prop="nid" label="消息编号" width="120" />
+        <el-table-column prop="title" label="消息标题" width="200" />
+        <el-table-column prop="nid" label="消息编号" width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="content" label="内容" min-width="250" />
         <el-table-column prop="tag" label="跳转页面" width="150" />
@@ -48,13 +48,10 @@ import { listPageApi } from '@/api/config/push';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
 import PushForm from '@/views/config/push/PushForm.vue';
 
-const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
-const exportLoading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const pushFormRef = ref();
