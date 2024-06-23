@@ -51,7 +51,7 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/config/memberTag';
 import { onMounted, reactive, ref } from 'vue';
-import { Connection, Delete, Edit } from '@element-plus/icons-vue';
+import { Connection, Delete, Edit, Document } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
