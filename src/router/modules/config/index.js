@@ -52,6 +52,14 @@ export default [
         meta: {
           title: '短信模板'
         }
+      },
+      {
+        path: 'task',
+        name: 'taskConfig',
+        component: () => import('@/views/config/task/index.vue'),
+        meta: {
+          title: '任务配置'
+        }
       }
     ]
   }
