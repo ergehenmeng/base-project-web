@@ -60,6 +60,27 @@ export default [
         meta: {
           title: '任务配置'
         }
+      },
+      {
+        path: 'memberTag',
+        meta: {
+          title: '会员标签'
+        },
+        children: [
+            {
+                path: '',
+                name: 'memberTagIndex',
+                component: () => import('@/views/config/memberTag/index.vue')
+            },
+            {
+                path: '/list',
+                name: 'memberTagList',
+                component: () => import('@/views/config/memberTag/MemberList.vue'),
+                meta: {
+                    title: '会员列表'
+               }
+           }
+        ]
       }
     ]
   }
