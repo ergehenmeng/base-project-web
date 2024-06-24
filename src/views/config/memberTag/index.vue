@@ -29,9 +29,9 @@
             <CreateButton v-has-perm="'NnR0'" title="新增标签" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'AnR0'" type="primary" :icon="Document" @click="handleEdit(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'AnR0'" type="info" :icon="Document" @click="handleEdit(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'GnR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'rnR0'" type="primary" :icon="Connection" @click="handleAuth(scope.row)" link title="刷新"></el-button>
+            <el-button v-has-perm="'rnR0'" type="success" :icon="Connection" @click="handleAuth(scope.row)" link title="刷新"></el-button>
             <el-button v-has-perm="'RnR0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>

@@ -46,7 +46,7 @@ export default [
         }
       },
       {
-        path: 'sms',
+        path: 'log',
         name: 'smsConfig',
         component: () => import('@/views/config/sms/index.vue'),
         meta: {
