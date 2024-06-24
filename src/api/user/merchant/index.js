@@ -21,10 +21,10 @@ export const updateApi = (data) => {
   });
 };
 
-export const selectApi = (data) => {
-  return request.post({
+export const selectApi = (params) => {
+  return request.get({
     url: '/manage/merchant/detail',
-    data
+    params
   });
 };
 

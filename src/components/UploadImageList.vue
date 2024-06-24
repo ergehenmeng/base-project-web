@@ -1,27 +1,29 @@
 <template>
-  <el-upload
-    class="image-uploader"
-    :action="uploadUrl"
-    :headers="headers"
-    v-model:file-list="localFile"
-    list-type="picture-card"
-    :on-success="handleImageSuccess"
-    :before-upload="beforeImageUpload"
-    :disabled="prop.disabled"
-    :on-preview="imagePreview"
-    :multiple="true"
-    :limit="prop.limit"
-    :on-exceed="handleExceed"
-    :class="fileList.length >= prop.limit || prop.disabled ? 'upload-image-hide-box' : ''"
-    :on-remove="handleRemoveImage"
-  >
-    <el-icon class="image-uploader-icon">
-      <Plus />
-    </el-icon>
-  </el-upload>
-  <el-dialog v-model="dialogVisible" width="550">
-    <img :src="dialogImageUrl" alt="图片预览" style="width: 515px; height: 350px" />
-  </el-dialog>
+  <div>
+    <el-upload
+      class="image-uploader"
+      :action="uploadUrl"
+      :headers="headers"
+      v-model:file-list="localFile"
+      list-type="picture-card"
+      :on-success="handleImageSuccess"
+      :before-upload="beforeImageUpload"
+      :disabled="disabled"
+      :on-preview="imagePreview"
+      :multiple="true"
+      :limit="limit"
+      :on-exceed="handleExceed"
+      :class="{ 'upload-image-hide-box': localFile.length >= limit || disabled }"
+      :on-remove="handleRemoveImage"
+    >
+      <el-icon class="image-uploader-icon">
+        <Plus />
+      </el-icon>
+    </el-upload>
+    <el-dialog v-model="dialogVisible" width="550">
+      <img :src="dialogImageUrl" alt="图片预览" style="width: 515px; height: 350px" />
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
@@ -34,22 +36,27 @@ const dialogVisible = ref(false);
 const dialogImageUrl = ref('');
 const route = useRoute();
 const localFile = ref([]);
+
 const fileList = defineModel('fileList', {
   type: Array,
   required: true
 });
 
-const prop = defineProps({
+const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
   },
   limit: {
     type: Number,
-    // 默认最大限制9张
     default: 9
   }
 });
+
+const disabled = toRef(props, 'disabled');
+
+const limit = toRef(props, 'limit');
+
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_URL + '/manage/file/upload';
 const headers = {
@@ -79,7 +86,7 @@ const imagePreview = (uploadFile) => {
 };
 
 const handleExceed = () => {
-  errorMsg('最多只能上传' + prop.limit + '张图片');
+  errorMsg('最多只能上传' + limit.value + '张图片');
 };
 
 const handleRemoveImage = (uploadFile, uploadFiles) => {

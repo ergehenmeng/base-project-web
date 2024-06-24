@@ -23,7 +23,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="企业类型">
-          <el-select v-model="queryParams.state" clearable>
+          <el-select v-model="queryParams.enterpriseType" clearable>
             <el-option label="个体工商户" :value="1" />
             <el-option label="企业" :value="2" />
           </el-select>
@@ -43,7 +43,7 @@
         <el-table-column prop="enterpriseType" label="企业类型" width="100" :formatter="formatter" />
         <el-table-column prop="legalName" label="法人姓名" width="120" />
         <el-table-column prop="legalIdCard" label="法人身份证" width="180" />
-        <el-table-column prop="creditCode" label="社会统一信用代码" width="160" />
+        <el-table-column prop="creditCode" label="社会统一信用代码" width="180" />
         <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150"/>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
@@ -78,14 +78,16 @@
 <script setup>
 import { listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/user/merchant';
 import { h, onMounted, reactive, ref } from 'vue';
-import { Delete, Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
+import { Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import Rate from '@/components/icon/Rate.vue'
 import Unbind from '@/components/icon/Unbind.vue'
 import Logout from '@/components/icon/Logout.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
@@ -95,7 +97,9 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  state: null
+  state: null,
+  type: null,
+  enterpriseType: null,
 });
 
 const pageData = ref([]);
@@ -156,36 +160,28 @@ onMounted(() => {
   getPage();
 });
 
-const handleDetail = (row) => {
-  formRef.value.openDialog(row);
-};
-
-const handleEdit = (row) => {
-  formRef.value.openDialog(row);
-};
-
 const handleLock = (row) => {
-  confirmMsg('确定要锁定该用户吗?', () => {
+  confirmMsg('确定要锁定该商户吗?', () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
-      successMsg('用户锁定成功');
+      successMsg('商户锁定成功');
       getPage();
     });
   });
 };
 
 const handleUnlock = (row) => {
-  confirmMsg('确定要解锁该用户吗?', () => {
+  confirmMsg('确定要解锁该商户吗?', () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
-      successMsg('用户解锁成功');
+      successMsg('商户解锁成功');
       getPage();
     });
   });
 };
 
 const handleReset = (row) => {
-  confirmMsg('确定要重置该用户的密码?', () => {
+  confirmMsg('确定要重置该商户的密码?', () => {
     const data = { id: row.id };
     resetPwdApi(data).then(() => {
       successMsg('密码重置成功');
@@ -195,26 +191,19 @@ const handleReset = (row) => {
 };
 
 const handleServiceRate = (row) => {
-  confirmMsg('确定要重置该用户的密码?', () => {
-    const data = { id: row.id };
-    resetPwdApi(data).then(() => {
-      successMsg('密码重置成功');
-      getPage();
-    });
-  });
-};
-
-const handleDelete = (row) => {
-  confirmMsg('确定要删除该用户吗?', () => {
-    const data = { id: row.id };
-    deleteApi(data).then(() => {
-      successMsg('用户删除成功');
-      getPage();
-    });
-  });
+  console.log("修改费率")
 };
 
 const handleCreate = () => {
-  formRef.value.openDialog({});
+  router.push("/user/merchant/create")
 };
+
+const handleEdit = (row) => {
+  router.push("/user/merchant/edit/" + row.id);
+}
+
+const handleDetail = (row) => {
+  router.push("/user/merchant/detail/" + row.id);
+};
+
 </script>
