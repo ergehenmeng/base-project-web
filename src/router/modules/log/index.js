@@ -20,6 +20,30 @@ export default [
         },
         name: 'taskLogIndex',
         component: () => import('@/views/log/task/index.vue')
+      },
+      {
+        path: 'member',
+        meta: {
+          title: '会员日志'
+        },
+        name: 'memberLogIndex',
+        component: () => import('@/views/log/member/index.vue')
+      },
+      {
+        path: 'pay',
+        meta: {
+          title: '支付日志'
+        },
+        name: 'payLogIndex',
+        component: () => import('@/views/log/pay/index.vue')
+      },
+      {
+        path: 'system',
+        meta: {
+          title: '系统日志'
+        },
+        name: 'systemLogIndex',
+        component: () => import('@/views/log/system/index.vue')
       }
     ]
   }
