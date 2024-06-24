@@ -28,7 +28,7 @@
         <el-input v-model="formData.creditCode" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="营业执照图片" prop="licenseUrlList">
-        <UploadImageList v-model:file-list="formData.licenseUrlList" :limit="4" :disable="disabled"></UploadImageList>
+        <UploadImageList v-model:file-list="formData.licenseUrlList" :limit="4" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="法人姓名" prop="legalName">
         <el-input v-model="formData.legalName" show-word-limit maxlength="20" />

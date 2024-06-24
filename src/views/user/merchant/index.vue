@@ -47,7 +47,7 @@
         <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150"/>
         <el-table-column prop="createTime" label="创建时间" width="180"/>
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
-        <el-table-column label="操作" width="250" fixed="right">
+        <el-table-column label="操作" min-width="250" fixed="right">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'mYp0'" title="新增商户" @click="handleCreate"></CreateButton>
@@ -59,8 +59,8 @@
             <el-button v-has-perm="'3Yp0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
             <el-button v-has-perm="'WYp0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
             <el-button v-has-perm="'vYp0'" @click="handleServiceRate(scope.row)" link title="调整费率"><Rate></Rate></el-button>
-            <el-button v-has-perm="'oYp0'" @click="handleServiceRate(scope.row)" link title="解绑手机号"><Unbind></Unbind></el-button>
-            <el-button v-has-perm="'Iup0'" @click="handleServiceRate(scope.row)" link title="注销商户"><Logout></Logout></el-button>
+            <el-button v-has-perm="'oYp0'" @click="handleUnbind(scope.row)" link title="解绑授权手机号"><Unbind></Unbind></el-button>
+            <el-button v-has-perm="'Iup0'" @click="handleCloseAccount(scope.row)" link title="注销商户"><Logout></Logout></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,9 +74,10 @@
       />
     </div>
   </div>
+  <ServiceRateForm ref="rateRef" @reload="getPage" ></ServiceRateForm>
 </template>
 <script setup>
-import { listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/user/merchant';
+import { listPageApi, lockApi, resetPwdApi, unlockApi, logoutApi, unbindApi } from '@/api/user/merchant';
 import { h, onMounted, reactive, ref } from 'vue';
 import { Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
@@ -86,11 +87,13 @@ import Rate from '@/components/icon/Rate.vue'
 import Unbind from '@/components/icon/Unbind.vue'
 import Logout from '@/components/icon/Logout.vue'
 import { useRouter } from 'vue-router'
+import {parseMerchantType} from "@/utils/common.js";
+import ServiceRateForm from "@/views/user/merchant/ServiceRateForm.vue";
 
+const rateRef = ref();
 const router = useRouter();
 const loading = ref(false);
 const total = ref(0);
-const formRef = ref();
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('2Yp0');
 const queryParams = reactive({
@@ -124,26 +127,7 @@ const formatter = (row, column, cellValue) => {
     }
     return cellValue === 0 ? h('span', { style: 'color: blue;' }, '锁定') : h('span', { style: 'color: red;' }, '销户');
   } else if (column.property === 'type') {
-    const typeList = [];
-    if ((cellValue & 1) === 1) {
-      typeList.push("景区");
-    }
-    if ((cellValue & 2) === 2) {
-      typeList.push("民宿");
-    }
-    if ((cellValue & 4) === 4) {
-      typeList.push("餐饮");
-    }
-    if ((cellValue & 8) === 8) {
-      typeList.push("零售");
-    }
-    if ((cellValue & 16) === 16) {
-      typeList.push("线路");
-    }
-    if ((cellValue & 32) === 32) {
-      typeList.push("场馆");
-    }
-    return typeList.join(',');
+    return parseMerchantType(cellValue);
   } else if (column.property === 'enterpriseType') {
     return cellValue === 1 ? '个体工商户' : '企业';
   } else {
@@ -190,8 +174,27 @@ const handleReset = (row) => {
   });
 };
 
+const handleCloseAccount = (row) => {
+  confirmMsg('确定要注销该商户吗?', () => {
+    const data = { id: row.id };
+    logoutApi(data).then(() => {
+      successMsg('商户注销成功');
+    })
+  });
+}
+
+const handleUnbind = (row) => {
+  confirmMsg('确定要解绑该商户授权手机号吗?', () => {
+    const data = { id: row.id };
+    unbindApi(data).then(() => {
+      successMsg('授权手机号解绑成功');
+      getPage();
+    });
+  });
+};
+
 const handleServiceRate = (row) => {
-  console.log("修改费率")
+  rateRef.value.openDialog({id: row.id, platformServiceRate: row.platformServiceRate})
 };
 
 const handleCreate = () => {

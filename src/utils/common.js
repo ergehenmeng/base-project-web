@@ -97,6 +97,29 @@ export const numberValidator = (value) => {
   return value;
 };
 
+export const parseMerchantType = (cellValue) => {
+  const typeList = [];
+  if ((cellValue & 1) === 1) {
+    typeList.push("景区");
+  }
+  if ((cellValue & 2) === 2) {
+    typeList.push("民宿");
+  }
+  if ((cellValue & 4) === 4) {
+    typeList.push("餐饮");
+  }
+  if ((cellValue & 8) === 8) {
+    typeList.push("零售");
+  }
+  if ((cellValue & 16) === 16) {
+    typeList.push("线路");
+  }
+  if ((cellValue & 32) === 32) {
+    typeList.push("场馆");
+  }
+  return typeList.join(',');
+};
+
 /**
  * 禁用小于当前时间的日期
  * @param time date
