@@ -24,7 +24,7 @@
         <el-table-column prop="response" label="响应信息" width="300" />
         <el-table-column prop="ip" label="访问ip" width="120" />
         <el-table-column prop="businessTime" label="接口耗时(ms)" width="120" />
-        <el-table-column prop="startTime" label="访问时间" width="180" />
+        <el-table-column prop="createTime" label="访问时间" width="180" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
