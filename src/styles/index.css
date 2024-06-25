@@ -26,13 +26,13 @@ body {
   width: 350px;
 }
 .edit-content .el-input.w100 {
-  width: 100px;
+  width: 100px !important;
 }
 .edit-content .el-input.w120 {
-  width: 120px;
+  width: 120px !important;
 }
 .edit-content .el-input.w200 {
-  width: 200px;
+  width: 200px !important;
 }
 .edit-content .el-collapse {
   width: 800px;
@@ -147,6 +147,7 @@ body {
 
 .amap-sug-result {
   z-index: 9999 !important;
+  border: none;
 }
 
 .amap-icon img, .amap-marker-content img {

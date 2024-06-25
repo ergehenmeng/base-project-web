@@ -1,5 +1,5 @@
 <template>
-  <el-cascader v-model="tagId" :options="options" :props="selectProps" clearable filterable :disabled="props.disabled" :show-all-levels="false"></el-cascader>
+  <el-cascader v-model="tagId" :options="options" :props="selectProps" clearable filterable :disabled="props.disabled" ></el-cascader>
 </template>
 <script setup>
 import { listApi } from '@/api/config/itemTag/index.js';
@@ -20,12 +20,13 @@ const props = defineProps({
 });
 const tagId = defineModel({
   type: Array,
-  required: true
+  required: true,
+  default: () => []
 });
 
 onMounted(() => {
   listApi().then((res) => {
-    options.value = res.data.list;
+    options.value = res.data;
   });
 });
 </script>

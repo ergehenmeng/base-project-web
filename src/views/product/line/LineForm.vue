@@ -86,7 +86,6 @@
         </div>
       </div>
     </el-form>
-    <el-backtop :right="100" :bottom="100" />
     <div>
       <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>

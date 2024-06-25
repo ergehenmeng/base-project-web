@@ -34,15 +34,15 @@ body {
   }
 
   .el-input.w100 {
-    width: 100px;
+    width: 100px !important;
   }
 
   .el-input.w120 {
-    width: 120px;
+    width: 120px !important;
   }
 
   .el-input.w200 {
-    width: 200px;
+    width: 200px !important;
   }
 
   .el-collapse {
@@ -169,6 +169,7 @@ body {
 // 高德地图搜索框层级问题
 .amap-sug-result {
   z-index: 9999 !important;
+  border: none;
 }
 
 .amap-icon img, .amap-marker-content img {

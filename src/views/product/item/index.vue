@@ -6,14 +6,14 @@
           <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
+          <el-select v-model="queryParams.state" clearable style="width: 110px;">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="交付方式">
-          <el-select v-model="queryParams.deliveryType" clearable>
+          <el-select v-model="queryParams.deliveryType" clearable style="width: 110px;">
             <el-option label="快递包邮" :value="1" />
             <el-option label="自提" :value="2" />
           </el-select>
@@ -29,10 +29,10 @@
         <el-form-item label="标签">
           <ItemTag v-model="queryParams.tagId"></ItemTag>
         </el-form-item>
-        <el-form-item label=" ">
+        <el-form-item >
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item v-has-perm="'oSO0'">
+        <el-form-item label=" " v-has-perm="'oSO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
       </el-form>
