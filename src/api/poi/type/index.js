@@ -28,3 +28,9 @@ export const deleteApi = (data) => {
   });
 };
 
+export const listApi = (params) => {
+  return request.get({
+    url: '/manage/poi/type/list',
+    params
+  });
+};

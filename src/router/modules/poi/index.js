@@ -10,34 +10,7 @@ export default [
         meta: {
           title: 'POI区域'
         },
-        children: [
-          {
-            path: '',
-            name: 'poiAreaIndex',
-            component: () => import('@/views/poi/area/index.vue')
-          },
-          {
-            path: 'create',
-            meta: {
-              title: '新增'
-            },
-            component: () => import('@/views/poi/area/AreaForm.vue')
-          },
-          {
-            path: 'edit/:id',
-            meta: {
-              title: '编辑'
-            },
-            component: () => import('@/views/poi/area/AreaForm.vue')
-          },
-          {
-            path: 'detail/:id',
-            meta: {
-              title: '详情'
-            },
-            component: () => import('@/views/poi/area/AreaForm.vue')
-          }
-        ]
+        component: () => import('@/views/poi/area/index.vue')
       },
       {
         path: 'type',
@@ -52,8 +25,34 @@ export default [
         meta: {
           title: 'POI点位'
         },
-        name: 'poiPointIndex',
-        component: () => import('@/views/poi/point/index.vue')
+        children: [
+          {
+            path: '',
+            name: 'poiPointIndex',
+            component: () => import('@/views/poi/point/index.vue')
+          },
+          {
+            path: 'create',
+            meta: {
+              title: '新增'
+            },
+            component: () => import('@/views/poi/point/PointForm.vue')
+          },
+          {
+            path: 'edit/:id',
+            meta: {
+              title: '编辑'
+            },
+            component: () => import('@/views/poi/point/PointForm.vue')
+          },
+          {
+            path: 'detail/:id',
+            meta: {
+              title: '详情'
+            },
+            component: () => import('@/views/poi/point/PointForm.vue')
+          }
+        ]
       },
       {
         path: 'line',
@@ -65,4 +64,4 @@ export default [
       }
     ]
   }
-]
+];
