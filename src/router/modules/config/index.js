@@ -73,7 +73,7 @@ export default [
                 component: () => import('@/views/config/memberTag/index.vue')
             },
             {
-                path: '/list',
+                path: 'list/:id',
                 name: 'memberTagList',
                 component: () => import('@/views/config/memberTag/MemberList.vue'),
                 meta: {

@@ -3,7 +3,34 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="标签名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="正常" :value="true" />
+            <el-option label="冻结" :value="false" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="性别">
+          <el-select v-model="queryParams.sex" clearable>
+            <el-option label="未知" :value="0" />
+            <el-option label="男" :value="1" />
+            <el-option label="女" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="访问渠道">
+          <el-select v-model="queryParams.channel" clearable style="width: 120px">
+            <el-option label="PC" value="PC" />
+            <el-option label="ANDROID" value="ANDROID" />
+            <el-option label="IOS" value="IOS" />
+            <el-option label="H5" value="H5" />
+            <el-option label="WECHAT" value="WECHAT" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="注册日期">
+          <div style="width: 220px">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -11,77 +38,88 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="标签名称" width="200" />
-        <el-table-column prop="registerStartDate" label="注册日期" width="200" />
-        <el-table-column prop="registerEndDate" label="截止日期" width="200" />
-        <el-table-column prop="consumeDay" label="最近几天有消费" width="200" />
-        <el-table-column prop="consumeNum" label="最低消费次数" width="200" />
-        <el-table-column prop="consumeAmount" label="最低消费金额" width="200" />
-        <el-table-column prop="channel" label="注册渠道" width="200" />
-        <el-table-column prop="sex" label="性别" width="200" />
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column label="操作">
-          <template #header>
-            <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'NnR0'" title="新增标签" @click="handleCreate"></CreateButton>
-          </template>
+      <el-table :data="pageData" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="avatar" label="头像" width="80">
           <template #default="scope">
-            <el-button v-has-perm="'AnR0'" type="info" :icon="Document" @click="handleEdit(scope.row)" link title="详情"></el-button>
-            <el-button v-has-perm="'GnR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'rnR0'" type="success" :icon="Connection" @click="handleAuth(scope.row)" link title="刷新"></el-button>
-            <el-button v-has-perm="'RnR0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <div style="display: flex; align-items: center">
+              <el-image fit="contain" :src="scope.row.avatar" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+            </div>
           </template>
         </el-table-column>
+        <el-table-column prop="nickName" label="昵称" width="120" />
+        <el-table-column prop="mobile" label="手机号码" width="120" />
+        <el-table-column prop="email" label="电子邮箱" width="180" />
+        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="score" label="积分" width="100" />
+        <el-table-column prop="inviteCode" label="邀请码" width="100" />
+        <el-table-column prop="sex" label="性别" width="80" :formatter="formatter" />
+        <el-table-column prop="realName" label="真实姓名" width="120" />
+        <el-table-column prop="birthday" label="生日" width="100" />
+        <el-table-column prop="channel" label="注册渠道" width="100" />
+        <el-table-column prop="createTime" label="注册时间" width="180" />
       </el-table>
       <el-pagination
-          v-model:current-page="queryParams.page"
-          v-model:page-size="queryParams.pageSize"
-          :page-sizes="[10, 20, 50]"
-          layout="->, total, sizes, prev, pager, next"
-          :total="total"
-          @change="getPage"
+        v-model:current-page="queryParams.page"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20, 50]"
+        layout="->, total, sizes, prev, pager, next"
+        :total="total"
+        @change="getPage"
       />
     </div>
   </div>
-  <MemberTagForm ref="formRef" @reload="getPage"></MemberTagForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/config/memberTag';
-import { onMounted, reactive, ref } from 'vue';
-import { Connection, Delete, Edit } from '@element-plus/icons-vue';
-import { confirmMsg, successMsg } from '@/utils/message';
+import { memberListApi } from '@/api/config/memberTag';
+import { h, onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
-import CreateButton from '@/components/CreateButton.vue';
-import MemberTagForm from "./MemberTagForm.vue";
+import { useRoute } from 'vue-router';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('JjK0');
+const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const formRef = ref();
-const authRef = ref();
-const pageData = ref([]);
-
+const userStore = useUserStore();
+const selectAuth = userStore.hasAuth('9nR0');
 const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  state: null
+  state: null,
+  sex: null,
+  channel: null,
+  tagId: null,
+  activityDate: []
 });
+
+const pageData = ref([]);
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      const { data } = await listPageApi(queryParams);
+      if (queryParams.activityDate.length === 2) {
+        queryParams.startDate = queryParams.activityDate[0];
+        queryParams.endDate = queryParams.activityDate[1];
+      }
+      const { data } = await memberListApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
     }
   } finally {
     loading.value = false;
+  }
+};
+
+const formatter = (row, column, cellValue) => {
+  if (column.property === 'state') {
+    return cellValue ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '冻结');
+  } else if (column.property === 'sex') {
+    if (cellValue === 0) {
+      return '未知';
+    }
+    return cellValue === 1 ? '男' : '女';
+  } else {
+    return cellValue;
   }
 };
 
@@ -91,28 +129,7 @@ const search = () => {
 };
 
 onMounted(() => {
+  queryParams.tagId = route.params.id;
   getPage();
 });
-
-const handleEdit = (row) => {
-  formRef.value.openDialog(row);
-};
-
-const handleAuth = (row) => {
-  authRef.value.openDialog(row);
-};
-
-const handleDelete = (row) => {
-  confirmMsg('确定要删除该标签吗?', () => {
-    const data = { id: row.id };
-    deleteApi(data).then(() => {
-      successMsg('标签删除成功');
-      getPage();
-    });
-  });
-};
-
-const handleCreate = () => {
-  formRef.value.openDialog({});
-};
 </script>
