@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="商家名称、手机号、法人信息" style="width: 250px" clearable @keyup.enter="search" maxlength="50"/>
+          <el-input v-model="queryParams.queryName" placeholder="商家名称、手机号、法人信息" style="width: 250px" clearable @keyup.enter="search" maxlength="50" />
         </el-form-item>
         <el-form-item label="商户类型">
           <el-select v-model="queryParams.type" clearable>
@@ -31,6 +31,9 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item v-has-perm="'LYp0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -44,9 +47,9 @@
         <el-table-column prop="legalName" label="法人姓名" width="120" />
         <el-table-column prop="legalIdCard" label="法人身份证" width="180" />
         <el-table-column prop="creditCode" label="社会统一信用代码" width="180" />
-        <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150"/>
-        <el-table-column prop="createTime" label="创建时间" width="180"/>
-        <el-table-column prop="updateTime" label="更新时间" width="180"/>
+        <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150" />
+        <el-table-column prop="createTime" label="创建时间" width="180" />
+        <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" min-width="250" fixed="right">
           <template #header>
             <span style="margin-right: 5px">操作</span>
@@ -74,21 +77,21 @@
       />
     </div>
   </div>
-  <ServiceRateForm ref="rateRef" @reload="getPage" ></ServiceRateForm>
+  <ServiceRateForm ref="rateRef" @reload="getPage"></ServiceRateForm>
 </template>
 <script setup>
-import { listPageApi, lockApi, resetPwdApi, unlockApi, logoutApi, unbindApi } from '@/api/user/merchant';
+import { exportApi, listPageApi, lockApi, logoutApi, resetPwdApi, unbindApi, unlockApi } from '@/api/user/merchant';
 import { h, onMounted, reactive, ref } from 'vue';
-import { Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
+import { Document, Download, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
-import Rate from '@/components/icon/Rate.vue'
-import Unbind from '@/components/icon/Unbind.vue'
-import Logout from '@/components/icon/Logout.vue'
-import { useRouter } from 'vue-router'
-import {parseMerchantType} from "@/utils/common.js";
-import ServiceRateForm from "@/views/user/merchant/ServiceRateForm.vue";
+import Rate from '@/components/icon/Rate.vue';
+import Unbind from '@/components/icon/Unbind.vue';
+import Logout from '@/components/icon/Logout.vue';
+import { useRouter } from 'vue-router';
+import { downloadExcel, parseMerchantType } from '@/utils/common.js';
+import ServiceRateForm from '@/views/user/merchant/ServiceRateForm.vue';
 
 const rateRef = ref();
 const router = useRouter();
@@ -102,7 +105,7 @@ const queryParams = reactive({
   pageSize: 10,
   state: null,
   type: null,
-  enterpriseType: null,
+  enterpriseType: null
 });
 
 const pageData = ref([]);
@@ -179,9 +182,9 @@ const handleCloseAccount = (row) => {
     const data = { id: row.id };
     logoutApi(data).then(() => {
       successMsg('商户注销成功');
-    })
+    });
   });
-}
+};
 
 const handleUnbind = (row) => {
   confirmMsg('确定要解绑该商户授权手机号吗?', () => {
@@ -193,20 +196,35 @@ const handleUnbind = (row) => {
   });
 };
 
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '商户列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
+};
+
 const handleServiceRate = (row) => {
-  rateRef.value.openDialog({id: row.id, platformServiceRate: row.platformServiceRate})
+  rateRef.value.openDialog({ id: row.id, platformServiceRate: row.platformServiceRate });
 };
 
 const handleCreate = () => {
-  router.push("/user/merchant/create")
+  router.push('/user/merchant/create');
 };
 
 const handleEdit = (row) => {
-  router.push("/user/merchant/edit/" + row.id);
-}
-
-const handleDetail = (row) => {
-  router.push("/user/merchant/detail/" + row.id);
+  router.push('/user/merchant/edit/' + row.id);
 };
 
+const handleDetail = (row) => {
+  router.push('/user/merchant/detail/' + row.id);
+};
 </script>

@@ -2,7 +2,7 @@
   <div>
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
-        <el-form-item label="搜索" >
+        <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
@@ -90,17 +90,16 @@
   <SendNoticeForm ref="noticeRef"></SendNoticeForm>
 </template>
 <script setup>
-import { freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
+import { exportApi, freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
 import { h, onMounted, reactive, ref } from 'vue';
 import { ChatDotSquare, Download, Lock, Message, Tickets, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import Offline from '@/components/icon/Offline.vue';
-import { useRouter } from 'vue-router'
-import SendSmsForm from '@/views/common/SendSmsForm.vue'
+import { useRouter } from 'vue-router';
+import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
-import { exportApi } from '@/api/product/store/index.js'
-import { downloadExcel } from '@/utils/common.js'
+import { downloadExcel } from '@/utils/common.js';
 
 const router = useRouter();
 const loading = ref(false);
@@ -119,7 +118,6 @@ const queryParams = reactive({
   activityDate: [],
   mobile: null
 });
-
 
 const pageData = ref([]);
 
@@ -140,7 +138,6 @@ const getPage = async () => {
   }
 };
 
-
 const exportLoading = ref(false);
 
 const handleExcel = () => {
@@ -156,7 +153,6 @@ const handleExcel = () => {
       exportLoading.value = false;
     });
 };
-
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
@@ -211,14 +207,14 @@ const handleLogout = (row) => {
 };
 
 const handleLoginLog = (row) => {
-  router.push("/user/member/login/" + row.id);
+  router.push('/user/member/login/' + row.id);
 };
 
 const handleSms = (row) => {
-  smsRef.value.openDialog({memberIds: [row.id]})
+  smsRef.value.openDialog({ memberIds: [row.id] });
 };
 
 const handleNotice = (row) => {
-  noticeRef.value.openDialog({memberIds: [row.id]})
+  noticeRef.value.openDialog({ memberIds: [row.id] });
 };
 </script>
