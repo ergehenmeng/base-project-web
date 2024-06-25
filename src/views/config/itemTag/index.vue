@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
-            <el-option label="正常" :value="true" />
+            <el-option label="启用" :value="true" />
             <el-option label="禁用" :value="false" />
           </el-select>
         </el-form-item>

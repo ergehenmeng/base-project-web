@@ -47,8 +47,21 @@ export default [
         meta: {
           title: '会员管理'
         },
-        name: 'memberIndex',
-        component: () => import('@/views/user/member/index.vue')
+        children: [
+          {
+            path: '',
+            name: 'memberIndex',
+            component: () => import('@/views/user/member/index.vue'),
+          },
+          {
+            path: 'login/:id',
+            meta: {
+              title: '登录日志'
+            },
+            name: 'memberLoginLog',
+            component: () => import('@/views/user/member/LoginLog.vue')
+          }
+        ]
       }
     ]
   }
