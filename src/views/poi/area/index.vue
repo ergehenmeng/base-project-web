@@ -137,6 +137,6 @@ const handleCreate = () => {
 };
 
 const handleEdit = (row) => {
-  areaFormRef.value.openDialog({ id: row.id });
+  areaFormRef.value.openDialog(row);
 };
 </script>

@@ -34,7 +34,7 @@
   </el-dialog>
 </template>
 <script setup>
-import { createApi, updateApi, selectApi } from '@/api/poi/area';
+import { createApi, updateApi } from '@/api/poi/area';
 import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
@@ -81,10 +81,8 @@ const openDialog = (row) => {
   resetForm();
   if (row.id) {
     dialogTitle.value = '编辑区域';
-    selectApi({ id: row.id }).then((res) => {
-      formData.value = res.data;
-      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-    });
+    formData.value = {...row};
+    formData.value.areaList = [row.provinceId, row.cityId, row.countyId];
   } else {
     dialogTitle.value = '新增区域';
   }

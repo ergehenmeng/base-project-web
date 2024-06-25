@@ -7,13 +7,6 @@ export const listPageApi = (params) => {
   });
 };
 
-export const selectApi = (params) => {
-  return request.get({
-    url: '/manage/poi/area/select',
-    params
-  });
-};
-
 export const createApi = (data) => {
   return request.post({
     url: '/manage/poi/area/create',
