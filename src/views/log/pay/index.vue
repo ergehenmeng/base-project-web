@@ -126,7 +126,6 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleChange = (tab) => {
-  console.log(tab);
   queryParams.page = 1;
   activeTab.value = tab;
   getPage();

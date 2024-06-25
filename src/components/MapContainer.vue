@@ -15,7 +15,6 @@ const defaultLng = import.meta.env.VITE_MAP_LNG;
 const defaultLat = import.meta.env.VITE_MAP_LAT;
 
 watch(showDialog, (val) => {
-  console.log(val)
   if (val) {
     nextTick(() => {
       initMap();

@@ -20,8 +20,8 @@
       <el-form-item label="详细地址" prop="detailAddress">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="30" />
       </el-form-item>
-      <el-form-item label="备注信息" prop="refundDescribe">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" autosize maxlength="100" show-word-limit />
+      <el-form-item label="备注信息" prop="remark">
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" autosize maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -106,7 +106,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.proviceId = formData.value.areaList[0];
+      formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
       if (formData.value.id) {

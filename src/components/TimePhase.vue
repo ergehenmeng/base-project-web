@@ -394,7 +394,6 @@ watch(
 );
 
 onMounted(() => {
-  console.log('phaseList2', phaseList.value);
   if (props.disabled) {
     mainContentRef.value.addEventListener(
       'click',

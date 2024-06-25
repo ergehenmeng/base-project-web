@@ -79,7 +79,6 @@ editorConfig.MENU_CONF['uploadImage'] = {
   },
   timeout: 10000,
   customInsert: (res, insertFn) => {
-    console.log(res);
     if (res.code === 200) {
       insertFn(res.data.address + res.data.path, '', '');
     } else {

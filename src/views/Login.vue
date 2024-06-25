@@ -101,7 +101,6 @@ const handleLogin = async () => {
           }
         })
         .catch((e) => {
-          console.log(e);
           getCode();
         })
         .finally(() => {

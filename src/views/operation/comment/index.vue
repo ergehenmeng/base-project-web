@@ -156,7 +156,6 @@ const formatter = (row, column, cellValue) => {
       {
         style: 'color: red; cursor: pointer;',
         onClick(e) {
-          console.log('跳转前', row.id);
           router.push({
             name: 'commentReport',
             query: { commentId: row.id }

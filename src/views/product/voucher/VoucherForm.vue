@@ -181,7 +181,6 @@ onMounted(() => {
           formData.value.validType = 1;
           formData.value.activityDate = [res.data.effectDate, res.data.expireDate];
         }
-        console.log(formData.value);
       })
       .finally(() => {
         loading.value = false;

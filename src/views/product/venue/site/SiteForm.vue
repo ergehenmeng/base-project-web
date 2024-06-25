@@ -87,7 +87,6 @@ const openDialog = (row) => {
     } else {
       formData.value.coverList = [];
     }
-    console.log(formData.value);
   } else {
     dialogTitle.value = '新增场地';
   }
