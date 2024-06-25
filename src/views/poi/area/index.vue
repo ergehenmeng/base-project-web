@@ -27,8 +27,8 @@
           </template>
           <template #default="scope">
             <el-button v-has-perm="'IXG0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'FXG0'" v-show="!scope.row.state" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
-            <el-button v-has-perm="'FXG0'" v-show="scope.row.state" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
+            <el-button v-has-perm="'FXG0'" v-show="!scope.row.state" type="success" :icon="Top" @click="handleState(scope.row)" link title="上架"></el-button>
+            <el-button v-has-perm="'FXG0'" v-show="scope.row.state" type="warning" :icon="Bottom" @click="handleState(scope.row)" link title="下架"></el-button>
             <el-button v-has-perm="'bXG0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -46,7 +46,7 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/poi/area';
+import {deleteApi, listPageApi, stateApi} from '@/api/poi/area';
 import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
@@ -102,7 +102,7 @@ const handleDelete = (row) => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
-    return cellValue ? '已上架' : '未上架';
+    return cellValue ? h('span', { style: 'color: green' }, '已上架') : '未上架';
   } else if (column.property === 'latitude') {
     return cellValue + '~' + row.longitude;
   } else {
@@ -110,27 +110,24 @@ const formatter = (row, column, cellValue) => {
   }
 };
 
-const handleShelves = (row) => {
-  confirmMsg('确定要上架该区域吗?', () => {
-    const data = { id: row.id };
-    shelvesApi(data).then(() => {
-      successMsg('区域上架成功');
+const handleState = (row) => {
+  let msg
+  let success;
+  if (row.state) {
+    msg = '确定要下架该区域吗?'
+    success = '区域下架成功'
+  } else {
+    msg = '确定要上架该区域吗?'
+    success = '区域上架成功'
+  }
+  confirmMsg(msg, () => {
+    const data = { id: row.id, state: !row.state };
+    stateApi(data).then(() => {
+      successMsg(success);
       getPage();
     });
   });
 };
-
-const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该区域吗?', () => {
-    const data = { id: row.id };
-    unShelvesApi(data).then(() => {
-      successMsg('区域下架成功');
-      getPage();
-    });
-  });
-};
-
-const exportLoading = ref(false);
 
 const handleCreate = () => {
   areaFormRef.value.openDialog({});
