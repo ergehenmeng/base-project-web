@@ -124,9 +124,8 @@ const handleRightCheckChange = (val) => {
 
 <template>
   <div class="edit-content">
-    <el-divider />
     <div id="app">
-      <div id="mapContainer" style="height: calc(100vh - 240px)"></div>
+      <div id="mapContainer" style="height: calc(100vh - 190px)"></div>
       <div class="transfer-card">
         <el-transfer v-model="pointList" :data="dataList" :props="props" style="height: 280px; width: 432px" :titles="['未选择', '已选择']"  target-order="push" :right-default-checked="rightChecked" @right-check-change="handleRightCheckChange">
           <template #default="{ option }">
@@ -160,6 +159,12 @@ const handleRightCheckChange = (val) => {
   --el-transfer-panel-body-height: 208px;
 }
 
+.edit-content {
+  padding: 20px 20px 50px 20px;
+  background-color: white;
+  border-radius: 3px;
+  min-height: calc(100vh - 120px);
+}
 #app {
   position: relative;
 
