@@ -120,7 +120,7 @@ const handleLogin = async () => {
   overflow: hidden;
   background:
     url('@/assets/images/background.png') repeat 1px 1px,
-    linear-gradient(207deg, #3c8ce7, #00eaff);
+    linear-gradient(132deg, rgba(0,168,255,1) 0%, rgba(0,210,211,1) 50%, rgba(0,168,255,1) 100%);
   background-blend-mode: multiply;
 
   .login-layout {

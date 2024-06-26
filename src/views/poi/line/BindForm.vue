@@ -3,6 +3,7 @@ import { bindDetailApi } from '@/api/poi/line';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AMapLoader from '@amap/amap-jsapi-loader';
+import {errorMsg} from "@/utils/message.js";
 
 const mapRef = ref(null);
 const marker = ref(null);
@@ -15,8 +16,9 @@ const route = useRoute();
 const router = useRouter();
 const disabled = ref(false);
 const pointList = ref([]);
-const valueList = ref([]);
+const dataList = ref([]);
 const rightChecked = ref([]);
+const sortList = ref([]);
 
 const addMarker = (lng, lat) => {
   if (marker.value) {
@@ -77,14 +79,46 @@ onMounted(() => {
   initMap();
   const params = route.params;
   bindDetailApi({ id: params.id }).then(({ data }) => {
-    valueList.value = data.pointList;
+    dataList.value = data.pointList;
   });
 });
 
 const handleUp = () => {
-  console.log(rightChecked.value, pointList.value);
+  if (sortList.value.length > 1 || sortList.value.length === 0) {
+    errorMsg("请选择一个要排序的点位");
+    return;
+  }
+  const itemId = sortList.value[0];
+  const points = pointList.value;
+  const index = points.indexOf(itemId);
+  if (index <= 0 ) {
+    return;
+  }
+  const before = points[index - 1];
+  points.splice(index - 1, 1, itemId);
+  points.splice(index, 1, before);
+  pointList.value = points;
 };
-const handleDown = () => {};
+const handleDown = () => {
+  if (sortList.value.length > 1 || sortList.value.length === 0) {
+    errorMsg("请选择一个要排序的点位");
+    return;
+  }
+  const points = pointList.value;
+  const itemId = sortList.value[0];
+  const index = points.indexOf(itemId);
+  if (index === -1 || index === points.length - 1 ) {
+    return;
+  }
+  const after = points[index + 1];
+  points.splice(index + 1, 1, itemId);
+  points.splice(index, 1, after);
+  pointList.value = points;
+};
+
+const handleRightCheckChange = (val) => {
+  sortList.value = val;
+}
 
 </script>
 
@@ -94,7 +128,7 @@ const handleDown = () => {};
     <div id="app">
       <div id="mapContainer" style="height: calc(100vh - 240px)"></div>
       <div class="transfer-card">
-        <el-transfer v-model="pointList" :data="valueList" :props="props" style="height: 280px; width: 432px" :titles="['未选择', '已选择']" :right-default-checked="rightChecked">
+        <el-transfer v-model="pointList" :data="dataList" :props="props" style="height: 280px; width: 432px" :titles="['未选择', '已选择']"  target-order="push" :right-default-checked="rightChecked" @right-check-change="handleRightCheckChange">
           <template #default="{ option }">
             <span :title="option.title">{{ option.title }}</span>
           </template>
