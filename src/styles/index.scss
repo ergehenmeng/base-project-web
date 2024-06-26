@@ -155,6 +155,26 @@ body {
   border-color: var(--el-color-primary);
 }
 
+/*穿梭框按钮内边距*/
+.el-transfer__buttons {
+  padding: 0 15px !important;
+}
+
+.el-transfer-panel__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/*自定义穿梭框内部高度*/
+.el-transfer .el-transfer-panel:first-of-type {
+  .el-transfer-panel__body {
+    height: 250px;
+    .el-transfer-panel__list {
+      height: 250px;
+    }
+  }
+}
+
 /*超过限制后隐藏上传按钮*/
 .upload-image-hide-box {
   .el-upload--picture-card {

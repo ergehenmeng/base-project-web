@@ -82,8 +82,9 @@ export const payTypeFormat = (cellValue) => {
  * 只能输入整数或包含两位的小数
  *
  * @param value
+ * @param point 小数点位数(1或2)
  */
-export const numberValidator = (value) => {
+export const numberValidator = (value, point = 2) => {
   if (value) {
     // 允许数字和小数点
     value = value.replace(/[^\d.]/g, '');
@@ -91,8 +92,12 @@ export const numberValidator = (value) => {
     value = value.replace(/\.{2,}/g, '.');
     // 防止连续输入小数点
     value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
-    // 只允许小数点后两位
-    return value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+    if (point === 2) {
+      // 只允许小数点后两位
+      return value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
+    } else {
+      return value.replace(/^(-)*(\d+)\.(\d).*$/, '$1$2.$3');
+    }
   }
   return value;
 };

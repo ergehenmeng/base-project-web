@@ -2,69 +2,63 @@ import request from '@/utils/request';
 
 export const listPageApi = (params) => {
   return request.get({
-    url: '/manage/homestay/listPage',
+    url: '/manage/poi/line/listPage',
     params
   });
 };
 
 export const createApi = (data) => {
   return request.post({
-    url: '/manage/homestay/create',
+    url: '/manage/poi/line/create',
     data
   });
 };
 
 export const updateApi = (data) => {
   return request.post({
-    url: '/manage/homestay/update',
+    url: '/manage/poi/line/update',
     data
   });
 };
 
 export const deleteApi = (data) => {
   return request.post({
-    url: '/manage/homestay/delete',
+    url: '/manage/poi/line/delete',
     data
   });
 };
 
 export const selectApi = (params) => {
   return request.get({
-    url: '/manage/homestay/select',
+    url: '/manage/poi/line/select',
     params
   });
 };
 
 export const shelvesApi = (data) => {
   return request.post({
-    url: '/manage/homestay/shelves',
+    url: '/manage/poi/line/shelves',
     data
   });
 };
 
 export const unShelvesApi = (data) => {
   return request.post({
-    url: '/manage/homestay/unShelves',
+    url: '/manage/poi/line/unShelves',
     data
   });
 };
 
-export const platformUnShelvesApi = (data) => {
-  return request.post({
-    url: '/manage/homestay/platformUnShelves',
-    data
-  });
-};
-
-export const listApi = () => {
+export const bindDetailApi = (params) => {
   return request.get({
-    url: '/manage/homestay/list'
+    url: '/manage/poi/line/bindDetail',
+    params
   });
 };
 
-export const exportApi = (params) => {
-  return request.download({
-    url: '/manage/homestay/export',
-    params
+export const bindApi = (data) => {
+  return request.post({
+    url: '/manage/poi/line/bind',
+    data
   });
 };

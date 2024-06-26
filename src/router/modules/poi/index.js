@@ -59,8 +59,41 @@ export default [
         meta: {
           title: 'POI线路'
         },
-        name: 'poiLineIndex',
-        component: () => import('@/views/poi/line/index.vue')
+        children: [
+          {
+            path: '',
+            name: 'poiLineIndex',
+            component: () => import('@/views/poi/line/index.vue')
+          },
+          {
+            path: 'create',
+            meta: {
+              title: '新增'
+            },
+            component: () => import('@/views/poi/line/LineForm.vue')
+          },
+          {
+            path: 'edit/:id',
+            meta: {
+              title: '编辑'
+            },
+            component: () => import('@/views/poi/line/LineForm.vue')
+          },
+          {
+            path: 'detail/:id',
+            meta: {
+              title: '详情'
+            },
+            component: () => import('@/views/poi/line/LineForm.vue')
+          },
+          {
+            path: 'bind/:id',
+            meta: {
+              title: '绑定点位'
+            },
+            component: () => import('@/views/poi/line/BindForm.vue')
+          }
+        ]
       }
     ]
   }
