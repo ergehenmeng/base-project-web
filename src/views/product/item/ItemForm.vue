@@ -94,8 +94,7 @@ const formRules = reactive({
     { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
   ],
   depotAddressId: [{ required: true, message: '请选择退换货地址', trigger: 'change' }],
-  longitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
-  latitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
+  latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });

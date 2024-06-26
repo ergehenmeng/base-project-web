@@ -24,7 +24,7 @@ watch(showDialog, (val) => {
   }
 });
 
-const openDialog = (inLat, inLng) => {
+const openDialog = (inLng, inLat) => {
   showDialog.value = true;
   lng.value = inLng;
   lat.value = inLat;

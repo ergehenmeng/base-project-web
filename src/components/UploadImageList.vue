@@ -112,13 +112,15 @@ const convert = (fileList) => {
 };
 
 watch(fileList, (newVal, oldVal) => {
-  if (Array.isArray(oldVal) && oldVal.length === 0) {
+  if (Array.isArray(newVal) && oldVal.length === 0) {
     localFile.value = convert(newVal);
   }
 });
 
 onMounted(() => {
-  localFile.value = convert(fileList.value);
+  if (Array.isArray(fileList.value)) {
+    localFile.value = convert(fileList.value);
+  }
 });
 </script>
 <style lang="scss" scoped>

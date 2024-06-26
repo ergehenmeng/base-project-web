@@ -1,7 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="点位名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -25,13 +25,16 @@
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+        <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" :disabled="disabled"></WangEditor>
       </el-form-item>
     </el-form>
     <div>
-      <div class="edit-button-footer">
+      <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
+      </div>
+      <div class="edit-button-footer" v-else>
+        <el-button @click="$router.go(-1)">返回</el-button>
       </div>
     </div>
   </div>
@@ -60,7 +63,7 @@ const formRules = reactive({
   title: [{ required: true, message: '点位名称不能为空', trigger: 'blur' }],
   areaCode: [{ required: true, message: '所属区域', trigger: 'change' }],
   typeId: [{ required: true, message: '请选择点位类型', trigger: 'change' }],
-  latitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
+  latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }],
   coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
@@ -86,7 +89,7 @@ const handleSave = () => {
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('公告更新成功');
+            successMsg('点位信息更新成功');
             router.go(-1);
           })
           .finally(() => {
@@ -95,7 +98,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('公告添加成功');
+            successMsg('点位信息添加成功');
             router.go(-1);
           })
           .finally(() => {
@@ -119,10 +122,15 @@ onMounted(() => {
   const params = route.params;
   if (params.id !== undefined) {
     loading.value = true;
+    disabled.value = route.fullPath.startsWith('/poi/point/detail');
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.answerText = res.data.answer;
+        if (res.data.coverUrl) {
+          formData.value.coverList = res.data.coverUrl.split(',');
+        } else {
+          formData.value.coverList = [];
+        }
       })
       .finally(() => {
         loading.value = false;

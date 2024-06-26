@@ -22,6 +22,11 @@ const areaCode = defineModel("areaCode");
 const typeId = defineModel("typeId");
 
 watch(() => areaCode.value, (value) => {
+  if (!value) {
+    typeId.value = null;
+    typeList.value = []
+    return;
+  }
   listApi({areaCode: value}).then((res) => {
     if (res.data.length === 0) {
       typeId.value = null;

@@ -91,8 +91,7 @@ const formRules = reactive({
     { required: true, message: '详细地址不能为空', trigger: 'blur' },
     { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
   ],
-  longitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
-  latitude: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
+  latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   depict: [
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
