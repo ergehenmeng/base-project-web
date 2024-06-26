@@ -16,6 +16,7 @@ const router = useRouter();
 const disabled = ref(false);
 const pointList = ref([]);
 const valueList = ref([]);
+const rightChecked = ref([]);
 
 const addMarker = (lng, lat) => {
   if (marker.value) {
@@ -56,9 +57,9 @@ const initMap = () => {
 };
 
 const props = ref({
-  key: "id",
-  label: "title"
-})
+  key: 'id',
+  label: 'title'
+});
 
 const destroyMap = () => {
   mapRef.value?.destroy();
@@ -75,15 +76,16 @@ const handleSave = () => {};
 onMounted(() => {
   initMap();
   const params = route.params;
-  bindDetailApi({id: params.id}).then(({data}) => {
+  bindDetailApi({ id: params.id }).then(({ data }) => {
     valueList.value = data.pointList;
-  })
+  });
 });
 
 const handleUp = () => {
+  console.log(rightChecked.value, pointList.value);
 };
-const handleDown = () => {
-};
+const handleDown = () => {};
+
 </script>
 
 <template>
@@ -92,7 +94,10 @@ const handleDown = () => {
     <div id="app">
       <div id="mapContainer" style="height: calc(100vh - 240px)"></div>
       <div class="transfer-card">
-        <el-transfer v-model="pointList" :data="valueList" :props="props" style="height: 280px; width: 432px;" :titles="['未选择', '已选择']">
+        <el-transfer v-model="pointList" :data="valueList" :props="props" style="height: 280px; width: 432px" :titles="['未选择', '已选择']" :right-default-checked="rightChecked">
+          <template #default="{ option }">
+            <span :title="option.title">{{ option.title }}</span>
+          </template>
           <template #right-footer>
             <el-button-group>
               <el-button size="small" @click="handleUp">上移</el-button>
@@ -123,6 +128,7 @@ const handleDown = () => {
 
 #app {
   position: relative;
+
   .transfer-card {
     position: absolute;
     height: 280px;
