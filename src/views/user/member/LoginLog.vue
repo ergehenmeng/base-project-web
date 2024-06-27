@@ -46,7 +46,7 @@
 import { loginPageApi } from '@/api/user/member';
 import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
-import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const loading = ref(false);

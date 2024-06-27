@@ -22,17 +22,17 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="nickName" label="用户昵称" />
-        <el-table-column prop="url" label="访问链接" width="250"/>
-        <el-table-column prop="ip" label="访问ip" width="120"/>
-        <el-table-column prop="elapsedTime" label="耗时(ms)" width="100"/>
-        <el-table-column prop="channel" label="访问渠道" width="100"/>
-        <el-table-column prop="requestParam" label="请求参数" width="250"/>
-        <el-table-column prop="createTime" label="请求时间" width="180"/>
-        <el-table-column prop="version" label="软件版本号" width="120"/>
-        <el-table-column prop="osVersion" label="平台版本号" width="120"/>
+        <el-table-column prop="url" label="访问链接" width="250" />
+        <el-table-column prop="ip" label="访问ip" width="120" />
+        <el-table-column prop="elapsedTime" label="耗时(ms)" width="100" />
+        <el-table-column prop="channel" label="访问渠道" width="100" />
+        <el-table-column prop="requestParam" label="请求参数" width="250" />
+        <el-table-column prop="createTime" label="请求时间" width="180" />
+        <el-table-column prop="version" label="软件版本号" width="120" />
+        <el-table-column prop="osVersion" label="平台版本号" width="120" />
         <el-table-column prop="deviceBrand" label="设备厂商" />
         <el-table-column prop="deviceModel" label="设备型号" />
-        <el-table-column prop="serialNumber" label="设备唯一编号" width="120"/>
+        <el-table-column prop="serialNumber" label="设备唯一编号" width="120" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
             <el-button v-has-perm="'eoa0'" v-show="scope.row.errorMsg" :icon="Document" @click="handleDetail(scope.row.errorMsg)" link title="详情"></el-button>
@@ -55,8 +55,8 @@
 import { listPageApi } from '@/api/log/member';
 import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
-import { Document } from '@element-plus/icons-vue'
-import ContentDialog from '@/components/ContentDialog.vue'
+import { Document } from '@element-plus/icons-vue';
+import ContentDialog from '@/components/ContentDialog.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('qva0');
@@ -88,7 +88,6 @@ const getPage = async () => {
     loading.value = false;
   }
 };
-
 
 const search = () => {
   queryParams.page = 1;

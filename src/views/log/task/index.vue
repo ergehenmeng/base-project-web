@@ -48,7 +48,7 @@ import { listPageApi } from '@/api/log/task';
 import { onMounted, reactive, ref } from 'vue';
 import { Document } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
-import ContentDialog from '@/components/ContentDialog.vue'
+import ContentDialog from '@/components/ContentDialog.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('foa0');
@@ -83,7 +83,7 @@ const handleDetail = (content) => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
-    return cellValue ? '成功' : h('span', { style: 'color: red' }, '失败') ;
+    return cellValue ? '成功' : h('span', { style: 'color: red' }, '失败');
   } else {
     return cellValue;
   }

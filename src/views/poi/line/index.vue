@@ -36,7 +36,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="线路名称" min-width="150" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter"/>
+        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="areaTitle" label="所属区域" min-width="150" />
         <el-table-column prop="playTime" label="预计游玩时间(小时)" min-width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
@@ -70,7 +70,7 @@
 <script setup>
 import { deleteApi, listPageApi, shelvesApi, unShelvesApi } from '@/api/poi/line';
 import { onMounted, reactive, ref } from 'vue';
-import { Bottom, Delete, Document, Edit, Link, SetUp, Top } from '@element-plus/icons-vue'
+import { Bottom, Delete, Document, Edit, Link, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

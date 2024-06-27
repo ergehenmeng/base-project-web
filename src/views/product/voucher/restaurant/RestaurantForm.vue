@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import { createApi, updateApi, selectApi } from '@/api/product/restaurant';
+import { createApi, selectApi, updateApi } from '@/api/product/restaurant';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

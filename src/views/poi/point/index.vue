@@ -71,7 +71,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
-import PoiTypeSelect from '@/components/PoiTypeSelect.vue'
+import PoiTypeSelect from '@/components/PoiTypeSelect.vue';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -85,7 +85,7 @@ const queryParams = reactive({
   page: 1,
   pageSize: 10,
   areaCode: null,
-  typeId: null,
+  typeId: null
 });
 
 const getPage = async () => {

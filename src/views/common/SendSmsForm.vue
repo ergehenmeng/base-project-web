@@ -17,7 +17,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { sendSmsApi } from '@/api/user/member';
-import { errorMsg, successMsg } from '@/utils/message.js'
+import { errorMsg, successMsg } from '@/utils/message.js';
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);

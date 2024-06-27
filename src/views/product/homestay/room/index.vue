@@ -85,9 +85,9 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, recommendApi, exportApi } from '@/api/product/room';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/room';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar, Star } from '@element-plus/icons-vue';
+import { Bottom, Calendar, Delete, Document, Download, Edit, Star, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

@@ -38,7 +38,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
 import UploadImageList from '@/components/UploadImageList.vue';
-import { numberValidator } from '@/utils/common.js'
+import { numberValidator } from '@/utils/common.js';
 
 const route = useRoute();
 const router = useRouter();

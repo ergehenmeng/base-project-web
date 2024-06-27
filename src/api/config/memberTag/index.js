@@ -1,10 +1,10 @@
 import request from '@/utils/request';
 
 export const listPageApi = (params) => {
-    return request.get({
-        url: '/manage/member/tag/listPage',
-        params
-    });
+  return request.get({
+    url: '/manage/member/tag/listPage',
+    params
+  });
 };
 
 export const createApi = (data) => {

@@ -37,7 +37,7 @@
         <el-input v-model="formData.legalIdCard" show-word-limit maxlength="18" />
       </el-form-item>
       <el-form-item label="法人身份证图片" prop="cardUrlList">
-        <UploadImageList v-model:file-list="formData.cardUrlList" :limit="2" :disabled="disabled" ></UploadImageList>
+        <UploadImageList v-model:file-list="formData.cardUrlList" :limit="2" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -162,5 +162,4 @@ onMounted(() => {
       });
   }
 });
-
 </script>

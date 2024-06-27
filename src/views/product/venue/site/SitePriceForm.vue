@@ -28,7 +28,7 @@
 import { priceListApi } from '@/api/product/site';
 import dayjs from 'dayjs';
 import { Setting } from '@element-plus/icons-vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import TimePhase from '@/components/TimePhase.vue';
 
 const router = useRouter();

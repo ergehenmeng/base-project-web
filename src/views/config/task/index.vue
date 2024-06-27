@@ -22,19 +22,19 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="任务名称" width="200" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="beanName" label="类名" width="180" />
         <el-table-column prop="methodName" label="方法名" width="150" />
         <el-table-column prop="args" label="方法入参" width="150" />
         <el-table-column prop="cronExpression" label="cron表达式" width="150" />
         <el-table-column prop="alarmEmail" label="报警邮箱" width="200" />
-        <el-table-column prop="lockTime" label="锁时间(ms)" width="100" :formatter="formatter"/>
+        <el-table-column prop="lockTime" label="锁时间(ms)" width="100" :formatter="formatter" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column label="操作" fixed="right">
           <template #default="scope">
             <el-button v-has-perm="'tOR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'KOR0'"  @click="handleExecute(scope.row)" link title="执行定时任务">
+            <el-button v-has-perm="'KOR0'" @click="handleExecute(scope.row)" link title="执行定时任务">
               <Execute></Execute>
             </el-button>
           </template>
@@ -53,14 +53,13 @@
   <SmsForm ref="formRef" @reload="getPage"></SmsForm>
 </template>
 <script setup>
-import { listPageApi, refreshApi, executeApi } from '@/api/config/task';
+import { executeApi, listPageApi, refreshApi } from '@/api/config/task';
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Refresh } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import SmsForm from './TaskForm.vue';
-import {confirmMsg, successMsg} from '@/utils/message.js';
-import Execute from "@/components/icon/Execute.vue";
-import {createApi} from "@/api/system/sensitive/index.js";
+import { confirmMsg, successMsg } from '@/utils/message.js';
+import Execute from '@/components/icon/Execute.vue';
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -91,16 +90,16 @@ const getPage = async () => {
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue
-        ? h('span', { style: 'color: green;' }, '已启用')
-        : h(
-            'span',
-            {
-              style: 'color: red;'
-            },
-            '未启用'
+      ? h('span', { style: 'color: green;' }, '已启用')
+      : h(
+          'span',
+          {
+            style: 'color: red;'
+          },
+          '未启用'
         );
   } else if (column.property === 'lockTime') {
-    return  h('span', { title: '定时任务持有锁时间(单位:ms)' }, cellValue);
+    return h('span', { title: '定时任务持有锁时间(单位:ms)' }, cellValue);
   } else {
     return cellValue;
   }
@@ -110,7 +109,7 @@ const handleRefresh = () => {
   confirmMsg('确定要刷新任务配置吗?', () => {
     refreshApi().then(() => {
       successMsg('任务刷新成功');
-    })
+    });
   });
 };
 
@@ -133,18 +132,18 @@ const handleExecute = (row) => {
     cancelButtonText: '取消',
     inputPlaceholder: '请输入方法入参',
     inputErrorMessage: '方法入参最大300字符',
-    inputType: "textarea",
+    inputType: 'textarea',
     inputValue: row.args,
     inputValidator: (str) => {
       return str === null || str.length < 300;
     }
-  }).then(({ value }) => {
-        executeApi({id: row.id , args: value }).then(() => {
-          successMsg('任务执行成功');
-          getPage();
-        });
-      })
-      .catch(() => {});
+  })
+    .then(({ value }) => {
+      executeApi({ id: row.id, args: value }).then(() => {
+        successMsg('任务执行成功');
+        getPage();
+      });
+    })
+    .catch(() => {});
 };
-
 </script>

@@ -26,7 +26,7 @@
         <el-input v-model="formData.alarmEmail" maxlength="30" show-word-limit />
       </el-form-item>
       <el-form-item label="锁时间(ms)" prop="lockTime">
-        <el-input v-model="formData.lockTime" maxlength="10" show-word-limit placeholder="30000~3600000ms之间" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.lockTime" maxlength="10" show-word-limit placeholder="30000~3600000ms之间" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="备注信息" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
@@ -57,17 +57,20 @@ const formRules = reactive({
   beanName: [{ required: true, message: '类名不能为空', trigger: 'blur' }],
   methodName: [{ required: true, message: '方法名不能为空', trigger: 'blur' }],
   alarmEmail: [{ required: true, message: '报警邮箱不能为空', trigger: 'blur' }],
-  lockTime: [{ required: true, message: '锁时间不能为空', trigger: 'blur' }, {
-    validator: (rule, value, callback) => {
-      const number = parseInt(value);
-      if (number < 30000 || number > 3600000) {
-        callback(new Error("锁持有时间应在30000~3600000ms之间"));
-      } else {
-        callback();
-      }
-    },
-    trigger: 'blur'
-  }]
+  lockTime: [
+    { required: true, message: '锁时间不能为空', trigger: 'blur' },
+    {
+      validator: (rule, value, callback) => {
+        const number = parseInt(value);
+        if (number < 30000 || number > 3600000) {
+          callback(new Error('锁持有时间应在30000~3600000ms之间'));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ]
 });
 
 const formData = ref({

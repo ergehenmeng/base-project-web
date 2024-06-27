@@ -74,9 +74,9 @@
   <SiteForm ref="formRef" @reload="getPage"></SiteForm>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, sortApi } from '@/api/product/site';
+import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/site';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus, Top, Bottom, Download, ScaleToOriginal } from '@element-plus/icons-vue';
+import { Bottom, Delete, Download, Edit, ScaleToOriginal, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

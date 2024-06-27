@@ -34,9 +34,9 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="smsType" label="短信类型" :formatter="formatter" width="200"/>
+        <el-table-column prop="smsType" label="短信类型" :formatter="formatter" width="200" />
         <el-table-column prop="mobile" label="手机号" />
-        <el-table-column prop="content" label="短信内容" min-width="300"/>
+        <el-table-column prop="content" label="短信内容" min-width="300" />
         <el-table-column prop="state" label="发送状态" :formatter="formatter" />
         <el-table-column prop="createTime" label="发送时间" />
       </el-table>
@@ -54,7 +54,6 @@
 <script setup>
 import { listPageApi } from '@/api/log/sms';
 import { onMounted, reactive, ref } from 'vue';
-import { Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 
 const userStore = useUserStore();

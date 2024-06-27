@@ -63,7 +63,7 @@
 <script setup>
 import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/travel';
 import { onMounted, reactive, ref } from 'vue';
-import { Bottom, Delete, Document, Download, Edit, Plus, Top } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

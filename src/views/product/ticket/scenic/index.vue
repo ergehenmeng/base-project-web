@@ -70,14 +70,13 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi } from '@/api/product/scenic';
+import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/scenic';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus, Top, Bottom, Download, Document, CirclePlus } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import MerchantSelect from '@/components/MerchantSelect.vue';
-import Add from '@/components/icon/Add.vue';
 import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();

@@ -97,9 +97,9 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, deleteApi, shelvesApi, unShelvesApi, platformUnShelvesApi, exportApi } from '@/api/product/line';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/line';
 import { onMounted, reactive, ref } from 'vue';
-import { Edit, Delete, Plus, Top, Bottom, Download, Document, Calendar } from '@element-plus/icons-vue';
+import { Bottom, Calendar, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

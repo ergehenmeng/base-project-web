@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { createApi, updateApi, selectApi } from '@/api/product/homestay';
+import { createApi, selectApi, updateApi } from '@/api/product/homestay';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

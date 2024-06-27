@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false" >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="区域名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
@@ -81,7 +81,7 @@ const openDialog = (row) => {
   resetForm();
   if (row.id) {
     dialogTitle.value = '编辑区域';
-    formData.value = {...row};
+    formData.value = { ...row };
     formData.value.areaList = [row.provinceId, row.cityId, row.countyId];
   } else {
     dialogTitle.value = '新增区域';

@@ -27,13 +27,13 @@
         <el-tab-pane label="同步日志" name="sync">
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="payChannel" label="支付渠道" :formatter="formatter" width="100" />
-            <el-table-column prop="orderNo" label="订单编号" width="220"/>
-            <el-table-column prop="stepType" label="请求类型" :formatter="formatter" width="120"/>
-            <el-table-column prop="tradeNo" label="交易流水号"  width="220" />
-            <el-table-column prop="refundNo" label="退款流水号"  width="220" />
-            <el-table-column prop="requestBody" label="请求参数"  min-width="250" />
-            <el-table-column prop="responseBody" label="响应参数"  width="250" />
-            <el-table-column prop="createTime" label="请求时间" width="180"/>
+            <el-table-column prop="orderNo" label="订单编号" width="220" />
+            <el-table-column prop="stepType" label="请求类型" :formatter="formatter" width="120" />
+            <el-table-column prop="tradeNo" label="交易流水号" width="220" />
+            <el-table-column prop="refundNo" label="退款流水号" width="220" />
+            <el-table-column prop="requestBody" label="请求参数" min-width="250" />
+            <el-table-column prop="responseBody" label="响应参数" width="250" />
+            <el-table-column prop="createTime" label="请求时间" width="180" />
           </el-table>
           <el-pagination
             v-model:current-page="queryParams.page"
@@ -47,11 +47,11 @@
         <el-tab-pane label="异步日志" name="async">
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="payChannel" label="支付方式" :formatter="formatter" width="100" />
-            <el-table-column prop="notifyId" label="异步通知ID" width="220"/>
+            <el-table-column prop="notifyId" label="异步通知ID" width="220" />
             <el-table-column prop="stepType" label="通知类型" :formatter="formatter" />
-            <el-table-column prop="tradeNo" label="交易流水号" width="220"/>
-            <el-table-column prop="refundNo" label="退款流水号" width="220"/>
-            <el-table-column prop="params" label="通知原始参数" min-width="250"/>
+            <el-table-column prop="tradeNo" label="交易流水号" width="220" />
+            <el-table-column prop="refundNo" label="退款流水号" width="220" />
+            <el-table-column prop="params" label="通知原始参数" min-width="250" />
             <el-table-column prop="createTime" label="请求时间" />
           </el-table>
           <el-pagination
@@ -69,7 +69,7 @@
   <ContentDialog ref="contentRef"></ContentDialog>
 </template>
 <script setup>
-import { syncPageApi, asyncPageApi } from '@/api/log/pay';
+import { asyncPageApi, syncPageApi } from '@/api/log/pay';
 import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import ContentDialog from '@/components/ContentDialog.vue';
@@ -117,9 +117,9 @@ const getPage = async () => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'payChannel') {
-    return cellValue === "WECHAT" ? "微信" : "支付宝";
+    return cellValue === 'WECHAT' ? '微信' : '支付宝';
   } else if (column.property === 'stepType') {
-    return cellValue === "PAY" ? "支付异步通知" : "退款异步通知";
+    return cellValue === 'PAY' ? '支付异步通知' : '退款异步通知';
   } else {
     return cellValue;
   }

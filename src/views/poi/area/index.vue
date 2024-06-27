@@ -46,7 +46,7 @@
   </div>
 </template>
 <script setup>
-import {deleteApi, listPageApi, stateApi} from '@/api/poi/area';
+import { deleteApi, listPageApi, stateApi } from '@/api/poi/area';
 import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
@@ -111,14 +111,14 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleState = (row) => {
-  let msg
+  let msg;
   let success;
   if (row.state) {
-    msg = '确定要下架该区域吗?'
-    success = '区域下架成功'
+    msg = '确定要下架该区域吗?';
+    success = '区域下架成功';
   } else {
-    msg = '确定要上架该区域吗?'
-    success = '区域上架成功'
+    msg = '确定要上架该区域吗?';
+    success = '区域上架成功';
   }
   confirmMsg(msg, () => {
     const data = { id: row.id, state: !row.state };

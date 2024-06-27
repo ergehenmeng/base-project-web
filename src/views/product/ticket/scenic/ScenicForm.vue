@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { createApi, updateApi, selectApi } from '@/api/product/scenic';
+import { createApi, selectApi, updateApi } from '@/api/product/scenic';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

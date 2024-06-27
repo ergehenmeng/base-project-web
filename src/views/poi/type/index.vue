@@ -15,7 +15,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="icon" label="图标" >
+        <el-table-column prop="icon" label="图标">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image fit="contain" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
@@ -24,8 +24,8 @@
         </el-table-column>
         <el-table-column prop="title" label="类型名称" />
         <el-table-column prop="areaTitle" label="所属区域" />
-        <el-table-column prop="sort" label="排序"  />
-        <el-table-column prop="createTime" label="创建时间"  />
+        <el-table-column prop="sort" label="排序" />
+        <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right" min-width="150">
           <template #header>
