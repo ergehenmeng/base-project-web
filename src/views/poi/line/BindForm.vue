@@ -17,7 +17,6 @@ const router = useRouter();
 const disabled = ref(false);
 const pointList = ref([]);
 const dataList = ref([]);
-const rightChecked = ref([]);
 const sortList = ref([]);
 const pointMap = new Map();
 
@@ -39,7 +38,7 @@ const addMarker = (lng, lat) => {
 /**
  * 初始化高德地图, 指定默认显示的位置
  */
-const initMap = async () => {
+const initMap = (callback) => {
   window._AMapSecurityConfig = {
     securityJsCode: secret
   };
@@ -53,6 +52,7 @@ const initMap = async () => {
         zoom: 11,
         center: [defaultLng, defaultLat]
       });
+      callback();
     })
     .catch((e) => {
       console.warn(e);
@@ -103,16 +103,21 @@ const handleSave = () => {
   });
 };
 
-onMounted(() => {
-  initMap();
+const getDetail = () => {
   const params = route.params;
   bindDetailApi({ id: params.id }).then(({ data: { checkedList, pointList: points } }) => {
-    rightChecked.value = checkedList;
     dataList.value = points;
+    pointList.value = checkedList;
     points.forEach((item) => {
       pointMap.set(item.id, item);
     });
     refreshMarker(checkedList);
+  });
+}
+
+onMounted(async () => {
+  initMap(() => {
+    getDetail();
   });
 });
 
@@ -167,7 +172,6 @@ const handleRightCheckChange = (val) => {
           style="height: 280px; width: 432px"
           :titles="['未选择', '已选择']"
           target-order="push"
-          :right-default-checked="rightChecked"
           @right-check-change="handleRightCheckChange"
         >
           <template #default="{ option }">
