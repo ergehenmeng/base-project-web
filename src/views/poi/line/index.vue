@@ -145,7 +145,13 @@ const handleUnShelves = (row) => {
 };
 
 const handleBind = (row) => {
-  router.push('/poi/line/bind/' + row.id);
+  router.push({
+    path: '/poi/line/bind/' + row.id,
+    query: {
+      lng: row.longitude,
+      lat: row.latitude
+    }
+  });
 };
 
 const formatter = (row, column, cellValue) => {

@@ -15,10 +15,16 @@ const defaultLat = import.meta.env.VITE_MAP_LAT;
 const route = useRoute();
 const router = useRouter();
 const disabled = ref(false);
+// 选中的点位
 const pointList = ref([]);
+// 所有点位
 const dataList = ref([]);
+// 右侧选中的点位
 const sortList = ref([]);
+// 点位 <-> 经纬度
 const pointMap = new Map();
+
+const polylineRef = ref(null);
 
 /**
  * 添加标记点
@@ -38,7 +44,7 @@ const addMarker = (lng, lat) => {
 /**
  * 初始化高德地图, 指定默认显示的位置
  */
-const initMap = (callback) => {
+const initMap = (callback, lng = defaultLng, lat = defaultLat) => {
   window._AMapSecurityConfig = {
     securityJsCode: secret
   };
@@ -47,10 +53,11 @@ const initMap = (callback) => {
     version: '2.0',
     // 需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
     plugins: ['AMap.AutoComplete', 'AMap.PlaceSearch', 'AMap.Marker']
-  }).then((AMap) => {
+  })
+    .then((AMap) => {
       mapRef.value = new AMap.Map('mapContainer', {
-        zoom: 11,
-        center: [defaultLng, defaultLat]
+        zoom: 13,
+        center: [lng, lat]
       });
       callback();
     })
@@ -80,12 +87,26 @@ onUnmounted(() => {
  * @param locationList 点位ID(不含经纬度) array
  */
 const refreshMarker = (locationList) => {
+  const linePath = [];
   locationList.forEach((item) => {
     if (pointMap.has(item)) {
       const location = pointMap.get(item);
       addMarker(location.longitude, location.latitude);
+      linePath.push([location.longitude, location.latitude]);
     }
   });
+  const polyline = new AMap.Polyline({
+    path: linePath,
+    strokeWeight: 3,
+    strokeColor: 'blue',
+    lineJoin: 'round',
+    lineCap: 'round'
+  });
+  if (polylineRef.value) {
+    mapRef.value.remove(polylineRef.value);
+  }
+  mapRef.value.add(polyline);
+  polylineRef.value = polyline;
 };
 
 const handleSave = () => {
@@ -113,12 +134,16 @@ const getDetail = () => {
     });
     refreshMarker(checkedList);
   });
-}
+};
 
-onMounted(async () => {
-  initMap(() => {
-    getDetail();
-  });
+onMounted(() => {
+  initMap(
+    () => {
+      getDetail();
+    },
+    route.query.lng,
+    route.query.lat
+  );
 });
 
 const handleUp = () => {
@@ -136,6 +161,7 @@ const handleUp = () => {
   points.splice(index - 1, 1, itemId);
   points.splice(index, 1, before);
   pointList.value = points;
+  refreshMarker(pointList.value);
 };
 
 const handleDown = () => {
@@ -153,10 +179,15 @@ const handleDown = () => {
   points.splice(index + 1, 1, itemId);
   points.splice(index, 1, after);
   pointList.value = points;
+  refreshMarker(pointList.value);
 };
 
 const handleRightCheckChange = (val) => {
   sortList.value = val;
+};
+
+const pointChange = () => {
+  refreshMarker(pointList.value);
 };
 </script>
 
@@ -173,6 +204,7 @@ const handleRightCheckChange = (val) => {
           :titles="['未选择', '已选择']"
           target-order="push"
           @right-check-change="handleRightCheckChange"
+          @change="pointChange"
         >
           <template #default="{ option }">
             <span :title="option.title">{{ option.title }}</span>

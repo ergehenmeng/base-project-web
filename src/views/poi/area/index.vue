@@ -104,7 +104,7 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue ? h('span', { style: 'color: green' }, '已上架') : '未上架';
   } else if (column.property === 'latitude') {
-    return cellValue + '~' + row.longitude;
+    return row.longitude + '~' + cellValue;
   } else {
     return cellValue;
   }
