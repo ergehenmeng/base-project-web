@@ -4,17 +4,17 @@
     <ul>
       <li>
         <el-icon title="个人中心" @click="handleUser">
-          <UserFilled />
+          <User color="#FFFFFF"></User>
         </el-icon>
       </li>
       <li>
         <el-icon title="修改密码" @click="handleChangePwd">
-          <Unlock />
+          <Password color="#FFFFFF"></Password>
         </el-icon>
       </li>
       <li>
         <el-icon title="退出系统" @click="handleLogout">
-          <CircleCloseFilled />
+          <Logout color="#FFFFFF"></Logout>
         </el-icon>
       </li>
     </ul>
@@ -25,6 +25,9 @@
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
 import { confirmMsg } from '@/utils/message';
+import Logout from '@/components/icon/Logout.vue';
+import Password from '@/components/icon/Password.vue';
+import User from '@/components/icon/User.vue';
 
 const userStore = useUserStore();
 const changePwdRef = ref();

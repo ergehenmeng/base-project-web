@@ -3,23 +3,25 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="门票名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="优惠券名称" clearable @keyup.enter="search" />
         </el-form-item>
-        <el-form-item label="景区">
-          <ScenicSelect v-model="queryParams.scenicId" style="width: 250px !important"></ScenicSelect>
-        </el-form-item>
-        <el-form-item label="状态">
+        <el-form-item label="发放状态">
           <el-select v-model="queryParams.state" clearable>
-            <el-option label="待上架" :value="0" />
-            <el-option label="已上架" :value="1" />
-            <el-option label="强制下架" :value="2" />
+            <el-option label="未开始" :value="0" />
+            <el-option label="进行中" :value="1" />
+            <el-option label="已结束" :value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="票种">
-          <el-select v-model="queryParams.category" clearable>
-            <el-option label="成人票" :value="1" />
-            <el-option label="老人票" :value="2" />
-            <el-option label="儿童票" :value="3" />
+        <el-form-item label="领取方式">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="页面领取" :value="1" />
+            <el-option label="手动发放" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="有无库存">
+          <el-select v-model="queryParams.inStock" clearable>
+            <el-option label="有库存" :value="true" />
+            <el-option label="无库存" :value="false" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -29,31 +31,31 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="门票名称" min-width="200" />
-        <el-table-column prop="scenicName" label="所属景区" min-width="200" />
-        <el-table-column prop="category" label="票种" width="80" :formatter="formatter" />
+        <el-table-column prop="title" label="优惠券名称" min-width="200" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="salePrice" label="销售价" width="80" :formatter="formatter" />
-        <el-table-column prop="saleNum" label="真实销量" width="80" />
-        <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter" />
-        <el-table-column prop="stock" label="剩余库存" width="80" />
-        <el-table-column prop="advanceDay" label="提前几天购票" width="120" :formatter="formatter" />
-        <el-table-column prop="verificationType" label="核销方式" width="120" :formatter="formatter" />
-        <el-table-column prop="realBuy" label="是否实名" width="100" :formatter="formatter" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="stock" label="库存" min-width="80" />
+        <el-table-column prop="receiveNum" label="已领取数量" min-width="120" />
+        <el-table-column prop="useNum" label="已使用数量" min-width="120" />
+        <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
+        <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
+        <el-table-column prop="discountValue" label="折扣比例" width="80" />
+        <el-table-column prop="useThreshold" label="使用门槛" width="100" :formatter="formatter" />
+        <el-table-column prop="useStartTime" label="使用时间段" width="280" :formatter="formatter" />
+        <el-table-column prop="startTime" label="发放开始时间" width="180" />
+        <el-table-column prop="endTime" label="发放截止时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'hTl0'" title="新增门票" @click="handleCreate"></CreateButton>
+            <CreateButton v-has-perm="'PPi0'" title="新增优惠券" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'iTl0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
-            <el-button v-has-perm="'XTl0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'qTl0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
-            <el-button v-has-perm="'8Tl0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
-            <el-button v-has-perm="'gTl0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
-            <el-button v-has-perm="'2Tl0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'ePi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'fPi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'EPi0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleOpen(scope.row)" link title="启用"></el-button>
+            <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
+            <el-button v-has-perm="'1Pi0'" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="发放优惠券"></el-button>
+            <el-button v-has-perm="'CPi0'" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="领取详情"></el-button>
+            <el-button v-has-perm="'zPi0'" :icon="Link" @click="handleDelete(scope.row)" link title="生成链接"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -69,13 +71,12 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/ticket';
+import { deleteApi, listPageApi } from '@/api/marketing/coupon';
 import { onMounted, reactive, ref } from 'vue';
-import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
+import { Bottom, Document, Download, Edit, Link, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import ScenicSelect from '@/components/ScenicSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
@@ -83,14 +84,14 @@ const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('pTl0');
+const selectAuth = userStore.hasAuth('sPi0');
 const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
   state: null,
-  scenicId: null,
-  category: null
+  mode: null,
+  inStock: null
 });
 
 const getPage = async () => {
@@ -116,102 +117,70 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该门票吗?', () => {
+  confirmMsg('确定要删除该优惠券吗?', () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
-      successMsg('门票删除成功');
+      successMsg('优惠券删除成功');
       getPage();
     });
   });
 };
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === 'category') {
-    switch (cellValue) {
-      case 1:
-        return '成人票';
-      case 2:
-        return '老人票';
-      case 3:
-        return '儿童票';
-      default:
-        return '无';
-    }
+  if (column.property === 'mode') {
+    return cellValue === 1 ? '页面领取' : '手动发放';
   } else if (column.property === 'state') {
-    if (cellValue === 0) {
-      return '待上架';
-    }
-    return cellValue === 1
-      ? h('span', { style: 'color: green;' }, '已上架')
-      : h(
-          'span',
-          {
-            style: 'color: red;',
-            title: '被平台强制下级后无法继续上架'
-          },
-          '强制下架'
-        );
-  } else if (column.property === 'startDate') {
-    return row.startDate + '~' + row.endDate;
-  } else if (column.property === 'verificationType') {
-    return cellValue === 1
-      ? h(
-          'span',
-          {
-            style: 'color: green;',
-            title: '核销端核销'
-          },
-          '手动核销'
-        )
-      : h('span', { style: 'color: green;', title: '次日凌晨0点开始核销' }, '自动核销');
-  } else if (column.property === 'realBuy') {
-    return cellValue ? '是' : '否';
-  } else if (column.property === 'advanceDay') {
-    return cellValue + '天';
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : '禁用';
+  } else if (column.property === 'couponType') {
+    return cellValue === 1 ? '抵扣券' : '折扣券';
+  } else if (column.property === 'useThreshold') {
+    return cellValue === '0' ? '不限制' : cellValue;
+  } else if (column.property === 'useStartTime') {
+    return cellValue + '~' + row.useEndTime;
   } else {
     return cellValue;
   }
 };
 
-const handleShelves = (row) => {
-  confirmMsg('确定要上架该门票吗?', () => {
+const handleOpen = (row) => {
+  confirmMsg('确定要启用该优惠券吗?', () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
-      successMsg('门票上架成功');
+      successMsg('优惠券启用成功');
       getPage();
     });
   });
 };
 
-const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该门票吗?', () => {
+const handleClose = (row) => {
+  confirmMsg('确定要禁用该优惠券吗?', () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
-      successMsg('门票下架成功');
+      successMsg('优惠券禁用成功');
       getPage();
     });
   });
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该门票吗?', () => {
+  confirmMsg('确定要强制下架该优惠券吗?', () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
-      successMsg('门票强制下架成功');
+      successMsg('优惠券强制下架成功');
       getPage();
     });
   });
 };
 
 const handleCreate = () => {
-  router.push('/product/ticket/create');
+  router.push('/marketing/coupon/create');
 };
 
 const handleEdit = (row) => {
-  router.push('/product/ticket/edit/' + row.id);
+  router.push('/marketing/coupon/edit/' + row.id);
 };
 
 const handleDetail = (row) => {
-  router.push('/product/ticket/detail/' + row.id);
+  router.push('/marketing/coupon/detail/' + row.id);
 };
 </script>

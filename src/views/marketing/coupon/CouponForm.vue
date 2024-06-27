@@ -2,7 +2,7 @@
   <div class="edit-content">
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="门票名称" prop="title">
+      <el-form-item label="优惠券名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属景区" prop="scenicId">
@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import { createApi, selectApi, updateApi } from '@/api/product/ticket';
+import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -83,9 +83,8 @@ const formDataRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
-  title: [{ required: true, message: '门票名称不能为空', trigger: 'blur' }],
-  scenicId: [{ required: true, message: '请选择所属景区', trigger: 'change' }],
-  salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
+  title: [{ required: true, message: '优惠券名称不能为空', trigger: 'blur' }],
+  maxLimit: [{ required: true, message: '单人领取限制不能为空', trigger: 'blur' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
   dueDate: [{ required: true, message: '预定日期不能为空', trigger: 'blur', type: 'array' }],
@@ -95,19 +94,22 @@ const formRules = reactive({
 const formData = ref({
   id: null,
   title: null,
-  scenicId: null,
-  category: null,
-  linePrice: null,
-  salePrice: null,
-  virtualNum: 0,
-  stock: 99999,
-  verificationType: 1,
-  realBuy: true,
-  advanceDay: 1,
-  quota: 99,
-  dueDate: [],
-  introduceText: null,
-  introduce: null
+  stock: null,
+  maxLimit: 1,
+  mode: 1,
+  couponType: 1,
+  useScope: 1,
+  storeId: null,
+  deductionValue: null,
+  discountValue: null,
+  useThreshold: null,
+  productType: null,
+  startTime: null,
+  endTime: null,
+  useStartTime: null,
+  useEndTime: null,
+  instruction: null,
+  productIds: []
 });
 
 const handleSave = () => {
@@ -119,7 +121,7 @@ const handleSave = () => {
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('门票信息更新成功');
+            successMsg('优惠券信息更新成功');
             router.go(-1);
           })
           .finally(() => {
@@ -128,7 +130,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('门票添加成功');
+            successMsg('优惠券添加成功');
             router.go(-1);
           })
           .finally(() => {
@@ -144,7 +146,7 @@ onMounted(() => {
   if (params.id !== undefined) {
     loading.value = true;
     // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith('/product/ticket/detail');
+    disabled.value = route.fullPath.startsWith('/marketing/coupon/detail');
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
