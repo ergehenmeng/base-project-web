@@ -1,12 +1,12 @@
 <script setup>
-import { bindDetailApi } from '@/api/poi/line';
+import { bindApi, bindDetailApi } from '@/api/poi/line';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AMapLoader from '@amap/amap-jsapi-loader';
-import {errorMsg} from "@/utils/message.js";
+import { errorMsg, successMsg } from '@/utils/message.js';
 
 const mapRef = ref(null);
-const marker = ref(null);
+const markerList = ref([]);
 const secret = import.meta.env.VITE_MAP_SECRET;
 const key = import.meta.env.VITE_MAP_KEY;
 const defaultLng = import.meta.env.VITE_MAP_LNG;
@@ -19,21 +19,27 @@ const pointList = ref([]);
 const dataList = ref([]);
 const rightChecked = ref([]);
 const sortList = ref([]);
+const pointMap = new Map();
 
+/**
+ * 添加标记点
+ * @param lng 经度
+ * @param lat 维度
+ */
 const addMarker = (lng, lat) => {
-  if (marker.value) {
-    marker.value.setPosition([lng, lat]);
-    return;
-  }
-  marker.value = new AMap.Marker({
+  const marker = new AMap.Marker({
     icon: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
     position: [lng, lat],
     offset: new AMap.Pixel(-9, -21)
   });
-  marker.value.setMap(mapRef.value);
+  marker.setMap(mapRef.value);
+  markerList.value.push(marker);
 };
 
-const initMap = () => {
+/**
+ * 初始化高德地图, 指定默认显示的位置
+ */
+const initMap = async () => {
   window._AMapSecurityConfig = {
     securityJsCode: secret
   };
@@ -42,16 +48,11 @@ const initMap = () => {
     version: '2.0',
     // 需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
     plugins: ['AMap.AutoComplete', 'AMap.PlaceSearch', 'AMap.Marker']
-  })
-    .then((AMap) => {
-      const map = new AMap.Map('mapContainer', {
+  }).then((AMap) => {
+      mapRef.value = new AMap.Map('mapContainer', {
         zoom: 11,
         center: [defaultLng, defaultLat]
       });
-      map.on('click', (e) => {
-        addMarker(e.lnglat.getLng(), e.lnglat.getLat());
-      });
-      mapRef.value = map;
     })
     .catch((e) => {
       console.warn(e);
@@ -65,33 +66,65 @@ const props = ref({
 
 const destroyMap = () => {
   mapRef.value?.destroy();
-  marker.value?.setMap(null);
-  marker.value = null;
+  markerList.value.forEach((item) => {
+    item.setMap(null);
+  });
 };
 
 onUnmounted(() => {
   destroyMap();
 });
 
-const handleSave = () => {};
+/**
+ * 刷新地图点位
+ * @param locationList 点位ID(不含经纬度) array
+ */
+const refreshMarker = (locationList) => {
+  locationList.forEach((item) => {
+    if (pointMap.has(item)) {
+      const location = pointMap.get(item);
+      addMarker(location.longitude, location.latitude);
+    }
+  });
+};
+
+const handleSave = () => {
+  if (pointList.value.length < 1) {
+    errorMsg('请选择至少两个点位');
+    return;
+  }
+  const formData = {
+    lineId: route.params.id,
+    pointIds: pointList.value
+  };
+  bindApi(formData).then((res) => {
+    successMsg('线路点位绑定成功');
+    router.go(-1);
+  });
+};
 
 onMounted(() => {
   initMap();
   const params = route.params;
-  bindDetailApi({ id: params.id }).then(({ data }) => {
-    dataList.value = data.pointList;
+  bindDetailApi({ id: params.id }).then(({ data: { checkedList, pointList: points } }) => {
+    rightChecked.value = checkedList;
+    dataList.value = points;
+    points.forEach((item) => {
+      pointMap.set(item.id, item);
+    });
+    refreshMarker(checkedList);
   });
 });
 
 const handleUp = () => {
   if (sortList.value.length > 1 || sortList.value.length === 0) {
-    errorMsg("请选择一个要排序的点位");
+    errorMsg('请选择一个要排序的点位');
     return;
   }
   const itemId = sortList.value[0];
   const points = pointList.value;
   const index = points.indexOf(itemId);
-  if (index <= 0 ) {
+  if (index <= 0) {
     return;
   }
   const before = points[index - 1];
@@ -99,15 +132,16 @@ const handleUp = () => {
   points.splice(index, 1, before);
   pointList.value = points;
 };
+
 const handleDown = () => {
   if (sortList.value.length > 1 || sortList.value.length === 0) {
-    errorMsg("请选择一个要排序的点位");
+    errorMsg('请选择一个要排序的点位');
     return;
   }
   const points = pointList.value;
   const itemId = sortList.value[0];
   const index = points.indexOf(itemId);
-  if (index === -1 || index === points.length - 1 ) {
+  if (index === -1 || index === points.length - 1) {
     return;
   }
   const after = points[index + 1];
@@ -118,8 +152,7 @@ const handleDown = () => {
 
 const handleRightCheckChange = (val) => {
   sortList.value = val;
-}
-
+};
 </script>
 
 <template>
@@ -127,7 +160,16 @@ const handleRightCheckChange = (val) => {
     <div id="app">
       <div id="mapContainer" style="height: calc(100vh - 190px)"></div>
       <div class="transfer-card">
-        <el-transfer v-model="pointList" :data="dataList" :props="props" style="height: 280px; width: 432px" :titles="['未选择', '已选择']"  target-order="push" :right-default-checked="rightChecked" @right-check-change="handleRightCheckChange">
+        <el-transfer
+          v-model="pointList"
+          :data="dataList"
+          :props="props"
+          style="height: 280px; width: 432px"
+          :titles="['未选择', '已选择']"
+          target-order="push"
+          :right-default-checked="rightChecked"
+          @right-check-change="handleRightCheckChange"
+        >
           <template #default="{ option }">
             <span :title="option.title">{{ option.title }}</span>
           </template>
@@ -165,6 +207,7 @@ const handleRightCheckChange = (val) => {
   border-radius: 3px;
   min-height: calc(100vh - 120px);
 }
+
 #app {
   position: relative;
 
