@@ -4,7 +4,7 @@
       <el-transfer v-model="productIds" :data="pageData" :props="props" :titles="['未选择', '已选择']" target-order="push">
         <template #default="{ option }">
           <span style="float: left" :title="option.title">{{ option.title }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px; margin-right: 10px;">{{ option.state === 0 ? '未上架' : option.state === 2 ? '强制下架' : '已上架' }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px; margin-right: 20px;">{{ option.state === 0 ? '未上架' : option.state === 2 ? '强制下架' : '已上架' }}</span>
         </template>
         <template #left-footer>
           <el-button-group>
@@ -34,7 +34,8 @@ const productIds = ref([]);
 
 const props = ref({
   key: 'id',
-  label: 'title'
+  label: 'title',
+  disabled: 'disabled'
 });
 
 const total = ref(0);
