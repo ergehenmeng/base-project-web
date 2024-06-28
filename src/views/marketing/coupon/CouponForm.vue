@@ -1,58 +1,73 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="优惠券名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属景区" prop="scenicId">
-        <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled"></ScenicSelect>
+      <el-form-item label="优惠券类型" prop="couponType">
+        <el-radio-group v-model="formData.couponType" @change="handleCouponType">
+          <el-radio label="抵扣券" :value="1"></el-radio>
+          <el-radio label="折扣券" :value="2"></el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="票种" prop="category">
-        <el-select v-model="formData.category">
-          <el-option label="成人票" :value="1" />
-          <el-option label="老人票" :value="2" />
-          <el-option label="儿童票" :value="3" />
-        </el-select>
+      <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1">
+        <el-input v-model="formData.deductionValue" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
       </el-form-item>
-      <el-form-item label="划线价">
-        <el-input v-model="formData.linePrice" placeholder="小于销售价时不显示" show-word-limit maxlength="6" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
+      <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2">
+        <el-input v-model="formData.discountValue" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="销售价" prop="salePrice">
-        <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
+      <el-form-item label="使用门槛" :prop="thresholdProp">
+        <el-radio-group v-model="formData.threshold" @change="handleThreshold">
+          <el-radio label="不限制" :value="1"></el-radio>
+          <el-radio :value="2"
+            >满
+            <el-input
+              style="width: 50px; margin: 0 5px"
+              onkeyup="this.value=this.value.replace(/\D/g,'')"
+              v-model="formData.useThreshold"
+              maxlength="6"
+              @keyup="formData.useThreshold = numberValidator(formData.useThreshold)"
+              :disabled="thresholdDisabled"
+            ></el-input>
+            元使用
+          </el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="虚拟销量" prop="virtualNum">
-        <el-input v-model="formData.virtualNum" placeholder="不填写默认为0" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="产品类型" prop="productType">
+        <el-radio-group v-model="formData.productType">
+          <el-radio label="门票" value="ticket"></el-radio>
+          <el-radio label="民宿" value="homestay"></el-radio>
+          <el-radio label="餐饮券" value="voucher"></el-radio>
+          <el-radio label="零售" value="item"></el-radio>
+          <el-radio label="线路" value="line"></el-radio>
+          <el-radio label="场馆" value="venue"></el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="库存" prop="stock">
-        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="使用范围" prop="useScope">
+        <el-radio-group v-model="formData.useScope">
+          <el-radio label="店铺通用" :value="1"></el-radio>
+          <el-radio label="指定商品" :value="2"></el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="提前购票(天)" prop="advanceDay">
-        <el-input v-model="formData.advanceDay" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="关联店铺" prop="storeId">
+        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false"></StoreAllSelect>
       </el-form-item>
-      <el-form-item label="单次限购(张)" prop="quota">
-        <el-input v-model="formData.quota" placeholder="默认限购99张" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
+        <el-button @click="handleProductSelect" type="primary" >{{formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品'}}<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
       </el-form-item>
-      <el-form-item label="预定时间" prop="dueDate">
+      <el-form-item label="发放时间" prop="timeList">
         <div style="width: 350px">
-          <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="formData.dueDate" style="width: 350px"></el-date-picker>
+          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="核销方式" prop="verificationType">
-        <el-radio-group v-model="formData.verificationType">
-          <el-radio :value="1" title="核销端核销">手动核销</el-radio>
-          <el-radio :value="0" title="次日凌晨自动核销">自动核销</el-radio>
-        </el-radio-group>
+      <el-form-item label="使用时间" prop="useTimeList">
+        <div style="width: 350px">
+          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" v-model="formData.useTimeList" time-format="HH:mm" style="width: 350px"></el-date-picker>
+        </div>
       </el-form-item>
-      <el-form-item label="是否实名购票" prop="realBuy">
-        <el-radio-group v-model="formData.realBuy">
-          <el-radio :value="true">实名制</el-radio>
-          <el-radio :value="false">非实名制</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce"></div>
+      <el-form-item label="使用说明" prop="instruction">
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" autosize maxlength="50" show-word-limit />
       </el-form-item>
     </el-form>
     <div>
@@ -65,30 +80,41 @@
       </div>
     </div>
   </div>
+  <TicketDialog ref="ticketRef" @reload="setProduct"></TicketDialog>
 </template>
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
 import { reactive, ref } from 'vue';
-import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { successMsg } from '@/utils/message.js';
+import { errorMsg, successMsg } from '@/utils/message.js'
 import { numberValidator } from '@/utils/common.js';
-import ScenicSelect from '@/components/ScenicSelect.vue';
+import StoreAllSelect from '@/components/StoreAllSelect.vue';
+import { ArrowRight } from '@element-plus/icons-vue';
+import TicketDialog from '@/components/TicketDialog.vue'
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
+const thresholdProp = ref('threshold');
+const thresholdDisabled = ref(true);
+const ticketRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '优惠券名称不能为空', trigger: 'blur' }],
   maxLimit: [{ required: true, message: '单人领取限制不能为空', trigger: 'blur' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
-  advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
-  dueDate: [{ required: true, message: '预定日期不能为空', trigger: 'blur', type: 'array' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
+  couponType: [{ required: true, message: '请选择产品类型', trigger: 'change' }],
+  useScope: [{ required: true, message: '请选择使用范围', trigger: 'change' }],
+  threshold: [{ required: true, message: '请选择使用门槛', trigger: 'change' }],
+  productType: [{ required: true, message: '请选择优惠券类型', trigger: 'change' }],
+  timeList: [{ required: true, message: '请选择发放时间', trigger: 'blur', type: 'array' }],
+  useTimeList: [{ required: true, message: '请选择使用时间', trigger: 'blur', type: 'array' }],
+  instruction: [{ required: true, message: '使用说明不能为空', trigger: 'blur' }],
+  deductionValue: [{ required: true, message: '请输入抵扣金额', trigger: 'blur' }]
 });
 
 const formData = ref({
@@ -102,22 +128,28 @@ const formData = ref({
   storeId: null,
   deductionValue: null,
   discountValue: null,
+  threshold: 1,
   useThreshold: null,
-  productType: null,
-  startTime: null,
-  endTime: null,
-  useStartTime: null,
-  useEndTime: null,
+  productType: 'ticket',
+  timeList: [],
+  useTimeList: [],
   instruction: null,
   productIds: []
 });
+
+
+const setProduct = (data) => {
+  formData.value.productIds = data;
+};
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.startDate = formData.value.dueDate[0];
-      formData.value.endDate = formData.value.dueDate[1];
+      formData.value.startTime = formData.value.timeList[0];
+      formData.value.endTime = formData.value.timeList[1];
+      formData.value.useStartTime = formData.value.useTimeList[0];
+      formData.value.useEndTime = formData.value.useTimeList[1];
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -140,6 +172,49 @@ const handleSave = () => {
     }
   });
 };
+
+const handleCouponType = (value) => {
+  if (value === 1) {
+    formRules.deductionValue = [{ required: true, message: '请输入抵扣金额', trigger: 'blur' }];
+    formRules.discountValue = [];
+  } else {
+    formRules.deductionValue = [];
+    formRules.discountValue = [
+      { required: true, message: '请输入折扣比例', trigger: 'blur' },
+      {
+        validator: (rule, value, callback) => {
+          const rate = parseInt(value);
+          if (rate < 10 || rate >= 100) {
+            callback(new Error('折扣比例应在10-99之间'));
+          } else {
+            callback();
+          }
+        },
+        trigger: 'blur'
+      }
+    ];
+  }
+};
+
+const handleThreshold = (value) => {
+  if (value === 1) {
+    thresholdProp.value = 'threshold';
+    thresholdDisabled.value = true;
+    formRules.threshold = [{ required: true, message: '请选择使用门槛', trigger: 'change' }];
+  } else {
+    thresholdProp.value = 'useThreshold';
+    thresholdDisabled.value = false;
+    formRules.useThreshold = [{ required: true, message: '请输入门槛金额', trigger: 'change' }];
+  }
+};
+
+const handleProductSelect = () => {
+  // if (!formData.value.storeId) {
+  //   errorMsg('请选择店铺');
+  //   return;
+  // }
+  ticketRef.value.openDialog();
+}
 
 onMounted(() => {
   const params = route.params;

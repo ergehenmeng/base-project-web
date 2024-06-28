@@ -56,7 +56,7 @@ export const platformUnShelvesApi = (data) => {
   });
 };
 
-export const listApi = () => {
+export const travelListApi = () => {
   return request.get({
     url: '/manage/travel/list'
   });

@@ -1,10 +1,23 @@
 <template>
-  <svg t="1719126177357" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6606" width="14" height="14">
+  <svg t="1719126177357" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6606" :width="props.size" :height="props.size">
     <path
       d="M512 128a382.6 382.6 0 1 1-149.45 30.15A381.54 381.54 0 0 1 512 128m0-64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.58 448-448S759.42 64 512 64z"
       p-id="6607"
-      fill="#36ab60"
+      :fill="props.color"
     ></path>
-    <path d="M352 256v512l448-256-448-256z" p-id="6608" fill="#36ab60"></path>
+    <path d="M352 256v512l448-256-448-256z" p-id="6608" :fill="props.color"></path>
   </svg>
 </template>
+
+<script setup>
+const props = defineProps({
+  color: {
+    type: String,
+    default: '#36ab60'
+  },
+  size: {
+    type: Number,
+    default: 14
+  }
+});
+</script>

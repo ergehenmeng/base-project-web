@@ -1,7 +1,9 @@
 <template>
   <div class="main-header">
-    <span class="main-header-title">欢迎您: {{ nickName }}</span>
-    <ul>
+    <ul class="">
+      <li>
+        <span class="main-header-title">欢迎您: {{ nickName }}</span>
+      </li>
       <li>
         <el-icon title="个人中心" @click="handleUser">
           <User color="#FFFFFF"></User>
@@ -61,23 +63,19 @@ const handleChangePwd = () => {
   ul {
     list-style: none;
     display: inline-flex;
-
     li {
       color: white;
       margin-right: 10px;
-
       i {
         cursor: pointer;
+        font-size: 15px;
       }
     }
   }
 
   .main-header-title {
-    color: white;
     font-size: 15px;
     font-weight: bold;
-    margin-right: 20px;
-    padding-bottom: 2px;
   }
 }
 </style>

@@ -7,7 +7,7 @@
   </el-select>
 </template>
 <script setup>
-import { listApi } from '@/api/product/homestay';
+import { homestayListApi } from '@/api/product/homestay';
 
 const homestayList = ref([]);
 
@@ -24,7 +24,7 @@ const props = defineProps({
 const homestayId = defineModel();
 
 onMounted(() => {
-  listApi().then((res) => {
+  homestayListApi().then((res) => {
     homestayList.value = res.data;
   });
 });

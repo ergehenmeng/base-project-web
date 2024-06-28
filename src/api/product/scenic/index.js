@@ -7,7 +7,7 @@ export const listPageApi = (params) => {
   });
 };
 
-export const listApi = () => {
+export const scenicListApi = () => {
   return request.get({
     url: '/manage/scenic/list'
   });

@@ -7,10 +7,9 @@
   </el-select>
 </template>
 <script setup>
-import { listApi } from '@/api/product/venue';
+import { venueListApi } from '@/api/product/venue';
 
 const venueList = ref([]);
-
 const props = defineProps({
   disabled: {
     type: Boolean,
@@ -24,7 +23,7 @@ const props = defineProps({
 const venueId = defineModel();
 
 onMounted(() => {
-  listApi().then((res) => {
+  venueListApi().then((res) => {
     venueList.value = res.data;
   });
 });

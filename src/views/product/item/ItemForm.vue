@@ -6,12 +6,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="storeId">
-        <el-select v-model="formData.storeId" filterable>
-          <el-option v-for="item in storeList" :key="item.storeId" :label="item.storeName" :value="item.storeId">
-            <span style="float: left">{{ item.storeName }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? h('span', { style: 'color: red' }, '强制下架') : '已上架' }}</span>
-          </el-option>
-        </el-select>
+        <StoreSelect v-model="formData.storeId"></StoreSelect>
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
         <el-input v-model="formData.depict" show-word-limit maxlength="40" />
@@ -63,7 +58,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/item';
-import { storeListApi } from '@/api/product/store';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -73,6 +67,7 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import MapContainer from '@/components/MapContainer.vue';
 import ItemTag from '@/components/ItemTag.vue';
 import ExpressSelect from '@/components/ExpressSelect.vue';
+import StoreSelect from '@/components/StoreSelect.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -146,36 +141,27 @@ const handleSave = () => {
 };
 
 onMounted(() => {
-  storeListApi()
-    .then((res) => {
-      storeList.value = res.data;
-    })
-    .then(() => {
-      const params = route.params;
-      if (params.id !== undefined) {
-        loading.value = true;
-        // 详情页面进来不可点击
-        disabled.value = route.fullPath.startsWith('/product/item/detail');
-        selectApi(params)
-          .then((res) => {
-            formData.value = { ...res.data };
-            if (res.data.coverUrl) {
-              formData.value.coverList = res.data.coverUrl.split(',');
-            } else {
-              formData.value.coverList = [];
-            }
-            formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-            formData.value.introduceText = res.data.introduce;
-          })
-          .finally(() => {
-            loading.value = false;
-          });
-      }
-    });
+  const params = route.params;
+  if (params.id !== undefined) {
+    loading.value = true;
+    // 详情页面进来不可点击
+    disabled.value = route.fullPath.startsWith('/product/item/detail');
+    selectApi(params)
+      .then((res) => {
+        formData.value = { ...res.data };
+        if (res.data.coverUrl) {
+          formData.value.coverList = res.data.coverUrl.split(',');
+        } else {
+          formData.value.coverList = [];
+        }
+        formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+        formData.value.introduceText = res.data.introduce;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  }
 });
-const handleMap = () => {
-  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
-};
 
 const setLocation = (lng, lat) => {
   formData.value.longitude = lng;

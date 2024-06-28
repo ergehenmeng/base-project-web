@@ -7,7 +7,7 @@ export const listPageApi = (params) => {
   });
 };
 
-export const listApi = () => {
+export const restaurantListApi = () => {
   return request.get({
     url: '/manage/restaurant/list'
   });
