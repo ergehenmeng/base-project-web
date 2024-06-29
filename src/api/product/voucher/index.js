@@ -7,6 +7,13 @@ export const listPageApi = (params) => {
   });
 };
 
+export const voucherPageApi = (params) => {
+  return request.get({
+    url: '/manage/restaurant/voucher/productListPage',
+    params
+  });
+};
+
 export const createApi = (data) => {
   return request.post({
     url: '/manage/restaurant/voucher/create',

@@ -125,6 +125,23 @@ export const parseMerchantType = (cellValue) => {
   return typeList.join(',');
 };
 
+export const parseProductType = (value) => {
+  switch (value) {
+    case 'ticket':
+      return '门票';
+    case 'item':
+      return '零售';
+    case 'voucher':
+      return '餐饮券';
+    case "venue":
+      return '场地';
+    case "line":
+      return '线路';
+    case "homestay":
+      return '房型';
+  }
+};
+
 /**
  * 禁用小于当前时间的日期
  * @param time date

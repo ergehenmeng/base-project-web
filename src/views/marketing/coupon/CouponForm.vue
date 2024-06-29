@@ -3,39 +3,45 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="优惠券名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20" />
+        <el-input v-model="formData.title" show-word-limit maxlength="20" :disabled="editDisabled"/>
       </el-form-item>
       <el-form-item label="优惠券类型" prop="couponType">
-        <el-radio-group v-model="formData.couponType" @change="handleCouponType">
+        <el-radio-group v-model="formData.couponType" @change="handleCouponType" :disabled="editDisabled">
           <el-radio label="抵扣券" :value="1"></el-radio>
           <el-radio label="折扣券" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1">
-        <el-input v-model="formData.deductionValue" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
+      <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1" >
+        <el-input v-model="formData.deductionValue" :disabled="editDisabled" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
       </el-form-item>
-      <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2">
+      <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="editDisabled">
         <el-input v-model="formData.discountValue" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="使用门槛" :prop="thresholdProp">
-        <el-radio-group v-model="formData.threshold" @change="handleThreshold">
-          <el-radio label="不限制" :value="1"></el-radio>
+        <el-radio-group v-model="formData.threshold" @change="handleThreshold" :disabled="editDisabled">
           <el-radio :value="2"
             >满
             <el-input
-              style="width: 50px; margin: 0 5px"
+              style="width: 80px; margin: 0 5px"
               onkeyup="this.value=this.value.replace(/\D/g,'')"
               v-model="formData.useThreshold"
               maxlength="6"
               @keyup="formData.useThreshold = numberValidator(formData.useThreshold)"
-              :disabled="thresholdDisabled"
+              :disabled="thresholdDisabled || editDisabled"
             ></el-input>
             元使用
           </el-radio>
+          <el-radio label="不限制" :value="1"></el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="库存" prop="stock" >
+        <el-input v-model="formData.stock" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      </el-form-item>
+      <el-form-item label="单人领取限制" prop="maxLimit" >
+        <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      </el-form-item>
       <el-form-item label="产品类型" prop="productType">
-        <el-radio-group v-model="formData.productType">
+        <el-radio-group v-model="formData.productType" :disabled="editDisabled">
           <el-radio label="门票" value="ticket"></el-radio>
           <el-radio label="民宿" value="homestay"></el-radio>
           <el-radio label="餐饮券" value="voucher"></el-radio>
@@ -44,30 +50,30 @@
           <el-radio label="场馆" value="venue"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="使用范围" prop="useScope">
-        <el-radio-group v-model="formData.useScope">
+      <el-form-item label="使用范围" prop="useScope" >
+        <el-radio-group v-model="formData.useScope" @change="handleUseScope" :disabled="editDisabled">
           <el-radio label="店铺通用" :value="1"></el-radio>
           <el-radio label="指定商品" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="关联店铺" prop="storeId">
-        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false"></StoreAllSelect>
+        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled"></StoreAllSelect>
       </el-form-item>
-      <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
+      <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2" >
         <el-button @click="handleProductSelect" type="primary" >{{formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品'}}<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
       </el-form-item>
-      <el-form-item label="发放时间" prop="timeList">
+      <el-form-item label="发放时间" prop="timeList" >
         <div style="width: 350px">
-          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
+          <el-date-picker :disabled="editDisabled" type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="使用时间" prop="useTimeList">
+      <el-form-item label="使用时间" prop="useTimeList" >
         <div style="width: 350px">
-          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" v-model="formData.useTimeList" time-format="HH:mm" style="width: 350px"></el-date-picker>
+          <el-date-picker :disabled="editDisabled" type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" v-model="formData.useTimeList" time-format="HH:mm" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="使用说明" prop="instruction">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" autosize maxlength="50" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.instruction" autosize maxlength="50" show-word-limit />
       </el-form-item>
     </el-form>
     <div>
@@ -80,7 +86,7 @@
       </div>
     </div>
   </div>
-  <TicketDialog ref="ticketRef" @reload="setProduct"></TicketDialog>
+  <ProductDialog ref="formRef" @reload="setProduct" ></ProductDialog>
 </template>
 
 <script setup>
@@ -91,16 +97,17 @@ import { errorMsg, successMsg } from '@/utils/message.js'
 import { numberValidator } from '@/utils/common.js';
 import StoreAllSelect from '@/components/StoreAllSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
-import TicketDialog from '@/components/TicketDialog.vue'
+import ProductDialog from '@/components/ProductDialog.vue'
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
+const editDisabled = ref(false);
 const thresholdProp = ref('threshold');
 const thresholdDisabled = ref(true);
-const ticketRef = ref();
+const formRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '优惠券名称不能为空', trigger: 'blur' }],
@@ -120,7 +127,7 @@ const formRules = reactive({
 const formData = ref({
   id: null,
   title: null,
-  stock: null,
+  stock: 9999,
   maxLimit: 1,
   mode: 1,
   couponType: 1,
@@ -136,7 +143,6 @@ const formData = ref({
   instruction: null,
   productIds: []
 });
-
 
 const setProduct = (data) => {
   formData.value.productIds = data;
@@ -201,10 +207,12 @@ const handleThreshold = (value) => {
     thresholdProp.value = 'threshold';
     thresholdDisabled.value = true;
     formRules.threshold = [{ required: true, message: '请选择使用门槛', trigger: 'change' }];
+    formRules.useThreshold = [];
   } else {
     thresholdProp.value = 'useThreshold';
     thresholdDisabled.value = false;
-    formRules.useThreshold = [{ required: true, message: '请输入门槛金额', trigger: 'change' }];
+    formRules.useThreshold = [{ required: true, message: '请输入门槛金额', trigger: 'blur' }];
+    formRules.threshold = [];
   }
 };
 
@@ -213,7 +221,15 @@ const handleProductSelect = () => {
   //   errorMsg('请选择店铺');
   //   return;
   // }
-  ticketRef.value.openDialog();
+  formRef.value.openDialog(formData.value.productType, formData.value.productIds);
+}
+
+const handleUseScope = () => {
+  if (formData.value.useScope === 2) {
+    formRules.productIds = [{ required: true, message: '请选择关联的商品', trigger: 'change' }];
+  } else {
+    formRules.productIds = [];
+  }
 }
 
 onMounted(() => {
@@ -225,8 +241,20 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.dueDate = [res.data.startDate, res.data.endDate];
-        formData.value.introduceText = res.data.introduce;
+        formData.value.timeList = [res.data.startTime, res.data.endTime];
+        formData.value.useTimeList = [res.data.useStartTime, res.data.useEndTime];
+        handleCouponType(res.data.couponType);
+        const useThreshold = parseFloat(res.data.useThreshold);
+        if (useThreshold > 0) {
+          formData.value.threshold = 2;
+          formData.value.useThreshold = res.data.useThreshold;
+        } else {
+          formData.value.threshold = 1;
+          formData.value.useThreshold = null;
+        }
+        handleUseScope();
+        handleThreshold(formData.value.threshold)
+        editDisabled.value = true;
       })
       .finally(() => {
         loading.value = false;

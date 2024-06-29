@@ -33,17 +33,16 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="优惠券名称" min-width="200" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="stock" label="库存" min-width="80" />
-        <el-table-column prop="receiveNum" label="已领取数量" min-width="120" />
-        <el-table-column prop="useNum" label="已使用数量" min-width="120" />
+        <el-table-column prop="stock" label="库存" width="80" />
+        <el-table-column prop="receiveNum" label="已领取数量" width="120" />
+        <el-table-column prop="useNum" label="已使用数量" width="120" />
         <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
         <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
         <el-table-column prop="discountValue" label="折扣比例" width="80" />
         <el-table-column prop="useThreshold" label="使用门槛" width="100" :formatter="formatter" />
-        <el-table-column prop="useStartTime" label="使用时间段" width="280" :formatter="formatter" />
-        <el-table-column prop="startTime" label="发放开始时间" width="180" />
-        <el-table-column prop="endTime" label="发放截止时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column prop="useStartTime" label="使用时间段" min-width="280" :formatter="formatter" />
+        <el-table-column prop="startTime" label="发放开始段" min-width="280" :formatter="formatter" />
+        <el-table-column label="操作" fixed="right" min-width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'PPi0'" title="新增优惠券" @click="handleCreate"></CreateButton>
@@ -53,8 +52,8 @@
             <el-button v-has-perm="'fPi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'EPi0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleOpen(scope.row)" link title="启用"></el-button>
             <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
-            <el-button v-has-perm="'1Pi0'" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="发放优惠券"></el-button>
-            <el-button v-has-perm="'CPi0'" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="领取详情"></el-button>
+            <el-button v-has-perm="'1Pi0'" type="primary" :icon="Position" @click="handlePlatformUnShelves(scope.row)" link title="发放优惠券"></el-button>
+            <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handlePlatformUnShelves(scope.row)" link title="领取详情"></el-button>
             <el-button v-has-perm="'zPi0'" :icon="Link" @click="handleDelete(scope.row)" link title="生成链接"></el-button>
           </template>
         </el-table-column>
@@ -73,7 +72,7 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/marketing/coupon';
 import { onMounted, reactive, ref } from 'vue';
-import { Bottom, Document, Download, Edit, Link, Top } from '@element-plus/icons-vue';
+import {Bottom, Document, Download, Edit, Link, Notebook, Position, Top} from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -137,6 +136,8 @@ const formatter = (row, column, cellValue) => {
     return cellValue === '0' ? '不限制' : cellValue;
   } else if (column.property === 'useStartTime') {
     return cellValue + '~' + row.useEndTime;
+  } else if (column.property === 'startTime') {
+    return cellValue + '~' + row.endTime;
   } else {
     return cellValue;
   }

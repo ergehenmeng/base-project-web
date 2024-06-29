@@ -65,8 +65,9 @@ const handleChangePwd = () => {
     display: inline-flex;
     li {
       color: white;
-      margin-right: 10px;
+      margin: auto 5px;
       i {
+        margin-top: 5px;
         cursor: pointer;
         font-size: 15px;
       }
