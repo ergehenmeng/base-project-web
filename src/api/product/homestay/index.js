@@ -7,12 +7,6 @@ export const listPageApi = (params) => {
   });
 };
 
-export const homestayPageApi = (params) => {
-  return request.get({
-    url: '/manage/homestay/productListPage',
-    params
-  });
-};
 
 export const createApi = (data) => {
   return request.post({
