@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="优惠券名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="优惠券名称" clearable @keyup.enter="search" maxlength="30"/>
         </el-form-item>
         <el-form-item label="发放状态">
           <el-select v-model="queryParams.state" clearable>
@@ -36,6 +36,7 @@
         <el-table-column prop="stock" label="库存" width="80" />
         <el-table-column prop="receiveNum" label="已领取数量" width="120" />
         <el-table-column prop="useNum" label="已使用数量" width="120" />
+        <el-table-column prop="mode" label="领取方式" width="100" :formatter="formatter"/>
         <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
         <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
         <el-table-column prop="discountValue" label="折扣比例" width="80" />
@@ -52,9 +53,9 @@
             <el-button v-has-perm="'fPi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'EPi0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleOpen(scope.row)" link title="启用"></el-button>
             <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
-            <el-button v-has-perm="'1Pi0'" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
+            <el-button v-has-perm="'1Pi0'" v-show="scope.row.mode === 2" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
             <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handleReceiveDetail(scope.row)" link title="领取详情"></el-button>
-            <el-button v-has-perm="'zPi0'" type="success" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
+            <el-button v-has-perm="'zPi0'" v-show="scope.row.mode === 1" type="success" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -154,7 +155,7 @@ const handleClose = (row) => {
 };
 
 const handleLink = (row) => {
-  router.push('/marketing/coupon/link/' + row.id);
+  console.log("待生成二维码链接")
 };
 
 const handleGrant = (row) => {

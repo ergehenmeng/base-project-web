@@ -19,17 +19,42 @@ export default [
           {
             path: 'create',
             name: 'marketingCouponCreate',
+            meta: {
+              title: '新增'
+            },
             component: () => import('@/views/marketing/coupon/CouponForm.vue'),
           },
           {
             path: 'edit/:id',
             name: 'marketingCouponEdit',
+            meta: {
+              title: '编辑'
+            },
             component: () => import('@/views/marketing/coupon/CouponForm.vue'),
           },
           {
             path: 'detail/:id',
             name: 'marketingCouponDetail',
+            meta: {
+              title: '详情'
+            },
             component: () => import('@/views/marketing/coupon/CouponForm.vue'),
+          },
+          {
+            path: 'grant/:id',
+            name: 'marketingCouponGrant',
+            meta: {
+              title: '发放'
+            },
+            component: () => import('@/views/marketing/coupon/GrantPage.vue'),
+          },
+          {
+            path: 'receive/:id',
+            name: 'marketingCouponReceive',
+            meta: {
+              title: '领取详情'
+            },
+            component: () => import('@/views/marketing/coupon/ReceivePage.vue'),
           }
         ]
       }

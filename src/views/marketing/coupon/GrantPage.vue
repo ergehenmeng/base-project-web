@@ -35,15 +35,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item class="right-bottom" v-has-perm="'anR0'">
-          <el-button type="primary" @click="handleNotice">站内信</el-button>
-        </el-form-item>
-        <el-form-item class="right-bottom" v-has-perm="'0nR0'">
-          <el-button type="primary" @click="handleSms">营销短信</el-button>
-        </el-form-item>
-        <el-form-item class="right-bottom" v-has-perm="'dnR0'">
-          <el-button type="primary" @click="handleCoupon">优惠券</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -55,17 +46,22 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" width="120" />
-        <el-table-column prop="mobile" label="手机号码" width="120" />
-        <el-table-column prop="email" label="电子邮箱" width="180" />
+        <el-table-column prop="nickName" label="昵称" min-width="120" />
+        <el-table-column prop="mobile" label="手机号码" min-width="120" />
+        <el-table-column prop="email" label="电子邮箱" min-width="180" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="score" label="积分" width="100" />
-        <el-table-column prop="inviteCode" label="邀请码" width="100" />
+        <el-table-column prop="inviteCode" label="邀请码" min-width="100" />
         <el-table-column prop="sex" label="性别" width="80" :formatter="formatter" />
-        <el-table-column prop="realName" label="真实姓名" width="120" />
+        <el-table-column prop="realName" label="真实姓名" min-width="120" />
         <el-table-column prop="birthday" label="生日" width="100" />
-        <el-table-column prop="channel" label="注册渠道" width="100" />
-        <el-table-column prop="createTime" label="注册时间" width="180" />
+        <el-table-column prop="channel" label="注册渠道" min-width="100" />
+        <el-table-column prop="createTime" label="注册时间" min-width="180" />
+        <el-table-column label="操作" min-width="150" fixed="right">
+          <template #default="scope">
+            <el-button v-has-perm="'1Pi0'" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
@@ -77,27 +73,21 @@
       />
     </div>
   </div>
-  <SendSmsForm ref="smsRef"></SendSmsForm>
-  <SendNoticeForm ref="noticeRef"></SendNoticeForm>
-  <GrantCouponForm ref="couponRef"></GrantCouponForm>
 </template>
 <script setup>
-import { memberListApi } from '@/api/config/memberTag';
+import { listPageApi } from '@/api/user/member';
+import { grantApi } from '@/api/marketing/coupon';
 import { h, onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
-import SendSmsForm from "@/views/common/SendSmsForm.vue";
-import SendNoticeForm from "@/views/common/SendNoticeForm.vue";
-import GrantCouponForm from "./GrantCouponForm.vue";
+import { Position } from '@element-plus/icons-vue';
+import { confirmMsg, successMsg } from '@/utils/message.js';
 
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
 const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('9nR0');
-const smsRef = ref();
-const noticeRef = ref();
-const couponRef = ref();
+const selectAuth = userStore.hasAuth('1Pi0');
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -105,7 +95,6 @@ const queryParams = reactive({
   state: null,
   sex: null,
   channel: null,
-  tagId: null,
   activityDate: []
 });
 
@@ -119,7 +108,7 @@ const getPage = async () => {
         queryParams.startDate = queryParams.activityDate[0];
         queryParams.endDate = queryParams.activityDate[1];
       }
-      const { data } = await memberListApi(queryParams);
+      const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
     }
@@ -141,25 +130,21 @@ const formatter = (row, column, cellValue) => {
   }
 };
 
+const handleGrant = (row) => {
+  confirmMsg('确定要给该用户发放优惠券吗?', () => {
+    grantApi({couponId: route.params.id, memberIds: [row.id] }).then(() => {
+      successMsg('优惠券发放成功');
+      getPage();
+    });
+  });
+};
+
 const search = () => {
   queryParams.page = 1;
   getPage();
 };
 
 onMounted(() => {
-  queryParams.tagId = route.params.id;
   getPage();
 });
-
-const handleSms = (row) => {
-  smsRef.value.openDialog({ tagId: [row.id] });
-};
-
-const handleCoupon = (row) => {
-  couponRef.value.openDialog({ tagId: [row.id] });
-};
-
-const handleNotice = (row) => {
-  noticeRef.value.openDialog({ tagId: [row.id] });
-};
 </script>
