@@ -120,7 +120,7 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'mode') {
     return cellValue === 1 ? '页面领取' : '手动发放';
   } else if (column.property === 'state') {
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : '禁用';
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : h('span', { style: 'color: red;' }, '禁用');
   } else if (column.property === 'couponType') {
     return cellValue === 1 ? '抵扣券' : '折扣券';
   } else if (column.property === 'useThreshold') {
