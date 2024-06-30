@@ -47,7 +47,7 @@
         <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="产品类型" prop="productType">
-        <el-radio-group v-model="formData.productType" :disabled="editDisabled">
+        <el-radio-group v-model="formData.productType" :disabled="editDisabled" @change="handleProductChange">
           <el-radio label="门票" value="ticket"></el-radio>
           <el-radio label="民宿" value="homestay"></el-radio>
           <el-radio label="餐饮券" value="voucher"></el-radio>
@@ -63,7 +63,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="关联店铺" prop="storeId">
-        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled"></StoreAllSelect>
+        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled" @change="handleChange"></StoreAllSelect>
       </el-form-item>
       <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2" >
         <el-button @click="handleProductSelect" type="primary" >{{formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品'}}<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
@@ -186,6 +186,16 @@ const handleSave = () => {
   });
 };
 
+// 切换商品类型或者店铺时,将之前选中的商品清空,防止影响,因为优惠券如果是商品级,只能在某一个店铺使用
+const handleChange = () => {
+  formData.value.productIds = [];
+}
+
+const handleProductChange = () => {
+  formData.value.productIds = [];
+  formData.value.storeId = null;
+}
+
 const handleMode = (value) => {
   if (value === 2) {
     warningMsg("手动发放模式下，需要联系运营人员进行手动发放");
@@ -230,10 +240,10 @@ const handleThreshold = (value) => {
 };
 
 const handleProductSelect = () => {
-  // if (!formData.value.storeId) {
-  //   errorMsg('请选择店铺');
-  //   return;
-  // }
+  if (!formData.value.storeId) {
+    errorMsg('请选择店铺');
+    return;
+  }
   formRef.value.openDialog(formData.value.productType, formData.value.productIds);
 }
 

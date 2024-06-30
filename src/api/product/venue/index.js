@@ -7,13 +7,6 @@ export const listPageApi = (params) => {
   });
 };
 
-export const venuePageApi = (params) => {
-  return request.get({
-    url: '/manage/venue/productListPage',
-    params
-  });
-};
-
 export const createApi = (data) => {
   return request.post({
     url: '/manage/venue/create',

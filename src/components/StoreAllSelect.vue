@@ -32,8 +32,8 @@ const props = defineProps({
 });
 const storeId = defineModel();
 
-onMounted(() => {
-  switch (props.productType) {
+const loadingStore = (productType) => {
+  switch (productType) {
     case 'ticket':
       scenicListApi().then((res) => {
         storeList.value = res.data;
@@ -67,5 +67,13 @@ onMounted(() => {
     default:
       break;
   }
+}
+
+watch(() => props.productType, (val) => {
+  loadingStore(val);
+})
+
+onMounted(() => {
+  loadingStore(props.productType);
 });
 </script>

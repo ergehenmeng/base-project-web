@@ -225,8 +225,13 @@ el-select.w250 {
 }
 
 /*穿梭框搜索框样式*/
-.el-transfer .el-input {
-  width: 315px !important;
+.el-transfer {
+  .el-input {
+    width: 315px !important;
+  }
+  .el-checkbox {
+    margin-right: 0 !important;
+  }
 }
 
 /*超过限制后隐藏上传按钮*/
