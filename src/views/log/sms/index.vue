@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="手机号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="手机号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="资金类型">
           <el-select v-model="queryParams.smsType" clearable style="width: 180px">
@@ -23,8 +23,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="发送日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

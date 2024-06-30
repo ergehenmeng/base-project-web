@@ -6,14 +6,14 @@
           <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable style="width: 110px">
+          <el-select v-model="queryParams.state" clearable class="w110">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="交付方式">
-          <el-select v-model="queryParams.deliveryType" clearable style="width: 110px">
+          <el-select v-model="queryParams.deliveryType" clearable class="w110">
             <el-option label="快递包邮" :value="1" />
             <el-option label="自提" :value="2" />
           </el-select>
@@ -24,7 +24,7 @@
           <el-input style="width: 80px" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
         </el-form-item>
         <el-form-item label="所属店铺">
-          <StoreSelect v-model="queryParams.storeId" style="width: 220px"></StoreSelect>
+          <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
         </el-form-item>
         <el-form-item label="标签">
           <ItemTag v-model="queryParams.tagId"></ItemTag>

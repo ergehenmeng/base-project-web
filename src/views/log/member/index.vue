@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="昵称、设备序列号、访问地址、访问IP" clearable @keyup.enter="search" style="width: 300px" maxlength="50" />
         </el-form-item>
         <el-form-item label="访问渠道">
-          <el-select v-model="queryParams.channel" clearable style="width: 120px">
+          <el-select v-model="queryParams.channel" clearable class="w120">
             <el-option label="PC" value="PC" />
             <el-option label="ANDROID" value="ANDROID" />
             <el-option label="IOS" value="IOS" />

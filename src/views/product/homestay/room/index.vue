@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="房型名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="所属民宿">
-          <HomestaySelect v-model="queryParams.homestayId" style="width: 250px"></HomestaySelect>
+          <HomestaySelect v-model="queryParams.homestayId" class="w250"></HomestaySelect>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>

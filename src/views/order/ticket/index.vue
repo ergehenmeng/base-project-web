@@ -3,18 +3,18 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" style="width: 280px" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" class="w280"  />
         </el-form-item>
         <el-form-item label="状态">
           <OrderStateSelect v-model="queryParams.state"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="订单日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item label="优惠券">
-          <el-select v-model="queryParams.useVoucher" clearable style="width: 100px">
+          <el-select v-model="queryParams.useVoucher" clearable class="w100">
             <el-option label="使用" :value="true" />
             <el-option label="不使用" :value="false" />
           </el-select>

@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="场馆名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="场馆类型">
-          <el-select v-model="queryParams.venueType" clearable style="width: 130px !important">
+          <el-select v-model="queryParams.venueType" clearable class="w130">
             <el-option label="篮球馆" :value="1" />
             <el-option label="网球馆" :value="2" />
             <el-option label="羽毛球馆" :value="3" />

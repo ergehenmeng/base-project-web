@@ -13,7 +13,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="领取方式">
-          <el-select v-model="queryParams.state" clearable>
+          <el-select v-model="queryParams.mode" clearable >
             <el-option label="页面领取" :value="1" />
             <el-option label="手动发放" :value="2" />
           </el-select>
@@ -52,9 +52,9 @@
             <el-button v-has-perm="'fPi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'EPi0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleOpen(scope.row)" link title="启用"></el-button>
             <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
-            <el-button v-has-perm="'1Pi0'" type="primary" :icon="Position" @click="handlePlatformUnShelves(scope.row)" link title="发放优惠券"></el-button>
-            <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handlePlatformUnShelves(scope.row)" link title="领取详情"></el-button>
-            <el-button v-has-perm="'zPi0'" :icon="Link" @click="handleDelete(scope.row)" link title="生成链接"></el-button>
+            <el-button v-has-perm="'1Pi0'" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
+            <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handleReceiveDetail(scope.row)" link title="领取详情"></el-button>
+            <el-button v-has-perm="'zPi0'" type="success" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,9 +70,9 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/marketing/coupon';
+import { closeApi, listPageApi, openApi } from '@/api/marketing/coupon';
 import { onMounted, reactive, ref } from 'vue';
-import {Bottom, Document, Download, Edit, Link, Notebook, Position, Top} from '@element-plus/icons-vue';
+import { Bottom, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -115,16 +115,6 @@ onMounted(() => {
   getPage();
 });
 
-const handleDelete = (row) => {
-  confirmMsg('确定要删除该优惠券吗?', () => {
-    const data = { id: row.id };
-    deleteApi(data).then(() => {
-      successMsg('优惠券删除成功');
-      getPage();
-    });
-  });
-};
-
 const formatter = (row, column, cellValue) => {
   if (column.property === 'mode') {
     return cellValue === 1 ? '页面领取' : '手动发放';
@@ -146,7 +136,7 @@ const formatter = (row, column, cellValue) => {
 const handleOpen = (row) => {
   confirmMsg('确定要启用该优惠券吗?', () => {
     const data = { id: row.id };
-    shelvesApi(data).then(() => {
+    openApi(data).then(() => {
       successMsg('优惠券启用成功');
       getPage();
     });
@@ -156,21 +146,23 @@ const handleOpen = (row) => {
 const handleClose = (row) => {
   confirmMsg('确定要禁用该优惠券吗?', () => {
     const data = { id: row.id };
-    unShelvesApi(data).then(() => {
+    closeApi(data).then(() => {
       successMsg('优惠券禁用成功');
       getPage();
     });
   });
 };
 
-const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该优惠券吗?', () => {
-    const data = { id: row.id };
-    platformUnShelvesApi(data).then(() => {
-      successMsg('优惠券强制下架成功');
-      getPage();
-    });
-  });
+const handleLink = (row) => {
+  router.push('/marketing/coupon/link/' + row.id);
+};
+
+const handleGrant = (row) => {
+  router.push('/marketing/coupon/grant/' + row.id);
+};
+
+const handleReceiveDetail = (row) => {
+  router.push('/marketing/coupon/receive/' + row.id);
 };
 
 const handleCreate = () => {

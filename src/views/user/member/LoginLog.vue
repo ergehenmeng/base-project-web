@@ -12,8 +12,8 @@
           </el-select>
         </el-form-item>
         <el-form-item label="登录日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

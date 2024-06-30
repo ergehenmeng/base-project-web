@@ -6,20 +6,20 @@
           <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
+          <el-select v-model="queryParams.state" clearable class="w100">
             <el-option label="正常" :value="true" />
             <el-option label="冻结" :value="false" />
           </el-select>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="queryParams.sex" clearable>
+          <el-select v-model="queryParams.sex" clearable class="w100">
             <el-option label="未知" :value="0" />
             <el-option label="男" :value="1" />
             <el-option label="女" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="访问渠道">
-          <el-select v-model="queryParams.channel" clearable style="width: 120px">
+          <el-select v-model="queryParams.channel" clearable class="w120">
             <el-option label="PC" value="PC" />
             <el-option label="ANDROID" value="ANDROID" />
             <el-option label="IOS" value="IOS" />
@@ -31,8 +31,8 @@
           <el-input v-model="queryParams.mobile" placeholder="邀请人手机号" clearable />
         </el-form-item>
         <el-form-item label="注册日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

@@ -6,10 +6,10 @@
           <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="旅行社">
-          <TravelSelect v-model="queryParams.travelAgencyId" style="width: 250px"></TravelSelect>
+          <TravelSelect v-model="queryParams.travelAgencyId" class="w250"></TravelSelect>
         </el-form-item>
         <el-form-item label="游玩天数">
-          <el-select v-model="queryParams.duration" clearable style="width: 120px !important">
+          <el-select v-model="queryParams.duration" clearable class="w120">
             <el-option label="一日游" :value="1" />
             <el-option label="二日游" :value="2" />
             <el-option label="三日游" :value="3" />
@@ -31,7 +31,7 @@
           <ProvinceCitySelect v-model="queryParams.areaList"></ProvinceCitySelect>
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable style="width: 120px !important">
+          <el-select v-model="queryParams.state" clearable class="w120">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />

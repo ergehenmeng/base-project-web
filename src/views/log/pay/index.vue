@@ -6,13 +6,13 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、交易单号、退款单号" clearable @keyup.enter="search" style="width: 300px" maxlength="50" />
         </el-form-item>
         <el-form-item label="请求类型">
-          <el-select v-model="queryParams.stepType" clearable style="width: 100px">
+          <el-select v-model="queryParams.stepType" clearable class="w110">
             <el-option label="支付" value="PAY" />
             <el-option label="退款" value="REFUND" />
           </el-select>
         </el-form-item>
         <el-form-item label="支付渠道">
-          <el-select v-model="queryParams.payChannel" clearable style="width: 100px">
+          <el-select v-model="queryParams.payChannel" clearable class="w110">
             <el-option label="微信" value="WECHAT" />
             <el-option label="支付宝" value="ALIPAY" />
           </el-select>

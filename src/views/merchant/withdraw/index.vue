@@ -3,24 +3,24 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="提现单号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="提现单号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="提现状态">
-          <el-select v-model="queryParams.state" clearable style="width: 130px">
+          <el-select v-model="queryParams.state" clearable class="w130">
             <el-option label="提现中" value="0" />
             <el-option label="提现成功" value="1" />
             <el-option label="提现失败" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="提现方式">
-          <el-select v-model="queryParams.withdrawWay" clearable style="width: 120px">
+          <el-select v-model="queryParams.withdrawWay" clearable class="w120">
             <el-option label="手动提现" value="1" />
             <el-option label="自动提现" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

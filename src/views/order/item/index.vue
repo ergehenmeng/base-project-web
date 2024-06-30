@@ -3,13 +3,13 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" style="width: 220px" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" class="w220" />
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState" style="width: 100px"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.orderState" class="w100"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
-          <el-select v-model="queryParams.refundState" clearable style="width: 100px">
+          <el-select v-model="queryParams.refundState" clearable class="w100">
             <el-option label="未退款" :value="0" />
             <el-option label="退款申请中" :value="1" />
             <el-option label="退款中" :value="2" />
@@ -19,18 +19,18 @@
           </el-select>
         </el-form-item>
         <el-form-item label="订单日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item label="优惠券">
-          <el-select v-model="queryParams.useVoucher" clearable style="width: 100px">
+          <el-select v-model="queryParams.useVoucher" clearable class="w100">
             <el-option label="使用" :value="true" />
             <el-option label="不使用" :value="false" />
           </el-select>
         </el-form-item>
         <el-form-item label="订单类型">
-          <el-select v-model="queryParams.orderType" clearable style="width: 100px">
+          <el-select v-model="queryParams.orderType" clearable class="w100">
             <el-option label="普通订单" :value="0" />
             <el-option label="限时购订单" :value="1" />
             <el-option label="拼团订单" :value="2" />

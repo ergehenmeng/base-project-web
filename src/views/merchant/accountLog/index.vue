@@ -3,10 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="交易单号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="资金类型">
-          <el-select v-model="queryParams.accountType" clearable style="width: 130px">
+          <el-select v-model="queryParams.accountType" clearable class="w130">
             <el-option label="订单收入" value="1" />
             <el-option label="订单退款" value="2" />
             <el-option label="积分提现收入" value="3" />
@@ -22,8 +22,8 @@
         </el-form-item>
         <MerchantSelect v-model="queryParams.merchantId" label="商户名称"></MerchantSelect>
         <el-form-item label="订单日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

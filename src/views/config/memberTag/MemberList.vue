@@ -6,20 +6,20 @@
           <el-input v-model="queryParams.queryName" placeholder="昵称、手机号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
+          <el-select v-model="queryParams.state" clearable class="w100">
             <el-option label="正常" :value="true" />
             <el-option label="冻结" :value="false" />
           </el-select>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="queryParams.sex" clearable>
+          <el-select v-model="queryParams.sex" clearable class="w100">
             <el-option label="未知" :value="0" />
             <el-option label="男" :value="1" />
             <el-option label="女" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="访问渠道">
-          <el-select v-model="queryParams.channel" clearable style="width: 120px">
+          <el-select v-model="queryParams.channel" clearable class="w120">
             <el-option label="PC" value="PC" />
             <el-option label="ANDROID" value="ANDROID" />
             <el-option label="IOS" value="IOS" />
@@ -28,12 +28,18 @@
           </el-select>
         </el-form-item>
         <el-form-item label="注册日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
+        </el-form-item>
+        <el-form-item class="right-bottom" v-has-perm="'anR0'">
+          <el-button type="primary" @click="handleNotice">站内信</el-button>
+        </el-form-item>
+        <el-form-item class="right-bottom" v-has-perm="'0nR0'">
+          <el-button type="primary" @click="handleSms">营销短信</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -68,18 +74,24 @@
       />
     </div>
   </div>
+  <SendSmsForm ref="smsRef"></SendSmsForm>
+  <SendNoticeForm ref="noticeRef"></SendNoticeForm>
 </template>
 <script setup>
 import { memberListApi } from '@/api/config/memberTag';
 import { h, onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
+import SendSmsForm from "@/views/common/SendSmsForm.vue";
+import SendNoticeForm from "@/views/common/SendNoticeForm.vue";
 
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('9nR0');
+const smsRef = ref();
+const noticeRef = ref();
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -132,4 +144,12 @@ onMounted(() => {
   queryParams.tagId = route.params.id;
   getPage();
 });
+
+const handleSms = (row) => {
+  smsRef.value.openDialog({ tagId: [row.id] });
+};
+
+const handleNotice = (row) => {
+  noticeRef.value.openDialog({ tagId: [row.id] });
+};
 </script>

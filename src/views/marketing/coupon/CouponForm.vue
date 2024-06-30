@@ -37,6 +37,12 @@
       <el-form-item label="库存" prop="stock" >
         <el-input v-model="formData.stock" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
+      <el-form-item label="领取方式" prop="mode">
+        <el-radio-group v-model="formData.mode" :disabled="editDisabled" @change="handleMode">
+          <el-radio label="页面领取" :value="1"></el-radio>
+          <el-radio label="手动发放" :value="2"></el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="单人领取限制" prop="maxLimit" >
         <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
@@ -93,7 +99,7 @@
 import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { errorMsg, successMsg } from '@/utils/message.js'
+import {errorMsg, successMsg, warningMsg} from '@/utils/message.js'
 import { numberValidator } from '@/utils/common.js';
 import StoreAllSelect from '@/components/StoreAllSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
@@ -115,6 +121,7 @@ const formRules = reactive({
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
   couponType: [{ required: true, message: '请选择产品类型', trigger: 'change' }],
+  mode: [{ required: true, message: '请选择领取方式', trigger: 'change' }],
   useScope: [{ required: true, message: '请选择使用范围', trigger: 'change' }],
   threshold: [{ required: true, message: '请选择使用门槛', trigger: 'change' }],
   productType: [{ required: true, message: '请选择优惠券类型', trigger: 'change' }],
@@ -178,6 +185,12 @@ const handleSave = () => {
     }
   });
 };
+
+const handleMode = (value) => {
+  if (value === 2) {
+    warningMsg("手动发放模式下，需要联系运营人员进行手动发放");
+  }
+}
 
 const handleCouponType = (value) => {
   if (value === 1) {

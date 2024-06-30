@@ -59,9 +59,9 @@
         <div v-for="(item, index) in formData.configList" :key="index" class="line-day-config-item">
           <h5 style="margin-bottom: 10px; margin-left: 20px">第{{ index + 1 }}天行程</h5>
           <el-form-item label="起始地" :prop="`configList[${index}].startPoint`" :rules="{ required: true, message: '起始地不能为空', trigger: 'blur' }">
-            <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" style="width: 200px !important" />
+            <el-input v-model="item.startPoint" placeholder="出发地" show-word-limit maxlength="10" class="w220" />
             &nbsp;-&nbsp;
-            <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" style="width: 200px !important" />
+            <el-input v-model="item.endPoint" placeholder="目的地" show-word-limit maxlength="10" class="w220" />
           </el-form-item>
           <el-form-item label="交通方式" :prop="`configList[${index}].trafficType`" :rules="{ required: true, message: '交通方式不能为空', trigger: 'change' }">
             <el-radio-group v-model="item.trafficType">

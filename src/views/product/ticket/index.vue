@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="门票名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="景区">
-          <ScenicSelect v-model="queryParams.scenicId" style="width: 250px !important"></ScenicSelect>
+          <ScenicSelect v-model="queryParams.scenicId" class="w250"></ScenicSelect>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>

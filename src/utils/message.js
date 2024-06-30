@@ -11,23 +11,21 @@ export const confirmMsg = (msg, fn, type) => {
 };
 
 export const errorMsg = (msg, func) => {
-  ElMessage({
-    message: msg,
-    type: 'error',
-    grouping: true,
-    duration: 3000,
-    onClose: () => {
-      if (func) {
-        func();
-      }
-    }
-  });
+  alertMsg(msg, 'error', func)
+};
+
+export const warningMsg = (msg, func) => {
+  alertMsg(msg, 'warning', func)
 };
 
 export const successMsg = (msg, func) => {
+  alertMsg(msg, 'success', func)
+};
+
+export const alertMsg = (msg, type, func) => {
   ElMessage({
     message: msg,
-    type: 'success',
+    type: type,
     grouping: true,
     duration: 3000,
     onClose: () => {

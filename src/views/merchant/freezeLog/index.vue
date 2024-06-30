@@ -3,24 +3,24 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" style="width: 250px" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="冻结状态">
-          <el-select v-model="queryParams.state" clearable style="width: 100px">
+          <el-select v-model="queryParams.state" clearable class="w100">
             <el-option label="冻结中" value="1" />
             <el-option label="已解冻" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="变更类型">
-          <el-select v-model="queryParams.changeType" clearable style="width: 130px">
+          <el-select v-model="queryParams.changeType" clearable class="w130">
             <el-option label="支付冻结" value="1" />
             <el-option label="退款解冻" value="2" />
             <el-option label="订单完成解冻" value="3" />
           </el-select>
         </el-form-item>
         <el-form-item label="日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

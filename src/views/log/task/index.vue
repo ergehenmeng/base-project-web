@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="类名、方法名、执行机器IP" clearable @keyup.enter="search" style="width: 300px" maxlength="50" />
         </el-form-item>
         <el-form-item label="执行状态">
-          <el-select v-model="queryParams.state" clearable style="width: 100px">
+          <el-select v-model="queryParams.state" clearable class="w100">
             <el-option label="成功" :value="true" />
             <el-option label="失败" :value="false" />
           </el-select>

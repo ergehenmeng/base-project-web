@@ -6,8 +6,8 @@
           <el-input v-model="queryParams.queryName" placeholder="昵称、手机号、访问地址、访问IP" clearable @keyup.enter="search" style="width: 300px" maxlength="50" />
         </el-form-item>
         <el-form-item label="日期">
-          <div style="width: 220px">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" style="width: 220px"></el-date-picker>
+          <div class="w220">
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>

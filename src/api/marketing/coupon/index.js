@@ -21,13 +21,6 @@ export const updateApi = (data) => {
   });
 };
 
-export const deleteApi = (data) => {
-  return request.post({
-    url: '/manage/coupon/delete',
-    data
-  });
-};
-
 export const selectApi = (params) => {
   return request.get({
     url: '/manage/coupon/select',

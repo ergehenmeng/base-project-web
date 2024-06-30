@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="餐饮券名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable style="width: 130px !important">
+          <el-select v-model="queryParams.state" clearable class="w120">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />

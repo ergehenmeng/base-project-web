@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="调整费率" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="平台服务费(%)" prop="platformServiceRate" style="width: 250px !important">
+      <el-form-item label="平台服务费(%)" prop="platformServiceRate" class="w250">
         <el-input v-model="formData.platformServiceRate" @keyup="formData.platformServiceRate = numberValidator(formData.platformServiceRate)" maxlength="4" />
       </el-form-item>
     </el-form>
