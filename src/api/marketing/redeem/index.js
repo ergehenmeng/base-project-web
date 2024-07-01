@@ -35,7 +35,7 @@ export const updateApi = (data) => {
   });
 };
 
-export const selectApi = (params) => {
+export const detailApi = (params) => {
   return request.get({
     url: '/manage/redeem/code/detail',
     params

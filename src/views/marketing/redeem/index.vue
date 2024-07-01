@@ -20,7 +20,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="cdKey名称" min-width="200" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="startTime" label="有效时间" width="280" :formatter="formatter" />
+        <el-table-column prop="startTime" label="有效时间" width="300" :formatter="formatter" />
         <el-table-column prop="num" label="发放数量" width="100" />
         <el-table-column prop="amount" label="面额" width="100" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
@@ -49,6 +49,7 @@
       />
     </div>
   </div>
+  <RedeemForm ref="formRef" @reload="getPage"></RedeemForm>
 </template>
 <script setup>
 import { deleteApi, listPageApi, generateApi } from '@/api/marketing/redeem';
@@ -58,6 +59,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
+import RedeemForm from "@/views/marketing/redeem/RedeemForm.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -65,6 +67,7 @@ const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('GCi0');
+const formRef = ref();
 const queryParams = reactive({
   queryName: null,
   page: 1,
@@ -128,14 +131,14 @@ const handleCdKeyPage = (row) => {
 };
 
 const handleCreate = () => {
-  router.push('/marketing/redeem/create');
+  formRef.value.openDialog({});
 };
 
 const handleEdit = (row) => {
-  router.push('/marketing/redeem/edit/' + row.id);
+  formRef.value.openDialog({id: row.id});
 };
 
 const handleDetail = (row) => {
-  router.push('/marketing/redeem/detail/' + row.id);
+  formRef.value.openDialog({id: row.id});
 };
 </script>
