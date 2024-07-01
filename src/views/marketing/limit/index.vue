@@ -3,14 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="活动名称、商品名称" clearable @keyup.enter="search" maxlength="30" />
-        </el-form-item>
-        <el-form-item label="发放状态">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="未开始" :value="0" />
-            <el-option label="进行中" :value="1" />
-            <el-option label="已结束" :value="2" />
-          </el-select>
+          <el-input v-model="queryParams.queryName" placeholder="活动名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -20,21 +13,19 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="活动名称" min-width="200" />
-        <el-table-column prop="itemName" label="商品名称" min-width="200" />
-        <el-table-column prop="startTime" label="活动时间" width="240" :formatter="formatter" />
-        <el-table-column prop="num" label="拼团人数" width="100" />
-        <el-table-column prop="expireTime" label="拼团有效期(分钟)" width="150" />
+        <el-table-column prop="startTime" label="活动时间" width="280" :formatter="formatter" />
+        <el-table-column prop="num" label="提前预告" width="100" :formatter="formatter"/>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" min-width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'ifi0'" title="新增拼团活动" @click="handleCreate"></CreateButton>
+            <CreateButton v-has-perm="'KEi0'" title="新增限时购活动" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'qfi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
-            <el-button v-has-perm="'qfi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'jfi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'ZEi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'5Ei0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'UEi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,7 +54,7 @@ const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('Xfi0');
+const selectAuth = userStore.hasAuth('JEi0');
 const queryParams = reactive({
   queryName: null,
   page: 1,
@@ -94,28 +85,32 @@ onMounted(() => {
 });
 
 const formatter = (row, column, cellValue) => {
-  return cellValue + '~' + row.endTime;
+  if (column.property === "startTime") {
+    return cellValue + '~' + row.endTime;
+  } else {
+    return h('span', { title: '提前' + cellValue + "小时进行活动预告" }, cellValue);
+  }
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该拼团活动吗?', () => {
+  confirmMsg('确定要删除该限时购活动吗?', () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
-      successMsg('拼团活动删除成功');
+      successMsg('限时购活动删除成功');
       getPage();
     });
   });
 };
 
 const handleCreate = () => {
-  router.push('/marketing/group/create');
+  router.push('/marketing/limit/create');
 };
 
 const handleEdit = (row) => {
-  router.push('/marketing/group/edit/' + row.id);
+  router.push('/marketing/limit/edit/' + row.id);
 };
 
 const handleDetail = (row) => {
-  router.push('/marketing/group/detail/' + row.id);
+  router.push('/marketing/limit/detail/' + row.id);
 };
 </script>

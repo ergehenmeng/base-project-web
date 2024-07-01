@@ -25,8 +25,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="skuList" border style="width: 100%">
-          <el-table-column prop="skuPic" label="封面图片" min-width="80">
+        <el-table :data="skuList" border style="width: 480px;" >
+          <el-table-column prop="id" label="选择" type="selection" width="60" ></el-table-column>
+          <el-table-column prop="skuPic" label="封面图片" width="100">
             <template #default="scope">
               <div style="display: flex; align-items: center">
                 <el-image
@@ -41,7 +42,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="specValue" label="规格名称" min-width="150" />
-          <el-table-column prop="salePrice" label="销售价格" min-width="150" />
+          <el-table-column prop="salePrice" label="销售价格" width="150" />
         </el-table>
       </el-form-item>
     </el-form>
@@ -151,6 +152,8 @@ onMounted(() => {
       .finally(() => {
         loading.value = false;
       });
+  } else {
+    loadingItemList();
   }
 });
 </script>

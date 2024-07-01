@@ -21,7 +21,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="活动名称" min-width="200" />
         <el-table-column prop="itemName" label="商品名称" min-width="200" />
-        <el-table-column prop="startTime" label="活动时间" width="240" :formatter="formatter" />
+        <el-table-column prop="startTime" label="活动时间" width="280" :formatter="formatter" />
         <el-table-column prop="num" label="拼团人数" width="100" />
         <el-table-column prop="expireTime" label="拼团有效期(分钟)" width="150" />
         <el-table-column prop="createTime" label="创建时间" width="180" />

@@ -7,6 +7,13 @@ export const listPageApi = (params) => {
   });
 };
 
+export const itemListApi = (params) => {
+  return request.get({
+    url: '/manage/item/activityList',
+    params
+  });
+};
+
 export const createApi = (data) => {
   return request.post({
     url: '/manage/limit/purchase/create',

@@ -10,14 +10,11 @@
           <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="拼团人数" prop="num">
-        <el-input v-model="formData.num" show-word-limit maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="拼团有效期" prop="expireTime">
-        <el-input v-model="formData.expireTime" placeholder="单位:分钟" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="提前预告" prop="advanceHour">
+        <el-input v-model="formData.advanceHour" placeholder="单位:小时" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="商品信息" prop="itemId">
-        <el-select v-model="formData.itemId" filterable @change="handleItemChange">
+        <el-select v-model="formData.itemId" filterable @change="handleItemChange" multiple collapse-tags>
           <el-option v-for="item in itemList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 2 || item.title === null">
             <span style="float: left">{{ item.title === null ? '未命名' : item.title }}</span>
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? '强制下架' : '已上架' }}</span>
@@ -25,14 +22,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="skuList" border style="width: 100%">
+        <el-table :data="skuList" border style="width: 550px;" :span-method="objectSpanMethod">
           <el-table-column prop="skuPic" label="封面图片" min-width="80">
             <template #default="scope">
               <div style="display: flex; align-items: center">
                 <el-image
                   fit="contain"
-                  :src="scope.row.skuPic?.split(',')[0]"
-                  :preview-src-list="scope.row.skuPic?.split(',')"
+                  :src="scope.row.coverUrl?.split(',')[0]"
+                  :preview-src-list="scope.row.coverUrl?.split(',')"
                   style="width: 50px; height: 50px"
                   preview-teleported
                   hide-on-click-modal
@@ -40,8 +37,14 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column prop="title" label="商品名称" min-width="150" />
           <el-table-column prop="specValue" label="规格名称" min-width="150" />
           <el-table-column prop="salePrice" label="销售价格" min-width="150" />
+          <el-table-column prop="discountPrice" label="限时价" width="80">
+            <template #default="scope">
+              <el-input v-model="scope.row.discountPrice" maxlength="3" @keyup="scope.row.discountPrice=numberValidator(scope.row.discountPrice);"></el-input>
+            </template>
+          </el-table-column>
         </el-table>
       </el-form-item>
     </el-form>
@@ -62,6 +65,7 @@ import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/li
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
+import { numberValidator } from '@/utils/common.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -74,20 +78,16 @@ const skuList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
-  itemId: [{ required: true, message: '请选择商品', trigger: 'change' }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur' }],
-  num: [{ required: true, message: '拼团人数不能为空', trigger: 'blur' }],
-  expireTime: [{ required: true, message: '拼团有效期不能为空', trigger: 'blur' }],
+  advanceHour: [{ required: true, message: '提前预告时间不能为空', trigger: 'blur' }],
   skuList: [{ required: true, message: '请选择要拼团商品', trigger: 'change' }]
 });
 
 const formData = ref({
   id: null,
   title: '',
-  itemId: null,
   timeList: [],
-  num: null,
-  expireTime: null,
+  advanceHour: 24,
   skuList: []
 });
 
@@ -126,6 +126,15 @@ const loadingItemList = (id) => {
     });
     handleItemChange(formData.value.itemId);
   });
+};
+
+const objectSpanMethod = (row, column, rowIndex, columnIndex) => {
+  if (columnIndex === 0 || columnIndex === 1) {
+    return {
+      rowspan: skuList.value.length,
+      colspan: 1
+    };
+  }
 };
 
 const handleItemChange = (value) => {

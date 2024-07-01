@@ -59,7 +59,7 @@ export default [
         ]
       },
       {
-        path: 'coupon',
+        path: 'group',
         meta: {
           title: '拼团'
         },
