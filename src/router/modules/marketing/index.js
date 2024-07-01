@@ -203,6 +203,14 @@ export default [
               title: '详情'
             },
             component: () => import('@/views/marketing/redeem/RedeemForm.vue'),
+          },
+          {
+            path: 'key/:id',
+            name: 'redeemKey',
+            meta: {
+              title: '兑换码列表'
+            },
+            component: () => import('@/views/marketing/redeem/CdKeyPage.vue'),
           }
         ]
       }

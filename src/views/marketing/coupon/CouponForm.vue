@@ -3,7 +3,7 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="优惠券名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20" :disabled="editDisabled"/>
+        <el-input v-model="formData.title" show-word-limit maxlength="20" :disabled="editDisabled" />
       </el-form-item>
       <el-form-item label="优惠券类型" prop="couponType">
         <el-radio-group v-model="formData.couponType" @change="handleCouponType" :disabled="editDisabled">
@@ -11,7 +11,7 @@
           <el-radio label="折扣券" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1" >
+      <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1">
         <el-input v-model="formData.deductionValue" :disabled="editDisabled" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
       </el-form-item>
       <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="editDisabled">
@@ -34,7 +34,7 @@
           <el-radio label="不限制" :value="1"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="库存" prop="stock" >
+      <el-form-item label="库存" prop="stock">
         <el-input v-model="formData.stock" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="领取方式" prop="mode">
@@ -43,7 +43,7 @@
           <el-radio label="手动发放" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="单人领取限制" prop="maxLimit" >
+      <el-form-item label="单人领取限制" prop="maxLimit">
         <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="产品类型" prop="productType">
@@ -56,26 +56,44 @@
           <el-radio label="场馆" value="venue"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="使用范围" prop="useScope" >
+      <el-form-item label="使用范围" prop="useScope">
         <el-radio-group v-model="formData.useScope" @change="handleUseScope" :disabled="editDisabled">
           <el-radio label="店铺通用" :value="1"></el-radio>
           <el-radio label="指定商品" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="关联店铺" prop="storeId">
-        <StoreAllSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled" @change="handleChange"></StoreAllSelect>
+        <StoreTypeSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled" @change="handleChange"></StoreTypeSelect>
       </el-form-item>
-      <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2" >
-        <el-button @click="handleProductSelect" type="primary" >{{formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品'}}<el-icon class="el-icon--right"><ArrowRight /></el-icon></el-button>
+      <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
+        <el-button @click="handleProductSelect" type="primary"
+          >{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}<el-icon class="el-icon--right"><ArrowRight /></el-icon
+        ></el-button>
       </el-form-item>
-      <el-form-item label="发放时间" prop="timeList" >
+      <el-form-item label="发放时间" prop="timeList">
         <div style="width: 350px">
-          <el-date-picker :disabled="editDisabled" type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
+          <el-date-picker
+            :disabled="editDisabled"
+            type="datetimerange"
+            format="YYYY-MM-DD HH:mm"
+            value-format="YYYY-MM-DD HH:mm"
+            time-format="HH:mm"
+            v-model="formData.timeList"
+            style="width: 350px"
+          ></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="使用时间" prop="useTimeList" >
+      <el-form-item label="使用时间" prop="useTimeList">
         <div style="width: 350px">
-          <el-date-picker :disabled="editDisabled" type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" v-model="formData.useTimeList" time-format="HH:mm" style="width: 350px"></el-date-picker>
+          <el-date-picker
+            :disabled="editDisabled"
+            type="datetimerange"
+            format="YYYY-MM-DD HH:mm"
+            value-format="YYYY-MM-DD HH:mm"
+            v-model="formData.useTimeList"
+            time-format="HH:mm"
+            style="width: 350px"
+          ></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="使用说明" prop="instruction">
@@ -92,18 +110,18 @@
       </div>
     </div>
   </div>
-  <ProductDialog ref="formRef" @reload="setProduct" ></ProductDialog>
+  <ProductDialog ref="formRef" @reload="setProduct"></ProductDialog>
 </template>
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import {errorMsg, successMsg, warningMsg} from '@/utils/message.js'
+import { errorMsg, successMsg, warningMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
-import StoreAllSelect from '@/components/StoreAllSelect.vue';
+import StoreTypeSelect from '@/components/StoreTypeSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
-import ProductDialog from '@/components/ProductDialog.vue'
+import ProductDialog from '@/components/ProductDialog.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -189,18 +207,18 @@ const handleSave = () => {
 // 切换商品类型或者店铺时,将之前选中的商品清空,防止影响,因为优惠券如果是商品级,只能在某一个店铺使用
 const handleChange = () => {
   formData.value.productIds = [];
-}
+};
 
 const handleProductChange = () => {
   formData.value.productIds = [];
   formData.value.storeId = null;
-}
+};
 
 const handleMode = (value) => {
   if (value === 2) {
-    warningMsg("手动发放模式下，需要联系运营人员进行手动发放");
+    warningMsg('手动发放模式下，需要联系运营人员进行手动发放');
   }
-}
+};
 
 const handleCouponType = (value) => {
   if (value === 1) {
@@ -245,7 +263,7 @@ const handleProductSelect = () => {
     return;
   }
   formRef.value.openDialog(formData.value.productType, formData.value.productIds);
-}
+};
 
 const handleUseScope = () => {
   if (formData.value.useScope === 2) {
@@ -253,7 +271,7 @@ const handleUseScope = () => {
   } else {
     formRules.productIds = [];
   }
-}
+};
 
 onMounted(() => {
   const params = route.params;
@@ -276,7 +294,7 @@ onMounted(() => {
           formData.value.useThreshold = null;
         }
         handleUseScope();
-        handleThreshold(formData.value.threshold)
+        handleThreshold(formData.value.threshold);
         editDisabled.value = true;
       })
       .finally(() => {

@@ -57,7 +57,7 @@ export const grantPageApi = (params) => {
 };
 
 export const grantExportApi = (params) => {
-  return request.get({
+  return request.download({
     url: '/manage/redeem/code/grant/export',
     params
   });
