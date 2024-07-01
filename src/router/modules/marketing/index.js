@@ -13,12 +13,12 @@ export default [
         children: [
           {
             path: '',
-            name: 'marketingCouponIndex',
+            name: 'couponIndex',
             component: () => import('@/views/marketing/coupon/index.vue'),
           },
           {
             path: 'create',
-            name: 'marketingCouponCreate',
+            name: 'couponCreate',
             meta: {
               title: '新增'
             },
@@ -26,7 +26,7 @@ export default [
           },
           {
             path: 'edit/:id',
-            name: 'marketingCouponEdit',
+            name: 'couponEdit',
             meta: {
               title: '编辑'
             },
@@ -34,7 +34,7 @@ export default [
           },
           {
             path: 'detail/:id',
-            name: 'marketingCouponDetail',
+            name: 'couponDetail',
             meta: {
               title: '详情'
             },
@@ -42,7 +42,7 @@ export default [
           },
           {
             path: 'grant/:id',
-            name: 'marketingCouponGrant',
+            name: 'couponGrant',
             meta: {
               title: '发放'
             },
@@ -50,7 +50,7 @@ export default [
           },
           {
             path: 'receive/:id',
-            name: 'marketingCouponReceive',
+            name: 'couponReceive',
             meta: {
               title: '领取详情'
             },
@@ -66,12 +66,12 @@ export default [
         children: [
           {
             path: '',
-            name: 'marketingGroupIndex',
+            name: 'groupIndex',
             component: () => import('@/views/marketing/group/index.vue'),
           },
           {
             path: 'create',
-            name: 'marketingGroupCreate',
+            name: 'groupCreate',
             meta: {
               title: '新增'
             },
@@ -79,7 +79,7 @@ export default [
           },
           {
             path: 'edit/:id',
-            name: 'marketingGroupEdit',
+            name: 'groupEdit',
             meta: {
               title: '编辑'
             },
@@ -87,11 +87,122 @@ export default [
           },
           {
             path: 'detail/:id',
-            name: 'marketingGroupDetail',
+            name: 'groupDetail',
             meta: {
               title: '详情'
             },
             component: () => import('@/views/marketing/group/GroupForm.vue'),
+          }
+        ]
+      },
+      {
+        path: 'limit',
+        meta: {
+          title: '限时购'
+        },
+        children: [
+          {
+            path: '',
+            name: 'limitIndex',
+            component: () => import('@/views/marketing/limit/index.vue'),
+          },
+          {
+            path: 'create',
+            name: 'limitCreate',
+            meta: {
+              title: '新增'
+            },
+            component: () => import('@/views/marketing/limit/LimitForm.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'limitEdit',
+            meta: {
+              title: '编辑'
+            },
+            component: () => import('@/views/marketing/limit/LimitForm.vue'),
+          },
+          {
+            path: 'detail/:id',
+            name: 'limitDetail',
+            meta: {
+              title: '详情'
+            },
+            component: () => import('@/views/marketing/limit/LimitForm.vue'),
+          }
+        ]
+      },
+      {
+        path: 'lottery',
+        meta: {
+          title: '抽奖'
+        },
+        children: [
+          {
+            path: '',
+            name: 'lotteryIndex',
+            component: () => import('@/views/marketing/lottery/index.vue'),
+          },
+          {
+            path: 'create',
+            name: 'lotteryCreate',
+            meta: {
+              title: '新增'
+            },
+            component: () => import('@/views/marketing/lottery/LotteryForm.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'lotteryEdit',
+            meta: {
+              title: '编辑'
+            },
+            component: () => import('@/views/marketing/lottery/LotteryForm.vue'),
+          },
+          {
+            path: 'detail/:id',
+            name: 'lotteryDetail',
+            meta: {
+              title: '详情'
+            },
+            component: () => import('@/views/marketing/lottery/LotteryForm.vue'),
+          }
+        ]
+      },
+      {
+        path: 'redeem',
+        meta: {
+          title: '兑换码'
+        },
+        children: [
+          {
+            path: '',
+            name: 'redeemIndex',
+            component: () => import('@/views/marketing/redeem/index.vue'),
+          },
+          {
+            path: 'create',
+            name: 'redeemCreate',
+            meta: {
+              title: '新增'
+            },
+            component: () => import('@/views/marketing/redeem/RedeemForm.vue'),
+          },
+          {
+            path: 'edit/:id',
+            name: 'redeemEdit',
+            meta: {
+              title: '编辑'
+            },
+            component: () => import('@/views/marketing/redeem/RedeemForm.vue'),
+          },
+          {
+            path: 'detail/:id',
+            name: 'redeemDetail',
+            meta: {
+              title: '详情'
+            },
+            component: () => import('@/views/marketing/redeem/RedeemForm.vue'),
           }
         ]
       }
