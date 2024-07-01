@@ -77,6 +77,42 @@ body {
   width: 150px;
 }
 
+.el-input.w250 {
+  width: 250px !important;
+}
+
+.el-input.w280 {
+  width: 280px !important;
+}
+
+.el-select.w80 {
+  width: 80px !important;
+}
+
+.el-select.w100 {
+  width: 100px !important;
+}
+
+.el-select.w110 {
+  width: 110px !important;
+}
+
+.el-select.w120 {
+  width: 120px !important;
+}
+
+.el-select.w130 {
+  width: 110px !important;
+}
+
+el-select.w250 {
+  width: 250px !important;
+}
+
+.w220 {
+  width: 220px !important;
+}
+
 /*搜索框右边距*/
 .el-form--inline .el-form-item {
   margin-right: 20px !important;
@@ -147,12 +183,30 @@ body {
   align-items: center;
 }
 
+/*商品穿梭框内部高度*/
+.product-list {
+  --el-transfer-height-val: 300px;
+}
+
+/*POI线路穿梭框内部高度*/
+.transfer-card {
+  --el-transfer-height-val: 250px;
+}
+
 /*自定义穿梭框内部高度*/
 .el-transfer .el-transfer-panel:first-of-type .el-transfer-panel__body {
-  height: 250px;
+  height: var(--el-transfer-height-val);
 }
 .el-transfer .el-transfer-panel:first-of-type .el-transfer-panel__body .el-transfer-panel__list {
-  height: 250px;
+  height: var(--el-transfer-height-val);
+}
+
+/*穿梭框搜索框样式*/
+.el-transfer .el-input {
+  width: 315px !important;
+}
+.el-transfer .el-checkbox {
+  margin-right: 0 !important;
 }
 
 /*超过限制后隐藏上传按钮*/

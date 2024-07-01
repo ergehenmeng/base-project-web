@@ -22,7 +22,7 @@
         <el-table-column prop="nickName" label="昵称" min-width="120" />
         <el-table-column prop="mobile" label="手机号码" min-width="120" />
         <el-table-column prop="state" label="状态" min-width="100" :formatter="formatter" />
-        <el-table-column prop="orderNo" label="使用所属订单号" min-width="180" />
+        <el-table-column prop="orderNo" label="优惠券所属订单号" min-width="180" />
         <el-table-column prop="receiveTime" label="领取时间" min-width="180" />
         <el-table-column prop="useTime" label="使用时间" min-width="180" />
       </el-table>

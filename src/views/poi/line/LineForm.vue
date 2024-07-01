@@ -44,7 +44,6 @@ const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const mapRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
