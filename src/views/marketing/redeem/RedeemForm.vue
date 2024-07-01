@@ -14,7 +14,7 @@
         <el-input v-model="formData.amount" show-word-limit maxlength="5" @keyup="formData.amount = numberValidator(formData.amount)" />
       </el-form-item>
       <el-form-item label="发放数量" prop="num">
-        <el-input v-model="formData.num" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="可使用店铺" prop="storeIds">
         <StoreAllSelect v-model:store-ids="formData.storeIds" v-model:store-list="storeList" :multiple="true"></StoreAllSelect>
