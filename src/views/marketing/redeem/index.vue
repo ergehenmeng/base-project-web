@@ -131,14 +131,14 @@ const handleCdKeyPage = (row) => {
 };
 
 const handleCreate = () => {
-  formRef.value.openDialog({});
+  formRef.value.openDialog({type: "create"});
 };
 
 const handleEdit = (row) => {
-  formRef.value.openDialog({id: row.id});
+  formRef.value.openDialog({id: row.id, type: "edit"});
 };
 
 const handleDetail = (row) => {
-  formRef.value.openDialog({id: row.id});
+  formRef.value.openDialog({id: row.id, type: "detail"});
 };
 </script>

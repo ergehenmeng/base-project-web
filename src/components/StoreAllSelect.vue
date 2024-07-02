@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="storeIds" :disabled="props.disabled" :clearable="props.clearable" filterable :multiple="multiple" :collapse-tags="multiple" collapse-tags-tooltip>
+  <el-select v-model="storeIds" :disabled="props.disabled" :clearable="props.clearable" filterable :multiple="multiple" :max-collapse-tags="2" :collapse-tags="multiple" collapse-tags-tooltip>
     <el-option v-for="item in storeList" :key="item.storeId" :value="item.storeId" :label="item.storeName" :disabled="item.state === 2 || item.storeName === null">
       <span style="float: left">{{ item.storeName === null ? '未命名' : item.storeName }}</span>
       <span style="float: right; color: #8492a6; font-size: 13px"

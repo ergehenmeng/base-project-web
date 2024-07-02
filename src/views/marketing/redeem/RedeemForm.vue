@@ -6,14 +6,14 @@
       </el-form-item>
       <el-form-item label="有效时间" prop="timeList">
         <div style="width: 400px">
-          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 400px"></el-date-picker>
+          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" :disabled="editDisabled" v-model="formData.timeList" style="width: 400px"></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="金额" prop="amount">
-        <el-input v-model="formData.amount" show-word-limit maxlength="5" @keyup="formData.amount = numberValidator(formData.amount)" />
+        <el-input v-model="formData.amount" show-word-limit maxlength="5" :disabled="editDisabled" @keyup="formData.amount = numberValidator(formData.amount)" />
       </el-form-item>
       <el-form-item label="发放数量" prop="num">
-        <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.num" show-word-limit maxlength="3" :disabled="editDisabled" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="可使用店铺" prop="storeIds">
         <StoreAllSelect v-model:store-ids="formData.storeIds" v-model:store-list="storeList" :multiple="true"></StoreAllSelect>
@@ -37,14 +37,15 @@ import { storeApi } from '@/api/product';
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js'
-import StoreAllSelect from '@/components/StoreAllSelect.vue'
+import { numberValidator } from '@/utils/common.js';
+import StoreAllSelect from '@/components/StoreAllSelect.vue';
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
+const editDisabled = ref(false);
 const storeMap = new Map();
 const storeList = ref([]);
 const dialogTitle = ref('');
@@ -56,7 +57,7 @@ const formRules = reactive({
   itemId: [{ required: true, message: '请选择商品', trigger: 'change' }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur' }],
   num: [{ required: true, message: '拼团人数不能为空', trigger: 'blur' }],
-  expireTime: [{ required: true, message: '拼团有效期不能为空', trigger: 'blur' }],
+  expireTime: [{ required: true, message: '拼团有效期不能为空', trigger: 'blur' }]
 });
 
 const formData = ref({
@@ -73,28 +74,40 @@ const formData = ref({
 const openDialog = (row) => {
   showDialog.value = true;
   resetForm();
-  storeApi().then(res => {
-    res.data.forEach(item => {
-      storeMap.set(item.storeId, item.productType)
-    })
-    storeList.value = res.data;
-  })
+  loadStore();
   if (row.id) {
-    detailApi({id: row.id})
-        .then((res) => {
-          formData.value = res.data;
-          formData.value.timeList = [res.data.startTime, res.data.endTime];
-        })
-        .finally(() => {
-          loading.value = false;
-        });
+    detailApi({ id: row.id })
+      .then((res) => {
+        formData.value = res.data
+        formData.value.timeList = [res.data.startTime, res.data.endTime];
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+    if ("edit" === row.type) {
+      editDisabled.value = true;
+    } else if ("detail" === row.type) {
+      disabled.value = true;
+    }
+  } else {
+    editDisabled.value = false;
+    disabled.value = false;
   }
-
   if (row.id) {
     dialogTitle.value = '编辑兑换码';
-    formData.value = { ...row };
   } else {
     dialogTitle.value = '新增兑换码';
+  }
+};
+
+const loadStore = () => {
+  if (storeList.value.length === 0) {
+    storeApi().then((res) => {
+      res.data.forEach((item) => {
+        storeMap.set(item.storeId, item.productType);
+      });
+      storeList.value = res.data;
+    });
   }
 };
 
@@ -112,16 +125,16 @@ const resetForm = () => {
   formDataRef.value?.resetFields();
 };
 
-
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
       formData.value.startTime = formData.value.timeList[0];
       formData.value.endTime = formData.value.timeList[1];
-      formData.value.storeIds.forEach(storeId => {
-        formData.value.storeList.push({storeId, productType: storeMap.get(storeId)})
-      })
+      formData.value.storeList = [];
+      formData.value.storeIds.forEach((storeId) => {
+        formData.value.storeList.push({ storeId: storeId, productType: storeMap.get(storeId) });
+      });
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
