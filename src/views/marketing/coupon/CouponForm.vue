@@ -129,8 +129,8 @@ const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
 const editDisabled = ref(false);
-const thresholdProp = ref('threshold');
-const thresholdDisabled = ref(true);
+const thresholdProp = ref('useThreshold');
+const thresholdDisabled = ref(false);
 const formRef = ref();
 
 const formRules = reactive({
@@ -160,7 +160,7 @@ const formData = ref({
   storeId: null,
   deductionValue: null,
   discountValue: null,
-  threshold: 1,
+  threshold: 2,
   useThreshold: null,
   productType: 'ticket',
   timeList: [],
@@ -249,6 +249,7 @@ const handleThreshold = (value) => {
     thresholdDisabled.value = true;
     formRules.threshold = [{ required: true, message: '请选择使用门槛', trigger: 'change' }];
     formRules.useThreshold = [];
+    formDataRef.value?.resetFields("useThreshold");
   } else {
     thresholdProp.value = 'useThreshold';
     thresholdDisabled.value = false;

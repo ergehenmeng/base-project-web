@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="skuList" border style="width: 550px;" :span-method="objectSpanMethod">
+        <el-table :data="skuList" border style="width: 600px;" :span-method="objectSpanMethod">
           <el-table-column prop="skuPic" label="封面图片" min-width="80">
             <template #default="scope">
               <div style="display: flex; align-items: center">
@@ -38,14 +38,17 @@
             </template>
           </el-table-column>
           <el-table-column prop="title" label="商品名称" min-width="150" />
-          <el-table-column prop="specValue" label="规格名称" min-width="150" />
-          <el-table-column prop="salePrice" label="销售价格" min-width="150" />
-          <el-table-column prop="discountPrice" label="限时价" width="80">
+          <el-table-column prop="specValue" label="规格名称" min-width="120" />
+          <el-table-column prop="salePrice" label="销售价格" min-width="120" />
+          <el-table-column prop="discountPrice" label="限时价" width="120">
             <template #default="scope">
               <el-input v-model="scope.row.discountPrice" maxlength="3" @keyup="scope.row.discountPrice=numberValidator(scope.row.discountPrice);"></el-input>
             </template>
           </el-table-column>
         </el-table>
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <div>
@@ -87,8 +90,9 @@ const formData = ref({
   id: null,
   title: '',
   timeList: [],
-  advanceHour: 24,
-  skuList: []
+  advanceHour: null,
+  skuList: [],
+  remark: null
 });
 
 const handleSave = () => {

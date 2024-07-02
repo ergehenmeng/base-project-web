@@ -42,6 +42,13 @@ export const selectApi = (params) => {
   });
 };
 
+export const sortApi = (data) => {
+  return request.post({
+    url: '/manage/item/sort',
+    data
+  });
+};
+
 export const shelvesApi = (data) => {
   return request.post({
     url: '/manage/item/shelves',

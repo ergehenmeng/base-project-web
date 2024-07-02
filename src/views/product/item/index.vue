@@ -19,11 +19,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input style="width: 80px" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
+          <el-input class="w80" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
           ~
-          <el-input style="width: 80px" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
+          <el-input class="w80" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
         </el-form-item>
-        <el-form-item label="所属店铺">
+        <el-form-item label="所属商品">
           <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
         </el-form-item>
         <el-form-item label="标签">
@@ -54,12 +54,17 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="商品名称" min-width="150" />
-        <el-table-column prop="storeName" label="所属店铺" min-width="150" />
+        <el-table-column prop="storeName" label="所属商品" min-width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="quota" label="限购数量" width="100" />
         <el-table-column prop="deliveryType" label="交付方式" width="100" :formatter="formatter" />
         <el-table-column prop="minPrice" label="价格" width="130" :formatter="formatter" />
         <el-table-column prop="saleNum" label="销量" width="80" />
+        <el-table-column prop="sort" label="排序" width="80">
+          <template #default="scope">
+            <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">
@@ -91,7 +96,7 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/item';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/item';
 import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Delete, Document, Download, Edit, Link, Star, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
@@ -144,10 +149,10 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该店铺吗?', () => {
+  confirmMsg('确定要删除该商品吗?', () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
-      successMsg('店铺删除成功');
+      successMsg('商品删除成功');
       getPage();
     });
   });
@@ -158,16 +163,7 @@ const formatter = (row, column, cellValue) => {
     if (cellValue === 0) {
       return '待上架';
     }
-    return cellValue === 1
-      ? h('span', { style: 'color: green;' }, '已上架')
-      : h(
-          'span',
-          {
-            style: 'color: red;',
-            title: '被平台强制下级后无法继续上架'
-          },
-          '强制下架'
-        );
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;', title: '被平台强制下级后无法继续上架' }, '强制下架');
   } else if (column.property === 'deliveryType') {
     return cellValue === 1 ? '门店自提' : '快递';
   } else if (column.property === 'minPrice') {
@@ -181,30 +177,41 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该店铺吗?', () => {
+  confirmMsg('确定要上架该商品吗?', () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
-      successMsg('店铺上架成功');
+      successMsg('商品上架成功');
       getPage();
     });
   });
 };
 
+const handleSort = (row) => {
+  if (!sortAuth) {
+    return;
+  }
+  const data = { id: row.id, sortBy: row.sort };
+  sortApi(data).then(() => {
+    successMsg('排序更新成功');
+    getPage();
+  });
+};
+
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该店铺吗?', () => {
+  confirmMsg('确定要下架该商品吗?', () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
-      successMsg('店铺下架成功');
+      successMsg('商品下架成功');
       getPage();
     });
   });
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该店铺吗?', () => {
+  confirmMsg('确定要强制下架该商品吗?', () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
-      successMsg('店铺强制下架成功');
+      successMsg('商品强制下架成功');
       getPage();
     });
   });
@@ -213,14 +220,14 @@ const handlePlatformUnShelves = (row) => {
 const handleRecommend = (row) => {
   let msg;
   if (row.recommend) {
-    msg = '确定要取消推荐该店铺吗?';
+    msg = '确定要取消推荐该商品吗?';
   } else {
-    msg = '确定要推荐该店铺吗?';
+    msg = '确定要推荐该商品吗?';
   }
   confirmMsg(msg, () => {
     const data = { id: row.id, recommend: !row.recommend };
     recommendApi(data).then(() => {
-      successMsg('店铺推荐设置成功');
+      successMsg('商品推荐设置成功');
       getPage();
     });
   });
