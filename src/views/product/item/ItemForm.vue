@@ -20,19 +20,57 @@
           <el-radio label="多规格" :value="true"></el-radio>
         </el-radio-group>
       </el-form-item>
-
       <el-form-item prop="skuList" label="商品规格" v-show="formData.multiSpec">
         <div class="item-group">
-          <div class="item-spec"></div>
+          <div class="item-spec">
+            <div class="item-spec-content">
+              <el-form-item label="规格名称">
+                <el-input class="w100"></el-input>
+              </el-form-item>
+              <el-form-item label="规格值">
+                <div class="spec-value">
+                  <div class="spec-value-patch">
+                    <el-input class="w120" style="margin-bottom: 10px"></el-input>
+                    <span class="close">
+                      <el-icon>
+                        <CircleCloseFilled />
+                      </el-icon>
+                    </span>
+                    <UploadImage />
+                  </div>
+                  <div class="spec-value-patch">
+                    <el-input class="w120" style="margin-bottom: 10px"></el-input>
+                    <span class="close">
+                      <el-icon>
+                        <CircleCloseFilled />
+                      </el-icon>
+                    </span>
+                    <UploadImage />
+                  </div>
+                  <span class="spec-value-patch" style="cursor: pointer" title="添加规格值">
+                    <Add></Add>
+                  </span>
+                </div>
+              </el-form-item>
+              <span class="spec-close">
+                <el-icon>
+                  <CircleCloseFilled />
+                </el-icon>
+              </span>
+            </div>
+            <div style="margin-bottom: 10px">
+              <el-button type="primary" size="small">添加规格</el-button>
+            </div>
+          </div>
           <div class="item-sku">
             <table>
               <tr>
-                <th>成本价</th>
-                <th>划线价</th>
-                <th>销售价</th>
-                <th>库存</th>
-                <th>虚拟销量</th>
-                <th>重量</th>
+                <th class="item">成本价</th>
+                <th class="item">划线价</th>
+                <th class="item">销售价</th>
+                <th class="item">库存</th>
+                <th class="item">虚拟销量</th>
+                <th class="item">重量</th>
               </tr>
               <tr v-for="(item, index) in formData.skuList" :key="index">
                 <td>
@@ -70,29 +108,31 @@
           </div>
         </div>
       </el-form-item>
-      <el-form-item label="成本价" v-show="!formData.multiSpec">
-        <el-input v-model="formData.skuList[0].costPrice" show-word-limit maxlength="6" @keyup="formData.skuList[0].costPrice = numberValidator(formData.skuList[0].costPrice)" />
-      </el-form-item>
-      <el-form-item label="划线价" v-show="!formData.multiSpec">
-        <el-input v-model="formData.skuList[0].linePrice" show-word-limit maxlength="6" @keyup="formData.skuList[0].linePrice = numberValidator(formData.skuList[0].linePrice)" />
-      </el-form-item>
-      <el-form-item :prop="salePriceRef" label="销售价" v-show="!formData.multiSpec" :rules="salePriceRule">
-        <el-input v-model="formData.skuList[0].salePrice" show-word-limit maxlength="6" @keyup="formData.skuList[0].salePrice = numberValidator(formData.skuList[0].salePrice)" />
-      </el-form-item>
-      <el-form-item :prop="stockRef" label="库存" v-show="!formData.multiSpec" :rules="stockRule">
-        <el-input v-model="formData.skuList[0].stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="虚拟销量" v-show="!formData.multiSpec">
-        <el-input v-model="formData.skuList[0].virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="重量(kg)" v-show="!formData.multiSpec">
-        <el-input v-model="formData.skuList[0].weight" show-word-limit maxlength="6" @keyup="formData.skuList[0].weight = numberValidator(formData.skuList[0].weight)" />
-      </el-form-item>
+      <template v-for="(item, index) in formData.skuList" :key="index">
+        <el-form-item label="成本价" v-show="!formData.multiSpec">
+          <el-input v-model="item.salePrice" show-word-limit maxlength="6" @keyup="formData.costPrice = numberValidator(formData.costPrice)" />
+        </el-form-item>
+        <el-form-item label="划线价" v-show="!formData.multiSpec">
+          <el-input v-model="formData.linePrice" show-word-limit maxlength="6" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
+        </el-form-item>
+        <el-form-item :prop="salePriceRef" label="销售价" v-show="!formData.multiSpec" :rules="salePriceRule">
+          <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
+        </el-form-item>
+        <el-form-item :prop="stockRef" label="库存" v-show="!formData.multiSpec" :rules="stockRule">
+          <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        </el-form-item>
+        <el-form-item label="虚拟销量" v-show="!formData.multiSpec">
+          <el-input v-model="formData.virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        </el-form-item>
+        <el-form-item label="重量(kg)" v-show="!formData.multiSpec">
+          <el-input v-model="formData.weight" show-word-limit maxlength="6" @keyup="formData.weight = numberValidator(formData.weight)" />
+        </el-form-item>
+      </template>
       <el-form-item label="限购数量" prop="quota" v-show="!formData.multiSpec">
-        <el-input v-model="formData.quota" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" />
+        <el-input v-model="formData.quota" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px" />
       </el-form-item>
       <el-form-item label="交付方式" prop="deliveryType">
-        <el-radio-group v-model="formData.deliveryType">
+        <el-radio-group v-model="formData.deliveryType" @change="handleDelivery">
           <el-radio :value="1">快递</el-radio>
           <el-radio :value="2">门店自提</el-radio>
         </el-radio-group>
@@ -104,7 +144,7 @@
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotes">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.purchaseNotes" autosize maxlength="400" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.purchaseNotes" autosize maxlength="400" show-word-limit />
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -134,12 +174,14 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import ItemTag from '@/components/ItemTag.vue';
 import ExpressSelect from '@/components/ExpressSelect.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
+import UploadImage from '@/components/UploadImage.vue';
+import { CircleCloseFilled, Plus } from '@element-plus/icons-vue';
+import Add from "@/components/icon/Add.vue";
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const mapRef = ref();
 const disabled = ref(false);
 const salePriceRef = 'skuList[0].salePrice';
 const stockRef = ref('skuList[0].stock');
@@ -161,6 +203,7 @@ const formRules = reactive({
     { required: true, message: '详细地址不能为空', trigger: 'blur' },
     { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
   ],
+  expressId: [{ required: true, message: '请选择物流模板', trigger: 'change' }],
   depotAddressId: [{ required: true, message: '请选择退换货地址', trigger: 'change' }],
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
@@ -172,7 +215,7 @@ let formData = ref({
   title: null,
   storeId: null,
   depict: null,
-  tagId: null,
+  tagId: [],
   quota: 99,
   deliveryType: 1,
   expressId: null,
@@ -181,7 +224,16 @@ let formData = ref({
   introduceText: null,
   introduce: null,
   purchaseNotes: null,
-  skuList: [],
+  skuList: [
+    {
+      linePrice: null,
+      costPrice: null,
+      salePrice: null,
+      stock: null,
+      virtualNum: null,
+      weight: null
+    }
+  ],
   specList: []
 });
 
@@ -234,19 +286,94 @@ onMounted(() => {
   }
 });
 
+const handleDelivery = (value) => {
+  if (value === 1) {
+    formData.value.expressId = null;
+    formRules.expressId = [{ required: true, message: '请选择物流模板', trigger: 'change' }];
+  } else {
+    formRules.expressId = [];
+  }
+};
+
 const handleChangeSpec = (value) => {
-  formData.value.specList = [];
-  formData.value.skuList = [];
   if (value) {
     salePriceRule.value = null;
     stockRule.value = null;
+    formData.value.specList = [];
+    formData.value.skuList = [];
+  } else {
+    formData.value.skuList = [
+      {
+        linePrice: null,
+        costPrice: null,
+        salePrice: null,
+        stock: null,
+        virtualNum: null,
+        weight: null
+      }
+    ];
   }
 };
 </script>
 <style lang="scss" scoped>
 .item-group {
-  width: 1000px;
+  width: 800px;
   border: 1px solid #dcdfe6;
   padding: 10px;
+
+  .item-sku {
+    table,
+    th,
+    td {
+      border-collapse: collapse;
+      border: 1px solid #dcdfe6;
+      text-align: center;
+    }
+
+    th {
+      font-weight: 400;
+    }
+
+    th.item {
+      width: 180px;
+      height: 40px;
+    }
+  }
+}
+
+.item-spec {
+  .item-spec-content {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    .spec-close {
+      position: absolute;
+      top: -15px;
+      right: -5px;
+      cursor: pointer;
+    }
+  }
+}
+
+.spec-value {
+  display: flex;
+  flex-wrap: wrap;
+
+  .spec-value-patch {
+    padding-top: 10px;
+    margin-right: 20px;
+    text-align: center;
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      cursor: pointer;
+    }
+  }
 }
 </style>
