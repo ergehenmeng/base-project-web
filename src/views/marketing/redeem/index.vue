@@ -18,11 +18,12 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="cdKey名称" min-width="200" />
+        <el-table-column prop="title" label="cdKey名称" min-width="150" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="startTime" label="有效时间" width="300" :formatter="formatter" />
         <el-table-column prop="num" label="发放数量" width="100" />
         <el-table-column prop="amount" label="面额" width="100" />
+        <el-table-column prop="remark" label="备注信息" width="150" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" min-width="200">
@@ -35,7 +36,7 @@
             <el-button v-has-perm="'rCi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'9Ci0'" v-show="scope.row.state === 0" type="success" :icon="Position" @click="handleGenerate(scope.row)" link title="生成cdKey"></el-button>
             <el-button v-has-perm="'0Ci0'" v-show="scope.row.state === 1" type="info" :icon="Notebook" @click="handleCdKeyPage(scope.row)" link title="兑换码列表"></el-button>
-            <el-button v-has-perm="'aCi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'aCi0'" v-show="scope.row.state === 0" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,14 +53,14 @@
   <RedeemForm ref="formRef" @reload="getPage"></RedeemForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi, generateApi } from '@/api/marketing/redeem';
+import { deleteApi, generateApi, listPageApi } from '@/api/marketing/redeem';
 import { onMounted, reactive, ref } from 'vue';
-import { Delete, Document, Edit, Notebook, Position } from '@element-plus/icons-vue'
+import { Delete, Document, Edit, Notebook, Position } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
-import RedeemForm from "@/views/marketing/redeem/RedeemForm.vue";
+import RedeemForm from '@/views/marketing/redeem/RedeemForm.vue';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -98,7 +99,7 @@ onMounted(() => {
 });
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === "startTime") {
+  if (column.property === 'startTime') {
     return cellValue + '~' + row.endTime;
   } else {
     return cellValue === 0 ? '待发放' : '已发放';
@@ -115,7 +116,6 @@ const handleGenerate = (row) => {
   });
 };
 
-
 const handleDelete = (row) => {
   confirmMsg('确定要删除该兑换码配置吗?', () => {
     const data = { id: row.id };
@@ -131,14 +131,14 @@ const handleCdKeyPage = (row) => {
 };
 
 const handleCreate = () => {
-  formRef.value.openDialog({type: "create"});
+  formRef.value.openDialog({ type: 'create' });
 };
 
 const handleEdit = (row) => {
-  formRef.value.openDialog({id: row.id, type: "edit"});
+  formRef.value.openDialog({ id: row.id, type: 'edit' });
 };
 
 const handleDetail = (row) => {
-  formRef.value.openDialog({id: row.id, type: "detail"});
+  formRef.value.openDialog({ id: row.id, type: 'detail' });
 };
 </script>

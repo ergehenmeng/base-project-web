@@ -42,10 +42,10 @@ export const detailApi = (params) => {
   });
 };
 
-export const deleteApi = (params) => {
-  return request.get({
+export const deleteApi = (data) => {
+  return request.post({
     url: '/manage/redeem/code/delete',
-    params
+    data
   });
 };
 
