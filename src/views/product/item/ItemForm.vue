@@ -1,15 +1,14 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled"
-    :validate-on-rule-change="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="商品名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
         <el-input v-model="formData.title" show-word-limit maxlength="40" />
       </el-form-item>
-      <el-form-item label="所属店铺" prop="storeId">
+      <el-form-item label="所属商品" prop="storeId">
         <StoreSelect v-model="formData.storeId"></StoreSelect>
       </el-form-item>
       <el-form-item label="标签" prop="tagId">
@@ -35,7 +34,7 @@
                 <th>虚拟销量</th>
                 <th>重量</th>
               </tr>
-              <tr v-for="(item, index) in formData.skuList" :key="index" >
+              <tr v-for="(item, index) in formData.skuList" :key="index">
                 <td>
                   <el-form-item>
                     <el-input v-model="item.costPrice" @keyup="formData.costPrice = numberValidator(formData.costPrice)" maxlength="6" style="width: 100px" />
@@ -58,12 +57,12 @@
                 </td>
                 <td>
                   <el-form-item>
-                    <el-input v-model="item.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" maxlength="4"/>
+                    <el-input v-model="item.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" maxlength="4" />
                   </el-form-item>
                 </td>
                 <td>
                   <el-form-item>
-                    <el-input v-model="item.weight" @keyup="formData.weight = numberValidator(formData.weight)" style="width: 100px" maxlength="6"/>
+                    <el-input v-model="item.weight" @keyup="formData.weight = numberValidator(formData.weight)" style="width: 100px" maxlength="6" />
                   </el-form-item>
                 </td>
               </tr>
@@ -84,7 +83,7 @@
         <el-input v-model="formData.skuList[0].stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="虚拟销量" v-show="!formData.multiSpec">
-        <el-input v-model="formData.skuList[0].virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.skuList[0].virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="重量(kg)" v-show="!formData.multiSpec">
         <el-input v-model="formData.skuList[0].weight" show-word-limit maxlength="6" @keyup="formData.skuList[0].weight = numberValidator(formData.skuList[0].weight)" />
@@ -121,7 +120,6 @@
         <el-button @click="$router.go(-1)">返回</el-button>
       </div>
     </div>
-    <MapContainer ref="mapRef" @reload="setLocation"></MapContainer>
   </div>
 </template>
 
@@ -131,9 +129,8 @@ import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { numberValidator, phoneValidator } from '@/utils/common.js'
+import { numberValidator, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
-import MapContainer from '@/components/MapContainer.vue';
 import ItemTag from '@/components/ItemTag.vue';
 import ExpressSelect from '@/components/ExpressSelect.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
@@ -144,17 +141,18 @@ const loading = ref(false);
 const formDataRef = ref();
 const mapRef = ref();
 const disabled = ref(false);
-const salePriceRef = ('skuList[0].salePrice');
+const salePriceRef = 'skuList[0].salePrice';
 const stockRef = ref('skuList[0].stock');
 const salePriceRule = ref({ required: true, message: '销售价不能为空', trigger: 'blur' });
 const stockRule = ref({ required: true, message: '库存不能为空', trigger: 'blur' });
 
-
 const formRules = reactive({
-  title: [{ required: true, message: '店铺名称不能为空', trigger: 'blur' }],
-  depict: [{ required: true, message: '描述信息不能为空', trigger: 'blur' },
-    { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }],
-  logoUrl: [{ required: true, message: '请上传店铺logo', trigger: 'change' }],
+  title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
+  depict: [
+    { required: true, message: '描述信息不能为空', trigger: 'blur' },
+    { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }
+  ],
+  logoUrl: [{ required: true, message: '请上传商品logo', trigger: 'change' }],
   merchantId: [{ required: true, message: '请选择所属商户', trigger: 'change' }],
   telephone: [{ required: true, validator: phoneValidator, trigger: 'blur' }],
   openTime: [{ required: true, message: '营业时间不能为空', trigger: 'blur' }],
@@ -191,13 +189,10 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      formData.value.provinceId = formData.value.areaList[0];
-      formData.value.cityId = formData.value.areaList[1];
-      formData.value.countyId = formData.value.areaList[2];
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('店铺信息更新成功');
+            successMsg('商品信息更新成功');
             router.go(-1);
           })
           .finally(() => {
@@ -206,7 +201,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('店铺添加成功');
+            successMsg('商品添加成功');
             router.go(-1);
           })
           .finally(() => {
@@ -231,7 +226,6 @@ onMounted(() => {
         } else {
           formData.value.coverList = [];
         }
-        formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
@@ -247,11 +241,6 @@ const handleChangeSpec = (value) => {
     salePriceRule.value = null;
     stockRule.value = null;
   }
-}
-
-const setLocation = (lng, lat) => {
-  formData.value.longitude = lng;
-  formData.value.latitude = lat;
 };
 </script>
 <style lang="scss" scoped>
