@@ -63,56 +63,17 @@
             </div>
           </div>
           <div class="item-sku">
-            <table>
-              <tr>
-                <th class="item">一级规格</th>
-                <th class="item">二级规格</th>
-                <th class="item">成本价</th>
-                <th class="item">划线价</th>
-                <th class="item"><span class="sku-required">*</span>销售价</th>
-                <th class="item"><span class="sku-required">*</span>库存</th>
-                <th class="item">虚拟销量</th>
-                <th class="item">重量</th>
-              </tr>
-              <tr v-for="(item, index) in formData.skuList" :key="index">
-                <td rowspan="2">
-                  <span>二级规格</span>
-                </td>
-                <td>
-                  <span>二级规格</span>
-                </td>
-                <td>
-                  <el-form-item>
-                    <el-input v-model="item.costPrice" @keyup="formData.costPrice = numberValidator(formData.costPrice)" maxlength="6" style="width: 100px" />
-                  </el-form-item>
-                </td>
-                <td>
-                  <el-form-item>
-                    <el-input v-model="item.linePrice" @keyup="formData.linePrice = numberValidator(formData.linePrice)" maxlength="6" style="width: 100px" />
-                  </el-form-item>
-                </td>
-                <td>
-                  <el-form-item :prop="`skuList[${index}].salePrice`" :rules="{ required: true, message: '销售价不能为空', trigger: 'blur' }">
-                    <el-input v-model="item.salePrice" @keyup="formData.salePrice = numberValidator(formData.salePrice)" maxlength="6" style="width: 100px" />
-                  </el-form-item>
-                </td>
-                <td>
-                  <el-form-item :prop="`skuList[${index}].stock`" :rules="{ required: true, message: '库存不能为空', trigger: 'blur' }">
-                    <el-input v-model="item.stock" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" maxlength="5" />
-                  </el-form-item>
-                </td>
-                <td>
-                  <el-form-item>
-                    <el-input v-model="item.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 100px" maxlength="4" />
-                  </el-form-item>
-                </td>
-                <td>
-                  <el-form-item>
-                    <el-input v-model="item.weight" @keyup="formData.weight = numberValidator(formData.weight)" style="width: 100px" maxlength="6" />
-                  </el-form-item>
-                </td>
-              </tr>
-            </table>
+            <el-table>
+              <el-table-column label="规格名称">
+                <template #header="scope">
+                  <el-input v-model="scope.row.specName" show-word-limit maxlength="20" />
+                </template>
+                <template #default="scope">
+                  <el-input v-model="scope.row.specName" show-word-limit maxlength="20" />
+                </template>
+              </el-table-column>
+            </el-table>
+
           </div>
         </div>
       </el-form-item>
