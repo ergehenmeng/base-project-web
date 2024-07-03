@@ -23,57 +23,77 @@
       <el-form-item prop="skuList" label="商品规格" v-show="formData.multiSpec">
         <div class="item-group">
           <div class="item-spec">
-            <div class="item-spec-content">
+            <div class="item-spec-content" v-for="(item, index) in specList" :key="index">
               <el-form-item label="规格名称">
-                <el-input class="w100"></el-input>
+                <el-input class="w100" v-model="item.specName"></el-input>
               </el-form-item>
               <el-form-item label="规格值">
                 <div class="spec-value">
-                  <div class="spec-value-patch">
-                    <el-input class="w120" style="margin-bottom: 10px"></el-input>
-                    <span class="close">
-                      <el-icon>
+                  <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
+                    <el-input class="w120" style="margin-bottom: 10px" v-model="value.name"></el-input>
+                    <span class="close" >
+                      <el-icon @click="handleCloseValue(index, idx)">
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage />
+                    <UploadImage v-model="value.pic" ></UploadImage>
                   </div>
-                  <div class="spec-value-patch">
-                    <el-input class="w120" style="margin-bottom: 10px"></el-input>
-                    <span class="close">
-                      <el-icon>
-                        <CircleCloseFilled />
-                      </el-icon>
-                    </span>
-                    <UploadImage />
-                  </div>
-                  <span class="spec-value-patch" style="cursor: pointer" title="添加规格值">
-                    <Add></Add>
+                  <span class="spec-value-patch" >
+                    <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
                   </span>
                 </div>
               </el-form-item>
-              <span class="spec-close">
-                <el-icon>
+              <span class="spec-close" v-show="index === 1">
+                <el-icon @click="handleCloseSpec">
                   <CircleCloseFilled />
                 </el-icon>
               </span>
             </div>
-            <div style="margin-bottom: 10px">
-              <el-button type="primary" size="small">添加规格</el-button>
+            <div style="margin-bottom: 10px" v-show="specList.length === 1">
+              <el-button type="primary" size="small" @click="handleAddSpec">添加规格</el-button>
             </div>
           </div>
           <div class="item-sku">
-            <el-table>
-              <el-table-column label="规格名称">
-                <template #header="scope">
-                  <el-input v-model="scope.row.specName" show-word-limit maxlength="20" />
+            <el-table border :data="formData.skuList">
+              <el-table-column label="规格1" prop="primaryValue"></el-table-column>
+              <el-table-column label="规格2" prop="secondValue"></el-table-column>
+              <el-table-column label="成本价" prop="costPrice">
+                <template #default="scope">
+                  <el-input v-model="scope.row.costPrice" show-word-limit maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
+                </template>
+              </el-table-column>
+              <el-table-column label="划线价" prop="linePrice">
+                <template #default="scope">
+                  <el-input v-model="scope.row.linePrice" show-word-limit maxlength="6" @keyup="scope.row.linePrice = numberValidator(scope.row.linePrice)" />
+                </template>
+              </el-table-column>
+              <el-table-column prop="salePrice">
+                <template #header>
+                  <span><span class="item-required">*</span>销售价</span>
                 </template>
                 <template #default="scope">
-                  <el-input v-model="scope.row.specName" show-word-limit maxlength="20" />
+                  <el-input v-model="scope.row.salePrice" show-word-limit maxlength="6" @keyup="scope.row.salePrice = numberValidator(scope.row.salePrice)" />
+                </template>
+              </el-table-column>
+              <el-table-column prop="stock">
+                <template #header>
+                  <span><span class="item-required">*</span>库存</span>
+                </template>
+                <template #default="scope">
+                  <el-input v-model="scope.row.stock" show-word-limit maxlength="5" @keyup="scope.row.stock = numberValidator(scope.row.stock)" />
+                </template>
+              </el-table-column>
+              <el-table-column label="虚拟销量" prop="virtualNum">
+                <template #default="scope">
+                  <el-input v-model="scope.row.virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                </template>
+              </el-table-column>
+              <el-table-column label="重量(kg)" prop="weight">
+                <template #default="scope">
+                  <el-input v-model="scope.row.weight" show-word-limit maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
                 </template>
               </el-table-column>
             </el-table>
-
           </div>
         </div>
       </el-form-item>
@@ -137,15 +157,16 @@ import { createApi, selectApi, updateApi } from '@/api/product/item';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { successMsg } from '@/utils/message.js';
+import {errorMsg, successMsg} from '@/utils/message.js';
 import { numberValidator, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import ItemTag from '@/components/ItemTag.vue';
 import ExpressSelect from '@/components/ExpressSelect.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
-import { CircleCloseFilled, Plus } from '@element-plus/icons-vue';
-import Add from "@/components/icon/Add.vue";
+import { CircleCloseFilled } from '@element-plus/icons-vue';
+import Add from '@/components/icon/Add.vue';
+import CreateButton from "@/components/CreateButton.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -195,6 +216,8 @@ let formData = ref({
   purchaseNotes: null,
   skuList: [
     {
+      primaryValue: null,
+      secondValue: null,
       linePrice: null,
       costPrice: null,
       salePrice: null,
@@ -205,6 +228,70 @@ let formData = ref({
   ],
   specList: []
 });
+
+const specList = ref([
+  {
+    specName: null,
+    valueList: [
+      {
+        name: null,
+        pic: null
+      }
+    ]
+  }
+]);
+
+const handleAddValue = (index) => {
+  specList.value[index].valueList.push({
+    name: null,
+    pic: null
+  });
+};
+
+const handleCloseSpec = (index) => {
+  if (specList.value.length === 1) {
+    errorMsg('至少保留一个规格名');
+    return;
+  }
+  specList.value.splice(1, 1);
+};
+
+const handleAddSpec = () => {
+  if (specList.value.length >= 2) {
+    errorMsg('最多支持两级规格定义');
+    return;
+  }
+  specList.value.push({
+    specName: null,
+    valueList: [
+      {
+        name: null,
+        pic: null
+      }
+    ]
+  });
+}
+
+/**
+ * 删除规格值
+ * @param index 规格名index
+ * @param idx 规格值index
+ */
+const handleCloseValue = (index, idx) => {
+  if (specList.value[index].valueList.length === 1) {
+    errorMsg('至少保留一个规格值');
+    return;
+  }
+  specList.value[index].valueList.splice(idx, 1);
+};
+
+const getSpanMethod = (index, columns) => {
+  if (index === 0) {
+    return 2;
+  } else {
+    return 1;
+  }
+};
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
@@ -286,29 +373,13 @@ const handleChangeSpec = (value) => {
 </script>
 <style lang="scss" scoped>
 .item-group {
-  width: 800px;
+  width: 850px;
   border: 1px solid #dcdfe6;
   padding: 10px;
 
   .item-sku {
-    table,
-    th,
-    td {
-      border-collapse: collapse;
-      border: 1px solid #dcdfe6;
-      text-align: center;
-    }
-
-    th {
-      font-weight: 400;
-      .sku-required {
-        color: red;
-      }
-    }
-
-    th.item {
-      width: 180px;
-      height: 40px;
+    .item-required {
+      color: #f56c6c;
     }
   }
 }
