@@ -25,20 +25,20 @@
           <div class="item-spec">
             <div class="item-spec-content" v-for="(item, index) in specList" :key="index">
               <el-form-item label="规格名称">
-                <el-input class="w100" v-model="item.specName"></el-input>
+                <el-input class="w100" v-model="item.specName" onkeyup="this.value=this.value.trim();" @blur="handleBlurSpec(index)"></el-input>
               </el-form-item>
               <el-form-item label="规格值">
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
-                    <el-input class="w120" style="margin-bottom: 10px" v-model="value.name"></el-input>
-                    <span class="close" >
+                    <el-input class="w120" style="margin-bottom: 10px" v-model="value.name" onkeyup="this.value=this.value.trim();" @blur="handleBlurValue(index, idx)"></el-input>
+                    <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)">
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage v-model="value.pic" ></UploadImage>
+                    <UploadImage v-model="value.pic"></UploadImage>
                   </div>
-                  <span class="spec-value-patch" >
+                  <span class="spec-value-patch">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
                   </span>
                 </div>
@@ -55,8 +55,22 @@
           </div>
           <div class="item-sku">
             <el-table border :data="formData.skuList">
-              <el-table-column label="规格1" prop="primaryValue"></el-table-column>
-              <el-table-column label="规格2" prop="secondValue"></el-table-column>
+              <el-table-column prop="primaryValue">
+                <template #header="scope">
+                  <span>{{ scope.row.primaryHeader }}</span>
+                </template>
+                <template #default="scope">
+                  <el-text v-model="scope.row.primaryValue"></el-text>
+                </template>
+              </el-table-column>
+              <el-table-column prop="secondValue" v-show="showSecondSpec">
+                <template #header="scope">
+                  <span>{{ scope.row.secondHeader }}</span>
+                </template>
+                <template #default="scope">
+                  <el-text v-model="scope.row.secondValue"></el-text>
+                </template>
+              </el-table-column>
               <el-table-column label="成本价" prop="costPrice">
                 <template #default="scope">
                   <el-input v-model="scope.row.costPrice" show-word-limit maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
@@ -157,7 +171,7 @@ import { createApi, selectApi, updateApi } from '@/api/product/item';
 import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import {errorMsg, successMsg} from '@/utils/message.js';
+import { errorMsg, successMsg } from '@/utils/message.js';
 import { numberValidator, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import ItemTag from '@/components/ItemTag.vue';
@@ -165,8 +179,7 @@ import ExpressSelect from '@/components/ExpressSelect.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
-import Add from '@/components/icon/Add.vue';
-import CreateButton from "@/components/CreateButton.vue";
+import CreateButton from '@/components/CreateButton.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -177,6 +190,7 @@ const salePriceRef = 'skuList[0].salePrice';
 const stockRef = ref('skuList[0].stock');
 const salePriceRule = ref({ required: true, message: '销售价不能为空', trigger: 'blur' });
 const stockRule = ref({ required: true, message: '库存不能为空', trigger: 'blur' });
+const showSecondSpec = ref(false);
 
 const formRules = reactive({
   title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
@@ -216,7 +230,11 @@ let formData = ref({
   purchaseNotes: null,
   skuList: [
     {
+      primaryHeader: null,
       primaryValue: null,
+      secondHeader: null,
+      // 合并多少列
+      secondSize: 0,
       secondValue: null,
       linePrice: null,
       costPrice: null,
@@ -270,7 +288,7 @@ const handleAddSpec = () => {
       }
     ]
   });
-}
+};
 
 /**
  * 删除规格值
@@ -283,6 +301,79 @@ const handleCloseValue = (index, idx) => {
     return;
   }
   specList.value[index].valueList.splice(idx, 1);
+};
+
+const handleBlurSpec = (index) => {
+  if (specList.value.length === 2 && specList.value[0].specName === specList.value[1].specName) {
+    errorMsg('规格名不能重复');
+    specList.value[index].specName = null;
+    return;
+  }
+  generateSkuTable();
+};
+
+const handleBlurValue = (index, idx) => {
+  const spec = specList.value[index];
+  const set = new Set();
+  spec.valueList.forEach((item) => {
+    set.add(item.name);
+  });
+  if (spec.valueList.length !== set.size) {
+    errorMsg('规格值不能重复');
+    spec.valueList[idx].name = null;
+    return;
+  }
+  generateSkuTable();
+};
+
+const generateSkuTable = () => {
+  const spec = specList.value[0];
+  if (spec.valueList.length === 0 || !spec.specName) {
+    // 一级规格信息都不完整
+    return;
+  }
+  if (specList.value.length === 1 || !specList.value[1].specName || specList.value[1].valueList.length === 0) {
+    createPrimarySpec(spec);
+    showSecondSpec.value = false;
+  } else {
+    const secondSpec = specList.value[1];
+    const size = secondSpec.valueList.length;
+    for (let item of spec.valueList) {
+      for (let secondItem of secondSpec.valueList) {
+        formData.value.skuList.push({
+          primaryHeader: spec.specName,
+          primaryValue: item.name,
+          secondHeader: secondSpec.specName,
+          secondValue: secondItem.name,
+          secondSize: size,
+          linePrice: null,
+          costPrice: null,
+          salePrice: null,
+          stock: null,
+          virtualNum: null,
+          weight: null
+        });
+      }
+    }
+    showSecondSpec.value = true;
+  }
+};
+
+const createPrimarySpec = (spec) => {
+  for (let item of spec.valueList) {
+    formData.value.skuList.push({
+      primaryHeader: spec.specName,
+      primaryValue: item.name,
+      secondHeader: null,
+      secondValue: [],
+      linePrice: null,
+      costPrice: null,
+      salePrice: null,
+      stock: null,
+      virtualNum: null,
+      weight: null
+    });
+  }
 };
 
 const getSpanMethod = (index, columns) => {
