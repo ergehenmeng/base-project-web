@@ -23,7 +23,7 @@
       <el-form-item prop="skuList" label="商品规格" v-show="formData.multiSpec">
         <div class="item-group">
           <div class="item-spec">
-            <div class="item-spec-content" v-for="(item, index) in specList" :key="index">
+            <div class="item-spec-content" v-for="(item, index) in formData.specList" :key="index">
               <el-form-item label="规格名称">
                 <el-input class="w100" v-model="item.specName" onkeyup="this.value=this.value.trim();" @blur="handleBlurSpec(index)"></el-input>
               </el-form-item>
@@ -49,12 +49,12 @@
                 </el-icon>
               </span>
             </div>
-            <div style="margin-bottom: 10px" v-show="specList.length === 1">
+            <div style="margin-bottom: 10px" v-show="formData.specList.length === 1">
               <el-button type="primary" size="small" @click="handleAddSpec">添加规格</el-button>
             </div>
           </div>
           <div class="item-sku">
-            <el-table border :data="formData.skuList">
+            <el-table border :data="formData.skuList" :span-method="handleSpanMethod">
               <el-table-column prop="primaryValue">
                 <template #header="scope">
                   <span>{{ scope.row.primaryHeader }}</span>
@@ -244,42 +244,42 @@ let formData = ref({
       weight: null
     }
   ],
-  specList: []
+  specList: [
+    {
+      id: null,
+      specName: null,
+      valueList: [
+        {
+          name: null,
+          pic: null
+        }
+      ]
+    }
+  ]
 });
 
-const specList = ref([
-  {
-    specName: null,
-    valueList: [
-      {
-        name: null,
-        pic: null
-      }
-    ]
-  }
-]);
-
 const handleAddValue = (index) => {
-  specList.value[index].valueList.push({
+  formData.value.specList[index].valueList.push({
     name: null,
     pic: null
   });
 };
 
-const handleCloseSpec = (index) => {
-  if (specList.value.length === 1) {
+const handleCloseSpec = () => {
+  if (formData.value.specList.length === 1) {
     errorMsg('至少保留一个规格名');
     return;
   }
-  specList.value.splice(1, 1);
+  formData.value.specList.splice(1, 1);
 };
 
 const handleAddSpec = () => {
-  if (specList.value.length >= 2) {
+  if (formData.value.specList.length >= 2) {
     errorMsg('最多支持两级规格定义');
     return;
   }
-  specList.value.push({
+  formData.value.specList.push({
+    id: null,
     specName: null,
     valueList: [
       {
@@ -296,24 +296,24 @@ const handleAddSpec = () => {
  * @param idx 规格值index
  */
 const handleCloseValue = (index, idx) => {
-  if (specList.value[index].valueList.length === 1) {
+  if (formData.value.specList[index].valueList.length === 1) {
     errorMsg('至少保留一个规格值');
     return;
   }
-  specList.value[index].valueList.splice(idx, 1);
+  formData.value.specList[index].valueList.splice(idx, 1);
 };
 
 const handleBlurSpec = (index) => {
-  if (specList.value.length === 2 && specList.value[0].specName === specList.value[1].specName) {
+  if (formData.value.specList.length === 2 && formData.value.specList[0].specName === formData.value.specList[1].specName) {
     errorMsg('规格名不能重复');
-    specList.value[index].specName = null;
+    formData.value.specList[index].specName = null;
     return;
   }
   generateSkuTable();
 };
 
 const handleBlurValue = (index, idx) => {
-  const spec = specList.value[index];
+  const spec = formData.value.specList[index];
   const set = new Set();
   spec.valueList.forEach((item) => {
     set.add(item.name);
@@ -327,16 +327,16 @@ const handleBlurValue = (index, idx) => {
 };
 
 const generateSkuTable = () => {
-  const spec = specList.value[0];
+  const spec = formData.value.specList[0];
   if (spec.valueList.length === 0 || !spec.specName) {
     // 一级规格信息都不完整
     return;
   }
-  if (specList.value.length === 1 || !specList.value[1].specName || specList.value[1].valueList.length === 0) {
+  if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || formData.value.specList[1].valueList.length === 0) {
     createPrimarySpec(spec);
     showSecondSpec.value = false;
   } else {
-    const secondSpec = specList.value[1];
+    const secondSpec = formData.value.specList[1];
     const size = secondSpec.valueList.length;
     for (let item of spec.valueList) {
       for (let secondItem of secondSpec.valueList) {
@@ -365,7 +365,8 @@ const createPrimarySpec = (spec) => {
       primaryHeader: spec.specName,
       primaryValue: item.name,
       secondHeader: null,
-      secondValue: [],
+      secondSize: 0,
+      secondValue: null,
       linePrice: null,
       costPrice: null,
       salePrice: null,
@@ -376,11 +377,17 @@ const createPrimarySpec = (spec) => {
   }
 };
 
-const getSpanMethod = (index, columns) => {
-  if (index === 0) {
-    return 2;
+const handleSpanMethod = (row, column, rowIndex, columnIndex) => {
+  if (columnIndex === 0 && row.secondSize > 0) {
+    return {
+      rowspan: row.secondSize,
+      colspan: 1
+    };
   } else {
-    return 1;
+    return {
+      rowspan: 0,
+      colspan: 0
+    };
   }
 };
 
@@ -451,6 +458,11 @@ const handleChangeSpec = (value) => {
   } else {
     formData.value.skuList = [
       {
+        primaryHeader: null,
+        primaryValue: null,
+        secondHeader: null,
+        secondSize: 0,
+        secondValue: null,
         linePrice: null,
         costPrice: null,
         salePrice: null,
