@@ -6,13 +6,13 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
-        <el-input v-model="formData.title" show-word-limit maxlength="40" />
+        <el-input v-model="formData.depict" type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" show-word-limit maxlength="40" />
       </el-form-item>
-      <el-form-item label="所属商品" prop="storeId">
+      <el-form-item label="所属店铺" prop="storeId">
         <StoreSelect v-model="formData.storeId"></StoreSelect>
       </el-form-item>
-      <el-form-item label="标签" prop="tagId">
-        <ItemTag v-model="formData.tagId"></ItemTag>
+      <el-form-item label="商品标签" prop="tagList">
+        <ItemTag v-model="formData.tagList"></ItemTag>
       </el-form-item>
       <el-form-item label="规格类型">
         <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec">
@@ -20,23 +20,25 @@
           <el-radio label="多规格" :value="true"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="skuList" label="商品规格" v-show="formData.multiSpec">
+      <el-form-item label="商品规格" v-show="formData.multiSpec">
         <div class="item-group">
           <div class="item-spec">
             <div class="item-spec-content" v-for="(item, index) in formData.specList" :key="index">
-              <el-form-item label="规格名称">
-                <el-input class="w140" v-model="item.specName" onkeyup="this.value=this.value.trim();" @blur="handleBlurSpec(index)" maxlength="10"></el-input>
+              <el-form-item label="规格名称" :prop="`specList[${index}].specName`" :rules="{ required: true, message: '请输入规格名称', trigger: 'blur' }">
+                <el-input class="w140" v-model.trim="item.specName" @keyup="handleBlurSpec(index)" maxlength="10"></el-input>
               </el-form-item>
-              <el-form-item label="规格值">
+              <el-form-item label="规格值" :prop="`specList[${index}].valueList`" :rules="{ required: true, message: '请输入规格值x', trigger: 'blur' }">
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
-                    <el-input class="w140" style="margin-bottom: 10px" v-model="value.name" onkeyup="this.value=this.value.trim();" maxlength="10" @blur="handleBlurValue(index, idx)"></el-input>
+                    <el-form-item :prop="`specList[${index}].valueList[${idx}].name`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
+                      <el-input class="w140"  v-model.trim="value.name" maxlength="10" @keyup="handleBlurValue(index, idx)"></el-input>
+                    </el-form-item>
                     <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)">
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage v-model="value.pic"></UploadImage>
+                    <UploadImage v-model="value.pic" v-if="index === 0"></UploadImage>
                   </div>
                   <span class="spec-value-patch">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
@@ -54,13 +56,13 @@
             </div>
           </div>
           <div class="item-sku">
-            <el-table border :data="formData.skuList"  v-show="formData.skuList.length > 0" >
+            <el-table border :data="formData.skuList" :span-method="handleSpanMethod" v-show="formData.skuList.length > 0">
               <el-table-column prop="primaryValue" min-width="120">
                 <template #header>
                   <span>{{ formData.specList[0]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{scope.row.primaryValue}}</span>
+                  <span>{{ scope.row.primaryValue }}</span>
                 </template>
               </el-table-column>
               <el-table-column prop="secondValue" v-if="showSecondSpec" min-width="120">
@@ -68,11 +70,11 @@
                   <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{scope.row.secondValue}}</span>
+                  <span>{{ scope.row.secondValue }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="成本价" prop="costPrice" >
-                <template #default="scope" >
+              <el-table-column label="成本价" prop="costPrice">
+                <template #default="scope">
                   <el-input v-model="scope.row.costPrice" class="w80" maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
                 </template>
               </el-table-column>
@@ -86,7 +88,9 @@
                   <span><span class="item-required">*</span>销售价</span>
                 </template>
                 <template #default="scope">
-                  <el-input v-model="scope.row.salePrice" class="w80" maxlength="6" @keyup="scope.row.salePrice = numberValidator(scope.row.salePrice)" />
+                  <el-form-item :prop="`skuList[${scope.$index}].salePrice`" :rules="{ required: true, message: '销售价不能为空', trigger: 'blur' }">
+                    <el-input v-model="scope.row.salePrice" class="w80" maxlength="6" @keyup="scope.row.salePrice = numberValidator(scope.row.salePrice)" />
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column prop="stock">
@@ -94,7 +98,9 @@
                   <span><span class="item-required">*</span>库存</span>
                 </template>
                 <template #default="scope">
-                  <el-input v-model="scope.row.stock" class="w80" maxlength="5" @keyup="scope.row.stock = numberValidator(scope.row.stock)" />
+                  <el-form-item :prop="`skuList[${scope.$index}].stock`" :rules="{ required: true, message: '库存不能为空', trigger: 'blur' }">
+                    <el-input v-model="scope.row.stock" class="w80" maxlength="5" @keyup="scope.row.stock = numberValidator(scope.row.stock)" />
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column label="虚拟销量" prop="virtualNum">
@@ -219,7 +225,7 @@ let formData = ref({
   title: null,
   storeId: null,
   depict: null,
-  tagId: [],
+  tagList: [],
   quota: 99,
   deliveryType: 1,
   expressId: null,
@@ -332,45 +338,50 @@ const handleBlurValue = (index, idx) => {
 
 const generateSkuTable = () => {
   const spec = formData.value.specList[0];
-  const length = spec.valueList.map((item) => !item).length;
-  if (length === 0 || !spec.specName) {
-    formData.value.skuList = [];
+  formData.value.skuList = [];
+  if (!spec.specName || filterSpec(spec).length === 0) {
     return;
   }
   let size = 0;
-  if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || ( size = formData.value.specList[1].valueList.map((item) => !item).length) === 0) {
-    console.log(formData.value.specList.length === 1)
-    console.log(!formData.value.specList[1].specName)
-    console.log(formData.value.specList[1].valueList.map((item) => !item).length)
+  if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || (size = filterSpec(formData.value.specList[1]).length) === 0) {
     createPrimarySpec(spec);
     showSecondSpec.value = false;
   } else {
     const secondSpec = formData.value.specList[1];
-    for (let item of spec.valueList) {
-      if (item.name) {
-        for (let secondItem of secondSpec.valueList) {
-          if (secondItem.name) {
-            formData.value.skuList.push({
-              primaryValue: item.name,
-              secondValue: secondItem.name,
-              secondSize: size,
-              linePrice: null,
-              costPrice: null,
-              salePrice: null,
-              stock: null,
-              virtualNum: null,
-              weight: null
-            });
-          }
-        }
-      }
-    }
-    showSecondSpec.value = true;
+    createSecondTable(spec, secondSpec, size);
   }
 };
 
+const createSecondTable = (spec, secondSpec, size) => {
+  for (let item of spec.valueList) {
+    if (item.name) {
+      for (let secondItem of secondSpec.valueList) {
+        if (secondItem.name) {
+          formData.value.skuList.push({
+            primaryValue: item.name,
+            secondValue: secondItem.name,
+            secondSize: size,
+            linePrice: null,
+            costPrice: null,
+            salePrice: null,
+            stock: null,
+            virtualNum: null,
+            weight: null
+          });
+        }
+      }
+    }
+  }
+  showSecondSpec.value = true;
+};
+
+const filterSpec = (spec) => {
+  return spec.valueList.filter((item) => {
+    return !!item.name;
+  });
+};
+
 const createPrimarySpec = (spec) => {
-  formData.value.skuList = [];
   for (let item of spec.valueList) {
     if (item.name) {
       formData.value.skuList.push({
@@ -388,17 +399,19 @@ const createPrimarySpec = (spec) => {
   }
 };
 
-const handleSpanMethod = (row, column, rowIndex, columnIndex) => {
+const handleSpanMethod = ({ row, rowIndex, columnIndex }) => {
   if (columnIndex === 0 && row.secondSize > 0) {
-    return {
-      rowspan: row.secondSize,
-      colspan: 1
-    };
-  } else {
-    return {
-      rowspan: 0,
-      colspan: 0
-    };
+    if (rowIndex % row.secondSize === 0) {
+      return {
+        rowspan: row.secondSize,
+        colspan: 1
+      };
+    } else {
+      return {
+        rowspan: 0,
+        colspan: 0
+      };
+    }
   }
 };
 
@@ -406,6 +419,9 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
+      if (formData.value.tagList.length > 0) {
+        formData.value.tagId = formData.value.tagList[formData.value.tagList.length - 1];
+      }
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -515,7 +531,6 @@ const handleChangeSpec = (value) => {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 15px;
-
     .spec-close {
       position: absolute;
       top: -15px;
@@ -530,17 +545,19 @@ const handleChangeSpec = (value) => {
   flex-wrap: wrap;
 
   .spec-value-patch {
-    padding-top: 10px;
     margin-right: 20px;
     text-align: center;
     position: relative;
 
     .close {
       position: absolute;
-      top: -5px;
+      top: -15px;
       right: -5px;
       cursor: pointer;
     }
   }
+}
+.el-form-item .el-form-item {
+  margin-bottom: 18px;
 }
 </style>

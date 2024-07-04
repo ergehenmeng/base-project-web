@@ -160,14 +160,15 @@ el-select.w250 {
   width: auto;
 }
 
+
 .image-uploader-preview {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: block;
 }
 
 .el-icon.image-uploader-icon {
-  font-size: 28px;
+  font-size: 20px;
   color: #8c939d;
   text-align: center;
 }
