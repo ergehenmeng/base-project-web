@@ -25,12 +25,12 @@
           <div class="item-spec">
             <div class="item-spec-content" v-for="(item, index) in formData.specList" :key="index">
               <el-form-item label="规格名称">
-                <el-input class="w100" v-model="item.specName" onkeyup="this.value=this.value.trim();" @blur="handleBlurSpec(index)"></el-input>
+                <el-input class="w140" v-model="item.specName" onkeyup="this.value=this.value.trim();" @blur="handleBlurSpec(index)" maxlength="10"></el-input>
               </el-form-item>
               <el-form-item label="规格值">
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
-                    <el-input class="w120" style="margin-bottom: 10px" v-model="value.name" onkeyup="this.value=this.value.trim();" @blur="handleBlurValue(index, idx)"></el-input>
+                    <el-input class="w140" style="margin-bottom: 10px" v-model="value.name" onkeyup="this.value=this.value.trim();" maxlength="10" @blur="handleBlurValue(index, idx)"></el-input>
                     <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)">
                         <CircleCloseFilled />
@@ -54,31 +54,31 @@
             </div>
           </div>
           <div class="item-sku">
-            <el-table border :data="formData.skuList" :span-method="handleSpanMethod" v-show="formData.skuList.length > 0">
-              <el-table-column prop="primaryValue">
-                <template #header="scope">
-                  <span>{{ scope.row.primaryHeader }}</span>
+            <el-table border :data="formData.skuList"  v-show="formData.skuList.length > 0" >
+              <el-table-column prop="primaryValue" min-width="120">
+                <template #header>
+                  <span>{{ formData.specList[0]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <el-text v-model="scope.row.primaryValue"></el-text>
+                  <span>{{scope.row.primaryValue}}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="secondValue" v-show="showSecondSpec">
-                <template #header="scope">
-                  <span>{{ scope.row.secondHeader }}</span>
+              <el-table-column prop="secondValue" v-if="showSecondSpec" min-width="120">
+                <template #header>
+                  <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <el-text v-model="scope.row.secondValue"></el-text>
+                  <span>{{scope.row.secondValue}}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="成本价" prop="costPrice">
-                <template #default="scope">
-                  <el-input v-model="scope.row.costPrice" show-word-limit maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
+              <el-table-column label="成本价" prop="costPrice" >
+                <template #default="scope" >
+                  <el-input v-model="scope.row.costPrice" class="w80" maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
                 </template>
               </el-table-column>
               <el-table-column label="划线价" prop="linePrice">
                 <template #default="scope">
-                  <el-input v-model="scope.row.linePrice" show-word-limit maxlength="6" @keyup="scope.row.linePrice = numberValidator(scope.row.linePrice)" />
+                  <el-input v-model="scope.row.linePrice" class="w80" maxlength="6" @keyup="scope.row.linePrice = numberValidator(scope.row.linePrice)" />
                 </template>
               </el-table-column>
               <el-table-column prop="salePrice">
@@ -86,7 +86,7 @@
                   <span><span class="item-required">*</span>销售价</span>
                 </template>
                 <template #default="scope">
-                  <el-input v-model="scope.row.salePrice" show-word-limit maxlength="6" @keyup="scope.row.salePrice = numberValidator(scope.row.salePrice)" />
+                  <el-input v-model="scope.row.salePrice" class="w80" maxlength="6" @keyup="scope.row.salePrice = numberValidator(scope.row.salePrice)" />
                 </template>
               </el-table-column>
               <el-table-column prop="stock">
@@ -94,17 +94,17 @@
                   <span><span class="item-required">*</span>库存</span>
                 </template>
                 <template #default="scope">
-                  <el-input v-model="scope.row.stock" show-word-limit maxlength="5" @keyup="scope.row.stock = numberValidator(scope.row.stock)" />
+                  <el-input v-model="scope.row.stock" class="w80" maxlength="5" @keyup="scope.row.stock = numberValidator(scope.row.stock)" />
                 </template>
               </el-table-column>
               <el-table-column label="虚拟销量" prop="virtualNum">
                 <template #default="scope">
-                  <el-input v-model="scope.row.virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                  <el-input v-model="scope.row.virtualNum" class="w80" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
                 </template>
               </el-table-column>
               <el-table-column label="重量(kg)" prop="weight">
                 <template #default="scope">
-                  <el-input v-model="scope.row.weight" show-word-limit maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
+                  <el-input v-model="scope.row.weight" class="w80" maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -230,9 +230,7 @@ let formData = ref({
   purchaseNotes: null,
   skuList: [
     {
-      primaryHeader: null,
       primaryValue: null,
-      secondHeader: null,
       // 合并多少列
       secondSize: 0,
       secondValue: null,
@@ -271,6 +269,7 @@ const handleCloseSpec = () => {
     return;
   }
   formData.value.specList.splice(1, 1);
+  generateSkuTable();
 };
 
 const handleAddSpec = () => {
@@ -301,6 +300,7 @@ const handleCloseValue = (index, idx) => {
     return;
   }
   formData.value.specList[index].valueList.splice(idx, 1);
+  generateSkuTable();
 };
 
 const handleBlurSpec = (index) => {
@@ -315,10 +315,14 @@ const handleBlurSpec = (index) => {
 const handleBlurValue = (index, idx) => {
   const spec = formData.value.specList[index];
   const set = new Set();
+  const list = [];
   spec.valueList.forEach((item) => {
-    set.add(item.name);
+    if (item.name) {
+      set.add(item.name);
+      list.push(item.name);
+    }
   });
-  if (spec.valueList.length !== set.size) {
+  if (list.length !== set.size) {
     errorMsg('规格值不能重复');
     spec.valueList[idx].name = null;
     return;
@@ -328,31 +332,37 @@ const handleBlurValue = (index, idx) => {
 
 const generateSkuTable = () => {
   const spec = formData.value.specList[0];
-  if (spec.valueList.length === 0 || !spec.specName) {
-    // 一级规格信息都不完整
+  const length = spec.valueList.map((item) => !item).length;
+  if (length === 0 || !spec.specName) {
+    formData.value.skuList = [];
     return;
   }
-  if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || formData.value.specList[1].valueList.length === 0) {
+  let size = 0;
+  if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || ( size = formData.value.specList[1].valueList.map((item) => !item).length) === 0) {
+    console.log(formData.value.specList.length === 1)
+    console.log(!formData.value.specList[1].specName)
+    console.log(formData.value.specList[1].valueList.map((item) => !item).length)
     createPrimarySpec(spec);
     showSecondSpec.value = false;
   } else {
     const secondSpec = formData.value.specList[1];
-    const size = secondSpec.valueList.length;
     for (let item of spec.valueList) {
-      for (let secondItem of secondSpec.valueList) {
-        formData.value.skuList.push({
-          primaryHeader: spec.specName,
-          primaryValue: item.name,
-          secondHeader: secondSpec.specName,
-          secondValue: secondItem.name,
-          secondSize: size,
-          linePrice: null,
-          costPrice: null,
-          salePrice: null,
-          stock: null,
-          virtualNum: null,
-          weight: null
-        });
+      if (item.name) {
+        for (let secondItem of secondSpec.valueList) {
+          if (secondItem.name) {
+            formData.value.skuList.push({
+              primaryValue: item.name,
+              secondValue: secondItem.name,
+              secondSize: size,
+              linePrice: null,
+              costPrice: null,
+              salePrice: null,
+              stock: null,
+              virtualNum: null,
+              weight: null
+            });
+          }
+        }
       }
     }
     showSecondSpec.value = true;
@@ -360,20 +370,21 @@ const generateSkuTable = () => {
 };
 
 const createPrimarySpec = (spec) => {
+  formData.value.skuList = [];
   for (let item of spec.valueList) {
-    formData.value.skuList.push({
-      primaryHeader: spec.specName,
-      primaryValue: item.name,
-      secondHeader: null,
-      secondSize: 0,
-      secondValue: null,
-      linePrice: null,
-      costPrice: null,
-      salePrice: null,
-      stock: null,
-      virtualNum: null,
-      weight: null
-    });
+    if (item.name) {
+      formData.value.skuList.push({
+        primaryValue: item.name,
+        secondSize: 0,
+        secondValue: null,
+        linePrice: null,
+        costPrice: null,
+        salePrice: null,
+        stock: null,
+        virtualNum: null,
+        weight: null
+      });
+    }
   }
 };
 
@@ -453,14 +464,24 @@ const handleChangeSpec = (value) => {
   if (value) {
     salePriceRule.value = null;
     stockRule.value = null;
-    formData.value.specList = [];
+    formData.value.specList = [
+      {
+        id: null,
+        specName: null,
+        valueList: [
+          {
+            name: null,
+            pic: null
+          }
+        ]
+      }
+    ];
     formData.value.skuList = [];
   } else {
+    formData.value.specList = [];
     formData.value.skuList = [
       {
-        primaryHeader: null,
         primaryValue: null,
-        secondHeader: null,
         secondSize: 0,
         secondValue: null,
         linePrice: null,
@@ -476,7 +497,7 @@ const handleChangeSpec = (value) => {
 </script>
 <style lang="scss" scoped>
 .item-group {
-  width: 850px;
+  width: 1100px;
   border: 1px solid #dcdfe6;
   padding: 10px;
 
@@ -493,7 +514,7 @@ const handleChangeSpec = (value) => {
     background-color: rgba(0, 0, 0, 0.02);
     border-radius: 5px;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 
     .spec-close {
       position: absolute;
