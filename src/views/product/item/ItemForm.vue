@@ -54,7 +54,7 @@
             </div>
           </div>
           <div class="item-sku">
-            <el-table border :data="formData.skuList" :span-method="handleSpanMethod">
+            <el-table border :data="formData.skuList" :span-method="handleSpanMethod" v-show="formData.skuList.length > 0">
               <el-table-column prop="primaryValue">
                 <template #header="scope">
                   <span>{{ scope.row.primaryHeader }}</span>
