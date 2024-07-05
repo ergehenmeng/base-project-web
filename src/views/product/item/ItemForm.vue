@@ -14,13 +14,13 @@
       <el-form-item label="商品标签" prop="tagList">
         <ItemTag v-model="formData.tagList"></ItemTag>
       </el-form-item>
-      <el-form-item label="规格类型">
+      <el-form-item label="规格类型" prop="multiSpec">
         <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec">
           <el-radio label="单规格" :value="false"></el-radio>
           <el-radio label="多规格" :value="true"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="商品规格" v-show="formData.multiSpec">
+      <el-form-item label="商品规格" v-if="formData.multiSpec">
         <div class="item-group">
           <div class="item-spec">
             <div class="item-spec-content" v-for="(item, index) in formData.specList" :key="index">
@@ -31,7 +31,7 @@
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
                     <el-form-item :prop="`specList[${index}].valueList[${idx}].name`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
-                      <el-input class="w140"  v-model.trim="value.name" maxlength="10" @keyup="handleBlurValue(index, idx)"></el-input>
+                      <el-input class="w140" v-model.trim="value.name" maxlength="10" @keyup="handleBlurValue(index, idx)"></el-input>
                     </el-form-item>
                     <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)">
@@ -117,27 +117,27 @@
           </div>
         </div>
       </el-form-item>
-      <template v-for="(item, index) in formData.skuList" :key="index">
-        <el-form-item label="成本价" v-show="!formData.multiSpec">
-          <el-input v-model="item.salePrice" show-word-limit maxlength="6" @keyup="formData.costPrice = numberValidator(formData.costPrice)" />
+      <template v-for="(item, index) in formData.skuList" :key="index" v-if="!formData.multiSpec">
+        <el-form-item label="成本价">
+          <el-input v-model="item.costPrice" show-word-limit maxlength="6" @keyup="item.costPrice = numberValidator(item.costPrice)" />
         </el-form-item>
-        <el-form-item label="划线价" v-show="!formData.multiSpec">
-          <el-input v-model="formData.linePrice" show-word-limit maxlength="6" @keyup="formData.linePrice = numberValidator(formData.linePrice)" />
+        <el-form-item label="划线价">
+          <el-input v-model="item.linePrice" show-word-limit maxlength="6" @keyup="item.linePrice = numberValidator(item.linePrice)" />
         </el-form-item>
-        <el-form-item :prop="salePriceRef" label="销售价" v-show="!formData.multiSpec" :rules="salePriceRule">
-          <el-input v-model="formData.salePrice" show-word-limit maxlength="6" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
+        <el-form-item :prop="`skuList[${index}].salePrice`" label="销售价" :rules="{ required: true, message: '销售价不能为空', trigger: 'blur' }">
+          <el-input v-model="item.salePrice" show-word-limit maxlength="6" @keyup="item.salePrice = numberValidator(item.salePrice)" />
         </el-form-item>
-        <el-form-item :prop="stockRef" label="库存" v-show="!formData.multiSpec" :rules="stockRule">
-          <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-form-item :prop="`skuList[${index}].stock`" label="库存" :rules="{ required: true, message: '库存不能为空', trigger: 'blur' }">
+          <el-input v-model="item.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
         </el-form-item>
-        <el-form-item label="虚拟销量" v-show="!formData.multiSpec">
-          <el-input v-model="formData.virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-form-item label="虚拟销量">
+          <el-input v-model="item.virtualNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
         </el-form-item>
-        <el-form-item label="重量(kg)" v-show="!formData.multiSpec">
-          <el-input v-model="formData.weight" show-word-limit maxlength="6" @keyup="formData.weight = numberValidator(formData.weight)" />
+        <el-form-item label="重量(kg)">
+          <el-input v-model="item.weight" show-word-limit maxlength="6" @keyup="item.weight = numberValidator(item.weight)" />
         </el-form-item>
       </template>
-      <el-form-item label="限购数量" prop="quota" v-show="!formData.multiSpec">
+      <el-form-item label="限购数量" prop="quota">
         <el-input v-model="formData.quota" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px" />
       </el-form-item>
       <el-form-item label="交付方式" prop="deliveryType">
@@ -192,10 +192,6 @@ const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const salePriceRef = 'skuList[0].salePrice';
-const stockRef = ref('skuList[0].stock');
-const salePriceRule = ref({ required: true, message: '销售价不能为空', trigger: 'blur' });
-const stockRule = ref({ required: true, message: '库存不能为空', trigger: 'blur' });
 const showSecondSpec = ref(false);
 
 const formRules = reactive({
@@ -204,19 +200,12 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }
   ],
-  logoUrl: [{ required: true, message: '请上传商品logo', trigger: 'change' }],
-  merchantId: [{ required: true, message: '请选择所属商户', trigger: 'change' }],
-  telephone: [{ required: true, validator: phoneValidator, trigger: 'blur' }],
-  openTime: [{ required: true, message: '营业时间不能为空', trigger: 'blur' }],
-  areaList: [{ required: true, message: '请选择省市县', trigger: 'change', type: 'array' }],
-  detailAddress: [
-    { required: true, message: '详细地址不能为空', trigger: 'blur' },
-    { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
-  ],
+  storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
+  coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
+  multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
   expressId: [{ required: true, message: '请选择物流模板', trigger: 'change' }],
-  depotAddressId: [{ required: true, message: '请选择退换货地址', trigger: 'change' }],
-  latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
+  purchaseNotes: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
 
@@ -451,12 +440,12 @@ onMounted(() => {
     loading.value = true;
     // 详情页面进来不可点击
     disabled.value = route.fullPath.startsWith('/product/item/detail');
-    loadItemDetail(params.id)
+    loadItemDetail(params.id);
   }
 });
 
 const loadItemDetail = (id) => {
-  selectApi({id: id})
+  selectApi({ id: id })
     .then((res) => {
       formData.value = { ...res.data };
       if (res.data.coverUrl) {
@@ -469,7 +458,7 @@ const loadItemDetail = (id) => {
     .finally(() => {
       loading.value = false;
     });
-}
+};
 
 const handleDelivery = (value) => {
   if (value === 1) {
@@ -482,8 +471,6 @@ const handleDelivery = (value) => {
 
 const handleChangeSpec = (value) => {
   if (value) {
-    salePriceRule.value = null;
-    stockRule.value = null;
     formData.value.specList = [
       {
         id: null,
