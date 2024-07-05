@@ -57,20 +57,20 @@
           </div>
           <div class="item-sku">
             <el-table border :data="formData.skuList" :span-method="handleSpanMethod" v-show="formData.skuList.length > 0">
-              <el-table-column prop="primaryValue" min-width="120">
+              <el-table-column prop="primarySpecValue" min-width="120">
                 <template #header>
                   <span>{{ formData.specList[0]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{ scope.row.primaryValue }}</span>
+                  <span>{{ scope.row.primarySpecValue }}</span>
                 </template>
               </el-table-column>
-              <el-table-column prop="secondValue" v-if="showSecondSpec" min-width="120">
+              <el-table-column prop="secondSpecValue" v-if="showSecondSpec" min-width="120">
                 <template #header>
                   <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{ scope.row.secondValue }}</span>
+                  <span>{{ scope.row.secondSpecValue }}</span>
                 </template>
               </el-table-column>
               <el-table-column label="成本价" prop="costPrice">
@@ -236,10 +236,10 @@ let formData = ref({
   purchaseNotes: null,
   skuList: [
     {
-      primaryValue: null,
+      primarySpecValue: null,
       // 合并多少列
       secondSize: 0,
-      secondValue: null,
+      secondSpecValue: null,
       linePrice: null,
       costPrice: null,
       salePrice: null,
@@ -358,8 +358,8 @@ const createSecondTable = (spec, secondSpec, size) => {
       for (let secondItem of secondSpec.valueList) {
         if (secondItem.name) {
           formData.value.skuList.push({
-            primaryValue: item.name,
-            secondValue: secondItem.name,
+            primarySpecValue: item.name,
+            secondSpecValue: secondItem.name,
             secondSize: size,
             linePrice: null,
             costPrice: null,
@@ -385,9 +385,9 @@ const createPrimarySpec = (spec) => {
   for (let item of spec.valueList) {
     if (item.name) {
       formData.value.skuList.push({
-        primaryValue: item.name,
+        primarySpecValue: item.name,
         secondSize: 0,
-        secondValue: null,
+        secondSpecValue: null,
         linePrice: null,
         costPrice: null,
         salePrice: null,
@@ -451,21 +451,25 @@ onMounted(() => {
     loading.value = true;
     // 详情页面进来不可点击
     disabled.value = route.fullPath.startsWith('/product/item/detail');
-    selectApi(params)
-      .then((res) => {
-        formData.value = { ...res.data };
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
-        formData.value.introduceText = res.data.introduce;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+    loadItemDetail(params.id)
   }
 });
+
+const loadItemDetail = (id) => {
+  selectApi({id: id})
+    .then((res) => {
+      formData.value = { ...res.data };
+      if (res.data.coverUrl) {
+        formData.value.coverList = res.data.coverUrl.split(',');
+      } else {
+        formData.value.coverList = [];
+      }
+      formData.value.introduceText = res.data.introduce;
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+}
 
 const handleDelivery = (value) => {
   if (value === 1) {
@@ -497,9 +501,9 @@ const handleChangeSpec = (value) => {
     formData.value.specList = [];
     formData.value.skuList = [
       {
-        primaryValue: null,
+        primarySpecValue: null,
         secondSize: 0,
-        secondValue: null,
+        secondSpecValue: null,
         linePrice: null,
         costPrice: null,
         salePrice: null,
