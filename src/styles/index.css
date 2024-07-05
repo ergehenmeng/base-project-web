@@ -38,6 +38,7 @@ body {
   width: 800px;
 }
 
+/*编辑页面底部按钮整体样式*/
 .edit-button-footer {
   position: fixed;
   bottom: 10px;
@@ -101,10 +102,6 @@ body {
   width: 280px !important;
 }
 
-.el-input.w80 {
-  width: 80px !important;
-}
-
 .el-select.w80 {
   width: 80px !important;
 }
@@ -160,33 +157,41 @@ el-select.w250 {
   width: auto;
 }
 
-
+/*单图片上传预览样式*/
 .image-uploader-preview {
   width: 80px;
   height: 80px;
   display: block;
 }
 
+/*单张文件上传后图片显示撑高的问题*/
+.el-form-item__content .image-uploader {
+  line-height: 0 !important;
+}
+
+/*图片上传中间+号图标样式*/
 .el-icon.image-uploader-icon {
-  font-size: 20px;
+  font-size: 16px;
   color: #8c939d;
   text-align: center;
 }
 
+/*图片上传整体样式*/
 .image-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   transition: var(--el-transition-duration-fast);
 }
 
+/*多图片上传后的展示样式*/
 .el-upload-list--picture-card .el-upload-list__item {
-  width: 100px !important;
-  height: 100px !important;
+  width: 80px !important;
+  height: 80px !important;
 }
 
 .image-uploader .el-upload:hover {
@@ -198,6 +203,7 @@ el-select.w250 {
   padding: 0 15px !important;
 }
 
+/*穿梭框底部按钮*/
 .el-transfer-panel__footer {
   display: flex;
   justify-content: center;
@@ -249,6 +255,7 @@ el-select.w250 {
   height: 25px;
 }
 
+/*时间段提示样式*/
 .tips-content {
   line-height: 20px !important;
   font-size: 12px;
@@ -260,6 +267,7 @@ el-select.w250 {
   margin-right: 1px;
 }
 
+/*404页面样式*/
 .full-content {
   border-radius: 3px;
   background-color: #fff;
