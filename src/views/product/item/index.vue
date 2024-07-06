@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="content-top">
-      <el-form :inline="true" label-width="70px">
+      <el-form :inline="true" label-width="auto" >
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
@@ -19,9 +19,9 @@
           </el-select>
         </el-form-item>
         <el-form-item label="价格">
-          <el-input class="w80" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
+          <el-input class="w80" v-model="queryParams.minPrice" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)" maxlength="6"></el-input>
           ~
-          <el-input class="w80" @keyup="queryParams.minPrice = numberValidator(queryParams.minPrice)"></el-input>
+          <el-input class="w80" v-model="queryParams.maxPrice" @keyup="queryParams.maxPrice = numberValidator(queryParams.maxPrice)" maxlength="6"></el-input>
         </el-form-item>
         <el-form-item label="所属商品">
           <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
@@ -32,7 +32,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item label=" " v-has-perm="'oSO0'">
+        <el-form-item v-has-perm="'oSO0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
       </el-form>

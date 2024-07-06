@@ -15,7 +15,7 @@
         <ItemTag v-model="formData.tagList"></ItemTag>
       </el-form-item>
       <el-form-item label="规格类型" prop="multiSpec">
-        <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec">
+        <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec" :disabled="formData.id  !== null">
           <el-radio label="单规格" :value="false"></el-radio>
           <el-radio label="多规格" :value="true"></el-radio>
         </el-radio-group>
@@ -178,7 +178,7 @@ import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
-import { numberValidator, phoneValidator } from '@/utils/common.js';
+import { numberValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import ItemTag from '@/components/ItemTag.vue';
 import ExpressSelect from '@/components/ExpressSelect.vue';
