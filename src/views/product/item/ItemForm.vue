@@ -15,7 +15,7 @@
         <ItemTag v-model="formData.tagList"></ItemTag>
       </el-form-item>
       <el-form-item label="规格类型" prop="multiSpec">
-        <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec" :disabled="formData.id  !== null">
+        <el-radio-group v-model="formData.multiSpec" @change="handleChangeSpec" :disabled="formData.id !== null">
           <el-radio label="单规格" :value="false"></el-radio>
           <el-radio label="多规格" :value="true"></el-radio>
         </el-radio-group>
@@ -62,7 +62,9 @@
                   <span>{{ formData.specList[0]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{ scope.row.primarySpecValue }}</span>
+                  <el-form-item>
+                    <span>{{ scope.row.primarySpecValue }}</span>
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column prop="secondSpecValue" v-if="showSecondSpec" min-width="120">
@@ -70,17 +72,23 @@
                   <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
                 <template #default="scope">
-                  <span>{{ scope.row.secondSpecValue }}</span>
+                  <el-form-item>
+                    <span>{{ scope.row.secondSpecValue }}</span>
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column label="成本价" prop="costPrice">
                 <template #default="scope">
-                  <el-input v-model="scope.row.costPrice" class="w80" maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
+                  <el-form-item>
+                    <el-input v-model="scope.row.costPrice" class="w80" maxlength="6" @keyup="scope.row.costPrice = numberValidator(scope.row.costPrice)" />
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column label="划线价" prop="linePrice">
                 <template #default="scope">
-                  <el-input v-model="scope.row.linePrice" class="w80" maxlength="6" @keyup="scope.row.linePrice = numberValidator(scope.row.linePrice)" />
+                  <el-form-item>
+                    <el-input v-model="scope.row.linePrice" class="w80" maxlength="6" @keyup="scope.row.linePrice = numberValidator(scope.row.linePrice)" />
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column prop="salePrice">
@@ -105,12 +113,16 @@
               </el-table-column>
               <el-table-column label="虚拟销量" prop="virtualNum">
                 <template #default="scope">
-                  <el-input v-model="scope.row.virtualNum" class="w80" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                  <el-form-item>
+                    <el-input v-model="scope.row.virtualNum" class="w80" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+                  </el-form-item>
                 </template>
               </el-table-column>
               <el-table-column label="重量(kg)" prop="weight">
                 <template #default="scope">
-                  <el-input v-model="scope.row.weight" class="w80" maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
+                  <el-form-item>
+                    <el-input v-model="scope.row.weight" class="w80" maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
+                  </el-form-item>
                 </template>
               </el-table-column>
             </el-table>
@@ -240,6 +252,7 @@ let formData = ref({
   specList: [
     {
       id: null,
+      level: 1,
       specName: null,
       valueList: [
         {
@@ -274,6 +287,7 @@ const handleAddSpec = () => {
   }
   formData.value.specList.push({
     id: null,
+    level: 2,
     specName: null,
     valueList: [
       {
@@ -474,6 +488,7 @@ const handleChangeSpec = (value) => {
     formData.value.specList = [
       {
         id: null,
+        level: 1,
         specName: null,
         valueList: [
           {
@@ -522,6 +537,7 @@ const handleChangeSpec = (value) => {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 15px;
+
     .spec-close {
       position: absolute;
       top: -15px;
@@ -548,6 +564,7 @@ const handleChangeSpec = (value) => {
     }
   }
 }
+
 .el-form-item .el-form-item {
   margin-bottom: 18px;
 }

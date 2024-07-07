@@ -27,7 +27,7 @@
           <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
         </el-form-item>
         <el-form-item label="标签">
-          <ItemTag v-model="queryParams.tagId"></ItemTag>
+          <ItemTag v-model="queryParams.tagList"></ItemTag>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -122,7 +122,7 @@ const queryParams = reactive({
   minPrice: null,
   maxPrice: null,
   deliveryType: null,
-  tagId: null,
+  tagList: [],
   storeId: null
 });
 
@@ -130,6 +130,9 @@ const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
+      if (queryParams.tagList.length > 0) {
+        queryParams.tagId = queryParams.tagList[0];
+      }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;
