@@ -1,7 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="活动名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -25,7 +25,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="skuList" border style="width: 480px;" >
+        <el-table :data="allSkuList" border style="width: 600px;" @selection-change="handleSelectionChange">
           <el-table-column prop="id" label="选择" type="selection" width="60" ></el-table-column>
           <el-table-column prop="skuPic" label="封面图片" width="100">
             <template #default="scope">
@@ -42,7 +42,17 @@
             </template>
           </el-table-column>
           <el-table-column prop="specValue" label="规格名称" min-width="150" />
-          <el-table-column prop="salePrice" label="销售价格" width="150" />
+          <el-table-column prop="salePrice" label="销售价格" width="130" />
+          <el-table-column width="150" >
+            <template #header>
+              <span><span class="item-required">*</span>拼团价格</span>
+            </template>
+            <template #default="scope">
+              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)" >
+                <el-input v-show="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
+              </el-form-item>
+            </template>
+          </el-table-column>
         </el-table>
       </el-form-item>
     </el-form>
@@ -63,6 +73,7 @@ import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/gr
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
+import { numberValidator } from '@/utils/common.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -71,7 +82,7 @@ const formDataRef = ref();
 const disabled = ref(false);
 const itemList = ref([]);
 const skuMap = new Map();
-const skuList = ref([]);
+const allSkuList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -89,6 +100,7 @@ const formData = ref({
   timeList: [],
   num: null,
   expireTime: null,
+  // 选中的sku列表
   skuList: []
 });
 
@@ -132,11 +144,37 @@ const loadingItemList = (id) => {
 const handleItemChange = (value) => {
   const sku = skuMap.get(value)
   if (sku) {
-    skuList.value = sku;
+    allSkuList.value = sku;
   } else {
-    skuList.value = []
+    allSkuList.value = []
   }
 }
+
+const handleSelectionChange = (val) => {
+  formData.value.skuList = val;
+};
+
+/**
+ * 该行选中则校验拼团价格,否则不校验
+ * @type {ComputedRef<function(*): [{trigger: string, message: string, required: boolean}]|[]>}
+ */
+const getSkuRule = computed(() => {
+  return (id) => {
+    const selectList = formData.value.skuList.filter((item) => item.skuId === id)
+    return selectList.length > 0 ? [{
+      required: true,
+      message: '拼团价格不能为空',
+      trigger: 'blur'
+    }] : [];
+  }
+})
+
+const showElement = computed(() => {
+  return (id) => {
+    const selectList = formData.value.skuList.filter((item) => item.skuId === id)
+    return selectList.length > 0;
+  }
+})
 
 onMounted(() => {
   const params = route.params;
@@ -157,3 +195,9 @@ onMounted(() => {
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.item-required {
+  color: #f56c6c;
+}
+</style>
