@@ -49,7 +49,7 @@
             </template>
             <template #default="scope">
               <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)" >
-                <el-input v-show="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
+                <el-input v-if="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
               </el-form-item>
             </template>
           </el-table-column>
