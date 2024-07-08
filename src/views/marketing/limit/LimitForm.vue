@@ -75,23 +75,23 @@ const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const itemList = ref([]);
-const skuMap = new Map();
+const allItemList = ref([]);
+const itemMap = new Map();
 const skuList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur' }],
   advanceHour: [{ required: true, message: '提前预告时间不能为空', trigger: 'blur' }],
-  skuList: [{ required: true, message: '请选择要拼团商品', trigger: 'change' }]
+  itemIds: [{ required: true, message: '请选择要拼团商品', trigger: 'change' }]
 });
 
 const formData = ref({
   id: null,
-  title: '',
+  title: null,
   timeList: [],
   advanceHour: null,
-  skuList: [],
+  itemIds: [],
   remark: null
 });
 
@@ -124,25 +124,36 @@ const handleSave = () => {
 
 const loadingItemList = (id) => {
   itemListApi({ id: id }).then((res) => {
-    itemList.value = res.data;
-    itemList.value.forEach((item) => {
-      skuMap.set(item.id, item.skuList);
+    allItemList.value = res.data;
+    allItemList.value.forEach((item) => {
+      itemMap.set(item.id, item);
     });
-    handleItemChange(formData.value.itemId);
+    const itemIds = formData.value.itemList.map(item => item.id);
+    handleItemChange(itemIds);
   });
 };
 
 const objectSpanMethod = (row, column, rowIndex, columnIndex) => {
   if (columnIndex === 0 || columnIndex === 1) {
-    return {
-      rowspan: skuList.value.length,
-      colspan: 1
-    };
+    if (skuList.value.length > 1) {
+      return {
+        rowspan: skuList.value.length,
+        colspan: 1
+      };
+    } else {
+      return {
+        rowspan: 0,
+        colspan: 0
+      };
+    }
   }
 };
 
-const handleItemChange = (value) => {
-  const sku = skuMap.get(value)
+const handleItemChange = (itemIds) => {
+  itemIds.forEach((value) => {
+    const sku = itemMap.get(value)
+  })
+
   if (sku) {
     skuList.value = sku;
   } else {
