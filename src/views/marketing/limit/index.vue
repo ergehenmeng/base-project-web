@@ -13,10 +13,11 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="活动名称" min-width="200" />
-        <el-table-column prop="startTime" label="活动时间" width="280" :formatter="formatter" />
-        <el-table-column prop="num" label="提前预告" width="100" :formatter="formatter"/>
+        <el-table-column prop="startTime" label="活动时间" width="320" :formatter="formatter" />
+        <el-table-column prop="advanceHour" label="提前预告(小时)" width="120" :formatter="formatter"/>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="remark" label="备注信息" width="200" />
         <el-table-column label="操作" fixed="right" min-width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>

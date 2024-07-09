@@ -86,17 +86,15 @@ export const payTypeFormat = (cellValue) => {
  */
 export const numberValidator = (value, point = 2) => {
   if (value) {
-    // 允许数字和小数点
-    value = value.replace(/[^\d.]/g, '');
-    // 只保留第一个小数点
-    value = value.replace(/\.{2,}/g, '.');
-    // 防止连续输入小数点
-    value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
-    if (point === 2) {
-      // 只允许小数点后两位
-      return value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3');
-    } else {
-      return value.replace(/^(-)*(\d+)\.(\d).*$/, '$1$2.$3');
+    value = value.replace(/[^0-9.]/g, '') // 移除非数字和小数点
+        .replace(/(\..*)\./g, '$1')
+        .replace(/(\..{2}).*/g, '$1');
+    value = value === '.' ? '' : value;
+    // 移除前导零，但保留小数点前至少一个数字
+    value = value.replace(/^0+(?=\d)/, '');
+    // 特殊处理：确保小数点前至少有一个数字
+    if (value.startsWith('.')) {
+      value = '0' + value;
     }
   }
   return value;

@@ -33,10 +33,16 @@
           <el-table-column prop="salePrice" label="销售价格" min-width="120" />
           <el-table-column width="120">
             <template #header>
-              <span><span class="item-required"> *</span>限时价</span>
+              <span><span class="item-required">*</span>限时价<QuestionTip content="限时价不能大于销售价"></QuestionTip></span>
             </template>
             <template #default="scope">
-              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" :rules="[{ required: true, message: '限时价不能为空', trigger: 'blur' }]">
+              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" :rules="[{ required: true, message: '限时价不能为空', trigger: 'blur' }, { validator(rule, value, callback) {
+                      if (parseFloat(value) > parseFloat(scope.row.salePrice)) {
+                        callback(new Error('限购价不能大于销售价'));
+                      } else {
+                        callback();
+                      }
+               }}]">
                 <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice=numberValidator(scope.row.discountPrice);"></el-input>
               </el-form-item>
             </template>
@@ -65,6 +71,7 @@ import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js'
+import QuestionTip from "@/components/QuestionTip.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -77,7 +84,15 @@ const itemMap = new Map();
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur' }],
-  advanceHour: [{ required: true, message: '提前预告时间不能为空', trigger: 'blur' }],
+  advanceHour: [{ required: true, message: '提前预告时间不能为空', trigger: 'blur' }, {
+    validator(rule, value, callback) {
+      if (parseInt(value) > 72) {
+        callback(new Error('提前预告时间不能超过72小时'));
+      } else {
+        callback();
+      }
+    }
+  }],
   itemIds: [{ required: true, message: '请选择参与限时购的商品', trigger: 'change' }],
   skuList: [{ required: true, message: '限时价不能为空', trigger: 'change'}]
 });
@@ -96,6 +111,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
+      formData.value.startTime = formData.value.timeList[0];
+      formData.value.endTime = formData.value.timeList[1];
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -125,7 +142,6 @@ const loadingItemList = (id) => {
     allItemList.value.forEach((item) => {
       itemMap.set(item.id, item);
     });
-    handleItemChange(formData.value.itemIds);
   });
 };
 
@@ -159,7 +175,7 @@ onMounted(() => {
   const params = route.params;
   if (params.id !== undefined) {
     loading.value = true;
-    disabled.value = route.fullPath.startsWith('/marketing/group/detail');
+    disabled.value = route.fullPath.startsWith('/marketing/limit/detail');
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
