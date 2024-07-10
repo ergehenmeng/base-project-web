@@ -6,7 +6,15 @@
       </el-form-item>
       <el-form-item label="有效时间" prop="timeList">
         <div style="width: 400px">
-          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" :disabled="editDisabled" v-model="formData.timeList" style="width: 400px"></el-date-picker>
+          <el-date-picker
+            type="datetimerange"
+            format="YYYY-MM-DD HH:mm"
+            value-format="YYYY-MM-DD HH:mm"
+            time-format="HH:mm"
+            :disabled="editDisabled"
+            v-model="formData.timeList"
+            style="width: 400px"
+          ></el-date-picker>
         </div>
       </el-form-item>
       <el-form-item label="金额" prop="amount">
@@ -35,13 +43,10 @@
 import { createApi, detailApi, updateApi } from '@/api/marketing/redeem';
 import { storeApi } from '@/api/product';
 import { reactive, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
 import StoreAllSelect from '@/components/StoreAllSelect.vue';
 
-const route = useRoute();
-const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
@@ -78,15 +83,15 @@ const openDialog = (row) => {
   if (row.id) {
     detailApi({ id: row.id })
       .then((res) => {
-        formData.value = res.data
+        formData.value = res.data;
         formData.value.timeList = [res.data.startTime, res.data.endTime];
       })
       .finally(() => {
         loading.value = false;
       });
-    if ("edit" === row.type) {
+    if ('edit' === row.type) {
       editDisabled.value = true;
-    } else if ("detail" === row.type) {
+    } else if ('detail' === row.type) {
       disabled.value = true;
     }
   } else {

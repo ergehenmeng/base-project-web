@@ -19,10 +19,7 @@ const storeList = defineModel('storeList', {
   type: Array
 });
 
-const storeIds = defineModel('storeIds', {
-  default: () => [],
-  type: Array
-});
+const storeIds = defineModel('storeIds');
 
 const props = defineProps({
   disabled: {
