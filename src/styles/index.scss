@@ -5,6 +5,16 @@ $font: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsof
 $main-header-color: linear-gradient(132deg, rgba(0,168,255,1) 0%, rgba(0,210,211,1) 50%, rgba(0,168,255,1) 100%);
 $main-header-logo-url: '@/assets/images/logo.png';
 
+@font-face {
+  font-family: 'ShuHeiTi';
+  src: url('font/alimama/AlimamaShuHeiTi-Bold.woff2') format('woff2'),
+  url('font/alimama/AlimamaShuHeiTi-Bold.woff') format('woff'),
+  url('font/alimama/AlimamaShuHeiTi-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;

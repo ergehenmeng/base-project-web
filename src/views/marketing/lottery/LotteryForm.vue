@@ -1,68 +1,100 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="活动名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20" />
-      </el-form-item>
-      <el-form-item prop="storeId">
-        <template #label>
-          <span>使用店铺<QuestionTip content="不选默认所有店铺生效"></QuestionTip></span>
-        </template>
-        <StoreAllSelect v-model:store-ids="formData.storeId" v-model:store-list="storeList"></StoreAllSelect>
-      </el-form-item>
-      <el-form-item label="活动时间" prop="timeList">
-        <div style="width: 350px">
-          <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
+    <el-container>
+      <el-aside width="500px">
+        <div class="lottery-show">
+          <div class="lottery-page">
+            <div class="lottery-top"></div>
+            <div class="lottery-title">
+              <div>{{formData.title}}</div>
+            </div>
+            <div class="lottery-sub-title">
+              <div>{{formData.subTitle}}</div>
+            </div>
+            <div class="lottery-content"></div>
+          </div>
         </div>
-      </el-form-item>
-      <el-form-item label="单日抽奖次数限制" prop="lotteryDay">
-        <el-input v-model="formData.lotteryDay" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="总抽奖次数限制" prop="lotteryTotal">
-        <el-input v-model="formData.lotteryTotal" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="中奖次数限制" prop="winNum">
-        <el-input v-model="formData.winNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-      </el-form-item>
-      <el-form-item label="封面图" prop="coverUrl">
-        <UploadImage v-model="formData.coverUrl"></UploadImage>
-      </el-form-item>
-      <el-form-item label="抽奖标题" prop="subTitle">
-        <el-input v-model="formData.subTitle" show-word-limit maxlength="10" />
-      </el-form-item>
-      <el-form-item label="抽奖规则" prop="rule">
-        <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
-      </el-form-item>
-      <el-form-item label="奖品配置" prop="prizeList">
-        <el-table :data="formData.prizeList" border style="width: 650px;" stripe show-overflow-tooltip>
-          <el-table-column label="奖品名称" prop="prizeName" width="120"/>
-          <el-table-column label="奖品类型" prop="prizeType" width="90" :formatter="formatter"/>
-          <el-table-column label="单次中奖发放数量" prop="num" width="150"/>
-          <el-table-column label="奖品总数量" prop="totalNum" width="100"/>
-          <el-table-column label="奖品图片" width="90">
-            <template #default="scope">
-              <div style="display: flex; align-items: center">
-                <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" fixed="right" width="100">
-            <template #header>
-              <span style="margin-right: 5px">操作</span>
-              <CreateButton v-show="formData.prizeList.length < 8" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
-            </template>
-            <template #default="scope">
-              <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDeletePrize(scope.row)" link title="删除"></el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </el-form-item>
-    </el-form>
+      </el-aside>
+      <el-container>
+        <el-header class="step-tip">
+          <el-steps style="max-width: 1000px" :space="1000" :active="step" finish-status="success">
+            <el-step title="基础配置" />
+            <el-step title="奖品设置" />
+          </el-steps>
+        </el-header>
+        <el-main>
+          <div style="width: 1000px">
+            <el-form v-show="step === 0" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+              <el-form-item label="活动名称" prop="title">
+                <el-input v-model="formData.title" show-word-limit maxlength="8" />
+              </el-form-item>
+              <el-form-item prop="storeId">
+                <template #label>
+                  <span>使用店铺<QuestionTip content="不选默认所有店铺生效"></QuestionTip></span>
+                </template>
+                <StoreAllSelect v-model:store-ids="formData.storeId" v-model:store-list="storeList"></StoreAllSelect>
+              </el-form-item>
+              <el-form-item label="活动时间" prop="timeList">
+                <div style="width: 350px">
+                  <el-date-picker type="datetimerange" format="YYYY-MM-DD HH:mm" value-format="YYYY-MM-DD HH:mm" time-format="HH:mm" v-model="formData.timeList" style="width: 350px"></el-date-picker>
+                </div>
+              </el-form-item>
+              <el-form-item label="单日抽奖次数限制" prop="lotteryDay">
+                <el-input v-model="formData.lotteryDay" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+              </el-form-item>
+              <el-form-item label="总抽奖次数限制" prop="lotteryTotal">
+                <el-input v-model="formData.lotteryTotal" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+              </el-form-item>
+              <el-form-item label="中奖次数限制" prop="winNum">
+                <el-input v-model="formData.winNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+              </el-form-item>
+              <el-form-item label="封面图" prop="coverUrl">
+                <UploadImage v-model="formData.coverUrl"></UploadImage>
+              </el-form-item>
+              <el-form-item label="抽奖标题" prop="subTitle">
+                <el-input v-model="formData.subTitle" show-word-limit maxlength="10" />
+              </el-form-item>
+              <el-form-item label="抽奖规则" prop="rule">
+                <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
+              </el-form-item>
+            </el-form>
+            <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+              <el-form-item label="奖品配置" prop="prizeList">
+                <el-table :data="formData.prizeList" border style="width: 650px" stripe show-overflow-tooltip>
+                  <el-table-column label="奖品名称" prop="prizeName" width="120" />
+                  <el-table-column label="奖品类型" prop="prizeType" width="90" :formatter="formatter" />
+                  <el-table-column label="单次中奖发放数量" prop="num" width="150" />
+                  <el-table-column label="奖品总数量" prop="totalNum" width="100" />
+                  <el-table-column label="奖品图片" width="90">
+                    <template #default="scope">
+                      <div style="display: flex; align-items: center">
+                        <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" fixed="right" width="100">
+                    <template #header>
+                      <span style="margin-right: 5px">操作</span>
+                      <CreateButton v-show="formData.prizeList.length < 8" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
+                    </template>
+                    <template #default="scope">
+                      <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDeletePrize(scope.row)" link title="删除"></el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-main>
+      </el-container>
+    </el-container>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
         <el-button @click="$router.go(-1)">取消</el-button>
-        <el-button type="primary" @click="handleSave">保存</el-button>
+        <el-button v-if="step === 1" @click="step = 0">上一步</el-button>
+        <el-button v-if="step === 0" type="primary" @click="handleNext">下一步</el-button>
+        <el-button v-if="step === 1" type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
         <el-button @click="$router.go(-1)">返回</el-button>
@@ -79,21 +111,22 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import StoreAllSelect from '@/components/StoreAllSelect.vue';
 import { storeApi } from '@/api/product/index.js';
-import QuestionTip from "@/components/QuestionTip.vue";
-import UploadImage from "@/components/UploadImage.vue";
-import {Delete} from "@element-plus/icons-vue";
-import CreateButton from "@/components/CreateButton.vue";
-import PrizeForm from "@/views/marketing/lottery/PrizeForm.vue";
+import QuestionTip from '@/components/QuestionTip.vue';
+import UploadImage from '@/components/UploadImage.vue';
+import { Delete } from '@element-plus/icons-vue';
+import CreateButton from '@/components/CreateButton.vue';
+import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
 
 const prizeRef = ref();
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
-const formDataRef = ref();
+const firstDataRef = ref();
+const nextDataRef = ref();
 const disabled = ref(false);
 const storeList = ref([]);
 
-const formRules = reactive({
+const firstRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '封面图不能为空', trigger: 'change' }],
   lotteryDay: [{ required: true, message: '单日抽奖次数不能为空', trigger: 'blur' }],
@@ -101,8 +134,12 @@ const formRules = reactive({
   winNum: [{ required: true, message: '中奖次数不能为空', trigger: 'blur' }],
   subTitle: [{ required: true, message: '抽奖标题不能为空', trigger: 'blur' }],
   rule: [{ required: true, message: '抽奖规则不能为空', trigger: 'blur' }],
-  timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur', type: 'array' }],
-  prizeList: [{ required: true, message: '奖品信息不能为空', trigger: 'change', type: 'array' }]
+  timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur', type: 'array' }]
+});
+
+const nextRules = reactive({
+  prizeList: [{ required: true, message: '奖品信息不能为空', trigger: 'change', type: 'array' }],
+  configList: [{ required: true, message: '奖品配置不能为空', trigger: 'change', type: 'array' }]
 });
 
 const formData = ref({
@@ -118,6 +155,8 @@ const formData = ref({
   timeList: [],
   prizeList: []
 });
+
+const step = ref(0);
 
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
@@ -148,14 +187,13 @@ const handleSave = () => {
 
 const handleCreatePrize = () => {
   prizeRef.value.openDialog();
-}
+};
 
-const handleDeletePrize = (row) => {
-}
+const handleDeletePrize = (row) => {};
 
 const addPrize = (data) => {
-  formData.value.prizeList.push({...data});
-}
+  formData.value.prizeList.push({ ...data });
+};
 
 const loadStore = () => {
   if (storeList.value.length === 0) {
@@ -163,14 +201,23 @@ const loadStore = () => {
       storeList.value = res.data;
     });
   }
-
 };
 
 const formatter = (row, column, cellValue) => {
   if (cellValue === 0) {
-    return "谢谢参与"
+    return '谢谢参与';
   }
-  return cellValue === 1 ? "优惠券" : "积分";
+  return cellValue === 1 ? '优惠券' : '积分';
+};
+
+const handleNext = () => {
+  if (step.value === 0) {
+    firstDataRef.value.validate((valid) => {
+      if (valid) {
+        step.value = 1;
+      }
+    });
+  }
 };
 
 onMounted(() => {
@@ -190,3 +237,53 @@ onMounted(() => {
   }
 });
 </script>
+<style lang="scss" scoped>
+.step-tip {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.lottery-show {
+  width: 500px;
+  padding: 10px;
+  .lottery-page {
+    background: url('@/assets/images/lottery-bg.jpg') 0 0 / 375px 812px;
+    height: 812px;
+    width: 375px;
+    position: relative;
+    border-radius: 10px;
+    .lottery-top {
+      height: 135px;
+      background: url('@/assets/images/lottery-top.png') 0 0 / 375px 135px;
+    }
+    .lottery-title {
+      position: absolute;
+      top: 95px;
+      width: 320px;
+      padding: 0 10px;
+      div {
+        width: 100%;
+        text-align: center;
+        font-size: 35px;
+        color: #ff5151;
+        text-shadow: 4px 2px 0 #ffffff;
+        font-family: "ShuHeiTi", serif;
+      }
+    }
+    .lottery-sub-title {
+      position: absolute;
+      top: 150px;
+      width: 375px;
+      padding: 0 10px 0 30px;
+      div {
+        width: 100%;
+        text-align: center;
+        font-size: 28px;
+        color: #ff5151;
+        text-shadow: 2px 2px 0 #ffffff;
+        font-family: "ShuHeiTi", serif;
+      }
+    }
+  }
+}
+</style>
