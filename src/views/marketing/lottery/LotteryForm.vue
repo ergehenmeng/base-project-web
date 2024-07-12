@@ -37,7 +37,7 @@
         </el-header>
         <el-main>
           <div style="width: 800px">
-            <el-form v-show="step === 1" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+            <el-form v-show="step === 0" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
               <el-form-item label="活动名称" prop="title">
                 <el-input v-model="formData.title" show-word-limit maxlength="8" />
               </el-form-item>
@@ -71,7 +71,7 @@
                 <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
               </el-form-item>
             </el-form>
-            <el-form v-show="step === 0" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+            <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
               <el-form-item label="奖品配置" prop="prizeList">
                 <el-table :data="formData.prizeList" border style="width: 650px" stripe show-overflow-tooltip>
                   <el-table-column label="奖品名称" prop="prizeName" width="120" align="center" />
@@ -136,7 +136,7 @@
                           }
                         ]"
                       >
-                        <el-input v-model="scope.row.ratio" class="w120" maxlength="5" @keyup="scope.row.ratio = numberValidator(scope.row.ratio)">
+                        <el-input v-model="scope.row.ratio" class="w120" maxlength="5" @keyup="scope.row.ratio = numberValidator(scope.row.ratio)" :disabled="scope.$index === 7">
                           <template #append>
                             <span style="color: #999; width: 10px">%</span>
                           </template>
@@ -327,7 +327,7 @@ onMounted(() => {
 
   .lottery-page {
     border: 1px solid #ebeef5;
-    // background: url('@/assets/images/lottery-bg.jpg') 0 0 / 374px 812px;
+    background: url('@/assets/images/lottery-bg.jpg') 0 0 / 374px 812px;
     height: 812px;
     width: 374px;
     position: relative;
@@ -335,7 +335,7 @@ onMounted(() => {
 
     .lottery-top {
       height: 135px;
-      // background: url('@/assets/images/lottery-top.png') 0 0 / 374px 135px;
+      background: url('@/assets/images/lottery-top.png') 0 0 / 374px 135px;
     }
 
     .lottery-title {
