@@ -99,9 +99,9 @@
               <el-form-item label="轮盘配置" prop="configList">
                 <el-table :data="formData.configList" border style="width: 650px" stripe show-overflow-tooltip>
                   <el-table-column label="转盘位置" prop="location" width="150" align="center" />
-                  <el-table-column label="奖品信息" prop="prizeIndex" min-width="150" align="center" >
+                  <el-table-column label="奖品信息" prop="prizeIndex" min-width="150" align="center">
                     <template #default="scope">
-                      <el-select v-model="scope.row.prizeIndex" >
+                      <el-select v-model="scope.row.prizeIndex">
                         <el-option v-for="(item, index) in formData.prizeList" :key="index" :value="index" :label="item.prizeName" />
                       </el-select>
                     </template>
@@ -113,30 +113,32 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="ratio" width="150" align="center">
+                  <el-table-column width="150" align="center">
                     <template #header>
                       <span><span class="item-required">*</span>中奖概率</span>
                     </template>
                     <template #default="scope">
                       <el-form-item
-                        :prop="`configList[${scope.$index}].ratio`"
+                        :prop="`configList[${scope.$index}].weight`"
                         :rules="[
                           { required: true, message: '中奖概率不能为空', trigger: 'blur' },
                           {
                             validator(rule, value, callback) {
-                              const ratio = parseFloat(value);
-                              if (ratio > 100) {
-                                callback(new Error('中奖概率不能大于100'));
-                              } else if (ratio < 0) {
-                                callback(new Error('中奖概率不能小于0'));
+                              const total = formData.configList.reduce((pre, cur) => {
+                                return Decimal.add(pre.weight, cur.weight);
+                              }, new Decimal(0))
+                              const sub = Decimal.sub(100, total).toNumber();
+                              if (sub < 0) {
+                                callback(new Error('总中奖概率不能大于100'));
                               } else {
+                                formData.configList[7].weight = sub;
                                 callback();
                               }
                             }
                           }
                         ]"
                       >
-                        <el-input v-model="scope.row.ratio" class="w120" maxlength="5" @keyup="scope.row.ratio = numberValidator(scope.row.ratio)" :disabled="scope.$index === 7">
+                        <el-input v-model="scope.row.weight" class="w120" maxlength="5" @keyup="scope.row.weight = numberValidator(scope.row.weight)" :disabled="scope.$index === 7">
                           <template #append>
                             <span style="color: #999; width: 10px">%</span>
                           </template>
@@ -181,6 +183,7 @@ import { Delete } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
 import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
 import { numberValidator } from '@/utils/common.js';
+import Decimal from 'decimal.js'
 
 const prizeRef = ref();
 const route = useRoute();
@@ -257,12 +260,12 @@ const handleCreatePrize = () => {
 
 const handleDeletePrize = (index) => {
   formData.value.prizeList.splice(index, 1);
-  formData.value.configList.forEach(item => {
+  formData.value.configList.forEach((item) => {
     if (item.prizeIndex === index) {
-        item.prizeIndex = null;
-        item.coverUrl = null;
+      item.prizeIndex = null;
+      item.coverUrl = null;
     }
-  })
+  });
 };
 
 const addPrize = (data) => {
@@ -304,6 +307,9 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.timeList = [res.data.startTime, res.data.endTime];
+        if (res.data.state === 1 || res.data.state === 2) {
+          disabled.value = true;
+        }
       })
       .finally(() => {
         loading.value = false;

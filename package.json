@@ -17,6 +17,7 @@
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.6.8",
     "dayjs": "^1.11.11",
+    "decimal.js": "^10.4.3",
     "element-plus": "^2.7.2",
     "md5": "^2.3.0",
     "pinia": "^2.1.7",
