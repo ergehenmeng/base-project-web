@@ -124,9 +124,10 @@
                           { required: true, message: '中奖概率不能为空', trigger: 'blur' },
                           {
                             validator(rule, value, callback) {
+                              // 总中奖概率不能大于100, 剩余概率不能小于0, 且默认8号位置为剩余概率
                               const total = formData.configList.reduce((pre, cur) => {
                                 return Decimal.add(pre.weight, cur.weight);
-                              }, new Decimal(0))
+                              }, new Decimal(0));
                               const sub = Decimal.sub(100, total).toNumber();
                               if (sub < 0) {
                                 callback(new Error('总中奖概率不能大于100'));
@@ -183,7 +184,7 @@ import { Delete } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
 import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
 import { numberValidator } from '@/utils/common.js';
-import Decimal from 'decimal.js'
+import Decimal from 'decimal.js';
 
 const prizeRef = ref();
 const route = useRoute();
@@ -221,7 +222,13 @@ const formData = ref({
   subTitle: null,
   rule: null,
   timeList: [],
-  prizeList: [],
+  prizeList: [{
+    prizeName: '谢谢参与',
+    prizeType: 0,
+    num: null,
+    totalNum: null,
+    coverUrl: null
+  }],
   configList: []
 });
 
@@ -317,7 +324,8 @@ onMounted(() => {
   } else {
     for (let i = 1; i < 9; i++) {
       formData.value.configList.push({
-        location: i
+        location: i,
+        prizeIndex: i === 7 ? 0 : null
       });
     }
   }
