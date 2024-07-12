@@ -398,7 +398,7 @@ onMounted(() => {
         }
 
         .lottery-item-start {
-          background: url('@/assets/images/start.svg') no-repeat 13px 13px;
+          background: url('@/assets/images/lottery-start.svg') no-repeat 13px 13px;
         }
       }
     }
