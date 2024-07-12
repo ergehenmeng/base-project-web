@@ -7,7 +7,7 @@
   </el-select>
 </template>
 <script setup>
-import { listApi } from '@/api/product/travel';
+import { travelListApi } from '@/api/product/travel';
 
 const travelList = ref([]);
 
@@ -24,7 +24,7 @@ const props = defineProps({
 const travelId = defineModel();
 
 onMounted(() => {
-  listApi().then((res) => {
+  travelListApi().then((res) => {
     travelList.value = res.data;
   });
 });

@@ -7,7 +7,7 @@
   </el-select>
 </template>
 <script setup>
-import { listApi } from '@/api/product/restaurant';
+import { restaurantListApi } from '@/api/product/restaurant';
 
 const restaurantList = ref([]);
 
@@ -24,7 +24,7 @@ const props = defineProps({
 const restaurantId = defineModel();
 
 onMounted(() => {
-  listApi().then((res) => {
+  restaurantListApi().then((res) => {
     restaurantList.value = res.data;
   });
 });

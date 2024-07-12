@@ -37,7 +37,7 @@
         </el-header>
         <el-main>
           <div style="width: 800px">
-            <el-form v-show="step === 0" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+            <el-form v-show="step === 0" :model="formData" ref="firstDataRef" :rules="firstRules" label-width="140" label-position="right" v-loading="loading" :disabled="disabled">
               <el-form-item label="活动名称" prop="title">
                 <el-input v-model="formData.title" show-word-limit maxlength="8" />
               </el-form-item>
@@ -61,7 +61,10 @@
               <el-form-item label="中奖次数限制" prop="winNum">
                 <el-input v-model="formData.winNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
               </el-form-item>
-              <el-form-item label="封面图" prop="coverUrl">
+              <el-form-item label="banner图" prop="bannerUrl">
+                <UploadImage v-model="formData.bannerUrl"></UploadImage>
+              </el-form-item>
+              <el-form-item label="背景图" prop="coverUrl">
                 <UploadImage v-model="formData.coverUrl"></UploadImage>
               </el-form-item>
               <el-form-item label="抽奖标题" prop="subTitle">
@@ -71,79 +74,64 @@
                 <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
               </el-form-item>
             </el-form>
-            <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+            <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-width="140" label-position="right" v-loading="loading" :disabled="disabled">
               <el-form-item label="奖品配置" prop="prizeList">
                 <el-table :data="formData.prizeList" border style="width: 650px" stripe show-overflow-tooltip>
-                  <el-table-column label="奖品名称" prop="prizeName" width="120" align="center" />
+                  <el-table-column label="奖品名称" prop="prizeName" min-width="120" align="center" />
                   <el-table-column label="奖品类型" prop="prizeType" width="90" :formatter="formatter" />
-                  <el-table-column label="单次中奖发放数量" prop="num" width="150" align="center" />
+                  <el-table-column label="中奖发放数量" prop="num" width="110" align="center" />
                   <el-table-column label="奖品总数量" prop="totalNum" width="100" align="center" />
                   <el-table-column label="奖品图片" width="90" align="center">
                     <template #default="scope">
-                      <div style="display: flex; align-items: center">
-                        <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+                      <div style="display: flex; align-items: center; justify-content: center">
+                        <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" fixed="right" width="100" align="center">
+                  <el-table-column label="操作" fixed="right" width="90" align="center">
                     <template #header>
                       <span style="margin-right: 5px">操作</span>
                       <CreateButton v-show="formData.prizeList.length < 8" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
                     </template>
                     <template #default="scope">
-                      <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
+                      <el-button v-show="scope.$index !== 0" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
                     </template>
                   </el-table-column>
                 </el-table>
               </el-form-item>
               <el-form-item label="轮盘配置" prop="configList">
                 <el-table :data="formData.configList" border style="width: 650px" stripe show-overflow-tooltip>
-                  <el-table-column label="转盘位置" prop="location" width="150" align="center" />
-                  <el-table-column label="奖品信息" prop="prizeIndex" min-width="150" align="center">
+                  <el-table-column label="转盘位置" prop="location" width="100" align="center" />
+                  <el-table-column prop="prizeIndex" min-width="150" align="center">
+                    <template #header>
+                      <span>奖品名称<QuestionTip content="为了防止奖品数量不足导致中奖后发放失败, 因此必须包含一个谢谢参与的奖项, 中奖概率可以设置为0"></QuestionTip></span>
+                    </template>
                     <template #default="scope">
-                      <el-select v-model="scope.row.prizeIndex">
+                      <el-select v-model="scope.row.prizeIndex" class="w200" :disabled="scope.$index === 7" @change="handleChangePrize($event, scope.$index)">
                         <el-option v-for="(item, index) in formData.prizeList" :key="index" :value="index" :label="item.prizeName" />
                       </el-select>
                     </template>
                   </el-table-column>
                   <el-table-column label="奖品图片" width="100" align="center">
                     <template #default="scope">
-                      <div style="display: flex; align-items: center">
+                      <div style="display: flex; align-items: center; justify-content: center">
                         <el-image fit="contain" v-show="scope.row.coverUrl !== undefined" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column width="150" align="center">
+                  <el-table-column width="110" align="center">
                     <template #header>
-                      <span><span class="item-required">*</span>中奖概率</span>
+                      <span><span class="item-required">*</span>中奖概率(%)</span>
                     </template>
                     <template #default="scope">
                       <el-form-item
                         :prop="`configList[${scope.$index}].weight`"
                         :rules="[
                           { required: true, message: '中奖概率不能为空', trigger: 'blur' },
-                          {
-                            validator(rule, value, callback) {
-                              // 总中奖概率不能大于100, 剩余概率不能小于0, 且默认8号位置为剩余概率
-                              const total = formData.configList.reduce((pre, cur) => {
-                                return Decimal.add(pre.weight, cur.weight);
-                              }, new Decimal(0));
-                              const sub = Decimal.sub(100, total).toNumber();
-                              if (sub < 0) {
-                                callback(new Error('总中奖概率不能大于100'));
-                              } else {
-                                formData.configList[7].weight = sub;
-                                callback();
-                              }
-                            }
-                          }
+                          { validator: checkValidator, trigger: 'blur' }
                         ]"
                       >
-                        <el-input v-model="scope.row.weight" class="w120" maxlength="5" @keyup="scope.row.weight = numberValidator(scope.row.weight)" :disabled="scope.$index === 7">
-                          <template #append>
-                            <span style="color: #999; width: 10px">%</span>
-                          </template>
-                        </el-input>
+                        <el-input v-model="scope.row.weight" class="w80" maxlength="5" @keyup="scope.row.weight = numberValidator(scope.row.weight)" :disabled="scope.$index === 7"></el-input>
                       </el-form-item>
                     </template>
                   </el-table-column>
@@ -198,6 +186,7 @@ const storeList = ref([]);
 const firstRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '封面图不能为空', trigger: 'change' }],
+  bannerUrl: [{ required: true, message: 'banner图不能为空', trigger: 'change' }],
   lotteryDay: [{ required: true, message: '单日抽奖次数不能为空', trigger: 'blur' }],
   lotteryTotal: [{ required: true, message: '总抽奖次数不能为空', trigger: 'blur' }],
   winNum: [{ required: true, message: '中奖次数不能为空', trigger: 'blur' }],
@@ -218,30 +207,58 @@ const formData = ref({
   lotteryDay: 1,
   lotteryTotal: 1,
   winNum: 1,
+  bannerUrl: null,
   coverUrl: null,
   subTitle: null,
   rule: null,
   timeList: [],
-  prizeList: [{
-    prizeName: '谢谢参与',
-    prizeType: 0,
-    num: null,
-    totalNum: null,
-    coverUrl: null
-  }],
+  prizeList: [
+    {
+      prizeName: '谢谢参与',
+      prizeType: 0,
+      num: null,
+      totalNum: null,
+      coverUrl: null
+    }
+  ],
   configList: []
 });
 
 const step = ref(0);
 
+const checkValidator = (rule, value, callback) => {
+  // 总中奖概率不能大于100, 剩余概率不能小于0, 且默认8号位置为剩余概率
+  const total = formData.value.configList
+    .filter((item, index) => index !== 7)
+    .map((item) => item.weight)
+    .reduce((pre, cur) => {
+      if (cur) {
+        return Decimal.add(pre, cur);
+      } else {
+        return pre;
+      }
+    }, new Decimal(0));
+  const sub = Decimal.sub(100, total).toNumber();
+  if (sub < 0) {
+    callback(new Error('总中奖概率不能大于100'));
+  } else {
+    formData.value.configList[7].weight = sub;
+    callback();
+  }
+};
+
+const handleChangePrize = (index, location) => {
+  formData.value.configList[location].coverUrl = formData.value.prizeList[index].coverUrl;
+}
+
 const handleSave = () => {
-  formDataRef.value.validate((valid) => {
+  nextDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('拼团活动更新成功');
+            successMsg('抽奖活动更新成功');
             router.go(-1);
           })
           .finally(() => {
@@ -250,7 +267,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('拼团活动添加成功');
+            successMsg('抽奖活动添加成功');
             router.go(-1);
           })
           .finally(() => {
@@ -325,7 +342,7 @@ onMounted(() => {
     for (let i = 1; i < 9; i++) {
       formData.value.configList.push({
         location: i,
-        prizeIndex: i === 7 ? 0 : null
+        prizeIndex: i === 8 ? 0 : null
       });
     }
   }

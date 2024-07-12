@@ -7,7 +7,6 @@ export const listPageApi = (params) => {
   });
 };
 
-
 export const createApi = (data) => {
   return request.post({
     url: '/manage/homestay/create',
