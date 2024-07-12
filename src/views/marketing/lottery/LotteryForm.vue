@@ -160,6 +160,8 @@
       </div>
       <div class="edit-button-footer" v-else>
         <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button v-if="step === 1" @click="step = 0">上一步</el-button>
+        <el-button v-if="step === 0" type="primary" @click="step = 1">下一步</el-button>
       </div>
     </div>
   </div>
