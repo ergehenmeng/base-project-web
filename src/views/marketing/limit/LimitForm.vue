@@ -190,8 +190,3 @@ onMounted(() => {
   }
 });
 </script>
-<style lang="scss" scoped>
-.item-required {
-  color: #f56c6c;
-}
-</style>

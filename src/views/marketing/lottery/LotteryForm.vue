@@ -7,12 +7,24 @@
           <div class="lottery-page">
             <div class="lottery-top"></div>
             <div class="lottery-title">
-              <div>{{formData.title}}</div>
+              <div>{{ formData.title }}</div>
             </div>
             <div class="lottery-sub-title">
-              <div>{{formData.subTitle}}</div>
+              <div>{{ formData.subTitle }}</div>
             </div>
-            <div class="lottery-content"></div>
+            <div class="lottery-content">
+              <ul class="lottery-item">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li class="lottery-item-start"></li>
+                <li>5</li>
+                <li>6</li>
+                <li>7</li>
+                <li>8</li>
+              </ul>
+            </div>
           </div>
         </div>
       </el-aside>
@@ -24,8 +36,8 @@
           </el-steps>
         </el-header>
         <el-main>
-          <div style="width: 1000px">
-            <el-form v-show="step === 0" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+          <div style="width: 800px">
+            <el-form v-show="step === 1" :model="formData" ref="firstDataRef" :rules="firstRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
               <el-form-item label="活动名称" prop="title">
                 <el-input v-model="formData.title" show-word-limit maxlength="8" />
               </el-form-item>
@@ -59,27 +71,77 @@
                 <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
               </el-form-item>
             </el-form>
-            <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
+            <el-form v-show="step === 0" :model="formData" ref="nextDataRef" :rules="nextRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
               <el-form-item label="奖品配置" prop="prizeList">
                 <el-table :data="formData.prizeList" border style="width: 650px" stripe show-overflow-tooltip>
-                  <el-table-column label="奖品名称" prop="prizeName" width="120" />
+                  <el-table-column label="奖品名称" prop="prizeName" width="120" align="center" />
                   <el-table-column label="奖品类型" prop="prizeType" width="90" :formatter="formatter" />
-                  <el-table-column label="单次中奖发放数量" prop="num" width="150" />
-                  <el-table-column label="奖品总数量" prop="totalNum" width="100" />
-                  <el-table-column label="奖品图片" width="90">
+                  <el-table-column label="单次中奖发放数量" prop="num" width="150" align="center" />
+                  <el-table-column label="奖品总数量" prop="totalNum" width="100" align="center" />
+                  <el-table-column label="奖品图片" width="90" align="center">
                     <template #default="scope">
                       <div style="display: flex; align-items: center">
                         <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" fixed="right" width="100">
+                  <el-table-column label="操作" fixed="right" width="100" align="center">
                     <template #header>
                       <span style="margin-right: 5px">操作</span>
                       <CreateButton v-show="formData.prizeList.length < 8" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
                     </template>
                     <template #default="scope">
-                      <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDeletePrize(scope.row)" link title="删除"></el-button>
+                      <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </el-form-item>
+              <el-form-item label="轮盘配置" prop="configList">
+                <el-table :data="formData.configList" border style="width: 650px" stripe show-overflow-tooltip>
+                  <el-table-column label="转盘位置" prop="location" width="150" align="center" />
+                  <el-table-column label="奖品信息" prop="prizeIndex" min-width="150" align="center" >
+                    <template #default="scope">
+                      <el-select v-model="scope.row.prizeIndex" >
+                        <el-option v-for="(item, index) in formData.prizeList" :key="index" :value="index" :label="item.prizeName" />
+                      </el-select>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="奖品图片" width="100" align="center">
+                    <template #default="scope">
+                      <div style="display: flex; align-items: center">
+                        <el-image fit="contain" v-show="scope.row.coverUrl !== undefined" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
+                      </div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="ratio" width="150" align="center">
+                    <template #header>
+                      <span><span class="item-required">*</span>中奖概率</span>
+                    </template>
+                    <template #default="scope">
+                      <el-form-item
+                        :prop="`configList[${scope.$index}].ratio`"
+                        :rules="[
+                          { required: true, message: '中奖概率不能为空', trigger: 'blur' },
+                          {
+                            validator(rule, value, callback) {
+                              const ratio = parseFloat(value);
+                              if (ratio > 100) {
+                                callback(new Error('中奖概率不能大于100'));
+                              } else if (ratio < 0) {
+                                callback(new Error('中奖概率不能小于0'));
+                              } else {
+                                callback();
+                              }
+                            }
+                          }
+                        ]"
+                      >
+                        <el-input v-model="scope.row.ratio" class="w120" maxlength="5" @keyup="scope.row.ratio = numberValidator(scope.row.ratio)">
+                          <template #append>
+                            <span style="color: #999; width: 10px">%</span>
+                          </template>
+                        </el-input>
+                      </el-form-item>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -116,6 +178,7 @@ import UploadImage from '@/components/UploadImage.vue';
 import { Delete } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
 import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
+import { numberValidator } from '@/utils/common.js';
 
 const prizeRef = ref();
 const route = useRoute();
@@ -153,7 +216,8 @@ const formData = ref({
   subTitle: null,
   rule: null,
   timeList: [],
-  prizeList: []
+  prizeList: [],
+  configList: []
 });
 
 const step = ref(0);
@@ -189,7 +253,15 @@ const handleCreatePrize = () => {
   prizeRef.value.openDialog();
 };
 
-const handleDeletePrize = (row) => {};
+const handleDeletePrize = (index) => {
+  formData.value.prizeList.splice(index, 1);
+  formData.value.configList.forEach(item => {
+    if (item.prizeIndex === index) {
+        item.prizeIndex = null;
+        item.coverUrl = null;
+    }
+  })
+};
 
 const addPrize = (data) => {
   formData.value.prizeList.push({ ...data });
@@ -234,54 +306,100 @@ onMounted(() => {
       .finally(() => {
         loading.value = false;
       });
+  } else {
+    for (let i = 1; i < 9; i++) {
+      formData.value.configList.push({
+        location: i
+      });
+    }
   }
 });
 </script>
 <style lang="scss" scoped>
 .step-tip {
   margin-bottom: 20px;
-  padding-left: 20px;
+  padding-left: 160px;
 }
 
 .lottery-show {
   width: 500px;
   padding: 10px;
+
   .lottery-page {
-    background: url('@/assets/images/lottery-bg.jpg') 0 0 / 375px 812px;
+    border: 1px solid #ebeef5;
+    // background: url('@/assets/images/lottery-bg.jpg') 0 0 / 374px 812px;
     height: 812px;
-    width: 375px;
+    width: 374px;
     position: relative;
     border-radius: 10px;
+
     .lottery-top {
       height: 135px;
-      background: url('@/assets/images/lottery-top.png') 0 0 / 375px 135px;
+      // background: url('@/assets/images/lottery-top.png') 0 0 / 374px 135px;
     }
+
     .lottery-title {
       position: absolute;
       top: 95px;
       width: 320px;
       padding: 0 10px;
+
       div {
         width: 100%;
         text-align: center;
         font-size: 35px;
         color: #ff5151;
-        text-shadow: 4px 2px 0 #ffffff;
-        font-family: "ShuHeiTi", serif;
+        text-shadow: 2px 2px 0 #ffffff;
+        font-family: 'ShuHeiTi', serif;
       }
     }
+
     .lottery-sub-title {
       position: absolute;
       top: 150px;
-      width: 375px;
+      width: 374px;
       padding: 0 10px 0 30px;
+
       div {
         width: 100%;
         text-align: center;
         font-size: 28px;
         color: #ff5151;
         text-shadow: 2px 2px 0 #ffffff;
-        font-family: "ShuHeiTi", serif;
+        font-family: 'ShuHeiTi', serif;
+      }
+    }
+
+    .lottery-content {
+      position: absolute;
+      top: 255px;
+      width: 374px;
+      padding: 12px;
+
+      .lottery-item {
+        width: 100%;
+        height: 100%;
+        padding: 25px;
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          width: 90px;
+          height: 90px;
+          margin: 5px;
+          border-radius: 3px;
+          list-style: none;
+          text-align: center;
+          line-height: 100px;
+          background-color: #fdf4de;
+          color: #d3d4dc;
+          font-weight: bolder;
+          font-size: 30px;
+        }
+
+        .lottery-item-start {
+          background: url('@/assets/images/start.svg') no-repeat 13px 13px;
+        }
       }
     }
   }

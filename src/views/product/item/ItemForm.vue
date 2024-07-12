@@ -522,12 +522,6 @@ const handleChangeSpec = (value) => {
   width: 1100px;
   border: 1px solid #dcdfe6;
   padding: 10px;
-
-  .item-sku {
-    .item-required {
-      color: #f56c6c;
-    }
-  }
 }
 
 .item-spec {

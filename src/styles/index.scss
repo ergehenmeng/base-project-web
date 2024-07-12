@@ -311,3 +311,8 @@ el-select.w250 {
   padding-top: 18px;
   min-height: calc(100vh - 120px);
 }
+
+/*必填标识样式*/
+.item-required {
+  color: #f56c6c;
+}
