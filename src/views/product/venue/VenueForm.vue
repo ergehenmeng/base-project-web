@@ -51,11 +51,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -70,7 +70,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImageList from '@/components/UploadImageList.vue';
-import { phoneValidator } from '@/utils/common.js';
+import { goBack, phoneValidator } from '@/utils/common.js';
 import MapContainer from '@/components/MapContainer.vue';
 
 const route = useRoute();
@@ -123,7 +123,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('场馆信息更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -132,7 +132,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('场馆添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

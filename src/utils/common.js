@@ -141,6 +141,17 @@ export const parseProductType = (value) => {
 };
 
 /**
+ * 返回上一页,如果上一页是登录页则跳转到首页
+ */
+export const goBack = (router) => {
+  if (router.options.history.state.back && !router.options.history.state.back.startsWith("/login")) {
+    router.go(-1)
+  } else {
+    router.push('/home');
+  }
+}
+
+/**
  * 禁用小于当前时间的日期
  * @param time date
  * @returns {boolean}

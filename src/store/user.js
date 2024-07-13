@@ -41,8 +41,8 @@ const useUserStore = defineStore(
       window.localStorage.clear();
       window.sessionStorage.clear();
       // 此处表示被动退出
-      if (router.hasRoute(redirectUrl)) {
-        router.replace('/login?redirect=' + encodeURIComponent(redirectUrl));
+      if (redirectUrl) {
+        router.replace('/login?redirect=' + redirectUrl);
       } else {
         // 表示主动退出
         logoutApi().then((res) => {

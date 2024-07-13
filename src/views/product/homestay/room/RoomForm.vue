@@ -57,11 +57,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -76,6 +76,7 @@ import { successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import useDictStore from '@/store/dict.js';
 import HomestaySelect from '@/components/HomestaySelect.vue';
+import { goBack } from '@/utils/common.js';
 
 const dictStore = useDictStore();
 const infrastructureTagList = dictStore.getDict('infrastructure_tag');
@@ -121,7 +122,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('房型信息更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -130,7 +131,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('房型添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

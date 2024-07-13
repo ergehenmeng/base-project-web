@@ -60,11 +60,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
     <MapContainer ref="mapRef" @reload="setLocation"></MapContainer>
@@ -77,7 +77,7 @@ import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { phoneValidator } from '@/utils/common.js';
+import { goBack, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import MapContainer from '@/components/MapContainer.vue';
@@ -147,7 +147,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('民宿信息更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -156,7 +156,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('民宿添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

@@ -25,8 +25,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="allSkuList" border style="width: 600px;" @selection-change="handleSelectionChange">
-          <el-table-column prop="id" label="选择" type="selection" width="60" ></el-table-column>
+        <el-table :data="allSkuList" border style="width: 600px" @selection-change="handleSelectionChange">
+          <el-table-column prop="id" label="选择" type="selection" width="60"></el-table-column>
           <el-table-column prop="skuPic" label="封面图片" width="100">
             <template #default="scope">
               <div style="display: flex; align-items: center">
@@ -43,12 +43,12 @@
           </el-table-column>
           <el-table-column prop="specValue" label="规格名称" min-width="150" />
           <el-table-column prop="salePrice" label="销售价格" width="130" />
-          <el-table-column width="150" >
+          <el-table-column width="150">
             <template #header>
               <span><span class="item-required">*</span>拼团价格</span>
             </template>
             <template #default="scope">
-              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)" >
+              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)">
                 <el-input v-if="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
               </el-form-item>
             </template>
@@ -58,11 +58,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/gr
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js'
+import { goBack, numberValidator } from '@/utils/common.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -112,7 +112,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('拼团活动更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -121,7 +121,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('拼团活动添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -142,13 +142,13 @@ const loadingItemList = (id) => {
 };
 
 const handleItemChange = (value) => {
-  const sku = skuMap.get(value)
+  const sku = skuMap.get(value);
   if (sku) {
     allSkuList.value = sku;
   } else {
-    allSkuList.value = []
+    allSkuList.value = [];
   }
-}
+};
 
 const handleSelectionChange = (val) => {
   formData.value.skuList = val;
@@ -160,21 +160,25 @@ const handleSelectionChange = (val) => {
  */
 const getSkuRule = computed(() => {
   return (id) => {
-    const selectList = formData.value.skuList.filter((item) => item.skuId === id)
-    return selectList.length > 0 ? [{
-      required: true,
-      message: '拼团价格不能为空',
-      trigger: 'blur'
-    }] : [];
-  }
-})
+    const selectList = formData.value.skuList.filter((item) => item.skuId === id);
+    return selectList.length > 0
+      ? [
+          {
+            required: true,
+            message: '拼团价格不能为空',
+            trigger: 'blur'
+          }
+        ]
+      : [];
+  };
+});
 
 const showElement = computed(() => {
   return (id) => {
-    const selectList = formData.value.skuList.filter((item) => item.skuId === id)
+    const selectList = formData.value.skuList.filter((item) => item.skuId === id);
     return selectList.length > 0;
-  }
-})
+  };
+});
 
 onMounted(() => {
   const params = route.params;

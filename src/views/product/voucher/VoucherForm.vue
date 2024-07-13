@@ -1,8 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled"
-      :validate-on-rule-change="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="餐饮券名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -58,11 +57,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -75,7 +74,7 @@ import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
-import { disableBeforeDate, numberValidator } from '@/utils/common.js';
+import { disableBeforeDate, goBack, numberValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 
 const route = useRoute();
@@ -138,7 +137,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('餐饮券信息更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -147,7 +146,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('餐饮券添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

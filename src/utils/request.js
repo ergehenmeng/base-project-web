@@ -1,5 +1,6 @@
 import axios from 'axios';
 import useUserStore from '@/store/user';
+import useHistoryStore from '@/store/history.js';
 import qs from 'qs';
 import { errorMsg } from '@/utils/message';
 
@@ -13,7 +14,8 @@ const errorCallback = {
     cancelRequest();
     errorMsg(data.msg);
     const userStore = useUserStore();
-    userStore.logout(response.config.url);
+    const historyStore = useHistoryStore();
+    userStore.logout(historyStore.getNowPage());
   }
 };
 

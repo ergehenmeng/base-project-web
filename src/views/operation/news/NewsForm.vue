@@ -20,7 +20,7 @@
     </el-form>
     <div>
       <div class="edit-button-footer">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
     </div>
@@ -34,6 +34,7 @@ import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
+import { goBack } from '@/utils/common.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -70,7 +71,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('公告更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -79,7 +80,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('公告添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

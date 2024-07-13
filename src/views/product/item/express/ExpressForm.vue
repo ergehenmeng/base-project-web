@@ -1,8 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled"
-      :validate-on-rule-change="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="模板名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -77,11 +76,11 @@
     <AreaTree ref="areaRef" @reload="handleReload"></AreaTree>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -92,7 +91,7 @@ import { createApi, selectApi, updateApi } from '@/api/product/express';
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js';
+import { goBack, numberValidator } from '@/utils/common.js';
 import AreaTree from '@/components/AreaTree.vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 
@@ -154,7 +153,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('快递模板更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -163,7 +162,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('快递模板添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

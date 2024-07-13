@@ -67,8 +67,11 @@
       </el-form-item>
       <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
         <el-button @click="handleProductSelect" type="primary"
-          >{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}<el-icon class="el-icon--right"><ArrowRight /></el-icon
-        ></el-button>
+          >{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}
+          <el-icon class="el-icon--right">
+            <ArrowRight />
+          </el-icon>
+        </el-button>
       </el-form-item>
       <el-form-item label="发放时间" prop="timeList">
         <div style="width: 350px">
@@ -102,11 +105,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -118,7 +121,7 @@ import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg, warningMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js';
+import { goBack, numberValidator } from '@/utils/common.js';
 import StoreTypeSelect from '@/components/StoreTypeSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import ProductDialog from '@/components/ProductDialog.vue';
@@ -185,7 +188,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('优惠券信息更新成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -194,7 +197,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('优惠券添加成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -249,7 +252,7 @@ const handleThreshold = (value) => {
     thresholdDisabled.value = true;
     formRules.threshold = [{ required: true, message: '请选择使用门槛', trigger: 'change' }];
     formRules.useThreshold = [];
-    formDataRef.value?.resetFields("useThreshold");
+    formDataRef.value?.resetFields('useThreshold');
   } else {
     thresholdProp.value = 'useThreshold';
     thresholdDisabled.value = false;

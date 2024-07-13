@@ -71,7 +71,7 @@
                 <el-input v-model="formData.subTitle" show-word-limit maxlength="10" />
               </el-form-item>
               <el-form-item label="抽奖规则" prop="rule">
-                <el-input type="textarea" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
+                <el-input type="textarea" placeholder="最少10个字符" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
               </el-form-item>
             </el-form>
             <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-width="140" label-position="right" v-loading="loading" :disabled="disabled">
@@ -144,13 +144,13 @@
     </el-container>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button v-if="step === 1" @click="step = 0">上一步</el-button>
         <el-button v-if="step === 0" type="primary" @click="handleNext">下一步</el-button>
         <el-button v-if="step === 1" type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
         <el-button v-if="step === 1" @click="step = 0">上一步</el-button>
         <el-button v-if="step === 0" type="primary" @click="step = 1">下一步</el-button>
       </div>
@@ -171,7 +171,7 @@ import UploadImage from '@/components/UploadImage.vue';
 import { Delete } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
 import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
-import { numberValidator } from '@/utils/common.js';
+import { numberValidator, goBack } from '@/utils/common.js';
 import Decimal from 'decimal.js';
 
 const prizeRef = ref();
@@ -191,7 +191,12 @@ const firstRules = reactive({
   lotteryTotal: [{ required: true, message: '总抽奖次数不能为空', trigger: 'blur' }],
   winNum: [{ required: true, message: '中奖次数不能为空', trigger: 'blur' }],
   subTitle: [{ required: true, message: '抽奖标题不能为空', trigger: 'blur' }],
-  rule: [{ required: true, message: '抽奖规则不能为空', trigger: 'blur' }],
+  rule: [{ required: true, message: '抽奖规则不能为空', trigger: 'blur' }, {
+    min: 10,
+    max: 1000,
+    message: '抽奖规则10~1000字符',
+    trigger: 'blur'
+  }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur', type: 'array' }]
 });
 
@@ -255,11 +260,13 @@ const handleSave = () => {
   nextDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
+      formData.value.startTime = formData.value.timeList[0];
+      formData.value.endTime = formData.value.timeList[1];
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
             successMsg('抽奖活动更新成功');
-            router.go(-1);
+            goBack(router)
           })
           .finally(() => {
             loading.value = false;
@@ -268,7 +275,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('抽奖活动添加成功');
-            router.go(-1);
+            goBack(router)
           })
           .finally(() => {
             loading.value = false;

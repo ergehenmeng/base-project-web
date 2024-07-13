@@ -31,7 +31,7 @@ import { balanceRechargeApi, rechargeDetailApi, scanRechargeApi } from '@/api/me
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js';
+import { goBack, numberValidator } from '@/utils/common.js';
 
 const router = useRouter();
 const loading = ref(false);
@@ -72,7 +72,7 @@ const handleSave = () => {
         balanceRechargeApi(formData.value)
           .then(() => {
             successMsg('积分充值成功');
-            router.go(-1);
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;

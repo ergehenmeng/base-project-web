@@ -24,11 +24,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
 import { setupApi } from '@/api/product/site';
 import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
-import { disableBeforeDate } from '@/utils/common.js';
+import { disableBeforeDate, goBack } from '@/utils/common.js';
 import TimePhase from '@/components/TimePhase.vue';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -70,7 +70,7 @@ const handleSave = () => {
       setupApi(formData.value)
         .then(() => {
           successMsg('场地价格配置成功');
-          router.go(-1);
+          goBack(router);
         })
         .finally(() => {
           loading.value = false;

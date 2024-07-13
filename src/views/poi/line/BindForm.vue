@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AMapLoader from '@amap/amap-jsapi-loader';
 import { errorMsg, successMsg } from '@/utils/message.js';
+import { goBack } from '@/utils/common.js';
 
 const mapRef = ref(null);
 const markerList = ref([]);
@@ -120,7 +121,7 @@ const handleSave = () => {
   };
   bindApi(formData).then((res) => {
     successMsg('线路点位绑定成功');
-    router.go(-1);
+    goBack(router);
   });
 };
 
@@ -220,11 +221,11 @@ const pointChange = () => {
     </div>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>

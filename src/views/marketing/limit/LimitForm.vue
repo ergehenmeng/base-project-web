@@ -22,9 +22,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="formData.skuList" border style="width: 600px;" :span-method="objectSpanMethod">
+        <el-table :data="formData.skuList" border style="width: 600px" :span-method="objectSpanMethod">
           <el-table-column prop="title" label="商品名称" min-width="150" />
-          <el-table-column prop="specValue" label="规格名称" min-width="120" >
+          <el-table-column prop="specValue" label="规格名称" min-width="120">
             <template #default="scope">
               <span v-if="scope.row.specValue">{{ scope.row.specValue }}</span>
               <span v-else title="单规格商品没有规格名称">单规格</span>
@@ -36,14 +36,22 @@
               <span><span class="item-required">*</span>限时价<QuestionTip content="限时价不能大于销售价"></QuestionTip></span>
             </template>
             <template #default="scope">
-              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" :rules="[{ required: true, message: '限时价不能为空', trigger: 'blur' }, { validator(rule, value, callback) {
+              <el-form-item
+                :prop="`skuList[${scope.$index}].discountPrice`"
+                :rules="[
+                  { required: true, message: '限时价不能为空', trigger: 'blur' },
+                  {
+                    validator(rule, value, callback) {
                       if (parseFloat(value) > parseFloat(scope.row.salePrice)) {
                         callback(new Error('限购价不能大于销售价'));
                       } else {
                         callback();
                       }
-               }}]">
-                <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice=numberValidator(scope.row.discountPrice);"></el-input>
+                    }
+                  }
+                ]"
+              >
+                <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
@@ -55,11 +63,11 @@
     </el-form>
     <div>
       <div class="edit-button-footer" v-if="!disabled">
-        <el-button @click="$router.go(-1)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
       <div class="edit-button-footer" v-else>
-        <el-button @click="$router.go(-1)">返回</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
   </div>
@@ -70,8 +78,8 @@ import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/li
 import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { numberValidator } from '@/utils/common.js'
-import QuestionTip from "@/components/QuestionTip.vue";
+import { goBack, numberValidator } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -84,17 +92,20 @@ const itemMap = new Map();
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur' }],
-  advanceHour: [{ required: true, message: '提前预告时间不能为空', trigger: 'blur' }, {
-    validator(rule, value, callback) {
-      if (parseInt(value) > 72) {
-        callback(new Error('提前预告时间不能超过72小时'));
-      } else {
-        callback();
+  advanceHour: [
+    { required: true, message: '提前预告时间不能为空', trigger: 'blur' },
+    {
+      validator(rule, value, callback) {
+        if (parseInt(value) > 72) {
+          callback(new Error('提前预告时间不能超过72小时'));
+        } else {
+          callback();
+        }
       }
     }
-  }],
+  ],
   itemIds: [{ required: true, message: '请选择参与限时购的商品', trigger: 'change' }],
-  skuList: [{ required: true, message: '限时价不能为空', trigger: 'change'}]
+  skuList: [{ required: true, message: '限时价不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -117,7 +128,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('拼团活动更新成功');
-            router.go(-1);
+            goBack(router)
           })
           .finally(() => {
             loading.value = false;
@@ -126,7 +137,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('拼团活动添加成功');
-            router.go(-1);
+            goBack(router)
           })
           .finally(() => {
             loading.value = false;
@@ -145,7 +156,7 @@ const loadingItemList = (id) => {
   });
 };
 
-const objectSpanMethod = ({row, rowIndex, columnIndex}) => {
+const objectSpanMethod = ({ row, rowIndex, columnIndex }) => {
   if (columnIndex === 0) {
     if (rowIndex % row.skuSize === 0) {
       return {
@@ -168,8 +179,8 @@ const handleItemChange = (itemIds) => {
     if (item) {
       formData.value.skuList.push(...item.skuList);
     }
-  })
-}
+  });
+};
 
 onMounted(() => {
   const params = route.params;

@@ -20,7 +20,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="活动名称" min-width="200" />
-        <el-table-column prop="startTime" label="活动时间" width="240" :formatter="formatter" />
+        <el-table-column prop="startTime" label="活动时间" width="300" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="lotteryDay" label="单日抽奖次数限制" width="150" />
         <el-table-column prop="lotteryTotal" label="总抽奖次数限制" width="150" />
@@ -96,7 +96,17 @@ onMounted(() => {
 });
 
 const formatter = (row, column, cellValue) => {
-  return cellValue + '~' + row.endTime;
+  if (column.property === 'startTime') {
+    return cellValue + '~' + row.endTime;
+  } else {
+    if (cellValue === 0) {
+      return '未开始';
+    } else if (cellValue === 1) {
+      return '进行中';
+    } else {
+      return '已结束';
+    }
+  }
 };
 
 const handleDelete = (row) => {
