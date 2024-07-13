@@ -14,15 +14,15 @@
             </div>
             <div class="lottery-content">
               <ul class="lottery-item">
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li class="lottery-item-start"></li>
-                <li>5</li>
-                <li>6</li>
-                <li>7</li>
-                <li>8</li>
+                <template v-for="(item, index) in prizeLocation">
+                  <li :class="{'lottery-item-start': index === 4}">
+                    <el-image v-if="item.coverUrl" :src="item.coverUrl" fit="fill" style="height: 90px; width: 90px;">
+                    </el-image>
+                    <span v-if="!item.coverUrl && index !== 4">
+                      {{ index + 1}}
+                    </span>
+                  </li>
+                </template>
               </ul>
             </div>
           </div>
@@ -174,6 +174,7 @@ import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
 import { numberValidator, goBack } from '@/utils/common.js';
 import Decimal from 'decimal.js';
 
+
 const prizeRef = ref();
 const route = useRoute();
 const router = useRouter();
@@ -182,6 +183,7 @@ const firstDataRef = ref();
 const nextDataRef = ref();
 const disabled = ref(false);
 const storeList = ref([]);
+const prizeLocation = ref([{},{},{},{},{},{},{},{},{}]);
 
 const firstRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -253,7 +255,18 @@ const checkValidator = (rule, value, callback) => {
 };
 
 const handleChangePrize = (index, location) => {
-  formData.value.configList[location].coverUrl = formData.value.prizeList[index].coverUrl;
+  const coverUrl = formData.value.prizeList[index].coverUrl;
+  formData.value.configList[location].coverUrl = coverUrl;
+  console.log(coverUrl)
+  handleLocationUrl(location, coverUrl)
+}
+
+const handleLocationUrl = (index, coverUrl) => {
+  prizeLocation.value.forEach((item, idx) => {
+    if ((idx <= 3 && idx === index) || (idx >= 5 && idx === index + 1)) {
+      item.coverUrl = coverUrl;
+    }
+  })
 }
 
 const handleSave = () => {
@@ -341,6 +354,9 @@ onMounted(() => {
         if (res.data.state === 1 || res.data.state === 2) {
           disabled.value = true;
         }
+        formData.value.configList.forEach((item) => {
+          handleLocationUrl(item.location - 1, item.coverUrl);
+        })
       })
       .finally(() => {
         loading.value = false;
