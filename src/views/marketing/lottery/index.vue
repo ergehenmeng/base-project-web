@@ -119,7 +119,9 @@ const handleDelete = (row) => {
   });
 };
 
-const handleLog = (row) => {};
+const handleLog = (row) => {
+  router.push('/marketing/lottery/log/' + row.id);
+};
 
 const handleCreate = () => {
   router.push('/marketing/lottery/create');

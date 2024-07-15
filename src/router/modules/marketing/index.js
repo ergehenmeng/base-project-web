@@ -166,6 +166,14 @@ export default [
               title: '详情'
             },
             component: () => import('@/views/marketing/lottery/LotteryForm.vue'),
+          },
+          {
+            path: 'log/:id',
+            name: 'lotteryLog',
+            meta: {
+              title: '抽奖记录'
+            },
+            component: () => import('@/views/marketing/lottery/LogPage.vue'),
           }
         ]
       },
