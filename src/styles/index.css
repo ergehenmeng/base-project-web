@@ -1,4 +1,11 @@
 @charset "UTF-8";
+@font-face {
+  font-family: "ShuHeiTi";
+  src: url("font/alimama/AlimamaShuHeiTi-Bold.woff2") format("woff2"), url("font/alimama/AlimamaShuHeiTi-Bold.woff") format("woff"), url("font/alimama/AlimamaShuHeiTi-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 * {
   margin: 0;
   padding: 0;
@@ -119,7 +126,15 @@ body {
 }
 
 .el-select.w130 {
-  width: 110px !important;
+  width: 130px !important;
+}
+
+.el-select.w180 {
+  width: 180px !important;
+}
+
+.el-select.w200 {
+  width: 200px !important;
 }
 
 el-select.w250 {
@@ -132,7 +147,7 @@ el-select.w250 {
 
 /*搜索框右边距*/
 .el-form--inline .el-form-item {
-  margin-right: 20px !important;
+  margin-right: 15px !important;
 }
 
 /*列表中间内容样式*/
@@ -273,6 +288,11 @@ el-select.w250 {
   background-color: #fff;
   padding-top: 18px;
   min-height: calc(100vh - 120px);
+}
+
+/*必填标识样式*/
+.item-required {
+  color: #f56c6c;
 }
 
 /*# sourceMappingURL=index.css.map */

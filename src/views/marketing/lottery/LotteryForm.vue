@@ -15,11 +15,10 @@
             <div class="lottery-content">
               <ul class="lottery-item">
                 <template v-for="(item, index) in prizeLocation">
-                  <li :class="{'lottery-item-start': index === 4}">
-                    <el-image v-if="item.coverUrl" :src="item.coverUrl" fit="fill" style="height: 90px; width: 90px;">
-                    </el-image>
+                  <li :class="{ 'lottery-item-start': index === 4 }">
+                    <el-image v-if="item.coverUrl" :src="item.coverUrl" fit="fill" style="height: 90px; width: 90px"> </el-image>
                     <span v-if="!item.coverUrl && index !== 4">
-                      {{ index + 1}}
+                      {{ index + 1 }}
                     </span>
                   </li>
                 </template>
@@ -171,9 +170,8 @@ import UploadImage from '@/components/UploadImage.vue';
 import { Delete } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
 import PrizeForm from '@/views/marketing/lottery/PrizeForm.vue';
-import { numberValidator, goBack } from '@/utils/common.js';
-import Decimal from 'decimal.js';
-
+import { goBack, numberValidator } from '@/utils/common.js';
+import Big from 'big.js';
 
 const prizeRef = ref();
 const route = useRoute();
@@ -183,7 +181,7 @@ const firstDataRef = ref();
 const nextDataRef = ref();
 const disabled = ref(false);
 const storeList = ref([]);
-const prizeLocation = ref([{},{},{},{},{},{},{},{},{}]);
+const prizeLocation = ref([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
 
 const firstRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -193,12 +191,15 @@ const firstRules = reactive({
   lotteryTotal: [{ required: true, message: '总抽奖次数不能为空', trigger: 'blur' }],
   winNum: [{ required: true, message: '中奖次数不能为空', trigger: 'blur' }],
   subTitle: [{ required: true, message: '抽奖标题不能为空', trigger: 'blur' }],
-  rule: [{ required: true, message: '抽奖规则不能为空', trigger: 'blur' }, {
-    min: 10,
-    max: 1000,
-    message: '抽奖规则10~1000字符',
-    trigger: 'blur'
-  }],
+  rule: [
+    { required: true, message: '抽奖规则不能为空', trigger: 'blur' },
+    {
+      min: 10,
+      max: 1000,
+      message: '抽奖规则10~1000字符',
+      trigger: 'blur'
+    }
+  ],
   timeList: [{ required: true, message: '活动时间不能为空', trigger: 'blur', type: 'array' }]
 });
 
@@ -240,12 +241,12 @@ const checkValidator = (rule, value, callback) => {
     .map((item) => item.weight)
     .reduce((pre, cur) => {
       if (cur) {
-        return Decimal.add(pre, cur);
+        return pre.plus(cur);
       } else {
         return pre;
       }
-    }, new Decimal(0));
-  const sub = Decimal.sub(100, total).toNumber();
+    }, new Big(0));
+  const sub = new Big(100).minus(total).toNumber();
   if (sub < 0) {
     callback(new Error('总中奖概率不能大于100'));
   } else {
@@ -257,17 +258,16 @@ const checkValidator = (rule, value, callback) => {
 const handleChangePrize = (index, location) => {
   const coverUrl = formData.value.prizeList[index].coverUrl;
   formData.value.configList[location].coverUrl = coverUrl;
-  console.log(coverUrl)
-  handleLocationUrl(location, coverUrl)
-}
+  handleLocationUrl(location, coverUrl);
+};
 
 const handleLocationUrl = (index, coverUrl) => {
   prizeLocation.value.forEach((item, idx) => {
     if ((idx <= 3 && idx === index) || (idx >= 5 && idx === index + 1)) {
       item.coverUrl = coverUrl;
     }
-  })
-}
+  });
+};
 
 const handleSave = () => {
   nextDataRef.value.validate((valid) => {
@@ -279,7 +279,7 @@ const handleSave = () => {
         updateApi(formData.value)
           .then(() => {
             successMsg('抽奖活动更新成功');
-            goBack(router)
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -288,7 +288,7 @@ const handleSave = () => {
         createApi(formData.value)
           .then(() => {
             successMsg('抽奖活动添加成功');
-            goBack(router)
+            goBack(router);
           })
           .finally(() => {
             loading.value = false;
@@ -356,7 +356,7 @@ onMounted(() => {
         }
         formData.value.configList.forEach((item) => {
           handleLocationUrl(item.location - 1, item.coverUrl);
-        })
+        });
       })
       .finally(() => {
         loading.value = false;
