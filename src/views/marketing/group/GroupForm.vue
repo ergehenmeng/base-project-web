@@ -43,11 +43,11 @@
           </el-table-column>
           <el-table-column prop="specValue" label="规格名称" min-width="150" />
           <el-table-column prop="salePrice" label="销售价格" width="130" />
-          <el-table-column width="150">
+          <el-table-column width="110" >
             <template #header>
               <span><span class="item-required">*</span>拼团价格</span>
             </template>
-            <template #default="scope">
+            <template #default="scope" >
               <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)">
                 <el-input v-if="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
               </el-form-item>

@@ -18,6 +18,13 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+        <el-table-column prop="avatar" label="头像" width="80">
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <el-image fit="contain" :src="scope.row.avatar" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="nickName" label="昵称" min-width="200" />
         <el-table-column prop="winning" label="是否中奖" width="300" :formatter="formatter" />
         <el-table-column prop="prizeTitle" label="奖品名称" width="150" />

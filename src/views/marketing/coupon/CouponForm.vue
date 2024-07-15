@@ -304,6 +304,8 @@ onMounted(() => {
       .finally(() => {
         loading.value = false;
       });
+  } else {
+    handleThreshold(2);
   }
 });
 </script>
