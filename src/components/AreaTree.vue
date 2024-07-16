@@ -49,10 +49,8 @@ const getNoCheckedChildren = (areaList, shieldList) => {
         item.children = children;
         nodeList.push(item);
       }
-    } else {
-      if (!shieldList.includes(item.id)) {
-        nodeList.push(item);
-      }
+    } else if (!shieldList.includes(item.id)) {
+      nodeList.push(item);
     }
   });
   return nodeList;
@@ -88,5 +86,3 @@ defineExpose({
   openDialog
 });
 </script>
-
-<style lang="scss" scoped></style>

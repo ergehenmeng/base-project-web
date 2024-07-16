@@ -1,14 +1,14 @@
 <template>
   <el-dialog title="发送站内信" v-model="showDialog" width="500"  draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px;">
-      <el-form-item label="奖品名称" prop="prizeName">
-        <el-input v-model="formData.prizeName" show-word-limit maxlength="10" />
-      </el-form-item>
       <el-form-item label="奖品类型" prop="prizeType">
         <el-select v-model="formData.prizeType">
           <el-option label="优惠券" :value="1" />
           <el-option label="积分" :value="2" />
         </el-select>
+      </el-form-item>
+      <el-form-item label="奖品名称" prop="prizeName">
+        <el-input v-model="formData.prizeName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="中奖发放数量" prop="num">
         <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"/>

@@ -56,3 +56,9 @@ export const receivePageApi = (params) => {
     params
   });
 };
+
+export const grantListApi = () => {
+  return request.get({
+    url: '/manage/coupon/grantList'
+  });
+};

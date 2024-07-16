@@ -24,4 +24,3 @@ const areaList = defineModel({
   required: true
 });
 </script>
-<style lang="scss" scoped></style>

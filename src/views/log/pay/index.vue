@@ -103,12 +103,10 @@ const getPage = async () => {
         pageData.value = data.rows;
         total.value = data.total;
       }
-    } else {
-      if (asyncAuth) {
-        const { data } = await asyncPageApi(queryParams);
-        pageData.value = data.rows;
-        total.value = data.total;
-      }
+    } else if (asyncAuth) {
+      const { data } = await asyncPageApi(queryParams);
+      pageData.value = data.rows;
+      total.value = data.total;
     }
   } finally {
     loading.value = false;
