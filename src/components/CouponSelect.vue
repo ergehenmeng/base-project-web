@@ -1,15 +1,15 @@
 <template>
-  <el-select v-model="scenicId" :disabled="props.disabled" :clearable="props.clearable" filterable>
-    <el-option v-for="item in scenicList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 2 || item.title === null">
-      <span style="float: left">{{ item.title === null ? '未命名' : item.title }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? '强制下架' : '已上架' }}</span>
+  <el-select v-model="couponId" :disabled="props.disabled" :clearable="props.clearable" filterable>
+    <el-option v-for="item in couponList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 0">
+      <span style="float: left">{{ item.title }}</span>
+      <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 1 ? '启用' : '禁用' }}</span>
     </el-option>
   </el-select>
 </template>
 <script setup>
-import { scenicListApi } from '@/api/product/scenic';
+import { grantListApi } from '@/api/marketing/coupon';
 
-const scenicList = ref([]);
+const couponList = ref([]);
 
 const props = defineProps({
   disabled: {
@@ -21,11 +21,11 @@ const props = defineProps({
     default: true
   }
 });
-const scenicId = defineModel();
+const couponId = defineModel();
 
 onMounted(() => {
-  scenicListApi().then((res) => {
-    scenicList.value = res.data;
+  grantListApi().then((res) => {
+    couponList.value = res.data;
   });
 });
 </script>
