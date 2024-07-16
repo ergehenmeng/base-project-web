@@ -1,11 +1,14 @@
 <template>
   <el-dialog title="发送站内信" v-model="showDialog" width="500"  draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px;">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px;" :validate-on-rule-change="false">
       <el-form-item label="奖品类型" prop="prizeType">
-        <el-select v-model="formData.prizeType">
+        <el-select v-model="formData.prizeType" @change="handleChangePrizeType">
           <el-option label="优惠券" :value="1" />
           <el-option label="积分" :value="2" />
         </el-select>
+      </el-form-item>
+      <el-form-item label="优惠券" prop="relationId" v-show="formData.prizeType === 1">
+        <CouponSelect v-model="formData.relationId"></CouponSelect>
       </el-form-item>
       <el-form-item label="奖品名称" prop="prizeName">
         <el-input v-model="formData.prizeName" show-word-limit maxlength="10" />
@@ -32,6 +35,8 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import UploadImage from "@/components/UploadImage.vue";
+import CouponSelect from '@/components/CouponSelect.vue'
+import { warningMsg } from '@/utils/message.js'
 
 const emit = defineEmits(['reload']);
 
@@ -47,6 +52,7 @@ const formData = ref({
   prizeName: null,
   prizeType: 0,
   num: 1,
+  relationId: null,
   totalNum: null,
   coverUrl: null
 });
@@ -78,6 +84,14 @@ const handleSave = () => {
       emit('reload', formData.value);
     }
   });
+};
+
+const handleChangePrizeType = (val) => {
+  if (val === 1) {
+    warningMsg("注意:只显示库存大于0且在发放期内手动发放的优惠券")
+  } else {
+    formData.value.relationId = null;
+  }
 };
 
 defineExpose({
