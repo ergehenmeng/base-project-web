@@ -90,7 +90,7 @@
                   <el-table-column label="操作" fixed="right" width="90" align="center">
                     <template #header>
                       <span style="margin-right: 5px">操作</span>
-                      <CreateButton v-show="formData.prizeList.length < 8" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
+                      <CreateButton v-show="formData.prizeList.length < 8 || !disabled" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
                     </template>
                     <template #default="scope">
                       <el-button v-show="scope.$index !== 0" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
@@ -155,7 +155,7 @@
       </div>
     </div>
   </div>
-  <PrizeForm ref="prizeRef" @reload="addPrize"></PrizeForm>
+  <PrizeForm ref="prizeRef" @reload="addPrize" v-show="!disabled"></PrizeForm>
 </template>
 
 <script setup>
