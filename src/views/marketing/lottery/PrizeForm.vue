@@ -1,6 +1,6 @@
 <template>
-  <el-dialog title="发送站内信" v-model="showDialog" width="500"  draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px;" :validate-on-rule-change="false">
+  <el-dialog title="发送站内信" v-model="showDialog" width="500" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px" :validate-on-rule-change="false">
       <el-form-item label="奖品类型" prop="prizeType">
         <el-select v-model="formData.prizeType" @change="handleChangePrizeType">
           <el-option label="优惠券" :value="1" />
@@ -8,16 +8,16 @@
         </el-select>
       </el-form-item>
       <el-form-item label="优惠券" prop="relationId" v-show="formData.prizeType === 1">
-        <CouponSelect v-model="formData.relationId"></CouponSelect>
+        <CouponSelect ref="couponRef" v-model="formData.relationId" @change="handleCouponChange"></CouponSelect>
       </el-form-item>
       <el-form-item label="奖品名称" prop="prizeName">
         <el-input v-model="formData.prizeName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="中奖发放数量" prop="num">
-        <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="奖品总数量" prop="totalNum">
-        <el-input v-model="formData.totalNum" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.totalNum" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="奖品图片" prop="coverUrl">
         <UploadImage v-model:model-value="formData.coverUrl"></UploadImage>
@@ -34,9 +34,9 @@
 
 <script setup>
 import { reactive, ref } from 'vue';
-import UploadImage from "@/components/UploadImage.vue";
-import CouponSelect from '@/components/CouponSelect.vue'
-import { warningMsg } from '@/utils/message.js'
+import UploadImage from '@/components/UploadImage.vue';
+import CouponSelect from '@/components/CouponSelect.vue';
+import { warningMsg } from '@/utils/message.js';
 
 const emit = defineEmits(['reload']);
 
@@ -45,7 +45,7 @@ const formRules = reactive({
   prizeType: [{ required: true, message: '奖品类型不能为空', trigger: 'change' }],
   num: [{ required: true, message: '单次中奖发放数量不能为空', trigger: 'blur' }],
   totalNum: [{ required: true, message: '奖品总数量不能为空', trigger: 'blur' }],
-  coverUrl: [{ required: true, message: '奖品图片不能为空', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '奖品图片不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -56,7 +56,7 @@ const formData = ref({
   totalNum: null,
   coverUrl: null
 });
-
+const couponRef = ref();
 const formDataRef = ref();
 const showDialog = ref(false);
 
@@ -88,10 +88,18 @@ const handleSave = () => {
 
 const handleChangePrizeType = (val) => {
   if (val === 1) {
-    warningMsg("注意:只显示库存大于0且在发放期内手动发放的优惠券")
+    warningMsg('注意:只显示库存大于0且在发放期内手动发放的优惠券');
   } else {
     formData.value.relationId = null;
   }
+};
+
+const handleCouponChange = (val) => {
+  couponRef.value.couponList.forEach((item) => {
+    if (item.id === val) {
+      formData.value.prizeName = item.title;
+    }
+  });
 };
 
 defineExpose({

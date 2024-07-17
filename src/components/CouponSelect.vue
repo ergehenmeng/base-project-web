@@ -28,4 +28,8 @@ onMounted(() => {
     couponList.value = res.data;
   });
 });
+
+defineExpose({
+  couponList
+});
 </script>
