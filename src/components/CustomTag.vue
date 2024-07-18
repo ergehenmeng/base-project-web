@@ -1,9 +1,8 @@
 <template>
   <div class="tag-box" @click="onclick" :style="{ width: props.width + 'px' }">
-    <div class="tag-items">
-      <el-tag v-for="(item) in tagList" :type="props.type" disable-transitions :key="item" closable @close="removeTag(item)">{{ item }}</el-tag>
-    </div>
-    <input :placeholder="props.placeholder" v-model="tagValue" @keyup.space="addTag" class="input-tag" ref="inputRef" type="text" />
+    <el-tag v-for="(item, index) in tagList" :type="props.type" disable-transitions :key="index" closable @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
+    <input :placeholder="tagList.length > 0 ? '' : props.placeholder" v-model="tagValue" @keyup.space="addTag" class="input-tag" ref="inputRef" type="text"
+           :maxlength="props.maxlength"/>
   </div>
 </template>
 
@@ -25,7 +24,8 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    default: 300
+    default: 300,
+    min: 100
   },
   placeholder: {
     type: String,
@@ -34,6 +34,11 @@ const props = defineProps({
   limit: {
     type: Number,
     default: 3
+  },
+  maxlength: {
+    type: Number,
+    max: 6,
+    default: 4
   }
 });
 
@@ -49,14 +54,13 @@ const addTag = () => {
   if (tagList.value.indexOf(tagValue.value) > -1) {
     errorMsg('标签重复啦~');
   } else {
-    console.log(tagValue.value);
     tagList.value.push(tagValue.value);
     tagValue.value = null;
   }
 };
 
 const removeTag = (item) => {
-  tagList.value.splice(tagList.value.indexOf(item), 1)
+  tagList.value = tagList.value.splice(tagList.value.indexOf(item), 1)
 };
 </script>
 
@@ -68,29 +72,27 @@ const removeTag = (item) => {
   border-radius: 4px;
   font-size: 12px;
   text-align: left;
-  padding-left: 5px;
   word-wrap: break-word;
   overflow: hidden;
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 
-.tag-items {
-  display: flex;
-  align-items: center;
-  grid-gap: 5px;
-  flex-wrap: wrap;
-  padding: 4px 2px;
+.tag-item {
+  margin: 3px;
 }
 
 .input-tag {
+  flex: 1;
   font-size: 12px;
   border: none;
   box-shadow: none;
   outline: none;
   background-color: transparent;
-  padding: 0 0 0 5px;
-  width: auto;
-  min-width: 150px;
+  padding-left: 5px;
+  min-width: 70px;
   vertical-align: top;
   height: 32px;
   color: #495060;
