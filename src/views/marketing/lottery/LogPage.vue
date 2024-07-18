@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="活动名称" clearable @keyup.enter="search" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="昵称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="中奖状态">
           <el-select v-model="queryParams.winning" clearable>
@@ -29,7 +29,7 @@
         <el-table-column prop="winning" label="是否中奖" width="300" :formatter="formatter" />
         <el-table-column prop="prizeTitle" label="奖品名称" width="150" />
         <el-table-column prop="winNum" label="中奖数量" width="150" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
+        <el-table-column prop="createTime" label="抽奖时间" width="180" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"

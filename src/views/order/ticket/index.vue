@@ -29,7 +29,7 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item v-has-perm="'lYD0'">
+        <el-form-item v-has-perm="'kYD0'">
           <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
         </el-form-item>
       </el-form>
@@ -42,7 +42,7 @@
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="mobile" label="订单联系人" min-width="120" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
         <el-table-column prop="discountAmount" label="总优惠金额" width="100" />
         <el-table-column prop="payTime" label="支付时间" width="180" />
