@@ -18,7 +18,7 @@ export default [
             component: () => import('@/views/order/homestay/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'homestayOrderDetail',
             component: () => import('@/views/order/homestay/detail/index.vue'),
             meta: {
@@ -40,7 +40,7 @@ export default [
             component: () => import('@/views/order/line/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'lineOrderDetail',
             component: () => import('@/views/order/line/detail/index.vue'),
             meta: {
@@ -62,7 +62,7 @@ export default [
             component: () => import('@/views/order/ticket/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'ticketOrderDetail',
             component: () => import('@/views/order/ticket/detail/index.vue'),
             meta: {
@@ -84,7 +84,7 @@ export default [
             component: () => import('@/views/order/voucher/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'voucherOrderDetail',
             component: () => import('@/views/order/voucher/detail/index.vue'),
             meta: {
@@ -106,7 +106,7 @@ export default [
             component: () => import('@/views/order/venue/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'venueOrderDetail',
             component: () => import('@/views/order/venue/detail/index.vue'),
             meta: {
@@ -128,7 +128,7 @@ export default [
             component: () => import('@/views/order/item/index.vue')
           },
           {
-            path: 'detail/:id',
+            path: 'detail/:orderNo',
             name: 'itemOrderDetail',
             component: () => import('@/views/order/item/detail/index.vue'),
             meta: {

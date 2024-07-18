@@ -35,7 +35,7 @@
             <el-button v-has-perm="'RCi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'rCi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'9Ci0'" v-show="scope.row.state === 0" type="success" :icon="Position" @click="handleGenerate(scope.row)" link title="生成cdKey"></el-button>
-            <el-button v-has-perm="'0Ci0'" v-show="scope.row.state === 1" type="info" :icon="Notebook" @click="handleCdKeyPage(scope.row)" link title="兑换码列表"></el-button>
+            <el-button v-has-perm="'0Ci0'" v-show="scope.row.state === 1" type="primary" :icon="Memo" @click="handleCdKeyPage(scope.row)" link title="兑换码列表"></el-button>
             <el-button v-has-perm="'aCi0'" v-show="scope.row.state === 0" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -55,7 +55,7 @@
 <script setup>
 import { deleteApi, generateApi, listPageApi } from '@/api/marketing/redeem';
 import { onMounted, reactive, ref } from 'vue';
-import { Delete, Document, Edit, Notebook, Position } from '@element-plus/icons-vue';
+import { Delete, Document, Edit, Memo, Position } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
