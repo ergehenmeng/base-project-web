@@ -19,9 +19,7 @@
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
-        <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
-          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
-        </el-select>
+        <CustomTag v-model="formData.tagList" :width="350"></CustomTag>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -83,6 +81,7 @@ import AreaSelect from '@/components/AreaSelect.vue';
 import MapContainer from '@/components/MapContainer.vue';
 import useDictStore from '@/store/dict.js';
 import MerchantSelect from '@/components/MerchantSelect.vue';
+import CustomTag from '@/components/CustomTag.vue'
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('homestay_tag');

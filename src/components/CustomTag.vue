@@ -1,7 +1,7 @@
 <template>
   <div class="tag-box" @click="onclick" :style="{ width: props.width + 'px' }">
-    <el-tag v-for="(item, index) in tagList" :type="props.type" disable-transitions :key="index" closable @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
-    <input :placeholder="tagList.length > 0 ? '' : props.placeholder" v-model="tagValue" @keyup.space="addTag" class="input-tag" ref="inputRef" type="text"
+    <el-tag v-for="(item, index) in tagList" :type="props.type" :key="index" disable-transitions closable @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
+    <input :placeholder="tagList.length > 0 ? '' : props.placeholder" v-model="tagValue" @keydown.space.prevent="addTag" class="input-tag" ref="inputRef" type="text"
            :maxlength="props.maxlength"/>
   </div>
 </template>
@@ -12,8 +12,7 @@ import { errorMsg } from '@/utils/message.js';
 const tagList = defineModel({
   default: () => [],
   type: Array
-});
-
+})
 const tagValue = ref(null);
 const inputRef = ref();
 
@@ -47,6 +46,14 @@ const onclick = () => {
 };
 
 const addTag = () => {
+  tagValue.value = tagValue.value.trim();
+  if (!tagValue.value) {
+    return;
+  }
+  if (tagValue.value.length > props.maxlength) {
+    errorMsg('标签长度不能超过' + props.maxlength + '个字符');
+    return;
+  }
   if (tagList.value.length === props.limit) {
     errorMsg('标签数量已达上限');
     return;
@@ -60,7 +67,7 @@ const addTag = () => {
 };
 
 const removeTag = (item) => {
-  tagList.value = tagList.value.splice(tagList.value.indexOf(item), 1)
+  tagList.value.splice(tagList.value.indexOf(item), 1)
 };
 </script>
 
@@ -81,7 +88,7 @@ const removeTag = (item) => {
 }
 
 .tag-item {
-  margin: 3px;
+  margin: 2px;
 }
 
 .input-tag {
@@ -94,8 +101,18 @@ const removeTag = (item) => {
   padding-left: 5px;
   min-width: 70px;
   vertical-align: top;
-  height: 32px;
+  height: 30px;
   color: #495060;
-  line-height: 32px;
+  line-height: 30px;
+}
+
+.input-tag::-webkit-input-placeholder {
+  color: #a8abb2;
+}
+.input-tag:-moz-placeholder {
+  color: #a8abb2;
+}
+.input-tag:-ms-input-placeholder {
+  color: #a8abb2;
 }
 </style>
