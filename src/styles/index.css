@@ -23,25 +23,25 @@ body {
 }
 
 /*三级页面样式(一般为编辑页面)*/
-.edit-content {
+.edit-content, .detail-content {
   padding: 20px 80px 50px 80px;
   background-color: white;
   border-radius: 3px;
   min-height: calc(100vh - 120px);
 }
-.edit-content .el-input, .edit-content .el-select, .edit-content .el-textarea {
+.edit-content .el-input, .edit-content .el-select, .edit-content .el-textarea, .detail-content .el-input, .detail-content .el-select, .detail-content .el-textarea {
   width: 350px;
 }
-.edit-content .el-input.w100 {
+.edit-content .el-input.w100, .detail-content .el-input.w100 {
   width: 100px !important;
 }
-.edit-content .el-input.w120 {
+.edit-content .el-input.w120, .detail-content .el-input.w120 {
   width: 120px !important;
 }
-.edit-content .el-input.w200 {
+.edit-content .el-input.w200, .detail-content .el-input.w200 {
   width: 200px !important;
 }
-.edit-content .el-collapse {
+.edit-content .el-collapse, .detail-content .el-collapse {
   width: 800px;
 }
 
