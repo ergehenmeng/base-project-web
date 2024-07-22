@@ -2,7 +2,7 @@
   <div class="detail-content">
     <el-divider />
     <OrderStateBar :state="data.state" :refund-state="data.refundState"></OrderStateBar>
-    <div class="order-content">
+    <div class="order-content" v-loading="loading">
       <div class="left item">
         <div class="header-nav">
           <span>订单信息</span>
@@ -91,7 +91,7 @@ import dayjs from 'dayjs';
 import { h } from 'vue'
 
 const { copy, isSupported } = useClipboard();
-
+const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
 const data = ref({
@@ -192,9 +192,12 @@ const handleNoConfirm = () => {
 };
 
 onBeforeMount(() => {
+  loading.value = true;
   selectApi({ orderNo: route.params.orderNo }).then((res) => {
     data.value = res.data;
     data.value.days = dayjs(data.value.endDate).diff(dayjs(data.value.startDate), 'day');
+  }).finally(() => {
+    loading.value = false;
   });
 });
 </script>

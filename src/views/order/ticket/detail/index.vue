@@ -2,7 +2,7 @@
   <div class="detail-content">
     <el-divider />
     <OrderStateBar :state="data.state" :refund-state="data.refundState"></OrderStateBar>
-    <div class="order-content">
+    <div class="order-content" v-loading="loading">
       <div class="left item">
         <div class="header-nav">
           <span>订单信息</span>
@@ -83,7 +83,7 @@ import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 
 const { copy, isSupported } = useClipboard();
-
+const loading = ref(false);
 const route = useRoute();
 const data = ref({
   orderNo: '',
@@ -132,9 +132,12 @@ const formatter = (row, column, cellValue) => {
   }
 };
 
-onMounted(() => {
+onBeforeMount(() => {
+  loading.value = true;
   selectApi({ orderNo: route.params.orderNo }).then((res) => {
     data.value = res.data;
+  }).finally(() => {
+    loading.value = false;
   });
 });
 </script>
