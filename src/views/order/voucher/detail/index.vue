@@ -41,11 +41,9 @@
           <span>餐饮券信息</span>
         </div>
         <div class="content-nav">
-          <span>场地名称：</span><span>{{ data.siteTitle }}</span> <span>场馆名称：</span><span>{{ data.title }}</span> <span>场馆类型：</span><span>{{ venueTypeFormat(data.venueType) }}</span>
-          <span>备注信息：</span
-          ><span
-        ><span class="order-remark">{{ data.remark }}</span></span
-        >
+          <span>餐饮券名称：</span><span>{{ data.title }}</span>
+          <span>餐饮店铺：</span><span>{{ data.restaurantName }}</span>
+          <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
         </div>
       </div>
       <div class="right item">
