@@ -9,10 +9,12 @@
         </div>
         <div class="content-nav">
           <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
-          <span>购买数量：</span><span>{{ data.num }}</span>
-          <span>已使用：</span><span>{{ data.useNum }}</span>
+          <span>购买数量：</span><span>{{ data.num }} 张</span>
+          <span>已核销：</span><span>{{ data.useNum }} 张</span>
           <span>订单联系人：</span><span> {{ data.nickName }}-{{ data.mobile }}</span>
-          <span>游玩日期：</span><span>{{ data.visitDate }}</span>
+          <span>使用日期：</span><span v-if="data.validDays > 0">购买之日起 {{ data.visitDate }} 天有效</span>
+          <span v-else>{{ data.effectDate }} ~ {{ data.expireDate }}</span>
+          <span>使用时间：</span><span> {{ data.effectTime }} ~ {{ data.expireTime }}</span>
           <span>下单时间：</span><span>{{ data.createTime }}</span>
           <template v-if="data.tradeNo">
             <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
@@ -98,7 +100,6 @@ const data = ref({
   tradeNo: null,
   nickName: '',
   mobile: null,
-  visitDate: null,
   state: 0,
   refundState: 0,
   closeType: null,
