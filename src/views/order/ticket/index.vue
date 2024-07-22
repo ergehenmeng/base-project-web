@@ -39,16 +39,14 @@
         <el-table-column prop="orderNo" label="订单编号" min-width="200" />
         <el-table-column prop="title" label="门票名称" min-width="150" />
         <el-table-column prop="scenicName" label="景区名称" min-width="150" />
-        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="mobile" label="订单联系人" min-width="120" />
-        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
+        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
-        <el-table-column prop="discountAmount" label="总优惠金额" width="100" />
+        <el-table-column prop="createTime" label="下单时间" width="180" />
         <el-table-column prop="payTime" label="支付时间" width="180" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="closeTime" label="订单关闭时间" width="180" />
-        <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
+        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="100">
           <template #default="scope">
             <el-button v-has-perm="'kYD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
