@@ -89,7 +89,6 @@ const data = ref({
   orderNo: '',
   scenicName: '',
   title: '',
-  coverList: [],
   payType: null,
   tradeNo: null,
   num: null,
@@ -167,7 +166,7 @@ onBeforeMount(() => {
   .header-nav {
     font-size: 14px;
     font-weight: bold;
-    background-color: #f5f5f5;
+    background-color: #eeeeee;
     display: flex;
     padding: 10px;
 
@@ -188,6 +187,7 @@ onBeforeMount(() => {
     }
     span:nth-child(2n) {
       flex: 80%;
+      line-height: 19px;
     }
     .order-remark {
       margin-top: 0;

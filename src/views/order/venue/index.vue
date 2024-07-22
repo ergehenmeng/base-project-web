@@ -146,6 +146,6 @@ const handleExcel = () => {
 };
 
 const handleDetail = (row) => {
-  router.push('/order/ticket/detail/' + row.id);
+  router.push('/order/venue/detail/' + row.orderNo);
 };
 </script>

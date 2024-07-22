@@ -89,7 +89,6 @@ const data = ref({
   title: '',
   duration: null,
   startProvinceCity: '',
-  coverList: [],
   payType: null,
   tradeNo: null,
   num: null,
@@ -98,7 +97,6 @@ const data = ref({
   mobile: null,
   visitDate: null,
   state: 0,
-  verificationType: null,
   refundState: 0,
   closeType: null,
   payAmount: '0',
@@ -170,7 +168,7 @@ onBeforeMount(() => {
   .header-nav {
     font-size: 14px;
     font-weight: bold;
-    background-color: #f5f5f5;
+    background-color: #eeeeee;
     display: flex;
     padding: 10px;
 
@@ -195,6 +193,7 @@ onBeforeMount(() => {
 
     span:nth-child(2n) {
       flex: 80%;
+      line-height: 19px;
     }
 
     .order-remark {

@@ -83,6 +83,7 @@ import { useRouter } from 'vue-router';
 import VenueSelect from '@/components/VenueSelect.vue';
 import SiteForm from '@/views/product/venue/site/SiteForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { venueTypeFormat } from '@/utils/common.js';
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -156,36 +157,7 @@ const formatter = (row, column, cellValue) => {
           '强制下架'
         );
   } else if (column.property === 'venueType') {
-    switch (cellValue) {
-      case 1:
-        return '篮球馆';
-      case 2:
-        return '网球馆';
-      case 3:
-        return '羽毛球馆';
-      case 4:
-        return '乒乓球馆';
-      case 5:
-        return '游泳馆';
-      case 6:
-        return '健身馆';
-      case 7:
-        return '瑜伽馆';
-      case 8:
-        return '保龄馆';
-      case 9:
-        return '足球馆';
-      case 10:
-        return '排球馆';
-      case 11:
-        return '田径馆';
-      case 12:
-        return '综合馆';
-      case 13:
-        return '跆拳道馆';
-      default:
-        return cellValue;
-    }
+    return venueTypeFormat(cellValue);
   } else {
     return cellValue;
   }

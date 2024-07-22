@@ -1,6 +1,6 @@
 <template>
-  <div class="title-bar" :style="{ width: props.width}">
-    <span class="bar-state">订单状态：{{ orderStateFormat(props.state) }}</span>
+  <div class="title-bar">
+    <span class="bar-state">订单状态：<span v-bind:style="formatStyle()">{{ orderStateFormat(props.state) }}</span></span>
     <span class="bar-refund-state" v-if="props.state === 7 || ( props === 9 && props.refundState === 4)">退款状态：{{ refundStateFormat(props.refundState) }}</span>
   </div>
 </template>
@@ -23,6 +23,21 @@ const props = defineProps({
     default: null
   }
 })
+
+const formatStyle = () => {
+  if (props.state === 8) {
+    return {
+      color: '#67c23a'
+    }
+  } else if (props.state === 10 || props.state === 11 || props.state === 7){
+    return {
+      color: '#e6a23c'
+    }
+  } else {
+    return {}
+  }
+
+}
 
 </script>
 
