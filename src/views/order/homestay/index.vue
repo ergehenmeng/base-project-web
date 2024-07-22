@@ -36,8 +36,8 @@
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="mobile" label="订单联系人" min-width="120" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
-        <el-table-column prop="discountAmount" label="总优惠金额" width="100" />
         <el-table-column prop="payTime" label="支付时间" width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="closeTime" label="订单关闭时间" width="180" />
@@ -140,6 +140,6 @@ const handleExcel = () => {
 };
 
 const handleDetail = (row) => {
-  router.push('/order/ticket/detail/' + row.id);
+  router.push('/order/homestay/detail/' + row.orderNo);
 };
 </script>

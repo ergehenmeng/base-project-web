@@ -1,7 +1,7 @@
 <template>
   <div class="detail-content">
     <el-divider />
-    <OrderStateBar :state="data.state"></OrderStateBar>
+    <OrderStateBar :state="data.state" :refund-state="data.refundState"></OrderStateBar>
     <div class="order-content">
       <div class="left item">
         <div class="header-nav">
@@ -96,13 +96,13 @@ const data = ref({
   price: null,
   mobile: null,
   visitDate: null,
-  state: null,
+  state: 0,
   category: null,
   verificationType: null,
-  refundState: null,
+  refundState: 0,
   closeType: null,
-  payAmount: null,
-  discountAmount: null,
+  payAmount: "0",
+  discountAmount: "0",
   useTime: null,
   completeTime: null,
   closeTime: null,

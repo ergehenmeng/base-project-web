@@ -14,6 +14,13 @@ export const selectApi = (params) => {
   });
 };
 
+export const confirmApi = (data) => {
+  return request.post({
+    url: '/manage/homestay/order/confirm',
+    data
+  });
+};
+
 export const exportApi = (params) => {
   return request.download({
     url: '/manage/homestay/order/export',

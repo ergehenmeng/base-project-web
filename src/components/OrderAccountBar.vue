@@ -4,7 +4,7 @@
       <span class="amount-item"><span>订单金额：<span>{{ props.amount }}</span> 元</span></span>
       <span class="amount-item" v-if="props.fee"><span>快递费：<span>{{ props.fee }}</span> 元</span></span>
       <span class="amount-item"><span>优惠金额：<span>{{ props.discountAmount }}</span> 元</span></span>
-      <span class="amount-item"><span>实付金额：<span class="amount">{{ props.payAmount }}</span> 元</span></span>
+      <span class="amount-item"><span>实付金额：<span class="pay-amount">{{ props.payAmount }}</span> 元</span></span>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@ const props = defineProps({
   },
   discountAmount: {
     type: String,
-    default: '0'
+    default: ''
   },
   fee: {
     type: String,
@@ -48,7 +48,7 @@ const props = defineProps({
     padding-right: 20px;
     .amount-item {
       margin-left: 20px;
-      .amount {
+      .pay-amount {
         color: #f56c6c;
         font-size: 20px;
         font-weight: bold;
