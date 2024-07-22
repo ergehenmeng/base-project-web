@@ -69,7 +69,42 @@ export const refundStateFormat = (state) => {
     default:
       return '';
   }
-}
+};
+
+export const durationFormat = (value) => {
+  switch (value) {
+    case 1:
+      return '一日游';
+    case 2:
+      return '二日游';
+    case 3:
+      return '三日游';
+    case 4:
+      return '四日游';
+    case 5:
+      return '五日游';
+    case 6:
+      return '六日游';
+    case 7:
+      return '七日游';
+    case 8:
+      return '八日游';
+    case 9:
+      return '九日游';
+    case 10:
+      return '十日游';
+    case 11:
+      return '十一日游';
+    case 12:
+      return '十二日游';
+    case 13:
+      return '十三日游';
+    case 14:
+      return '十四日游';
+    case 15:
+      return '十五日游';
+  }
+};
 
 export const closeTypeFormat = (cellValue) => {
   if (cellValue === 1) {
@@ -107,9 +142,10 @@ export const payTypeFormat = (cellValue) => {
  */
 export const numberValidator = (value, point = 2) => {
   if (value) {
-    value = value.replace(/[^0-9.]/g, '') // 移除非数字和小数点
-        .replace(/(\..*)\./g, '$1')
-        .replace(/(\..{2}).*/g, '$1');
+    value = value
+      .replace(/[^0-9.]/g, '') // 移除非数字和小数点
+      .replace(/(\..*)\./g, '$1')
+      .replace(/(\..{2}).*/g, '$1');
     value = value === '.' ? '' : value;
     // 移除前导零，但保留小数点前至少一个数字
     value = value.replace(/^0+(?=\d)/, '');
@@ -124,22 +160,22 @@ export const numberValidator = (value, point = 2) => {
 export const parseMerchantType = (cellValue) => {
   const typeList = [];
   if ((cellValue & 1) === 1) {
-    typeList.push("景区");
+    typeList.push('景区');
   }
   if ((cellValue & 2) === 2) {
-    typeList.push("民宿");
+    typeList.push('民宿');
   }
   if ((cellValue & 4) === 4) {
-    typeList.push("餐饮");
+    typeList.push('餐饮');
   }
   if ((cellValue & 8) === 8) {
-    typeList.push("零售");
+    typeList.push('零售');
   }
   if ((cellValue & 16) === 16) {
-    typeList.push("线路");
+    typeList.push('线路');
   }
   if ((cellValue & 32) === 32) {
-    typeList.push("场馆");
+    typeList.push('场馆');
   }
   return typeList.join(',');
 };
@@ -152,11 +188,11 @@ export const parseProductType = (value) => {
       return '零售';
     case 'voucher':
       return '餐饮券';
-    case "venue":
+    case 'venue':
       return '场地';
-    case "line":
+    case 'line':
       return '线路';
-    case "homestay":
+    case 'homestay':
       return '房型';
   }
 };
@@ -165,12 +201,12 @@ export const parseProductType = (value) => {
  * 返回上一页,如果上一页是登录页则跳转到首页
  */
 export const goBack = (router) => {
-  if (router.options.history.state.back && !router.options.history.state.back.startsWith("/login")) {
-    router.go(-1)
+  if (router.options.history.state.back && !router.options.history.state.back.startsWith('/login')) {
+    router.go(-1);
   } else {
     router.push('/home');
   }
-}
+};
 
 /**
  * 禁用小于当前时间的日期
