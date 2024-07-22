@@ -1,21 +1,29 @@
 <template>
   <div class="title-bar" :style="{ width: props.width}">
-    <span class="bar-content">{{ props.title }}</span>
+    <span class="bar-state">订单状态：{{ orderStateFormat(props.state) }}</span>
+    <span class="bar-refund-state" v-if="props.state === 7 || ( props === 9 && props.refundState === 4)">退款状态：{{ refundStateFormat(props.refundState) }}</span>
   </div>
 </template>
 
 <script setup>
+import { orderStateFormat, refundStateFormat } from '../utils/common.js'
+
 const props = defineProps({
-  title: {
-    required: true,
-    type: String,
-    default: ''
-  },
   width: {
     type: String,
     default: '100%'
+  },
+  state: {
+    required: true,
+    type: Number,
+    default: null
+  },
+  refundState: {
+    type: Number,
+    default: null
   }
 })
+
 </script>
 
 <style lang="scss" scoped>
@@ -23,17 +31,16 @@ const props = defineProps({
   height: 50px;
   background-color: #eee;
   border-radius: 3px;
-  padding-left: 20px;
+  padding: 0 40px;
   line-height: 50px;
   font-size: 20px;
   font-weight: bold;
   color: #000;
+  display: flex;
+  justify-content: space-between;
   position: relative;
-  .bar-content {
-    margin-left: 20px;
-  }
 }
-.bar-content::before {
+.bar-state::before {
   content: '';
   display: inline-block;
   width: 4px;

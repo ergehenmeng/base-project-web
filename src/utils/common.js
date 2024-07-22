@@ -50,6 +50,27 @@ export const orderStateFormat = (state) => {
   }
 };
 
+export const refundStateFormat = (state) => {
+  switch (state) {
+    case 0:
+      return '未退款';
+    case 1:
+      return '退款申请中';
+    case 2:
+      return '退款中';
+    case 3:
+      return '退款拒绝';
+    case 4:
+      return '退款成功';
+    case 5:
+      return '退款失败';
+    case 6:
+      return '线下退款成功';
+    default:
+      return '';
+  }
+}
+
 export const closeTypeFormat = (cellValue) => {
   if (cellValue === 1) {
     return '订单自动过期';

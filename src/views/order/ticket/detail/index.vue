@@ -1,19 +1,16 @@
 <template>
   <div class="detail-content">
     <el-divider />
-    <TitleBar :title="'订单状态:'"></TitleBar>
+    <OrderStateBar :state="data.state"></OrderStateBar>
     <div class="order-content">
       <div class="left item">
         <div class="header-nav">
           <span>订单信息</span>
         </div>
         <div class="content-nav">
-          <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
-          <span>购买数量：</span><span>{{ data.num }}</span>
-          <span>单价：</span><span>{{ data.price }}</span>
-          <span>订单联系人：</span><span>{{ data.mobile }}</span>
-          <span>游玩日期：</span><span>{{ data.visitDate }}</span>
-          <span>下单时间：</span><span>{{ data.createTime }}</span>
+          <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span> <span>购买数量：</span
+          ><span>{{ data.num }}</span> <span>单价：</span><span>{{ data.price }}</span> <span>订单联系人：</span><span>{{ data.mobile }}</span> <span>游玩日期：</span
+          ><span>{{ data.visitDate }}</span> <span>下单时间：</span><span>{{ data.createTime }}</span>
           <template v-if="data.tradeNo">
             <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
           </template>
@@ -24,7 +21,7 @@
             <span>支付时间：</span><span>{{ data.payTime }}</span>
           </template>
           <template v-if="data.state === 9">
-            <span>关闭时间：</span><span>{{ data.closeTime }}<QuestionTip :content="data.closeType === 1 ? '过期自动关闭' : (data.closeType === 2 ? '用户取消' : '退款完成') "></QuestionTip></span>
+            <span>关闭时间：</span><span>{{ data.closeTime }}<QuestionTip :content="data.closeType === 1 ? '过期自动关闭' : data.closeType === 2 ? '用户取消' : '退款完成'"></QuestionTip></span>
           </template>
           <template v-if="data.useTime">
             <span>核销时间：</span><span>{{ data.useTime }}</span>
@@ -39,12 +36,15 @@
           <span>门票信息</span>
         </div>
         <div class="content-nav">
-          <span>景区名称：</span><span>{{ data.scenicName }}</span>
-          <span>门票名称：</span><span>{{ data.title }}</span>
-          <span>票种类型：</span><span>{{ data.category === 1 ? '成人票' : (data.category === 2 ? '老人票' : '儿童票')  }}</span>
-          <span>核销方式：</span><span>{{ data.verificationType === 1 ? '手动核销' : '自动核销'  }}<QuestionTip :content="data.verificationType === 1 ? '在核销端进行扫码核销' : '游玩日期次日凌晨自动核销'"></QuestionTip></span>
-          <span>是否实名：</span><span>{{ data.realBuy ? '是' : '否' }}</span>
-          <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
+          <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}</span> <span>票种类型：</span
+          ><span>{{ data.category === 1 ? '成人票' : data.category === 2 ? '老人票' : '儿童票' }}</span> <span>核销方式：</span
+          ><span
+            >{{ data.verificationType === 1 ? '手动核销' : '自动核销' }}<QuestionTip :content="data.verificationType === 1 ? '在核销端进行扫码核销' : '游玩日期次日凌晨自动核销'"></QuestionTip
+          ></span>
+          <span>是否实名：</span><span>{{ data.realBuy ? '是' : '否' }}</span> <span>备注信息：</span
+          ><span
+            ><span class="order-remark">{{ data.remark }}</span></span
+          >
         </div>
       </div>
       <div class="right item" v-if="data.realBuy">
@@ -52,15 +52,15 @@
           <span>游客信息</span>
         </div>
         <div class="content-nav visit-item">
-          <el-table :data="data.visitorList" border stripe show-overflow-tooltip>
+          <el-table :data="data.visitorList" stripe show-overflow-tooltip max-height="250">
             <el-table-column prop="memberName" label="游客姓名" />
-            <el-table-column prop="idCard" label="身份证号码" width="180"/>
+            <el-table-column prop="idCard" label="身份证号码" width="180" />
             <el-table-column prop="state" label="状态" :formatter="formatter" />
           </el-table>
         </div>
       </div>
     </div>
-    <OrderAccountBar :pay-amount="data.payAmount" :amount="data.payAmount" :discount-amount="data.discountAmount"/>
+    <OrderAccountBar :pay-amount="data.payAmount" :amount="data.payAmount" :discount-amount="data.discountAmount" />
     <div>
       <div class="edit-button-footer">
         <el-button @click="goBack($router)">返回</el-button>
@@ -72,15 +72,16 @@
 <script setup>
 import { selectApi } from '@/api/order/ticket';
 import { goBack } from '@/utils/common.js';
-import TitleBar from '@/components/TitleBar.vue';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { successMsg } from '@/utils/message.js'
-import { useClipboard } from '@vueuse/core'
-import { DocumentCopy } from '@element-plus/icons-vue'
-import QuestionTip from '@/components/QuestionTip.vue'
-import PayType from '@/components/PayType.vue'
-import OrderAccountBar from '@/components/OrderAccountBar.vue'
+import { successMsg } from '@/utils/message.js';
+import { useClipboard } from '@vueuse/core';
+import { DocumentCopy } from '@element-plus/icons-vue';
+import QuestionTip from '@/components/QuestionTip.vue';
+import PayType from '@/components/PayType.vue';
+import OrderAccountBar from '@/components/OrderAccountBar.vue';
+import OrderStateBar from '@/components/OrderStateBar.vue';
+
 const { copy, isSupported } = useClipboard();
 
 const route = useRoute();
@@ -114,7 +115,7 @@ const data = ref({
 
 const copyClipboard = (value) => {
   copy(value);
-  successMsg('复制成功')
+  successMsg('复制成功');
 };
 
 const formatter = (row, column, cellValue) => {
@@ -143,7 +144,9 @@ onMounted(() => {
   margin-top: 20px;
   display: flex;
   font-size: 14px;
-  .right, .left, .middle {
+  .right,
+  .left,
+  .middle {
     flex: 1;
   }
   .item {
@@ -176,7 +179,7 @@ onMounted(() => {
     span {
       margin-top: 15px;
     }
-    span:nth-child(2n+1) {
+    span:nth-child(2n + 1) {
       flex: 20%;
       text-align: right;
     }
