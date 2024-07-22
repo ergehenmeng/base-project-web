@@ -33,6 +33,10 @@ const formatStyle = () => {
     return {
       color: '#e6a23c'
     }
+  } else if (props.state === 2 || props.state === 3 || props.state === 4 || props.state === 5 || props.state === 6){
+    return {
+      color: '#409eff'
+    }
   } else {
     return {}
   }

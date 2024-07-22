@@ -9,7 +9,6 @@
         </div>
         <div class="content-nav">
           <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
-          <span>单价：</span><span>{{ data.price }}</span>
           <span>订单联系人：</span><span> {{ data.nickName }}-{{ data.mobile }}</span>
           <span>游玩日期：</span><span>{{ data.visitDate }}</span>
           <span>下单时间：</span><span>{{ data.createTime }}</span>
@@ -91,7 +90,6 @@ const data = ref({
   venueType: null,
   payType: null,
   tradeNo: null,
-  price: null,
   nickName: '',
   mobile: null,
   visitDate: null,
