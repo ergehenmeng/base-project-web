@@ -49,7 +49,7 @@
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="closeTime" label="订单关闭时间" width="180" />
         <el-table-column prop="closeType" label="订单关闭方式" width="120" :formatter="formatter" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="100">
           <template #default="scope">
             <el-button v-has-perm="'kYD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
