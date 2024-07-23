@@ -158,6 +158,6 @@ const handleExcel = () => {
 };
 
 const handleDetail = (row) => {
-  router.push('/order/item/detail/' + row.id);
+  router.push('/order/item/detail/' + row.orderNo);
 };
 </script>

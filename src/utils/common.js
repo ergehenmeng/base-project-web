@@ -167,6 +167,35 @@ export const payTypeFormat = (cellValue) => {
   }
 };
 
+export const formatExpressType = (value) => {
+  switch (value) {
+    case "yuantong":
+      return '圆通速递';
+    case "shentong":
+      return '申通快递';
+    case "jtexpress":
+      return '极兔速递';
+    case "zhongtong":
+      return '中通快递';
+    case "yunda":
+      return '韵达快递';
+    case "youzhengguonei":
+      return '邮政快递';
+    case "shunfeng":
+      return '顺丰速运';
+    case "jd":
+      return '京东物流';
+    case "ems":
+      return 'EMS';
+    case "debangkuaidi":
+      return '德邦快递';
+    case "huitongkuaidi":
+      return '百世快递';
+    case "other":
+      return '其他';
+  }
+}
+
 /**
  * 只能输入整数或包含两位的小数
  *

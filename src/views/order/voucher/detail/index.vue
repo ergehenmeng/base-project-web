@@ -12,7 +12,7 @@
           <span>购买数量：</span><span>{{ data.num }} 张</span>
           <span>已核销：</span><span>{{ data.useNum }} 张</span>
           <span>订单联系人：</span><span> {{ data.nickName }}-{{ data.mobile }}</span>
-          <span>使用日期：</span><span v-if="data.validDays > 0">购买之日起 {{ data.visitDate }} 天有效</span>
+          <span>使用日期：</span><span v-if="data.validDays > 0">购买之日起 {{ data.validDays }} 天有效</span>
           <span v-else>{{ data.effectDate }} ~ {{ data.expireDate }}</span>
           <span>使用时间：</span><span> {{ data.effectTime }} ~ {{ data.expireTime }}</span>
           <span>下单时间：</span><span>{{ data.createTime }}</span>
@@ -46,17 +46,6 @@
           <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
         </div>
       </div>
-      <div class="right item">
-        <div class="header-nav">
-          <span>预约信息</span>
-        </div>
-        <div class="content-nav visit-item">
-          <el-table :data="data.phaseList" stripe show-overflow-tooltip max-height="250">
-            <el-table-column prop="startTime" label="预约时间段" min-width="200" :formatter="formatter" />
-            <el-table-column prop="price" label="价格" min-width="150" />
-          </el-table>
-        </div>
-      </div>
     </div>
     <OrderAccountBar :pay-amount="data.payAmount" :amount="data.payAmount" :discount-amount="data.discountAmount" />
     <div>
@@ -69,7 +58,7 @@
 
 <script setup>
 import { selectApi } from '@/api/order/voucher';
-import { goBack, venueTypeFormat } from '@/utils/common.js';
+import { goBack } from '@/utils/common.js';
 import { useRoute } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { useClipboard } from '@vueuse/core';
@@ -153,10 +142,6 @@ onBeforeMount(() => {
     border-right: none;
   }
 
-  .visit-item {
-    padding: 15px 20px;
-  }
-
   .header-nav {
     font-size: 14px;
     font-weight: bold;
@@ -165,7 +150,7 @@ onBeforeMount(() => {
     padding: 10px;
 
     span {
-      padding-left: 30px;
+      padding-left: 20px;
       flex: 1;
     }
   }
@@ -179,12 +164,12 @@ onBeforeMount(() => {
     }
 
     span:nth-child(2n + 1) {
-      flex: 20%;
+      flex: 15%;
       text-align: right;
     }
 
     span:nth-child(2n) {
-      flex: 80%;
+      flex: 85%;
       line-height: 19px;
     }
 
