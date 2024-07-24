@@ -1,7 +1,7 @@
 <template>
   <el-tooltip :effect="props.effect" :content="props.content" :placement="props.placement">
     <el-button type="primary" link>
-      <Question></Question>
+      <Question :size="props.size"></Question>
     </el-button>
   </el-tooltip>
 </template>
@@ -19,6 +19,10 @@ const props = defineProps({
   placement: {
     type: String,
     default: 'top'
+  },
+  size: {
+    type: Number,
+    default: 14
   }
 });
 </script>

@@ -14,6 +14,27 @@ export const selectApi = (params) => {
   });
 };
 
+export const adjustApi = (data) => {
+  return request.post({
+    url: '/manage/order/adjust/item',
+    data
+  });
+};
+
+export const expressApi = (data) => {
+  return request.post({
+    url: '/manage/item/order/updateExpress',
+    data
+  });
+};
+
+export const sippingApi = (data) => {
+  return request.post({
+    url: '/manage/item/order/sipping',
+    data
+  });
+};
+
 export const exportApi = (params) => {
   return request.download({
     url: '/manage/item/order/export',

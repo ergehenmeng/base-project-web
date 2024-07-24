@@ -9,8 +9,9 @@
             <span>订单信息</span>
           </div>
           <div class="content-nav">
-            <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span> <span>店铺名称：</span
-            ><span>{{ data.storeName }}</span> <span>下单时间：</span><span>{{ data.createTime }}</span>
+            <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
+            <span>店铺名称：</span><span>{{ data.storeName }}</span>
+            <span>下单时间：</span><span>{{ data.createTime }}</span>
             <template v-if="data.tradeNo">
               <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
             </template>
@@ -38,8 +39,7 @@
           <div class="content-nav">
             <span>昵称：</span><span> {{ data.nickName }}</span>
             <span>手机号：</span><span> {{ data.mobile }}</span>
-            <span>收货地址：</span
-            ><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
+            <span>收货地址：</span><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
             <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
           </div>
         </div>
@@ -48,11 +48,10 @@
             <span>订单总计</span>
           </div>
           <div class="content-nav visit-item">
-            <span>订单金额：</span><span>{{ data.amount }} 元</span> <span>快递费：</span><span>{{ data.fee }} 元</span> <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
-            <span>实付金额：</span
-            ><span
-              ><span class="pay-amount"> {{ data.payAmount }}</span> 元</span
-            >
+            <span>订单金额：</span><span>{{ data.amount }} 元</span>
+            <span>快递费：</span><span>{{ data.fee }} 元</span>
+            <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
+            <span>实付金额：</span><span><span class="pay-amount"> {{ data.payAmount }}</span> 元</span>
           </div>
         </div>
       </div>
@@ -79,10 +78,11 @@
               <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
               <el-table-column width="80">
                 <template #header>
-                  <el-button type="primary" size="small" :disabled="selected.length === 0">发货</el-button>
+                  <el-button v-if="(data.state === 4 || data.state === 5) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
+                  <span v-else>操作</span>
                 </template>
                 <template #default="scope">
-                  <el-button type="primary" @click="handleUpdatePrice(scope.row)" :icon="Edit" link title="改价"></el-button>
+                  <el-button v-if="data.state === 0 " v-has-perm="'TRD0'" type="primary" @click="handleUpdatePrice(scope.row)" :icon="Edit" link title="改价"></el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -90,11 +90,10 @@
           <div class="adjust-log">
             <p v-for="(item, index) in data.adjustList" :key="index">
              【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
-              <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime"></QuestionTip>
+              <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
             </p>
           </div>
         </div>
-
       </div>
       <div class="delivery-content">
         <div class="header-nav">
@@ -105,7 +104,7 @@
             <div class="delivery-item">
               <div class="package-content item">
                 <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
-                ><span> {{ item.expressNo }} <el-button :icon="EditPen" type="primary" link title="修改物流单号"></el-button></span>
+                ><span> {{ item.expressNo }} <el-button v-has-perm="'7RD0'" :icon="EditPen" type="primary" link title="修改物流单号" @click="handleUpdateExpress(item)"></el-button></span>
                 <span>包含商品：</span>
                 <div class="good-content">
                   <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
@@ -128,6 +127,9 @@
         </div>
       </div>
     </div>
+    <AdjustForm ref="adjustRef" @reload="$router.go(0)"></AdjustForm>
+    <ExpressForm ref="expressRef" @reload="$router.go(0)"></ExpressForm>
+    <SippingForm ref="sippingRef" @reload="$router.go(0)"></SippingForm>
     <div>
       <div class="edit-button-footer">
         <el-button @click="goBack($router)">返回</el-button>
@@ -146,11 +148,21 @@ import { DocumentCopy, Edit, EditPen } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
+import useUserStore from '@/store/user.js'
+import AdjustForm from '@/views/order/item/detail/AdjustForm.vue'
+import ExpressForm from '@/views/order/item/detail/ExpressForm.vue'
+import SippingForm from '@/views/order/item/detail/SippingForm.vue'
 
+const userStore = useUserStore();
 const { copy, isSupported } = useClipboard();
 const loading = ref(false);
 const route = useRoute();
 const selected = ref([]);
+const deliveryAuth = userStore.hasAuth('BRD0');
+const adjustRef = ref();
+const expressRef = ref();
+const sippingRef = ref();
+
 const data = ref({
   orderNo: '',
   storeName: '',
@@ -182,12 +194,20 @@ const copyClipboard = (value) => {
 };
 
 const handleSelected = (val) => {
-  selected.value = val.map((item) => item.cacheName);
+  selected.value = val.map((item) => item.id);
 };
 
 const handleUpdatePrice = (row) => {
-  console.log(row);
+  adjustRef.value.openDialog(row);
 };
+
+const handleUpdateExpress = (row) => {
+  expressRef.value.openDialog({expressCode: row.expressCode, orderNo: data.value.orderNo, id: row.id, expressNo: row.expressNo});
+}
+
+const handleDelivery = () => {
+  sippingRef.value.openDialog({orderIds: selected.value, orderNo: data.value.orderNo});
+}
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'skuTitle') {
@@ -205,10 +225,10 @@ const formatter = (row, column, cellValue) => {
       case 5:
         return '已退款';
       default:
-        return '';
+        return '无';
     }
   } else if (column.property === 'refundState') {
-    return cellValue === 1 ? "已退款" : "";
+    return cellValue === 1 ? "已退款" : "无";
   }
 };
 
@@ -225,6 +245,8 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
+
+/*订单信息*/
 .order-content {
   margin-top: 20px;
   display: flex;
@@ -295,7 +317,7 @@ onBeforeMount(() => {
     }
   }
 }
-
+/*商品信息*/
 .item-content {
   margin-top: 20px;
   font-size: 14px;
@@ -324,7 +346,7 @@ onBeforeMount(() => {
     }
   }
 }
-
+/*已发货信息*/
 .delivery-content {
   margin-top: 20px;
   font-size: 14px;

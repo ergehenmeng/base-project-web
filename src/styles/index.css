@@ -38,6 +38,12 @@ body {
 .edit-content .el-input.w120, .detail-content .el-input.w120 {
   width: 120px !important;
 }
+.edit-content .el-input.w240, .detail-content .el-input.w240 {
+  width: 240px !important;
+}
+.edit-content .el-select.w240, .detail-content .el-select.w240 {
+  width: 240px !important;
+}
 .edit-content .el-input.w200, .detail-content .el-input.w200 {
   width: 200px !important;
 }
