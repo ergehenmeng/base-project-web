@@ -9,7 +9,7 @@
           <OrderStateSelect v-model="queryParams.orderState" class="w100"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
-          <el-select v-model="queryParams.refundState" clearable class="w100">
+          <el-select v-model="queryParams.refundState" clearable class="w120">
             <el-option label="未退款" :value="0" />
             <el-option label="退款申请中" :value="1" />
             <el-option label="退款中" :value="2" />
@@ -30,7 +30,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="订单类型">
-          <el-select v-model="queryParams.orderType" clearable class="w100">
+          <el-select v-model="queryParams.orderType" clearable class="w120">
             <el-option label="普通订单" :value="0" />
             <el-option label="限时购订单" :value="1" />
             <el-option label="拼团订单" :value="2" />
