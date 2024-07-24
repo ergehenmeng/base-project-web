@@ -1,141 +1,143 @@
 <template>
-  <div class="detail-content">
-    <el-divider />
-    <OrderStateBar :state="data.state" :refund-state="data.refundState"></OrderStateBar>
-    <div v-loading="loading">
-      <div class="order-content">
-        <div class="left item">
+  <el-scrollbar height="calc(100vh - 120px)">
+    <div class="detail-content">
+      <el-divider />
+      <OrderStateBar :state="data.state" :refund-state="data.refundState"></OrderStateBar>
+      <div v-loading="loading">
+        <div class="order-content">
+          <div class="left item">
+            <div class="header-nav">
+              <span>订单信息</span>
+            </div>
+            <div class="content-nav">
+              <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
+              <span>店铺名称：</span><span>{{ data.storeName }}</span>
+              <span>下单时间：</span><span>{{ data.createTime }}</span>
+              <template v-if="data.tradeNo">
+                <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
+              </template>
+              <template v-if="data.tradeNo">
+                <span>支付流水号：</span><span>{{ data.tradeNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.tradeNo)" link></el-button></span>
+              </template>
+              <template v-if="data.payTime">
+                <span>支付时间：</span><span>{{ data.payTime }}</span>
+              </template>
+              <template v-if="data.state === 9">
+                <span>关闭时间：</span><span>{{ data.closeTime }}<QuestionTip :content="data.closeType === 1 ? '过期自动关闭' : data.closeType === 2 ? '用户取消' : '退款完成'"></QuestionTip></span>
+              </template>
+              <template v-if="data.useTime">
+                <span>核销时间：</span><span>{{ data.useTime }}</span>
+              </template>
+              <template v-if="data.completeTime">
+                <span>完成时间：</span><span>{{ data.completeTime }}</span>
+              </template>
+            </div>
+          </div>
+          <div class="middle item">
+            <div class="header-nav">
+              <span>买家信息</span>
+            </div>
+            <div class="content-nav">
+              <span>昵称：</span><span> {{ data.nickName }}</span>
+              <span>手机号：</span><span> {{ data.mobile }}</span>
+              <span>收货地址：</span><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
+              <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
+            </div>
+          </div>
+          <div class="right item">
+            <div class="header-nav">
+              <span>订单总计</span>
+            </div>
+            <div class="content-nav visit-item">
+              <span>订单金额：</span><span>{{ data.amount }} 元</span>
+              <span>快递费：</span><span>{{ data.fee }} 元</span>
+              <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
+              <span>实付金额：</span><span><span class="pay-amount"> {{ data.payAmount }}</span> 元</span>
+            </div>
+          </div>
+        </div>
+        <div class="item-content">
           <div class="header-nav">
-            <span>订单信息</span>
+            <span>商品信息</span>
           </div>
           <div class="content-nav">
-            <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
-            <span>店铺名称：</span><span>{{ data.storeName }}</span>
-            <span>下单时间：</span><span>{{ data.createTime }}</span>
-            <template v-if="data.tradeNo">
-              <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
-            </template>
-            <template v-if="data.tradeNo">
-              <span>支付流水号：</span><span>{{ data.tradeNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.tradeNo)" link></el-button></span>
-            </template>
-            <template v-if="data.payTime">
-              <span>支付时间：</span><span>{{ data.payTime }}</span>
-            </template>
-            <template v-if="data.state === 9">
-              <span>关闭时间：</span><span>{{ data.closeTime }}<QuestionTip :content="data.closeType === 1 ? '过期自动关闭' : data.closeType === 2 ? '用户取消' : '退款完成'"></QuestionTip></span>
-            </template>
-            <template v-if="data.useTime">
-              <span>核销时间：</span><span>{{ data.useTime }}</span>
-            </template>
-            <template v-if="data.completeTime">
-              <span>完成时间：</span><span>{{ data.completeTime }}</span>
-            </template>
+            <div class="item-list">
+              <el-table :data="data.itemList" @selection-change="handleSelected" max-height="300">
+                <el-table-column type="selection" width="50"> </el-table-column>
+                <el-table-column label="图片" prop="coverUrl" width="80">
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <el-image fit="cover" :src="scope.row.coverUrl" style="width: 50px; height: 50px" :preview-src-list="scope.row.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column label="商品名称" prop="title" min-width="150"></el-table-column>
+                <el-table-column label="规格名称" prop="skuTitle" width="120" :formatter="formatter"></el-table-column>
+                <el-table-column label="购买数量" prop="num" width="100"></el-table-column>
+                <el-table-column label="单价" prop="salePrice" width="100"></el-table-column>
+                <el-table-column label="退款状态" prop="refundState" width="100" :formatter="formatter"></el-table-column>
+                <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
+                <el-table-column width="80">
+                  <template #header>
+                    <el-button v-if="(data.state === 4 || data.state === 5) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
+                    <span v-else>操作</span>
+                  </template>
+                  <template #default="scope">
+                    <el-button v-if="data.state === 0 " v-has-perm="'TRD0'" type="primary" @click="handleUpdatePrice(scope.row)" :icon="Edit" link title="改价"></el-button>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
+            <div class="adjust-log">
+              <p v-for="(item, index) in data.adjustList" :key="index">
+                【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
+                <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="middle item">
+        <div class="delivery-content">
           <div class="header-nav">
-            <span>买家信息</span>
+            <span>发货信息</span>
           </div>
           <div class="content-nav">
-            <span>昵称：</span><span> {{ data.nickName }}</span>
-            <span>手机号：</span><span> {{ data.mobile }}</span>
-            <span>收货地址：</span><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
-            <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
-          </div>
-        </div>
-        <div class="right item">
-          <div class="header-nav">
-            <span>订单总计</span>
-          </div>
-          <div class="content-nav visit-item">
-            <span>订单金额：</span><span>{{ data.amount }} 元</span>
-            <span>快递费：</span><span>{{ data.fee }} 元</span>
-            <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
-            <span>实付金额：</span><span><span class="pay-amount"> {{ data.payAmount }}</span> 元</span>
-          </div>
-        </div>
-      </div>
-      <div class="item-content">
-        <div class="header-nav">
-          <span>商品信息</span>
-        </div>
-        <div class="content-nav">
-          <div class="item-list">
-            <el-table :data="data.itemList" @selection-change="handleSelected" max-height="300">
-              <el-table-column type="selection" width="50"> </el-table-column>
-              <el-table-column label="图片" prop="coverUrl" width="80">
-                <template #default="scope">
-                  <div style="display: flex; align-items: center">
-                    <el-image fit="cover" :src="scope.row.coverUrl" style="width: 50px; height: 50px" :preview-src-list="scope.row.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column label="商品名称" prop="title" min-width="150"></el-table-column>
-              <el-table-column label="规格名称" prop="skuTitle" width="120" :formatter="formatter"></el-table-column>
-              <el-table-column label="购买数量" prop="num" width="100"></el-table-column>
-              <el-table-column label="单价" prop="salePrice" width="100"></el-table-column>
-              <el-table-column label="退款状态" prop="refundState" width="100" :formatter="formatter"></el-table-column>
-              <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
-              <el-table-column width="80">
-                <template #header>
-                  <el-button v-if="(data.state === 4 || data.state === 5) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
-                  <span v-else>操作</span>
-                </template>
-                <template #default="scope">
-                  <el-button v-if="data.state === 0 " v-has-perm="'TRD0'" type="primary" @click="handleUpdatePrice(scope.row)" :icon="Edit" link title="改价"></el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div class="adjust-log">
-            <p v-for="(item, index) in data.adjustList" :key="index">
-             【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
-              <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="delivery-content">
-        <div class="header-nav">
-          <span>发货信息</span>
-        </div>
-        <div class="content-nav">
-          <div v-for="item in data.shippedList" :key="item.id">
-            <div class="delivery-item">
-              <div class="package-content item">
-                <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
+            <div v-for="item in data.shippedList" :key="item.id">
+              <div class="delivery-item">
+                <div class="package-content item">
+                  <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
                 ><span> {{ item.expressNo }} <el-button v-has-perm="'7RD0'" :icon="EditPen" type="primary" link title="修改物流单号" @click="handleUpdateExpress(item)"></el-button></span>
-                <span>包含商品：</span>
-                <div class="good-content">
-                  <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
-                    <div class="good-item-img">
-                      <el-image fit="cover" :src="good.coverUrl" style="width: 50px; height: 50px" :preview-src-list="good.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                  <span>包含商品：</span>
+                  <div class="good-content">
+                    <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
+                      <div class="good-item-img">
+                        <el-image fit="cover" :src="good.coverUrl" style="width: 50px; height: 50px" :preview-src-list="good.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                      </div>
+                      <div class="good-item-info">
+                        <div class="good-item-title">{{ good.title }} </div>
+                        <div class="good-item-sku" v-if="good.skuTitle">{{ good.skuTitle }} </div>
+                        <div class="good-item-price">{{ good.salePrice }}元</div>
+                      </div>
+                      <div class="good-item-total"> x{{ good.num }}</div>
                     </div>
-                    <div class="good-item-info">
-                      <div class="good-item-title">{{ good.title }} </div>
-                      <div class="good-item-sku" v-if="good.skuTitle">{{ good.skuTitle }} </div>
-                      <div class="good-item-price">{{ good.salePrice }}元</div>
-                    </div>
-                    <div class="good-item-total"> x{{ good.num }}</div>
                   </div>
                 </div>
+                <div class="logistics-content item"> </div>
               </div>
-              <div class="logistics-content item"> </div>
+              <el-divider />
             </div>
-            <el-divider />
           </div>
         </div>
       </div>
-    </div>
-    <AdjustForm ref="adjustRef" @reload="$router.go(0)"></AdjustForm>
-    <ExpressForm ref="expressRef" @reload="$router.go(0)"></ExpressForm>
-    <SippingForm ref="sippingRef" @reload="$router.go(0)"></SippingForm>
-    <div>
-      <div class="edit-button-footer">
-        <el-button @click="goBack($router)">返回</el-button>
+      <AdjustForm ref="adjustRef" @reload="$router.go(0)"></AdjustForm>
+      <ExpressForm ref="expressRef" @reload="$router.go(0)"></ExpressForm>
+      <SippingForm ref="sippingRef" @reload="$router.go(0)"></SippingForm>
+      <div>
+        <div class="edit-button-footer">
+          <el-button @click="goBack($router)">返回</el-button>
+        </div>
       </div>
     </div>
-  </div>
+  </el-scrollbar>
 </template>
 
 <script setup>
@@ -258,14 +260,6 @@ onBeforeMount(() => {
     flex: 1;
   }
 
-  .item {
-    border-right: 1px solid #e6e6e6;
-  }
-
-  .item:last-child {
-    border-right: none;
-  }
-
   .header-nav {
     font-size: 14px;
     font-weight: bold;
@@ -279,20 +273,10 @@ onBeforeMount(() => {
     }
   }
 
-  .visit-item {
-    font-size: 16px;
-    line-height: 19px;
-    .pay-amount {
-      color: #f56c6c;
-      font-size: 20px;
-      font-weight: bold;
-    }
-  }
-
   .content-nav {
     display: flex;
     flex-wrap: wrap;
-
+    border-right: 1px solid #e6e6e6;
     span {
       margin-top: 15px;
     }
@@ -314,6 +298,17 @@ onBeforeMount(() => {
       text-align: left !important;
       word-break: break-word;
       overflow-wrap: break-word;
+    }
+  }
+
+  .visit-item {
+    font-size: 16px;
+    line-height: 19px;
+    border-right: none;
+    .pay-amount {
+      color: #f56c6c;
+      font-size: 20px;
+      font-weight: bold;
     }
   }
 }
