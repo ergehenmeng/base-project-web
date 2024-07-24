@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" class="w220" />
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState" class="w100"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.orderState" class="w120"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
           <el-select v-model="queryParams.refundState" clearable class="w120">
