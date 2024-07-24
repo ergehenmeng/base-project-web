@@ -9,9 +9,8 @@
             <span>订单信息</span>
           </div>
           <div class="content-nav">
-            <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
-            <span>店铺名称：</span><span>{{ data.storeName }}</span>
-                       <span>下单时间：</span><span>{{ data.createTime }}</span>
+            <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span> <span>店铺名称：</span
+            ><span>{{ data.storeName }}</span> <span>下单时间：</span><span>{{ data.createTime }}</span>
             <template v-if="data.tradeNo">
               <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
             </template>
@@ -39,8 +38,9 @@
           <div class="content-nav">
             <span>昵称：</span><span> {{ data.nickName }}</span>
             <span>手机号：</span><span> {{ data.mobile }}</span>
-            <span>收货地址：</span><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
-            <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
+            <span>收货地址：</span
+            ><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
+            <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
           </div>
         </div>
         <div class="right item">
@@ -48,10 +48,11 @@
             <span>订单总计</span>
           </div>
           <div class="content-nav visit-item">
-            <span>订单金额：</span><span>{{ data.amount }} 元</span>
-            <span>快递费：</span><span>{{ data.fee }} 元</span>
-            <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
-            <span>实付金额：</span><span><span class="pay-amount"> {{ data.payAmount }}</span> 元</span>
+            <span>订单金额：</span><span>{{ data.amount }} 元</span> <span>快递费：</span><span>{{ data.fee }} 元</span> <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
+            <span>实付金额：</span
+            ><span
+              ><span class="pay-amount"> {{ data.payAmount }}</span> 元</span
+            >
           </div>
         </div>
       </div>
@@ -62,12 +63,11 @@
         <div class="content-nav">
           <div class="item-list">
             <el-table :data="data.itemList" @selection-change="handleSelected" max-height="300">
-              <el-table-column type="selection" width="50" >
-              </el-table-column>
+              <el-table-column type="selection" width="50"> </el-table-column>
               <el-table-column label="图片" prop="coverUrl" width="80">
                 <template #default="scope">
                   <div style="display: flex; align-items: center">
-                    <el-image fit="contain" :src="scope.row.coverUrl" style="width: 50px; height: 50px" :preview-src-list="scope.row.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                    <el-image fit="cover" :src="scope.row.coverUrl" style="width: 50px; height: 50px" :preview-src-list="scope.row.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
                   </div>
                 </template>
               </el-table-column>
@@ -76,8 +76,8 @@
               <el-table-column label="购买数量" prop="num" width="100"></el-table-column>
               <el-table-column label="单价" prop="salePrice" width="100"></el-table-column>
               <el-table-column label="退款状态" prop="refundState" width="100" :formatter="formatter"></el-table-column>
-              <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter" ></el-table-column>
-              <el-table-column width="80" >
+              <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
+              <el-table-column width="80">
                 <template #header>
                   <el-button type="primary" size="small" :disabled="selected.length === 0">发货</el-button>
                 </template>
@@ -87,7 +87,14 @@
               </el-table-column>
             </el-table>
           </div>
+          <div class="adjust-log">
+            <p v-for="(item, index) in data.adjustList" :key="index">
+             【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
+              <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime"></QuestionTip>
+            </p>
+          </div>
         </div>
+
       </div>
       <div class="delivery-content">
         <div class="header-nav">
@@ -97,16 +104,24 @@
           <div v-for="item in data.shippedList" :key="item.id">
             <div class="delivery-item">
               <div class="package-content item">
-                <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span>
-                <span>物流单号：</span><span> {{ item.expressNo }} <el-button :icon="EditPen" type="primary" link title="修改单号"></el-button></span>
+                <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
+                ><span> {{ item.expressNo }} <el-button :icon="EditPen" type="primary" link title="修改物流单号"></el-button></span>
                 <span>包含商品：</span>
-                <div>
-                  水电费水电费水电费是的水电费水电费第三方
+                <div class="good-content">
+                  <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
+                    <div class="good-item-img">
+                      <el-image fit="cover" :src="good.coverUrl" style="width: 50px; height: 50px" :preview-src-list="good.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                    </div>
+                    <div class="good-item-info">
+                      <div class="good-item-title">{{ good.title }} </div>
+                      <div class="good-item-sku" v-if="good.skuTitle">{{ good.skuTitle }} </div>
+                      <div class="good-item-price">{{ good.salePrice }}元</div>
+                    </div>
+                    <div class="good-item-total"> x{{ good.num }}</div>
+                  </div>
                 </div>
               </div>
-              <div class="logistics-content item">
-
-              </div>
+              <div class="logistics-content item"> </div>
             </div>
             <el-divider />
           </div>
@@ -123,15 +138,14 @@
 
 <script setup>
 import { selectApi } from '@/api/order/item';
-import { formatExpressType, goBack } from '@/utils/common.js'
+import { formatExpressType, goBack } from '@/utils/common.js';
 import { useRoute } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { useClipboard } from '@vueuse/core';
-import { DocumentCopy, Edit, EditPen } from '@element-plus/icons-vue'
+import { DocumentCopy, Edit, EditPen } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
-import Price from '@/components/icon/Price.vue'
 
 const { copy, isSupported } = useClipboard();
 const loading = ref(false);
@@ -177,7 +191,7 @@ const handleUpdatePrice = (row) => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'skuTitle') {
-    return cellValue ? cellValue : '无';
+    return cellValue || '无';
   } else if (column.property === 'deliveryState') {
     switch (cellValue) {
       case 1:
@@ -194,12 +208,7 @@ const formatter = (row, column, cellValue) => {
         return '';
     }
   } else if (column.property === 'refundState') {
-    switch (cellValue) {
-      case 1:
-        return '已退款';
-      default:
-        return '';
-    }
+    return cellValue === 1 ? "已退款" : "";
   }
 };
 
@@ -216,12 +225,14 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss" scoped>
-.order-content  {
+.order-content {
   margin-top: 20px;
   display: flex;
   font-size: 14px;
 
-  .right, .middle, .left {
+  .right,
+  .middle,
+  .left {
     flex: 1;
   }
 
@@ -285,7 +296,7 @@ onBeforeMount(() => {
   }
 }
 
-.item-content, .delivery-content {
+.item-content {
   margin-top: 20px;
   font-size: 14px;
   .header-nav {
@@ -301,10 +312,15 @@ onBeforeMount(() => {
   }
   .content-nav {
     margin: 10px;
+    display: flex;
     .item-list {
       width: 990px;
       padding-right: 50px;
       border-right: 1px solid #e6e6e6;
+    }
+    .adjust-log {
+      flex: 1;
+      padding-left: 10px;
     }
   }
 }
@@ -343,12 +359,41 @@ onBeforeMount(() => {
 
         span:nth-child(2n + 1) {
           flex: 15%;
+          max-width: 15%;
           text-align: right;
         }
 
         span:nth-child(2n) {
           flex: 85%;
           line-height: 19px;
+        }
+        .good-content {
+          margin-top: 15px;
+          width: 500px;
+          display: flex;
+          flex-direction: column;
+          .good-item {
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid #e6e6e6;
+            height: 70px;
+            margin-bottom: 10px;
+            padding: 10px;
+            .good-item-img {
+              width: 50px;
+              text-align: center;
+              margin-right: 10px;
+            }
+            .good-item-info {
+              flex: 1;
+            }
+            .good-item-total {
+              width: 50px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
         }
       }
     }
