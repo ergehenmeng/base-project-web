@@ -121,7 +121,17 @@
                     </div>
                   </div>
                 </div>
-                <div class="logistics-content item"> </div>
+                <div class="logistics-content item">
+                  <el-timeline style="max-width: 600px">
+                    <el-timeline-item
+                      v-for="(express, index) in item.expressList"
+                      :key="index"
+                      :type="index === 0 ? 'primary' : 'info'"
+                      :timestamp="express.time">
+                      {{ express.content }}
+                    </el-timeline-item>
+                  </el-timeline>
+                </div>
               </div>
               <el-divider />
             </div>
@@ -412,6 +422,9 @@ onBeforeMount(() => {
             }
           }
         }
+      }
+      .logistics-content {
+        padding: 10px 20px;
       }
     }
   }
