@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="角色授权" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>角色授权</span><QuestionTip content="注意：勾选按钮菜单时，需要先勾选列表菜单，否则会无法显示列表数据"></QuestionTip>
+    </template>
     <el-scrollbar height="400px">
       <el-tree ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps" :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading"></el-tree>
     </el-scrollbar>
@@ -16,6 +19,7 @@
 import { authApi, roleMenuApi, systemMenuApi } from '@/api/system/role';
 import useUserStore from '@/store/user';
 import { successMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const defaultProps = {
   label: 'title',

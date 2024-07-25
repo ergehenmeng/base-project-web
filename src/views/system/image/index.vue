@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="图片名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="图片名称、备注" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="图片分类">
           <el-select v-model="queryParams.imageType" clearable>
@@ -18,20 +18,20 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="图片名称" width="150" />
-        <el-table-column prop="path" label="预览" width="150">
+        <el-table-column prop="path" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image fit="contain" :src="scope.row.path" :preview-src-list="[scope.row.path]" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="imageType" label="图片分类" :formatter="formatter" />
+        <el-table-column prop="imageType" label="图片分类" width="100" :formatter="formatter" />
         <el-table-column prop="path" label="url" />
-        <el-table-column prop="size" label="图片大小" :formatter="formatter" />
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column label="操作">
+        <el-table-column prop="size" label="图片大小" width="100" :formatter="formatter" />
+        <el-table-column prop="remark" label="备注" width="100"/>
+        <el-table-column prop="createTime" label="创建时间" width="180"/>
+        <el-table-column prop="updateTime" label="更新时间" width="180"/>
+        <el-table-column label="操作" width="100">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'vgK0'" title="新增图片" @click="handleCreate"></CreateButton>

@@ -10,7 +10,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="path">
-        <UploadImage v-model="formData.path" :disabled="formData.id !== null && formData.path !== ''"></UploadImage>
+        <UploadImage v-model="formData.path" :disabled="formData.id !== null && formData.path !== ''" tips="注意：编辑时无法修改图片"></UploadImage>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
@@ -30,6 +30,7 @@ import { createApi, updateApi } from '@/api/system/image';
 import useDictStore from '@/store/dict.js';
 import { successMsg } from '@/utils/message';
 import UploadImage from '@/components/UploadImage.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('image_type');
