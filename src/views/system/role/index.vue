@@ -23,7 +23,7 @@
           </template>
           <template #default="scope">
             <el-button v-has-perm="'5jK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'ZjK0'" type="primary" :icon="Connection" @click="handleAuth(scope.row)" link title="菜单授权"></el-button>
+            <el-button v-has-perm="'ZjK0'" @click="handleAuth(scope.row)" link title="菜单授权"><Auth color="#36ab60"></Auth></el-button>
             <el-button v-has-perm="'UjK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -49,6 +49,7 @@ import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import Auth from '@/components/icon/Auth.vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('JjK0');
