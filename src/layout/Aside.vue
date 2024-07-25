@@ -33,6 +33,7 @@
 <script setup>
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
+import { HomeFilled } from '@element-plus/icons-vue'
 
 const route = useRoute();
 

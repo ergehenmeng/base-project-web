@@ -30,6 +30,8 @@ import { confirmMsg, warningMsg } from '@/utils/message'
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
+import useDictStore from '@/store/dict.js'
+import useAreaStore from '@/store/area.js'
 
 const userStore = useUserStore();
 const changePwdRef = ref();
@@ -40,11 +42,17 @@ const handleLogout = () => {
     userStore.logout();
   });
 };
+// 初始化地区字典
+const areaStore = useAreaStore();
+areaStore.initArea();
+// 初始化数据字典
+const dictStore = useDictStore();
+dictStore.initDict('image_type', 'help_type', 'feedback_type', 'banner_type', 'notice_type', 'scenic_tag', 'homestay_tag', 'key_service', 'infrastructure_tag');
 
 onMounted(() => {
   const init = userStore.user?.init;
   if (init) {
-    warningMsg('您的密码为初始化密码，请修改密码');
+    warningMsg('您的密码为初始化密码，请及时修改密码');
     userStore.setInit(false);
   }
 })
