@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="标题" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="资讯标题" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -33,6 +33,7 @@
                 </div>
               </template>
             </el-table-column>
+            <el-table-column prop="likeNum" label="点赞数" />
             <el-table-column prop="sort" label="排序" width="80">
               <template #default="scope">
                 <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
@@ -43,7 +44,7 @@
             <el-table-column label="操作" fixed="right">
               <template #header>
                 <span style="margin-right: 5px">操作</span>
-                <CreateButton v-has-perm="'SmU0'" title="新增新闻资讯" @click="handleCreate"></CreateButton>
+                <CreateButton v-has-perm="'SmU0'" title="新增资讯" @click="handleCreate"></CreateButton>
               </template>
               <template #default="scope">
                 <el-button v-has-perm="'ymU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>

@@ -26,7 +26,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="播放时间">
-          <el-date-picker v-model="queryParams.middleTime" value-format="YYYY-MM-DD HH:mm:ss" type="datetime" placeholder="在此时间段内有效的轮播图" />
+          <el-date-picker v-model="queryParams.middleTime" time-format="HH:mm" format="YYYY-MM-DD HH:mm"  value-format="YYYY-MM-DD HH:mm" type="datetime" placeholder="在此时间段内有效的轮播图" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
