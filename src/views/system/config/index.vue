@@ -7,8 +7,8 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.locked" clearable>
-            <el-option label="禁止编辑" value="true" />
             <el-option label="可编辑" value="false" />
+            <el-option label="禁止编辑" value="true" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -21,10 +21,10 @@
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
         <el-table-column prop="content" label="配置信息" width="300" />
+        <el-table-column prop="locked" label="状态" width="100" :formatter="(row) => row.locked ? '禁止编辑' : '可编辑'"/>
         <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="locked" label="状态" width="100" />
-        <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column label="操作">
+        <el-table-column prop="updateTime" label="更新时间" width="180"/>
+        <el-table-column label="操作" width="100">
           <template #default="scope">
             <el-button type="primary" :icon="Edit" @click="handleEdit(scope.row)" link></el-button>
           </template>

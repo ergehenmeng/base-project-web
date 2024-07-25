@@ -14,7 +14,8 @@ export default defineConfig(({ mode }) => {
       vue(),
       vueJsx(),
       AutoImport({
-        imports: ['vue', 'vue-router']
+        imports: ['vue', 'vue-router'],
+        resolvers: [ElementPlusResolver()]
       }),
       Components({
         resolvers: [ElementPlusResolver()]
