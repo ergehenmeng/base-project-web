@@ -35,7 +35,7 @@
     <template #footer>
       <span>
         <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleSave">保存</el-button>
+        <el-button type="primary" @click="handleSave" v-if="!disabled">保存</el-button>
       </span>
     </template>
   </el-dialog>
