@@ -19,7 +19,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="nickName" label="昵称" width="120" />
-        <el-table-column prop="mobile" label="登录账号" width="150" />
+        <el-table-column prop="mobile" label="手机号" width="150" />
         <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
         <el-table-column prop="dataType" label="数据权限" width="150" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
@@ -124,11 +124,11 @@ onMounted(() => {
 });
 
 const handleDetail = (row) => {
-  formRef.value.openDialog(row);
+  formRef.value.openDialog({ id: row.id, type: "detail"});
 };
 
 const handleEdit = (row) => {
-  formRef.value.openDialog(row);
+  formRef.value.openDialog({id: row.id, type: "edit"});
 };
 
 const handleLock = (row) => {

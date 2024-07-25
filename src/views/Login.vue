@@ -49,13 +49,17 @@
 <script setup>
 import useUserStore from '@/store/user';
 import md5 from 'md5';
-import { User } from '@element-plus/icons-vue';
+import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
-const formData = ref({});
+const formData = ref({
+  userName: null,
+  pwd: null,
+  verifyCode: null
+});
 const formDataRef = ref();
 const loading = ref(false);
 const api = import.meta.env.VITE_API_URL;
@@ -86,24 +90,20 @@ const handleLogin = async () => {
   await formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      userStore
-        .login({
+      userStore.login({
           userName: formData.value.userName,
           pwd: md5(formData.value.pwd),
           verifyCode: formData.value.verifyCode
-        })
-        .then(() => {
+        }).then(() => {
           const fullPath = route.fullPath;
           if (fullPath.startsWith('/login?redirect=')) {
             router.replace(fullPath.replace('/login?redirect=', ''));
           } else {
             router.replace('/');
           }
-        })
-        .catch((e) => {
+        }).catch(() => {
           getCode();
-        })
-        .finally(() => {
+        }).finally(() => {
           loading.value = false;
         });
     }

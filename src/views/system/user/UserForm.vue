@@ -1,11 +1,11 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="用户名称" prop="nickName">
-        <el-input v-model="formData.nickName" show-word-limit maxlength="20" />
+        <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
-        <el-input v-model="formData.mobile" maxlength="11" />
+        <el-input v-model="formData.mobile" show-word-limit maxlength="11" title="默认手机号后6位为初始密码"/>
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
@@ -13,14 +13,14 @@
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门" prop="deptCode">
-        <el-select v-model="formData.deptCode" clearable>
-          <el-option label="研发部" :value="1"></el-option>
-          <el-option label="设计部" :value="2"></el-option>
-          <el-option label="测试部" :value="2"></el-option>
+        <el-select v-model="formData.deptCode" clearable title="注意:部门模块尚未开发">
+          <el-option label="研发部" value="1"></el-option>
+          <el-option label="设计部" value="2"></el-option>
+          <el-option label="测试部" value="3"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="数据权限" prop="dataType">
-        <el-select v-model="formData.dataType" clearable>
+        <el-select v-model="formData.dataType" clearable title="注意:数据权限需要按实际需求进行开发,且自定义数据权限需要手动选择">
           <el-option label="本人数据" :value="1"></el-option>
           <el-option label="本部门数据" :value="2"></el-option>
           <el-option label="本部门及子部门数据" :value="4"></el-option>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { createApi, roleListApi, updateApi } from '@/api/system/user';
+import { createApi, roleListApi, selectApi, updateApi } from '@/api/system/user'
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);
@@ -51,6 +51,7 @@ const roleList = ref([]);
 const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
+const disabled = ref(false);
 
 const formRules = reactive({
   nickName: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
@@ -72,14 +73,26 @@ const formData = ref({
 });
 
 const openDialog = (row) => {
-  showDialog.value = true;
   resetForm();
   if (row.id) {
-    dialogTitle.value = '编辑用户';
-    formData.value = { ...row };
+    if (row.type === "edit") {
+      dialogTitle.value = '编辑用户';
+      disabled.value = false;
+    } else {
+      dialogTitle.value = '查看用户';
+      disabled.value = true;
+    }
+    loading.value = true
+    selectApi({ id: row.id}).then(res => {
+      formData.value = res.data;
+    }).finally(() => {
+      loading.value = false;
+    })
   } else {
     dialogTitle.value = '新增用户';
+    disabled.value = false;
   }
+  showDialog.value = true;
 };
 
 const resetForm = () => {
@@ -130,7 +143,9 @@ const loadingRoleList = () => {
   });
 };
 
-loadingRoleList();
+onMounted(() => {
+  loadingRoleList();
+})
 
 defineExpose({
   openDialog

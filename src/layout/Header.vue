@@ -26,7 +26,7 @@
 <script setup>
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
-import { confirmMsg } from '@/utils/message';
+import { confirmMsg, warningMsg } from '@/utils/message'
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
@@ -40,6 +40,14 @@ const handleLogout = () => {
     userStore.logout();
   });
 };
+
+onMounted(() => {
+  const init = userStore.user?.init;
+  if (init) {
+    warningMsg('您的密码为初始化密码，请修改密码');
+    userStore.setInit(false);
+  }
+})
 
 const handleUser = () => {};
 

@@ -12,12 +12,14 @@ const useUserStore = defineStore(
     const user = ref({
       // 登录token
       token: '',
-      // 用户类型 1:系统用户 2:商户用户
+      // 用户类型 0:系统管理员 1:系统用户 2:商户管理员 3:商户用户
       userType: null,
       // 昵称
       nickName: '',
       // 按钮权限
-      permList: []
+      permList: [],
+      // 是否为初始密码
+      init: false
     });
     // 用户是否登陆
     const isLogin = ref(false);
@@ -60,7 +62,12 @@ const useUserStore = defineStore(
       isLogin.value = true;
       user.value = { ...result.data };
     };
-    return { user, isLogin, login, hasAuth, logout };
+
+    const setInit = (init) => {
+      user.value.init = init;
+    };
+
+    return { user, isLogin, login, hasAuth, logout, setInit };
   },
   // 开启持久化
   { persist: true }

@@ -14,7 +14,7 @@ import useUserStore from '@/store/user.js';
 
 const userStore = useUserStore();
 const merchantList = ref([]);
-const show = userStore.user?.userType === 1;
+const show = userStore.user?.userType === 1 || userStore.user?.userType === 0;
 
 const props = defineProps({
   disabled: {
