@@ -54,7 +54,6 @@
 </template>
 <script setup>
 import { deleteApi, generateApi, listPageApi } from '@/api/marketing/redeem';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Document, Edit, Memo, Position } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

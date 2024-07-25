@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import { sendSmsApi } from '@/api/user/member';
 import { errorMsg, successMsg } from '@/utils/message.js';
 

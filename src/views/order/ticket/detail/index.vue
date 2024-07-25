@@ -72,7 +72,6 @@
 <script setup>
 import { selectApi } from '@/api/order/ticket';
 import { goBack } from '@/utils/common.js';
-import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { useClipboard } from '@vueuse/core';

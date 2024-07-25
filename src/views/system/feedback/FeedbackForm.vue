@@ -16,7 +16,6 @@
 
 <script setup>
 import { disposeApi } from '@/api/system/feedback';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);

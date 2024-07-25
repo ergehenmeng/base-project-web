@@ -47,7 +47,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, stateApi } from '@/api/poi/area';
-import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

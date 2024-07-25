@@ -19,7 +19,6 @@
 </template>
 <script setup>
 import { clearApi, listPageApi } from '@/api/system/cache';
-import { onMounted, ref } from 'vue';
 import { Refresh } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import dayjs from 'dayjs';

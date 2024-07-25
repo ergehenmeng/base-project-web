@@ -22,7 +22,6 @@
 
 <script setup>
 import { updateApi } from '@/api/config/sms';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 
 const loading = ref(false);

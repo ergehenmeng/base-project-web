@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import { numberValidator } from '@/utils/common.js';
 
 const formDataRef = ref();

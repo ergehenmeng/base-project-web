@@ -28,7 +28,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/address';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
 

@@ -22,7 +22,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import { withdrawApplyApi, withdrawDetailApi } from '@/api/merchant/score';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';

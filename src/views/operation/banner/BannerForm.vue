@@ -58,7 +58,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/operation/banner';
-import { reactive, ref } from 'vue';
 import useDictStore from '@/store/dict.js';
 import { successMsg } from '@/utils/message';
 import UploadImage from '@/components/UploadImage.vue';

@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import { deleteApi, listApi } from '@/api/product/express';
 import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user.js';

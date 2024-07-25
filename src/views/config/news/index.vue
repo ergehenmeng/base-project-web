@@ -46,7 +46,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/config/news';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import NewsForm from './NewsForm.vue';

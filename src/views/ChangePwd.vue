@@ -22,7 +22,6 @@
 
 <script setup>
 import { changePwdApi } from '@/api/system/user';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);

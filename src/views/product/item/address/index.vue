@@ -43,7 +43,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/product/address';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

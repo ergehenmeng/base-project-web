@@ -53,7 +53,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/marketing/lottery';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Document, Edit, Memo } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

@@ -28,7 +28,6 @@
 </template>
 <script setup>
 import { balanceRechargeApi, rechargeDetailApi, scanRechargeApi } from '@/api/merchant/score';
-import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';

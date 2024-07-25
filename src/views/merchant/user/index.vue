@@ -51,7 +51,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, lockApi, unlockApi } from '@/api/merchant/user';
-import { h, onMounted, reactive, ref } from 'vue';
 import { Delete, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';

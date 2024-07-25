@@ -81,7 +81,6 @@
 </template>
 <script setup>
 import { exportApi, listPageApi, lockApi, logoutApi, resetPwdApi, unbindApi, unlockApi } from '@/api/user/merchant';
-import { h, onMounted, reactive, ref } from 'vue';
 import { Document, Download, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

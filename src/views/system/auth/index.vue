@@ -52,7 +52,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/system/auth';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Edit, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';

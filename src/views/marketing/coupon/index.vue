@@ -72,7 +72,6 @@
 </template>
 <script setup>
 import { closeApi, listPageApi, openApi } from '@/api/marketing/coupon';
-import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

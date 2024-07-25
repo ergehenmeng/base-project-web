@@ -45,7 +45,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/log/task';
-import { onMounted, reactive, ref } from 'vue';
 import { Document } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import ContentDialog from '@/components/ContentDialog.vue';

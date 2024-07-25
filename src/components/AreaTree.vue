@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import useAreaStore from '@/store/area.js';
 import { errorMsg } from '@/utils/message.js';
 

@@ -72,7 +72,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/system/feedback';
-import { onMounted, reactive, ref } from 'vue';
 import { ChatLineSquare } from '@element-plus/icons-vue';
 import FeedbackForm from './FeedbackForm.vue';
 import useUserStore from '@/store/user';

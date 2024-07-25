@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import { ticketPageApi } from '@/api/product/ticket';
 import { itemPageApi } from '@/api/product/item';
 import { voucherPageApi } from '@/api/product/voucher';

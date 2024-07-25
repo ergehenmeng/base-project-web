@@ -32,7 +32,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/poi/line';
-import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';

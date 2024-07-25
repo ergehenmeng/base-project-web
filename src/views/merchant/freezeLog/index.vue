@@ -55,7 +55,6 @@
 </template>
 <script setup>
 import { exportApi, listPageApi } from '@/api/merchant/freezeLog';
-import { onMounted, reactive, ref } from 'vue';
 import { Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { downloadExcel } from '@/utils/common.js';

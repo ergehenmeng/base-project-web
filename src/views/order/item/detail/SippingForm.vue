@@ -32,7 +32,6 @@
 
 <script setup>
 import { sippingApi } from '@/api/order/item';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 
 const loading = ref(false);

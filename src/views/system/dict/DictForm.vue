@@ -22,7 +22,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/system/dict';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);

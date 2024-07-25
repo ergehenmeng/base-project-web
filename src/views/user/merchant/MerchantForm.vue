@@ -60,7 +60,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/user/merchant';
-import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';

@@ -42,7 +42,6 @@
 </template>
 <script setup>
 import { reportPageApi } from '@/api/operation/comment';
-import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
 

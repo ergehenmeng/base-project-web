@@ -22,7 +22,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/product/site';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import VenueSelect from '@/components/VenueSelect.vue';

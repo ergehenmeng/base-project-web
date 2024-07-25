@@ -60,11 +60,10 @@
 </template>
 <script setup>
 import { exportApi, listPageApi } from '@/api/order/homestay';
-import { onMounted, reactive, ref } from 'vue';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 

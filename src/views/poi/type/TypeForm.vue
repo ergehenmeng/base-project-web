@@ -24,7 +24,6 @@
 </template>
 <script setup>
 import { createApi, updateApi } from '@/api/poi/type';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import UploadImage from '@/components/UploadImage.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';

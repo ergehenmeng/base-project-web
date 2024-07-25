@@ -43,7 +43,6 @@
 
 <script setup>
 import { createApi, roleListApi, updateApi } from '@/api/system/user';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);

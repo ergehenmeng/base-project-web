@@ -70,7 +70,6 @@
 </template>
 <script setup>
 import { asyncPageApi, syncPageApi } from '@/api/log/pay';
-import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import ContentDialog from '@/components/ContentDialog.vue';
 

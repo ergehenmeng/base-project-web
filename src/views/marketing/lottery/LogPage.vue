@@ -43,7 +43,6 @@
   </div>
 </template>
 <script setup>
-import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
 import { logPageApi } from '@/api/marketing/lottery/index.js';

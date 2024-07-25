@@ -50,7 +50,6 @@
 </template>
 <script setup>
 import { deleteApi, listApi, sortApi } from '@/api/config/itemTag';
-import { onMounted, reactive, ref } from 'vue';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

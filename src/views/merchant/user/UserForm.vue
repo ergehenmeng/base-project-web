@@ -30,7 +30,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/merchant/user';
-import { reactive, ref } from 'vue';
 import { roleListApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
 

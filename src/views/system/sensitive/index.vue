@@ -37,7 +37,6 @@
 </template>
 <script setup>
 import { createApi, deleteApi, listPageApi } from '@/api/system/sensitive';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

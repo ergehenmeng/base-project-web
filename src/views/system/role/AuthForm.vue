@@ -15,7 +15,6 @@
 <script setup>
 import { authApi, roleMenuApi, systemMenuApi } from '@/api/system/role';
 import useUserStore from '@/store/user';
-import { ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const defaultProps = {

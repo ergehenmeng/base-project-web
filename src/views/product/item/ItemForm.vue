@@ -186,7 +186,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/item';
-import { reactive, ref } from 'vue';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';

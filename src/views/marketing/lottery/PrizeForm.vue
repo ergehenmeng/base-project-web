@@ -33,7 +33,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import UploadImage from '@/components/UploadImage.vue';
 import CouponSelect from '@/components/CouponSelect.vue';
 import { warningMsg } from '@/utils/message.js';

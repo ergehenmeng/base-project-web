@@ -33,7 +33,6 @@
 
 <script setup>
 import { setDayApi } from '@/api/product/line';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 import { numberValidator } from '@/utils/common.js';
 

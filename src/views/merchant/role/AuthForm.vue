@@ -15,7 +15,6 @@
 <script setup>
 import { authApi, merchantMenuApi, roleMenuApi } from '@/api/merchant/role';
 import useUserStore from '@/store/user';
-import { ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const defaultProps = {

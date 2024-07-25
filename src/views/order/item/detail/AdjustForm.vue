@@ -22,7 +22,6 @@
 
 <script setup>
 import { adjustApi } from '@/api/order/item';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 import { numberValidator } from '@/utils/common.js';
 

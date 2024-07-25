@@ -44,7 +44,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/system/config';
-import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from './EditForm.vue';
 import useUserStore from '@/store/user';

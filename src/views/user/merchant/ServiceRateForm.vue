@@ -16,7 +16,6 @@
 
 <script setup>
 import { adjustRateApi } from '@/api/user/merchant';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 import { numberValidator } from '@/utils/common.js';
 

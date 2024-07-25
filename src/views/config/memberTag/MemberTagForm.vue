@@ -64,7 +64,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/config/memberTag';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import dayjs from 'dayjs';
 import { numberValidator } from '@/utils/common.js';

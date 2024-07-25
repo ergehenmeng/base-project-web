@@ -63,7 +63,6 @@
 </template>
 <script setup>
 import { monthApi } from '@/api/product/line';
-import { reactive, ref } from 'vue';
 import { Setting } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

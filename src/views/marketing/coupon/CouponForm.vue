@@ -118,7 +118,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/marketing/coupon';
-import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg, warningMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';

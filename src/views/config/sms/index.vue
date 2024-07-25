@@ -36,7 +36,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/config/sms';
-import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import SmsForm from './SmsForm.vue';

@@ -25,7 +25,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/operation/notice';
-import { reactive, ref } from 'vue';
 import useDictStore from '@/store/dict.js';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';

@@ -56,7 +56,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/system/user';
-import { h, onMounted, reactive, ref } from 'vue';
 import { Delete, Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';

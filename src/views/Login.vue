@@ -50,7 +50,6 @@
 import useUserStore from '@/store/user';
 import md5 from 'md5';
 import { User } from '@element-plus/icons-vue';
-import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();

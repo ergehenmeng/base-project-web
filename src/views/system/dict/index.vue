@@ -59,7 +59,6 @@
 </template>
 <script setup>
 import { deleteApi, deleteItemApi, listApi } from '@/api/system/dict';
-import { onMounted, reactive, ref } from 'vue';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import DictForm from './DictForm.vue';

@@ -42,7 +42,6 @@
 <script setup>
 import { createApi, detailApi, updateApi } from '@/api/marketing/redeem';
 import { storeApi } from '@/api/product';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
 import StoreAllSelect from '@/components/StoreAllSelect.vue';

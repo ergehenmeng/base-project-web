@@ -100,7 +100,6 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/line';
-import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';

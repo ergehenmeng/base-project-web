@@ -88,7 +88,6 @@ import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 import dayjs from 'dayjs';
-import { h } from 'vue'
 
 const { copy, isSupported } = useClipboard();
 const loading = ref(false);

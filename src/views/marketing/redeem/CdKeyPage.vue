@@ -42,7 +42,6 @@
 </template>
 <script setup>
 import { grantExportApi, grantPageApi } from '@/api/marketing/redeem';
-import { onMounted, reactive, ref } from 'vue';
 import useUserStore from '@/store/user';
 import { useRouter, useRoute } from 'vue-router';
 import { Download } from '@element-plus/icons-vue';

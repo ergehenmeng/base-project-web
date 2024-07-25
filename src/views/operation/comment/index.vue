@@ -66,7 +66,6 @@
 </template>
 <script setup>
 import { listPageApi, shieldApi, topApi, unTopApi } from '@/api/operation/comment';
-import { h, onMounted, reactive, ref } from 'vue';
 import { Bottom, Hide, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

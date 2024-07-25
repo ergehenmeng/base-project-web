@@ -1,6 +1,5 @@
 <script setup>
 import { bindApi, bindDetailApi } from '@/api/poi/line';
-import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import AMapLoader from '@amap/amap-jsapi-loader';
 import { errorMsg, successMsg } from '@/utils/message.js';

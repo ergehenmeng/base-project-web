@@ -35,7 +35,6 @@
 </template>
 <script setup>
 import { createApi, updateApi } from '@/api/poi/area';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
 import MapContainer from '@/components/MapContainer.vue';

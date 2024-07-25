@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import { reactive, ref } from 'vue';
 import { updateApi } from '@/api/system/config';
 import { successMsg } from '@/utils/message.js';
 

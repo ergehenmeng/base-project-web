@@ -86,7 +86,6 @@
 </template>
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/room';
-import { onMounted, reactive, ref } from 'vue';
 import { Bottom, Calendar, Delete, Document, Download, Edit, Star, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

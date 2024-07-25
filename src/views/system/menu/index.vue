@@ -83,7 +83,6 @@
 </template>
 <script setup>
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
-import { onMounted, reactive, ref } from 'vue';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';

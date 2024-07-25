@@ -49,7 +49,6 @@
 
 <script setup>
 import { createApi, updateApi } from '@/api/config/news';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message';
 
 const loading = ref(false);

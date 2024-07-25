@@ -45,7 +45,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/config/push';
-import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import PushForm from '@/views/config/push/PushForm.vue';

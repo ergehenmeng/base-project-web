@@ -101,7 +101,6 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, sortApi, stateApi } from '@/api/operation/banner';
-import { onMounted, reactive, ref } from 'vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import BannerForm from './BannerForm.vue';

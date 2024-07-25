@@ -75,7 +75,6 @@
 
 <script setup>
 import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/limit';
-import { reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';

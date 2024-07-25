@@ -20,7 +20,6 @@
 
 <script setup>
 import { sendSmsApi, unbindApi } from '@/api/merchant/detail';
-import { reactive, ref } from 'vue';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);

@@ -37,7 +37,6 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/config/notice';
-import { onMounted, reactive, ref } from 'vue';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import NoticeForm from './NoticeForm.vue';

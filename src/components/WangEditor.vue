@@ -10,7 +10,6 @@
 
 <script setup>
 import '@wangeditor/editor/dist/css/style.css';
-import { shallowRef } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import useUserStore from '@/store/user';
 import { defaultImgType } from '@/utils/image';
