@@ -45,7 +45,7 @@
         <el-table-column prop="likeNum" label="点赞数量" width="100" />
         <el-table-column prop="reportNum" label="举报次数" width="100" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" fixed="right" align="center">
+        <el-table-column label="操作" fixed="right" align="left">
           <template #default="scope">
             <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="info" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论"></el-button>
             <el-button v-has-perm="'iBU0'" v-show="scope.row.state === false" type="warning" :icon="View" @click="handleUnShield(scope.row)" link title="显示评论"></el-button>
