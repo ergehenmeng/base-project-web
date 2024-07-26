@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" row-key="id" stripe v-loading="loading" max-height="670" show-overflow-tooltip @expand-change="handleExpend" :expand-row-keys="expendKeys">
+      <el-table :data="pageData" style="width: 100%" row-key="id" stripe v-loading="loading" max-height="710" show-overflow-tooltip @expand-change="handleExpend" :expand-row-keys="expendKeys">
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 0 55px">
@@ -92,7 +92,7 @@ const getPage = async () => {
 };
 
 const search = () => {
-  queryParams.page = 1;
+  expendKeys.value = [];
   getPage();
 };
 

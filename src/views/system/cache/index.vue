@@ -8,7 +8,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :row-class-name="tableRowClass" :data="pageData" ref="tableRef" @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :row-class-name="tableRowClass" :data="pageData"  @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="selection" width="50" />
         <el-table-column prop="cacheName" label="缓存名称" />
         <el-table-column prop="updateTime" label="最近一次更新时间" />
@@ -28,7 +28,6 @@ const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('E7K0');
 const selected = ref([]);
 const loading = ref(false);
-const tableRef = ref();
 const pageData = ref([]);
 
 const getPage = async () => {
@@ -37,6 +36,7 @@ const getPage = async () => {
     if (selectAuth) {
       const { data } = await listPageApi();
       pageData.value = data;
+      selected.value = [];
     }
   } finally {
     loading.value = false;
