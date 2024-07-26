@@ -78,7 +78,7 @@
 
 <script setup>
 import { selectApi, confirmApi } from '@/api/order/homestay';
-import { goBack } from '@/utils/common.js';
+import { goBack, renderMsg } from '@/utils/common.js'
 import { useRoute, useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js'
 import { useClipboard } from '@vueuse/core';
@@ -154,11 +154,8 @@ const formatConfirmState = (state) => {
 }
 
 const handleYesConfirm = () => {
-  confirmMsg(h('span', null, [
-    '你的民宿确定有 ',
-    h('span',  { style: 'color: #e6a23c; font-weight: bold'}, data.value.title),
-    ' 吗？'
-  ]), () => {
+  const msg  = renderMsg(["你的民宿确定有", () => data.value.title, "吗？"])
+  confirmMsg(msg, () => {
     confirmApi({ orderNo: route.params.orderNo, confirmState: 1 }).then((res) => {
       successMsg('确认成功');
       goBack(router);
@@ -167,11 +164,8 @@ const handleYesConfirm = () => {
 };
 
 const handleNoConfirm = () => {
-  ElMessageBox.prompt(h('span', null, [
-    '你的民宿确定没有 ',
-    h('span',  { style: 'color: #e6a23c; font-weight: bold'}, data.value.title),
-    ' 了吗？'
-    ]), '提示', {
+  const msg  = renderMsg(["你的民宿确定没有", () => data.value.title, "了吗？"])
+  ElMessageBox.prompt(msg, '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     inputPlaceholder: '备注信息',

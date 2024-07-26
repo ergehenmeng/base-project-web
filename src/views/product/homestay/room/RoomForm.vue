@@ -32,7 +32,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款说明" prop="refundDescribe">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" autosize maxlength="100" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="面积" prop="dimension">
         <el-input v-model="formData.dimension" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />

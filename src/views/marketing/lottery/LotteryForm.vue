@@ -61,16 +61,16 @@
                 <el-input v-model="formData.winNum" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
               </el-form-item>
               <el-form-item label="banner图" prop="bannerUrl">
-                <UploadImage v-model="formData.bannerUrl"></UploadImage>
+                <UploadImage v-model:img-url="formData.bannerUrl"></UploadImage>
               </el-form-item>
               <el-form-item label="背景图" prop="coverUrl">
-                <UploadImage v-model="formData.coverUrl"></UploadImage>
+                <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
               </el-form-item>
               <el-form-item label="抽奖标题" prop="subTitle">
                 <el-input v-model="formData.subTitle" show-word-limit maxlength="10" />
               </el-form-item>
               <el-form-item label="抽奖规则" prop="rule">
-                <el-input type="textarea" placeholder="最少10个字符" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" autosize maxlength="1000" show-word-limit />
+                <el-input type="textarea" placeholder="最少10个字符" :autosize="{ minRows: 6, maxRows: 8 }" v-model="formData.rule" maxlength="1000" show-word-limit />
               </el-form-item>
             </el-form>
             <el-form v-show="step === 1" :model="formData" ref="nextDataRef" :rules="nextRules" label-width="140" label-position="right" v-loading="loading" :disabled="disabled">

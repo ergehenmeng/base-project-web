@@ -7,7 +7,7 @@
       </el-form-item>
       <MerchantSelect v-model="formData.merchantId" prop="merchantId" :clearable="false" width="350"></MerchantSelect>
       <el-form-item label="店铺LOGO" prop="logoUrl">
-        <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
+        <UploadImage v-model:img-url="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
       <el-form-item label="旅行社电话" prop="phone">
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />

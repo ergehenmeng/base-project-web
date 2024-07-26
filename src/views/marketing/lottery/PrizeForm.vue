@@ -20,7 +20,7 @@
         <el-input v-model="formData.totalNum" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="奖品图片" prop="coverUrl">
-        <UploadImage v-model:model-value="formData.coverUrl"></UploadImage>
+        <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
       </el-form-item>
     </el-form>
     <template #footer>

@@ -13,7 +13,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="内容" prop="content">
-        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 7 }" v-model="formData.content" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 7 }" v-model="formData.content" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

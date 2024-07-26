@@ -45,13 +45,13 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款说明" prop="refundDescribe">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" autosize maxlength="100" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
-        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 8 }" v-model="formData.introduce" autosize maxlength="400" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 8 }" v-model="formData.introduce" maxlength="400" show-word-limit />
       </el-form-item>
       <h4>游玩信息</h4>
       <el-divider />

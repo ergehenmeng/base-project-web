@@ -27,7 +27,7 @@
         <StoreAllSelect v-model:store-ids="formData.storeIds" v-model:store-list="storeList" :multiple="true"></StoreAllSelect>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

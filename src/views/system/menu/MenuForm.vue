@@ -33,11 +33,11 @@
         <el-input v-model="formData.path" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="权限URL" prop="subPath">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.subPath" autosize maxlength="300" show-word-limit placeholder="多个逗号分割" />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.subPath" maxlength="300" show-word-limit placeholder="多个逗号分割" />
       </el-form-item>
 
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

@@ -38,7 +38,7 @@
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage v-model="value.pic" v-if="index === 0"></UploadImage>
+                    <UploadImage v-model:img-url="value.pic" v-if="index === 0"></UploadImage>
                   </div>
                   <span class="spec-value-patch">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
@@ -165,7 +165,7 @@
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotes">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.purchaseNotes" autosize maxlength="400" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.purchaseNotes" maxlength="400" show-word-limit />
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>

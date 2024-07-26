@@ -1,7 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :validate-on-rule-change="false">
       <el-form-item label="资讯标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -12,7 +12,7 @@
         <UploadImageList v-model:file-list="formData.imageList"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
-        <el-input v-model="formData.video" show-word-limit maxlength="200" />
+        <el-input type="textarea" v-model="formData.video"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="200" />
       </el-form-item>
       <el-form-item label="详细信息" prop="contentText">
         <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
@@ -101,12 +101,15 @@ onMounted(() => {
     const { includeDepict, includeImage, includeVideo } = res.data;
     if (includeDepict === true) {
       showField.value.includeDepict = true;
+      formRules.depict = [{ required: true, message: '资讯描述不能为空', trigger: 'blur' }];
     }
     if (includeImage === true) {
       showField.value.includeImage = true;
+      formRules.imageList = [{ required: true, message: '请上传图片', trigger: 'change' }];
     }
     if (includeVideo === true) {
       showField.value.includeVideo = true;
+      formRules.video = [{ required: true, message: '请输入视频地址', trigger: 'blur' }];
     }
     if (params.id) {
       loading.value = true;

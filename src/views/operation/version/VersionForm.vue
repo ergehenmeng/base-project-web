@@ -20,7 +20,7 @@
         <el-input v-model="formData.url" :disabled="formData.id !== null" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.remark" autosize maxlength="400" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.remark" maxlength="400" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

@@ -2,7 +2,7 @@
   <el-dialog title="发送短信" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="短信内容" prop="content">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.content" autosize maxlength="70" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.content" maxlength="70" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

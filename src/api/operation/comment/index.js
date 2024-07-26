@@ -21,9 +21,16 @@ export const shieldApi = (data) => {
   });
 };
 
+export const unShieldApi = (data) => {
+  return request.post({
+    url: '/manage/comment/unShield',
+    data
+  });
+};
+
 export const topApi = (data) => {
   return request.post({
-    url: '/manage/comment/update',
+    url: '/manage/comment/top',
     data
   });
 };

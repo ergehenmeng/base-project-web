@@ -45,9 +45,10 @@
         <el-table-column prop="likeNum" label="点赞数量" width="100" />
         <el-table-column prop="reportNum" label="举报次数" width="100" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" fixed="right">
+        <el-table-column label="操作" fixed="right" align="center">
           <template #default="scope">
-            <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="primary" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论"></el-button>
+            <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="info" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论"></el-button>
+            <el-button v-has-perm="'iBU0'" v-show="scope.row.state === false" type="warning" :icon="View" @click="handleUnShield(scope.row)" link title="显示评论"></el-button>
             <el-button v-has-perm="'hBU0'" v-show="scope.row.topState === 0" type="success" :icon="Top" @click="handleTop(scope.row)" link title="置顶评论"></el-button>
             <el-button v-has-perm="'XBU0'" v-show="scope.row.topState === 1" type="danger" :icon="Bottom" @click="handleUnTop(scope.row)" link title="取消置顶"></el-button>
           </template>
@@ -65,8 +66,8 @@
   </div>
 </template>
 <script setup>
-import { listPageApi, shieldApi, topApi, unTopApi } from '@/api/operation/comment';
-import { Bottom, Hide, Top } from '@element-plus/icons-vue';
+import { listPageApi, shieldApi, topApi, unTopApi, unShieldApi } from '@/api/operation/comment';
+import { Bottom, Hide, Top, View } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -115,6 +116,16 @@ const handleShield = (row) => {
     const data = { id: row.id };
     shieldApi(data).then(() => {
       successMsg('评论屏蔽成功');
+      getPage();
+    });
+  });
+};
+
+const handleUnShield = (row) => {
+  confirmMsg('确定要解除屏蔽该信息吗?', () => {
+    const data = { id: row.id };
+    unShieldApi(data).then(() => {
+      successMsg('屏蔽接触成功');
       getPage();
     });
   });

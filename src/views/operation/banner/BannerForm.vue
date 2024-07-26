@@ -19,7 +19,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="imgUrl">
-        <UploadImage v-model="formData.imgUrl"></UploadImage>
+        <UploadImage v-model:img-url="formData.imgUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="展示时间" prop="showTime">
         <div style="width: 400px">
@@ -44,7 +44,7 @@
         <el-input v-model="formData.jumpUrl" show-word-limit maxlength="100" :disabled="formData.click === false" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -83,7 +83,7 @@ const formData = ref({
   title: '',
   clientType: null,
   bannerType: null,
-  jumpUrl: null,
+  jumpUrl: '',
   click: false,
   imgUrl: null,
   showTime: [],
@@ -150,7 +150,7 @@ const handleSave = () => {
 
 const changeClick = (value) => {
   if (value === false) {
-    formData.value.jumpUrl = null;
+    formData.value.jumpUrl = '';
   }
 };
 

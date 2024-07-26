@@ -19,14 +19,14 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="单位名称" width="200" />
-        <el-table-column prop="signType" label="签名方式" width="100" />
+        <el-table-column prop="signType" label="签名方式" width="80" />
         <el-table-column prop="appKey" label="appKey" width="300" />
         <el-table-column prop="privateKey" label="签名秘钥" />
         <el-table-column prop="expireDate" label="过期时间" width="100" />
         <el-table-column prop="remark" label="备注" width="200" />
-        <el-table-column prop="createTime" label="创建时间" width="200" />
-        <el-table-column prop="updateTime" label="更新时间" width="200" />
-        <el-table-column label="操作" width="200">
+        <el-table-column prop="createTime" label="创建时间" width="170" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
+        <el-table-column label="操作" width="120">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"></CreateButton>

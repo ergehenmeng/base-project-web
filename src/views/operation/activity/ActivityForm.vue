@@ -1,28 +1,30 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20" />
-      </el-form-item>
-      <el-form-item label="活动日期" prop="activityDate">
-        <div style="width: 350px">
-          <el-date-picker type="date" value-format="YYYY-MM-DD" v-model="formData.nowDate" style="width: 350px" :disabled="formData.id !== null"></el-date-picker>
-        </div>
-      </el-form-item>
-      <el-form-item label="活动时间" prop="activityTime">
-        <el-input v-model="formData.activityTime" show-word-limit maxlength="20" placeholder="18:00~22:00" />
-      </el-form-item>
-      <el-form-item label="封面图" prop="coverUrl">
-        <UploadImage v-model="formData.coverUrl"></UploadImage>
-      </el-form-item>
-      <el-form-item label="活动地址" prop="address">
-        <el-input v-model="formData.address" show-word-limit maxlength="100" />
-      </el-form-item>
-      <el-form-item label="公告内容" prop="introduceText">
-        <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-      </el-form-item>
-    </el-form>
+    <el-scrollbar height="700px">
+      <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="formData.title" show-word-limit maxlength="20" />
+        </el-form-item>
+        <el-form-item label="活动日期" prop="activityDate">
+          <div style="width: 350px">
+            <el-date-picker type="date" value-format="YYYY-MM-DD" v-model="formData.nowDate" style="width: 350px" :disabled="formData.id !== null"></el-date-picker>
+          </div>
+        </el-form-item>
+        <el-form-item label="活动时间" prop="activityTime">
+          <el-input v-model="formData.activityTime" show-word-limit maxlength="20" placeholder="例如：18:00~22:00" />
+        </el-form-item>
+        <el-form-item label="封面图" prop="coverUrl">
+          <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
+        </el-form-item>
+        <el-form-item label="活动地址" prop="address">
+          <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
+        </el-form-item>
+        <el-form-item label="公告内容" prop="introduceText">
+          <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+        </el-form-item>
+      </el-form>
+    </el-scrollbar>
     <div>
       <div class="edit-button-footer">
         <el-button @click="$router.back()">取消</el-button>

@@ -5,7 +5,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="8" />
       </el-form-item>
       <el-form-item label="图标" prop="icon">
-        <UploadImage v-model="formData.icon"></UploadImage>
+        <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
@@ -14,7 +14,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

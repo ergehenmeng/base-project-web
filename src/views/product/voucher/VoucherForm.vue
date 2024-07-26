@@ -45,7 +45,7 @@
         <el-input v-model="formData.quota" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="2" />
       </el-form-item>
       <el-form-item label="购买说明" prop="depict">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.depict" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.depict" maxlength="200" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>

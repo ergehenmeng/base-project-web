@@ -12,7 +12,7 @@
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'ZdU0'">
-          <el-button type="primary" :icon="Plus" @click="handleConfig">配置</el-button>
+          <el-button type="primary" :icon="Plus" @click="handleConfig">批量</el-button>
         </el-form-item>
       </el-form>
     </div>

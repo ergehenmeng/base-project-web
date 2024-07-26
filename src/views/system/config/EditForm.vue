@@ -8,10 +8,10 @@
         <el-input v-model="formData.nid" disabled />
       </el-form-item>
       <el-form-item label="配置信息" prop="content">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.content" autosize maxlength="400" show-word-limit :disabled="formData.locked" />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.content" maxlength="400" show-word-limit :disabled="formData.locked" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

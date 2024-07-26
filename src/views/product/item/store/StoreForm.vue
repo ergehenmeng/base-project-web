@@ -7,7 +7,7 @@
       </el-form-item>
       <MerchantSelect v-model="formData.merchantId" @change="handleMerchantChange" prop="merchantId" width="350"></MerchantSelect>
       <el-form-item label="店铺LOGO" prop="logoUrl">
-        <UploadImage v-model="formData.logoUrl" :disabled="disabled"></UploadImage>
+        <UploadImage v-model:img-url="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
       <el-form-item label="营业时间" prop="openTime">
         <el-input v-model="formData.openTime" show-word-limit maxlength="20" />

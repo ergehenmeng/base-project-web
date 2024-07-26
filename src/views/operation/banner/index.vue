@@ -60,8 +60,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="clientType" label="客户端类型" width="100" />
-        <el-table-column prop="startTime" label="开始时间" width="180" />
-        <el-table-column prop="endTime" label="截止时间" width="180" />
+        <el-table-column prop="startTime" label="开始时间" width="170" />
+        <el-table-column prop="endTime" label="截止时间" width="170" />
         <el-table-column prop="click" label="是否点击" width="80">
           <template #default="scope">
             <el-switch v-model="scope.row.click" inline-prompt active-text="是" inactive-text="否" disabled />
@@ -76,7 +76,7 @@
         <el-table-column prop="remark" label="备注" width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="150">
+        <el-table-column label="操作" fixed="right" width="80">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'gxU0'" title="新增轮播图" @click="handleCreate"></CreateButton>

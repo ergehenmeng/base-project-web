@@ -23,7 +23,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="content" label="反馈内容" width="200" />
+        <el-table-column prop="content" label="反馈内容" min-width="150" />
         <el-table-column prop="imageUrl" label="图片" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -45,14 +45,14 @@
         <el-table-column prop="feedbackType" label="问题类型" :formatter="formatter" />
         <el-table-column prop="nickName" label="反馈人昵称" width="120" />
         <el-table-column prop="mobile" label="反馈人手机号" width="120" />
-        <el-table-column prop="remark" label="回复内容" />
-        <el-table-column prop="createTime" label="反馈时间" width="180" />
-        <el-table-column prop="updateTime" label="处理时间" width="180" />
+        <el-table-column prop="remark" label="回复内容" min-width="120"/>
+        <el-table-column prop="createTime" label="反馈时间" width="170" />
+        <el-table-column prop="updateTime" label="处理时间" width="170" />
         <el-table-column prop="version" label="软件版本" />
         <el-table-column prop="systemVersion" label="系统版本" />
         <el-table-column prop="deviceBrand" label="设备厂商" />
         <el-table-column prop="deviceModel" label="设备型号" />
-        <el-table-column label="操作" fixed="right">
+        <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'7b50'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"></el-button>
           </template>

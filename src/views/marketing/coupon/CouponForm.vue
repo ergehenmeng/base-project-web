@@ -100,7 +100,7 @@
         </div>
       </el-form-item>
       <el-form-item label="使用说明" prop="instruction">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.instruction" autosize maxlength="50" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.instruction" maxlength="50" show-word-limit />
       </el-form-item>
     </el-form>
     <div>

@@ -26,21 +26,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="channel" label="客户端" width="100" />
         <el-table-column prop="version" label="版本号" width="100" />
-        <el-table-column prop="state" label="状态" width="100">
-          <template #default="scope">
-            <el-switch
-              v-model="scope.row.state"
-              inline-prompt
-              :active-value="true"
-              :inactive-value="false"
-              active-text="已上架"
-              inactive-text="待上架"
-              @change="updateState(scope.row.id, scope.row.state)"
-              :disabled="!stateAuth"
-              style="--el-switch-off-color: #ff4949"
-            />
-          </template>
-        </el-table-column>
+        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
         <el-table-column prop="forceUpdate" label="是否强更" :formatter="formatter" width="100" />
         <el-table-column prop="url" label="下载地址" width="350" />
         <el-table-column prop="remark" label="更新信息" />
@@ -53,6 +39,8 @@
           </template>
           <template #default="scope">
             <el-button v-has-perm="'VkU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'UJU0'" v-if="!scope.row.state" type="success" :icon="Top" @click="handleState(scope.row.id, true, scope.row.version)" link title="上架"></el-button>
+            <el-button v-has-perm="'UJU0'" v-if="scope.row.state" type="warning" :icon="Bottom" @click="handleState(scope.row.id, false, scope.row.version)" link title="下架"></el-button>
             <el-button v-has-perm="'tkU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -71,13 +59,14 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, stateApi } from '@/api/operation/version';
-import { Delete, Edit } from '@element-plus/icons-vue';
+import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import VersionForm from './VersionForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -89,7 +78,6 @@ const total = ref(0);
 const formRef = ref();
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('zkU0');
-const stateAuth = userStore.hasAuth('UJU0');
 
 const queryParams = reactive({
   queryName: '',
@@ -131,17 +119,22 @@ const handleDelete = (row) => {
   });
 };
 
-const updateState = (id, state) => {
-  if (stateAuth) {
+const handleState = (id, state, version) => {
+  const type = state ? '上架' : '下架';
+  const msg = renderMsg([`确定要${type} `, () => `V${version}`, " 版本吗?"])
+  confirmMsg(msg, () => {
     stateApi({ id: id, state: state }).then(() => {
       getPage();
     });
-  }
+    successMsg(`版本${type}成功`);
+  });
 };
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'forceUpdate') {
     return cellValue === true ? '是' : '否';
+  } else if (column.property === 'state') {
+    return cellValue ? h('span', { style: { color: 'green' } }, '已上架') : '待上架';
   } else {
     return cellValue;
   }

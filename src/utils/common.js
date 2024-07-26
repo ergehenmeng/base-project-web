@@ -259,6 +259,18 @@ export const parseProductType = (value) => {
   }
 };
 
+export const renderMsg = (msgList) => {
+  const hMsg = [];
+  msgList.forEach((item) => {
+    if (typeof item  === 'function') {
+      hMsg.push(h('span',  { style: 'color: #e6a23c; font-weight: bold'}, " " + item() + " "));
+    } else {
+      hMsg.push(item);
+    }
+  });
+  return h('span', null, hMsg);
+}
+
 /**
  * 返回上一页,如果上一页是登录页则跳转到首页
  */

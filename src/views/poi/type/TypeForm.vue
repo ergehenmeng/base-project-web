@@ -8,7 +8,7 @@
         <PoiAreaSelect v-model="formData.areaCode"></PoiAreaSelect>
       </el-form-item>
       <el-form-item label="图标" prop="icon">
-        <UploadImage v-model="formData.icon"></UploadImage>
+        <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input v-model="formData.sort" placeholder="不填写默认1" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
