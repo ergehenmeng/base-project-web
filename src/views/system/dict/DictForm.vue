@@ -7,6 +7,12 @@
       <el-form-item label="字典编码" prop="nid">
         <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== undefined" />
       </el-form-item>
+      <el-form-item label="分类">
+        <el-select v-model="formData.dictType">
+          <el-option label="系统字典" :value="1" />
+          <el-option label="业务字典" :value="2" />
+        </el-select>
+      </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
       </el-form-item>
@@ -34,14 +40,14 @@ const emit = defineEmits(['reload']);
 const formRules = reactive({
   title: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
   nid: [{ required: true, message: '字典编码不能为空', trigger: 'blur' }],
-  locked: [{ required: true, message: '请选择状态', trigger: 'change', type: 'boolean' }]
+  dictType: [{ required: true, message: '请选择分类', trigger: 'change' }]
 });
 
 const formData = ref({
   id: null,
   title: '',
   nid: '',
-  locked: null,
+  dictType: null,
   remark: ''
 });
 
@@ -61,7 +67,7 @@ const resetForm = () => {
     id: null,
     title: '',
     nid: '',
-    locked: null,
+    dictType: null,
     remark: ''
   };
   formDataRef.value?.resetFields();

@@ -25,7 +25,8 @@ import { useRoute } from 'vue-router';
 import { Plus } from '@element-plus/icons-vue'
 
 const route = useRoute();
-const imgUrl = defineModel();
+const imgUrl = defineModel("imgUrl");
+const size = defineModel("size");
 const prop = defineProps({
   disabled: {
     type: Boolean,
@@ -52,6 +53,7 @@ const handleImageSuccess = (res) => {
   }
   const { data } = res;
   imgUrl.value = data.address + data.path;
+  size.value = data.size;
 };
 
 const beforeImageUpload = (rawFile) => {

@@ -8,7 +8,7 @@
         <el-form-item label="分类">
           <el-select v-model="queryParams.dictType" clearable>
             <el-option label="系统字典" value="1" />
-            <el-option label="系统字典" value="2" />
+            <el-option label="业务字典" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" row-key="id" stripe v-loading="loading" max-height="670" show-overflow-tooltip @expand-change="handleExpend" :expand-row-keys="expendKeys">
         <el-table-column type="expand">
           <template #default="props">
             <div style="padding: 0 55px">
@@ -27,7 +27,7 @@
                 <el-table-column label="隐藏值" prop="hiddenValue" title="保存数据库的值" />
                 <el-table-column label="操作">
                   <template #default="scope">
-                    <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleItemEdit(scope.row)" link title="编辑"></el-button>
+                    <el-button v-has-perm="'rmK0'" type="primary" :icon="Edit" @click="handleItemEdit(scope.row, props.row.nid)" link title="编辑"></el-button>
                     <el-button v-has-perm="'RmK0'" type="danger" :icon="Delete" @click="handleItemDelete(scope.row)" link title="删除"></el-button>
                   </template>
                 </el-table-column>
@@ -72,10 +72,11 @@ const loading = ref(false);
 const dictRef = ref();
 const itemRef = ref();
 const pageData = ref([]);
+const expendKeys = ref([]);
 
 const queryParams = reactive({
-  queryName: '',
-  locked: null
+  queryName: null,
+  dictType: null
 });
 
 const getPage = async () => {
@@ -129,9 +130,13 @@ const handleItemCreate = (row) => {
   itemRef.value.openDialog({ nid: row.nid });
 };
 
-const handleItemEdit = (row) => {
-  itemRef.value.openDialog(row);
+const handleItemEdit = (row, nid) => {
+  itemRef.value.openDialog({ nid, ...row });
 };
+
+const handleExpend = (_row, expandedRow) => {
+  expendKeys.value = expandedRow.map((item) => item.id);
+}
 
 const handleItemDelete = (row) => {
   confirmMsg('确定要删除该子项数据吗?', () => {

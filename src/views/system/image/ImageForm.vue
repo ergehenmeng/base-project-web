@@ -1,5 +1,8 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>{{ dialogTitle }} <QuestionTip content="注意：图片编辑时不可修改"></QuestionTip></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="图片名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
@@ -10,7 +13,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="上传图片" prop="path">
-        <UploadImage v-model="formData.path" :disabled="formData.id !== null && formData.path !== ''" tips="注意：编辑时无法修改图片"></UploadImage>
+        <UploadImage v-model:img-url="formData.path" v-model:size="formData.size" :disabled="formData.id !== null && formData.path !== ''"></UploadImage>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" autosize maxlength="200" show-word-limit />
@@ -51,7 +54,7 @@ const formData = ref({
   id: null,
   title: '',
   imageType: null,
-  size: 0,
+  size: "0",
   path: '',
   remark: ''
 });
