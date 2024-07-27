@@ -58,7 +58,7 @@ const queryParams = reactive({
   page: 1,
   pageSize: 10,
   winning: null,
-  lotteryId: null
+  lotteryId: ''
 });
 
 const getPage = async () => {
@@ -84,7 +84,7 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   return cellValue ? '已中奖' : '未中奖';
 };
 </script>

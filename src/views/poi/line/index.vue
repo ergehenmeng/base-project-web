@@ -153,7 +153,7 @@ const handleBind = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   return cellValue === 0 ? '未上架' : h('span', { style: 'color: green;' }, '上架');
 };
 

@@ -35,7 +35,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="标题" width="150" />
+        <el-table-column prop="title" label="标题" min-width="100" />
         <el-table-column prop="imgUrl" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -67,7 +67,7 @@
             <el-switch v-model="scope.row.click" inline-prompt active-text="是" inactive-text="否" disabled />
           </template>
         </el-table-column>
-        <el-table-column prop="jumpUrl" label="跳转地址" width="180" />
+        <el-table-column prop="jumpUrl" label="跳转地址" min-width="150" />
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
@@ -179,7 +179,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'bannerType') {
     return dictStore.parseDict('banner_type', cellValue);
   } else {

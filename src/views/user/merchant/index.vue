@@ -59,7 +59,7 @@
             <el-button v-has-perm="'TYp0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'BYp0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'7Yp0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"></el-button>
-            <el-button v-has-perm="'3Yp0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
+            <el-button v-has-perm="'3Yp0'" v-show="scope.row.state !== 1" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
             <el-button v-has-perm="'WYp0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
             <el-button v-has-perm="'vYp0'" @click="handleServiceRate(scope.row)" link title="调整费率"><Rate></Rate></el-button>
             <el-button v-has-perm="'oYp0'" @click="handleUnbind(scope.row)" link title="解绑授权手机号"><Unbind></Unbind></el-button>
@@ -122,12 +122,9 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
-    if (cellValue === 1) {
-      return h('span', { style: 'color: green;' }, '正常');
-    }
-    return cellValue === 0 ? h('span', { style: 'color: blue;' }, '锁定') : h('span', { style: 'color: red;' }, '销户');
+    return cellValue === 0 ? h('span', { style: 'color: blue;' }, '锁定') : h('span', { style: 'color: green;' }, '正常');
   } else if (column.property === 'type') {
     return parseMerchantType(cellValue);
   } else if (column.property === 'enterpriseType') {

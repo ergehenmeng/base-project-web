@@ -5,7 +5,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="字典编码" prop="nid">
-        <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== undefined" />
+        <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== null" @keyup="formData.nid=formData.nid.replace(/[^a-zA-Z]/g,'')"/>
       </el-form-item>
       <el-form-item label="分类">
         <el-select v-model="formData.dictType">

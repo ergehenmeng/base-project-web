@@ -115,7 +115,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'size') {
     return (cellValue / 1024).toFixed(1) + 'KB';
   } else if (column.property === 'imageType') {

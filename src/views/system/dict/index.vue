@@ -110,7 +110,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'dictType') {
     return cellValue === 1 ? '系统字典' : '业务字典';
   } else {

@@ -18,14 +18,14 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="beanName" label="类名" :formatter="formatter" width="200" />
-        <el-table-column prop="methodName" label="方法名" />
-        <el-table-column prop="args" label="方法入参" />
-        <el-table-column prop="state" label="执行状态" :formatter="formatter" />
-        <el-table-column prop="startTime" label="执行时间" />
-        <el-table-column prop="elapsedTime" label="任务耗时(ms)" />
-        <el-table-column prop="ip" label="机器IP" />
-        <el-table-column label="操作">
+        <el-table-column prop="beanName" label="类名" :formatter="formatter" min-width="200" />
+        <el-table-column prop="methodName" label="方法名" min-width="150"/>
+        <el-table-column prop="args" label="方法入参" min-width="150"/>
+        <el-table-column prop="state" label="执行状态" :formatter="formatter" width="120"/>
+        <el-table-column prop="startTime" label="执行时间" width="180"/>
+        <el-table-column prop="elapsedTime" label="任务耗时(ms)" width="150"/>
+        <el-table-column prop="ip" label="机器IP" width="150"/>
+        <el-table-column label="操作" width="100">
           <template #default="scope">
             <el-button v-has-perm="'eoa0'" v-show="!scope.row.state" :icon="Document" @click="handleDetail(scope.row.errorMsg)" link title="详情"></el-button>
           </template>
@@ -80,7 +80,7 @@ const handleDetail = (content) => {
   contentRef.value.openDialog(content);
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue ? '成功' : h('span', { style: 'color: red' }, '失败');
   } else {

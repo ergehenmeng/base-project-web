@@ -51,7 +51,7 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  couponId: null,
+  couponId: '',
   state: null
 });
 
@@ -70,7 +70,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   if (cellValue === 0) {
     return '未使用';
   }

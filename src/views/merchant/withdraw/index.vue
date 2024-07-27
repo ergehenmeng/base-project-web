@@ -110,7 +110,7 @@ const handleExcel = () => {
     });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     switch (cellValue) {
       case 0:

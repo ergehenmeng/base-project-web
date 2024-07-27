@@ -128,7 +128,7 @@ const getPreview = (row) => {
   return [];
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue ? '已解决' : '待解决';
   } else if (column.property === 'feedbackType') {

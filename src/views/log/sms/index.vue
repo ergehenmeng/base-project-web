@@ -35,10 +35,10 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="smsType" label="短信类型" :formatter="formatter" width="200" />
-        <el-table-column prop="mobile" label="手机号" />
+        <el-table-column prop="mobile" label="手机号" width="200"/>
         <el-table-column prop="content" label="短信内容" min-width="300" />
-        <el-table-column prop="state" label="发送状态" :formatter="formatter" />
-        <el-table-column prop="createTime" label="发送时间" />
+        <el-table-column prop="state" label="发送状态" :formatter="formatter" width="150"/>
+        <el-table-column prop="createTime" label="发送时间" width="200"/>
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
@@ -87,7 +87,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'smsType') {
     switch (cellValue) {
       case 'default':

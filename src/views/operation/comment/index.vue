@@ -30,7 +30,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="objectName" label="文章名称" width="300" />
+        <el-table-column prop="objectName" label="文章名称" min-width="200" />
         <el-table-column prop="nickName" label="留言昵称" width="120" />
         <el-table-column prop="avatar" label="头像" width="80">
           <template #default="scope">
@@ -39,14 +39,15 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="评论信息" width="400" />
+        <el-table-column prop="content" label="评论信息" min-width="300" />
         <el-table-column prop="state" label="状态" :formatter="formatter" width="80" />
         <el-table-column prop="topState" label="置顶状态" width="80" :formatter="formatter" />
         <el-table-column prop="likeNum" label="点赞数量" width="100" />
         <el-table-column prop="reportNum" label="举报次数" width="100" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column label="操作" fixed="right" align="left">
+        <el-table-column label="操作" fixed="right" align="center" width="120">
           <template #default="scope">
+            <el-button v-show="false" :icon="Hide" link title="占位"></el-button>
             <el-button v-has-perm="'dBU0'" v-show="scope.row.state === true" type="info" :icon="Hide" @click="handleShield(scope.row)" link title="屏蔽评论"></el-button>
             <el-button v-has-perm="'iBU0'" v-show="scope.row.state === false" type="warning" :icon="View" @click="handleUnShield(scope.row)" link title="显示评论"></el-button>
             <el-button v-has-perm="'hBU0'" v-show="scope.row.topState === 0" type="success" :icon="Top" @click="handleTop(scope.row)" link title="置顶评论"></el-button>

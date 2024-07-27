@@ -91,7 +91,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : '禁用';
   } else if (column.property === 'couponType') {

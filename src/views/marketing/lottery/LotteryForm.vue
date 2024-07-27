@@ -323,7 +323,7 @@ const loadStore = () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   if (cellValue === 0) {
     return '谢谢参与';
   }

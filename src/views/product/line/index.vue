@@ -63,13 +63,13 @@
         </el-table-column>
         <el-table-column prop="title" label="线路名称" min-width="200" />
         <el-table-column prop="travelAgencyName" label="所属旅行社" min-width="200" />
-        <el-table-column prop="startProvinceId" label="出发城市" width="120" :formatter="formatter" />
+        <el-table-column prop="startProvinceId" label="出发城市" min-width="120" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="duration" label="游玩天数" width="120" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="250">
+        <el-table-column label="操作" fixed="right" width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'tvl0'" title="新增线路" @click="handleCreate"></CreateButton>

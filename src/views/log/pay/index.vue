@@ -48,11 +48,11 @@
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="payChannel" label="支付方式" :formatter="formatter" width="100" />
             <el-table-column prop="notifyId" label="异步通知ID" width="220" />
-            <el-table-column prop="stepType" label="通知类型" :formatter="formatter" />
+            <el-table-column prop="stepType" label="通知类型" :formatter="formatter" width="150"/>
             <el-table-column prop="tradeNo" label="交易流水号" width="220" />
             <el-table-column prop="refundNo" label="退款流水号" width="220" />
             <el-table-column prop="params" label="通知原始参数" min-width="250" />
-            <el-table-column prop="createTime" label="请求时间" />
+            <el-table-column prop="createTime" label="请求时间" width="180"/>
           </el-table>
           <el-pagination
             v-model:current-page="queryParams.page"
@@ -112,7 +112,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'payChannel') {
     return cellValue === 'WECHAT' ? '微信' : '支付宝';
   } else if (column.property === 'stepType') {

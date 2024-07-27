@@ -106,7 +106,7 @@ const handleEdit = (row) => {
   formRef.value.openDialog(row);
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   return h('span', { title: '该值只是预估值, 请刷新标签获取最新值' }, cellValue);
 };
 

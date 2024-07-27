@@ -16,8 +16,8 @@
         <el-table-column prop="code" label="区域编号" min-width="100" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="latitude" label="经纬度" width="200" :formatter="formatter" />
-        <el-table-column prop="detailAddress" label="详细地址" width="250" />
-        <el-table-column prop="remark" label="备注" width="250" />
+        <el-table-column prop="detailAddress" label="详细地址" min-width="250" />
+        <el-table-column prop="remark" label="备注" max-width="250" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="250">
@@ -103,7 +103,7 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue ? h('span', { style: 'color: green' }, '已上架') : '未上架';
   } else if (column.property === 'latitude') {
-    return row.longitude + '~' + cellValue;
+    return row.longitude + '-' + cellValue;
   } else {
     return cellValue;
   }

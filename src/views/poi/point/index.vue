@@ -119,7 +119,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (row, _column, cellValue) => {
   return cellValue + '~' + row.latitude;
 };
 

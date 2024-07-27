@@ -59,7 +59,7 @@ const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
-  redeemCodeId: null,
+  redeemCodeId: '',
   state: null
 });
 
@@ -102,7 +102,7 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   if (cellValue === 0) {
     return '待使用';
   } else if (cellValue === 1) {

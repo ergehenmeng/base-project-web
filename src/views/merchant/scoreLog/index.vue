@@ -113,7 +113,7 @@ const handleExcel = () => {
     });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'chargeType') {
     switch (cellValue) {
       case 1:

@@ -150,7 +150,7 @@ const handleEdit = (row) => {
   formRef.value.openDialog(row);
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'grade') {
     return cellValue === 1 ? '导航菜单' : '按钮菜单';
   } else if (column.property === 'state') {

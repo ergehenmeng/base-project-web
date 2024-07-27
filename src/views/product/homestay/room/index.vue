@@ -56,7 +56,7 @@
         <el-table-column prop="resident" label="居住人数" min-width="80" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="250">
+        <el-table-column label="操作" fixed="right" width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'NbO0'" title="新增房型" @click="handleCreate"></CreateButton>
@@ -142,7 +142,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'roomType') {
     switch (cellValue) {
       case 1:

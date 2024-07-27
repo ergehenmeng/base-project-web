@@ -102,7 +102,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   return cellValue ? '是' : '否';
 };
 

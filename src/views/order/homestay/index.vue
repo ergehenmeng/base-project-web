@@ -109,7 +109,7 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return orderStateFormat(cellValue);
   } else if (column.property === 'payType') {

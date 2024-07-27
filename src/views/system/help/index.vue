@@ -96,7 +96,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'helpType') {
     return dictStore.parseDict('help_type', cellValue);
   } else if (column.property === 'state') {

@@ -86,7 +86,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue
       ? h('span', { style: 'color: green;' }, '已启用')

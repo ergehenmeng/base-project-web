@@ -115,7 +115,7 @@ const copyClipboard = (value) => {
   successMsg('复制成功');
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   if (cellValue === 0) {
     return '待支付';
   } else if (cellValue === 1) {

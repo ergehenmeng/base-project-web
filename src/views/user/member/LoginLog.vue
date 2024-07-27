@@ -56,7 +56,7 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  memberId: null,
+  memberId: '',
   channel: null,
   activityDate: []
 });

@@ -221,7 +221,7 @@ const handleDelivery = () => {
   sippingRef.value.openDialog({orderIds: selected.value, orderNo: data.value.orderNo});
 }
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'skuTitle') {
     return cellValue || '无';
   } else if (column.property === 'deliveryState') {

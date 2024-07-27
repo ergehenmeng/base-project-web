@@ -5,7 +5,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="区域编号" prop="code">
-        <el-input v-model="formData.code" show-word-limit maxlength="20" />
+        <el-input v-model="formData.code" show-word-limit maxlength="20" @keyup="formData.code=formData.code.replace(/[^a-zA-Z]/g,'')"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
         <el-input v-model="formData.longitude" show-word-limit readonly style="width: 120px !important" />
@@ -67,7 +67,7 @@ const setLocation = (lng, lat) => {
 const formData = ref({
   id: null,
   title: null,
-  code: null,
+  code: '',
   areaList: [],
   detailAddress: null,
   longitude: null,

@@ -113,7 +113,7 @@ const copyClipboard = (value) => {
   successMsg('复制成功');
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (row, _column, cellValue) => {
   return cellValue + '~' + row.endTime;
 };
 

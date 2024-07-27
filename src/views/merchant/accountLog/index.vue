@@ -36,14 +36,14 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="merchantName" label="商户名称" />
-        <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter" />
-        <el-table-column prop="amount" label="变动金额" />
-        <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
-        <el-table-column prop="surplusAmount" label="变动后余额" />
-        <el-table-column prop="tradeNo" label="交易单号" width="250" />
-        <el-table-column prop="createTime" label="操作时间" />
-        <el-table-column prop="remark" label="备注信息" />
+        <el-table-column prop="merchantName" label="商户名称" min-width="200"/>
+        <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter" min-width="150"/>
+        <el-table-column prop="amount" label="变动金额" min-width="130"/>
+        <el-table-column prop="direction" label="收支类型" :formatter="formatter" min-width="100"/>
+        <el-table-column prop="surplusAmount" label="变动后余额" min-width="130"/>
+        <el-table-column prop="tradeNo" label="交易单号" min-width="250" />
+        <el-table-column prop="createTime" label="操作时间" min-width="170"/>
+        <el-table-column prop="remark" label="备注信息" min-width="150"/>
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
@@ -113,7 +113,7 @@ const handleExcel = () => {
     });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'accountType') {
     switch (cellValue) {
       case 1:

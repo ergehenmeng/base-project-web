@@ -106,10 +106,6 @@ const copyClipboard = (value) => {
   successMsg('复制成功');
 };
 
-const formatter = (row, column, cellValue) => {
-  return cellValue + '~' + row.endTime;
-};
-
 onBeforeMount(() => {
   loading.value = true;
   selectApi({ orderNo: route.params.orderNo })

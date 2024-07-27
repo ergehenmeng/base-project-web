@@ -88,7 +88,7 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, _column, cellValue) => {
   switch (cellValue) {
     case 1:
       return '淫秽色情';

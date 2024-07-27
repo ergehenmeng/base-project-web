@@ -104,7 +104,7 @@ const queryParams = reactive({
   state: null,
   sex: null,
   channel: null,
-  tagId: null,
+  tagId: '',
   activityDate: []
 });
 
@@ -127,7 +127,7 @@ const getPage = async () => {
   }
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '冻结');
   } else if (column.property === 'sex') {

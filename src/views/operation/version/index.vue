@@ -130,7 +130,7 @@ const handleState = (id, state, version) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'forceUpdate') {
     return cellValue === true ? '是' : '否';
   } else if (column.property === 'state') {

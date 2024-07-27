@@ -135,7 +135,7 @@ const handleCancel = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'noticeType') {
     return dictStore.parseDict('notice_type', cellValue);
   } else if (column.property === 'state') {
