@@ -7,9 +7,9 @@ export const listPageApi = (params) => {
   });
 };
 
-export const auditApi = (data) => {
+export const shieldApi = (data) => {
   return request.post({
-    url: '/manage/order/evaluation/audit',
+    url: '/manage/order/evaluation/shield',
     data
   });
 };

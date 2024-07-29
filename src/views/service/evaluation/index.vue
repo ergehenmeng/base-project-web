@@ -92,6 +92,7 @@
       />
     </div>
   </div>
+  <EvaluationForm ref="formRef" @reload="getPage"></EvaluationForm>
 </template>
 <script setup>
 import { listPageApi } from '@/api/service/evaluation';
@@ -99,11 +100,13 @@ import { Coordinate } from '@element-plus/icons-vue'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { parseProductType } from '@/utils/common.js'
+import EvaluationForm from '@/views/service/evaluation/EvaluationForm.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
+const formRef = ref();
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('L520');
 const queryParams = reactive({
@@ -160,7 +163,7 @@ const formatter = (row, column, cellValue) => {
 }
 
 const handleAudit = (row) => {
-  console.log("待不全")
+  formRef.value.openDialog({id: row.id})
 }
 
 </script>
