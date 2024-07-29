@@ -3,9 +3,12 @@
     <div class="main-center">
       <div class="main-navigation">
         <el-breadcrumb>
-          <el-breadcrumb-item v-for="(breadcrumb, index) in breadcrumbList" :key="index" :to="{ path: breadcrumb?.path }">
-            {{ breadcrumb.meta?.title }}
-          </el-breadcrumb-item>
+          <template v-for="(breadcrumb, index) in breadcrumbList" :key="index">
+            <el-breadcrumb-item v-if="index !== 1 && index !== breadcrumbList.length - 1" :to="breadcrumb?.path">
+              {{ breadcrumb.meta?.title }}
+            </el-breadcrumb-item>
+            <el-breadcrumb-item v-else>{{ breadcrumb.meta?.title }}</el-breadcrumb-item>
+          </template>
         </el-breadcrumb>
       </div>
       <div class="main-content">
@@ -32,6 +35,7 @@ const font = reactive({
   color: 'rgba(0, 0, 0, .05)',
   fontSize: 14
 })
+
 
 </script>
 <style lang="scss" scoped>
