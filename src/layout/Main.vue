@@ -4,7 +4,7 @@
       <div class="main-navigation">
         <el-breadcrumb>
           <template v-for="(breadcrumb, index) in breadcrumbList" :key="index">
-            <el-breadcrumb-item v-if="index !== 1 && index !== breadcrumbList.length - 1" :to="breadcrumb?.path">
+            <el-breadcrumb-item v-if="index !== 0 && index !== 1 && index !== breadcrumbList.length - 1" :to="breadcrumb?.path">
               {{ breadcrumb.meta?.title }}
             </el-breadcrumb-item>
             <el-breadcrumb-item v-else>{{ breadcrumb.meta?.title }}</el-breadcrumb-item>
