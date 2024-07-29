@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" style="width: 300px" />
+          <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable class="w110">
@@ -44,12 +44,12 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="商品名称" width="250" />
+        <el-table-column prop="title" label="商品名称" min-width="250" />
         <el-table-column prop="minPrice" label="价格" width="250" :formatter="formatter"/>
-        <el-table-column prop="hotSell" label="是否热销" width="150" :formatter="(row, column, cellValue) => cellValue ? '是' : '否'"/>
-        <el-table-column prop="num" label="商品数量" width="150" />
-        <el-table-column prop="state" label="状态" min-width="100" :formatter="formatter"/>
-        <el-table-column prop="saleNum" label="销售数量" width="180" />
+        <el-table-column prop="hotSell" label="是否热销" width="120" :formatter="(row, column, cellValue) => cellValue ? '是' : '否'"/>
+        <el-table-column prop="quantity" label="商品数量" width="120" />
+        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="saleNum" label="销售数量" width="120" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"

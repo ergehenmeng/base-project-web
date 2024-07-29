@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" style="width: 300px" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" />
         </el-form-item>
         <el-form-item label="核销日期">
           <div class="w220">

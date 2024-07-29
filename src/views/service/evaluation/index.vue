@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" style="width: 300px" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号" clearable @keyup.enter="search" maxlength="30"/>
         </el-form-item>
         <el-form-item label="评价状态">
           <el-select v-model="queryParams.state" clearable>
@@ -50,17 +50,29 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="productTitle" label="商品名称" width="200" />
-        <el-table-column prop="productType" label="商品类型" width="180" />
+        <el-table-column prop="productTitle" label="商品名称" min-width="200" :formatter="formatter"/>
+        <el-table-column prop="productType" label="商品类型" width="100" :formatter="(row, column, cellValue) => parseProductType(cellValue)"/>
         <el-table-column prop="orderNo" label="订单编号" width="180" />
         <el-table-column prop="score" label="综合评分" width="100" />
         <el-table-column prop="storeScore" label="店铺评分" width="100" />
         <el-table-column prop="comment" label="评论" width="150" />
-        <el-table-column prop="commentPic" label="评论图片" width="100" />
-        <el-table-column prop="state" label="审核状态" width="100" />
+        <el-table-column prop="commentPic" label="评论图片" width="100" >
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <el-image
+                fit="cover"
+                :src="scope.row.commentPic?.split(',')[0]"
+                :preview-src-list="scope.row.commentPic?.split(',')"
+                style="width: 50px; height: 50px"
+                preview-teleported
+                hide-on-click-modal
+              />
+           </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="state" label="审核状态" width="100" :formatter="formatter"/>
         <el-table-column prop="nickName" label="用户昵称" width="120" />
-        <el-table-column prop="anonymity" label="是否匿名" width="120" />
-        <el-table-column prop="anonymity" label="是否匿名" width="120" />
+        <el-table-column prop="anonymity" label="是否匿名" width="120" :formatter="formatter"/>
         <el-table-column prop="auditRemark" label="审核拒绝原因" min-width="150" />
         <el-table-column prop="auditName" label="审核人" min-width="150" />
         <el-table-column prop="createTime" label="评价时间" width="180" />
@@ -86,6 +98,7 @@ import { listPageApi } from '@/api/service/evaluation';
 import { Coordinate } from '@element-plus/icons-vue'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
+import { parseProductType } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -125,6 +138,26 @@ onMounted(() => {
   getPage();
 });
 
+const formatter = (row, column, cellValue) => {
+  if (column.property === 'state') {
+    switch (cellValue) {
+      case 0:
+        return '待审核';
+      case 1:
+        return '审核通过';
+      case 2:
+        return '审核拒绝';
+    }
+  } else if (column.property === 'anonymity') {
+    return cellValue ? '是' : '否';
+  } else {
+    const subTitle = row.subTitle;
+    if (subTitle) {
+      return cellValue + `（${subTitle}）`
+    }
+    return cellValue;
+  }
+}
 
 const handleAudit = (row) => {
   console.log("待不全")
