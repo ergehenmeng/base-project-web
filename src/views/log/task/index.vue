@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="类名、方法名、执行机器IP" clearable @keyup.enter="search" style="width: 300px" maxlength="50" />
+          <el-input v-model="queryParams.queryName" placeholder="类名、方法名、执行机器IP" clearable @keyup.enter="search" style="width: 300px" maxlength="30" />
         </el-form-item>
         <el-form-item label="执行状态">
           <el-select v-model="queryParams.state" clearable class="w100">

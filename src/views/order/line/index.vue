@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号、线路名称、旅行社名称、手机号" clearable @keyup.enter="search" style="width: 300px" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、线路名称、旅行社名称、手机号" clearable @keyup.enter="search" style="width: 300px" maxlength="30" />
         </el-form-item>
         <el-form-item label="订单状态">
           <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>

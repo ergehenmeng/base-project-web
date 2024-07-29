@@ -4,7 +4,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="问" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="问" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="问题分类">
           <el-select v-model="queryParams.helpType" clearable>

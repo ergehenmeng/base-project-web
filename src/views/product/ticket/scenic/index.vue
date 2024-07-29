@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="景区名称" clearable @keyup.enter="search" />
+          <el-input v-model="queryParams.queryName" placeholder="景区名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
