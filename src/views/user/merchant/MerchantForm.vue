@@ -8,7 +8,14 @@
       <el-form-item label="联系人电话" prop="mobile">
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
-      <el-form-item label="商家类型" prop="type">
+      <el-form-item label="账户名" prop="account">
+        <el-input v-model="formData.account" maxlength="20" @keyup="formData.account=formData.account.replace(/\W/g,'')">
+          <template #suffix>
+            <QuestionTip content="该账号是商户用于登录管理后台的账户，默认密码请查看系统参数"></QuestionTip>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item label="商家类型" prop="typeList">
         <el-checkbox-group v-model="formData.typeList">
           <el-checkbox :value="1" label="景区"></el-checkbox>
           <el-checkbox :value="2" label="商户"></el-checkbox>
@@ -65,6 +72,7 @@ import { successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import { goBack } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -75,9 +83,13 @@ const disabled = ref(false);
 const formRules = reactive({
   merchantName: [{ required: true, message: '商户名称不能为空', trigger: 'blur' }],
   mobile: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' }],
+  account: [{ required: true, message: '账户名不能为空', trigger: 'blur' },
+    { min: 6, max: 20, message: '账户名长度6~20位', trigger: 'blur' }
+  ],
   typeList: [{ required: true, message: '请选择商家类型', trigger: 'change', type: 'array' }],
   creditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
   licenseUrlList: [{ required: true, message: '请上传营业执照图片', trigger: 'change', type: 'array' }],
+  enterpriseType: [{ required: true, message: '请选择企业类型', trigger: 'change' }],
   legalName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
   legalIdCard: [{ required: true, message: '法人身份证不能为空', trigger: 'blur' }],
   cardUrlList: [{ required: true, message: '请上传法人身份证图片', trigger: 'change', type: 'array' }],
@@ -92,6 +104,7 @@ const formData = ref({
   id: null,
   merchantName: null,
   mobile: null,
+  account: null,
   typeList: [],
   enterpriseType: 1,
   creditCode: null,

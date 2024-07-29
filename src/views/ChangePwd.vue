@@ -5,7 +5,7 @@
         <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="密码" prop="newPwd">
-        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="16" />
+        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="确认密码" prop="confirmPwd">
         <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" />
@@ -35,9 +35,9 @@ const formRules = reactive({
   ],
   newPwd: [
     { required: true, message: '新密码不能为空', trigger: 'blur' },
-    { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
+    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6, 20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },
@@ -54,9 +54,9 @@ const formRules = reactive({
   ],
   confirmPwd: [
     { required: true, message: '确认密码不能为空', trigger: 'blur' },
-    { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
+    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6, 20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },
