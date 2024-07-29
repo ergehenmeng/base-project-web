@@ -22,6 +22,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="handleSave">充值</el-button>
+        <el-button @click="goBack($router)">返回</el-button>
       </el-form-item>
     </el-form>
   </div>

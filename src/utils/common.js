@@ -271,6 +271,38 @@ export const renderMsg = (msgList) => {
   return h('span', null, hMsg);
 }
 
+export const parseDataType = (value) => {
+  switch (value) {
+    case 1:
+      return '本人数据权限';
+    case 2:
+      return '本部门数据权限';
+    case 3:
+      return '本部门及子部门数据权限';
+    case 4:
+      return '所有数据权限';
+    case 5:
+      return '自定义数据权限';
+    default:
+      return '';
+  }
+}
+
+export const parseUserType = (value) => {
+  switch (value) {
+    case 0:
+      return '系统管理员';
+    case 1:
+      return '系统用户';
+    case 2:
+      return '商户管理员';
+    case 3:
+      return '商户用户';
+    default:
+      return '';
+  }
+}
+
 /**
  * 返回上一页,如果上一页是登录页则跳转到首页
  */

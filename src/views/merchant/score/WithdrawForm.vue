@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="编辑" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="提现" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
       <el-form-item label="可用积分">
         <span style="font-size: 20px">{{ formData.useAmount }}</span>

@@ -28,7 +28,7 @@
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image
-                fit="contain"
+                fit="cover"
                 :src="getPreview(scope.row)[0]"
                 :preview-src-list="getPreview(scope.row)"
                 style="width: 50px; height: 50px"

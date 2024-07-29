@@ -61,6 +61,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import { parseDataType, parseUserType } from '@/utils/common.js'
 
 const loading = ref(false);
 const total = ref(0);
@@ -93,22 +94,9 @@ const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '锁定');
   } else if (column.property === 'userType') {
-    if (cellValue === 1) {
-      return '系统用户';
-    }
-    return cellValue === 2 ? '商户管理员' : '商户用户';
+    return parseUserType(cellValue);
   } else if (column.property === 'dataType') {
-    if (cellValue === 1) {
-      return '本人数据权限';
-    } else if (cellValue === 2) {
-      return '本部门数据权限';
-    } else if (cellValue === 3) {
-      return '本部门及子部门数据权限';
-    } else if (cellValue === 4) {
-      return '所有数据权限';
-    } else {
-      return '自定义数据权限';
-    }
+    return parseDataType(cellValue);
   } else {
     return cellValue;
   }

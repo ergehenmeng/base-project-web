@@ -24,7 +24,7 @@
       </el-form-item>
       <el-form-item label="营业执照图片：">
         <el-image
-          fit="contain"
+          fit="cover"
           :src="detail.businessLicenseUrl?.split(',')[0]"
           :preview-src-list="detail.businessLicenseUrl?.split(',')"
           style="width: 50px; height: 50px"
@@ -39,7 +39,7 @@
         {{ detail.legalIdCard }}
       </el-form-item>
       <el-form-item label="法人身份证图片：">
-        <el-image fit="contain" :src="detail.legalUrl?.split(',')[0]" :preview-src-list="detail.legalUrl?.split(',')" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+        <el-image fit="cover" :src="detail.legalUrl?.split(',')[0]" :preview-src-list="detail.legalUrl?.split(',')" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
       </el-form-item>
       <el-form-item label="联系人电话：">
         {{ detail.mobile }}

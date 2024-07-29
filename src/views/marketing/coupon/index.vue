@@ -153,7 +153,7 @@ const handleClose = (row) => {
   });
 };
 
-const handleLink = (row) => {
+const handleLink = (_row) => {
   console.log("待生成二维码链接")
 };
 

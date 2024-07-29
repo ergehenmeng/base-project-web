@@ -18,16 +18,16 @@
     </div>
     <div class="content-main">
       <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="标签名称" />
-        <el-table-column prop="icon" label="图标">
+        <el-table-column prop="title" label="标签名称" width="150"/>
+        <el-table-column prop="icon" label="图标" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="state" label="状态" :formatter="formatter"> </el-table-column>
-        <el-table-column prop="sort" label="排序" width="80">
+        <el-table-column prop="state" label="状态" :formatter="formatter" width="120"/>
+        <el-table-column prop="sort" label="排序" width="120" >
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>

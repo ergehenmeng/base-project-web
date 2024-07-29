@@ -31,7 +31,7 @@
             <template #default="scope">
               <div style="display: flex; align-items: center">
                 <el-image
-                  fit="contain"
+                  fit="cover"
                   :src="scope.row.skuPic?.split(',')[0]"
                   :preview-src-list="scope.row.skuPic?.split(',')"
                   style="width: 50px; height: 50px"

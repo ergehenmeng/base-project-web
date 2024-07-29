@@ -83,7 +83,7 @@
                   <el-table-column label="奖品图片" width="90" align="center">
                     <template #default="scope">
                       <div style="display: flex; align-items: center; justify-content: center">
-                        <el-image fit="contain" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
+                        <el-image fit="cover" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
                       </div>
                     </template>
                   </el-table-column>
@@ -114,7 +114,7 @@
                   <el-table-column label="奖品图片" width="100" align="center">
                     <template #default="scope">
                       <div style="display: flex; align-items: center; justify-content: center">
-                        <el-image fit="contain" v-show="scope.row.coverUrl !== undefined" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
+                        <el-image fit="cover" v-show="scope.row.coverUrl !== undefined" :src="scope.row?.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
                       </div>
                     </template>
                   </el-table-column>

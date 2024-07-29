@@ -18,7 +18,7 @@
         <el-table-column prop="icon" label="图标">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>

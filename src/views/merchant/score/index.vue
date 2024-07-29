@@ -9,7 +9,7 @@
       </el-col>
       <el-col :span="8">
         <el-statistic title="支付冻结积分" :value="payFreeze"> </el-statistic>
-        <el-button v-has-perm="'ZVu0'" type="primary" style="margin-top: 10px" @click="handleWithdraw" size="small"> 冻结记录 </el-button>
+        <el-button v-has-perm="'ZVu0'" type="primary" style="margin-top: 10px" @click="handleFreeze" size="small"> 冻结记录 </el-button>
       </el-col>
       <el-col :span="8">
         <el-statistic title="提现冻结积分" :value="withdrawFreeze"> </el-statistic>
@@ -33,7 +33,7 @@ const payFreeze = ref(0);
 const withdrawFreeze = ref(0);
 const withdrawFormRef = ref();
 
-const amountValue = useTransition(amount, {
+const amountValue = useTransition(amount.value, {
   duration: 500
 });
 
@@ -41,10 +41,10 @@ onMounted(async () => {
   if (!selectAuth) {
     return;
   }
-  const { data } = await accountApi();
-  amount.value = data.amount;
-  payFreeze.value = data.payFreeze;
-  withdrawFreeze.value = data.withdrawFreeze;
+  const { data: { amount, payFreeze, withdrawFreeze } } = await accountApi();
+  amount.value = amount;
+  payFreeze.value = payFreeze;
+  withdrawFreeze.value = withdrawFreeze;
 });
 
 const handleWithdraw = () => {
@@ -53,6 +53,10 @@ const handleWithdraw = () => {
 
 const handleRecharge = () => {
   router.push('/merchant/score/recharge');
+};
+
+const handleFreeze = () => {
+  router.push('/merchant/scoreLog');
 };
 
 const reload = () => {

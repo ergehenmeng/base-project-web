@@ -39,7 +39,7 @@
         <el-table-column prop="imgUrl" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="contain" :src="scope.row.imgUrl" :preview-src-list="[scope.row.imgUrl]" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.imgUrl" :preview-src-list="[scope.row.imgUrl]" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
