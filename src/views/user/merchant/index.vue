@@ -42,6 +42,7 @@
         <el-table-column prop="type" label="商家类型" width="250" :formatter="formatter" />
         <el-table-column prop="state" label="商家状态" width="100" :formatter="formatter" />
         <el-table-column prop="mobile" label="联系人电话" width="150" />
+        <el-table-column prop="account" label="账户名" width="100" />
         <el-table-column prop="authMobile" label="微信授权手机号" width="150" />
         <el-table-column prop="enterpriseType" label="企业类型" width="100" :formatter="formatter" />
         <el-table-column prop="legalName" label="法人姓名" width="120" />
@@ -63,7 +64,7 @@
             <el-button v-has-perm="'WYp0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
             <el-button v-has-perm="'vYp0'" @click="handleServiceRate(scope.row)" link title="调整费率"><Rate></Rate></el-button>
             <el-button v-has-perm="'oYp0'" @click="handleUnbind(scope.row)" link title="解绑授权手机号"><Unbind></Unbind></el-button>
-            <el-button v-has-perm="'Iup0'" @click="handleCloseAccount(scope.row)" link title="注销商户"><Logout size="13"></Logout></el-button>
+            <el-button v-has-perm="'Iup0'" @click="handleCloseAccount(scope.row)" link title="注销商户"><Logout :size="13"></Logout></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -18,7 +18,7 @@
       <el-form-item label="商家类型" prop="typeList">
         <el-checkbox-group v-model="formData.typeList">
           <el-checkbox :value="1" label="景区"></el-checkbox>
-          <el-checkbox :value="2" label="商户"></el-checkbox>
+          <el-checkbox :value="2" label="民宿"></el-checkbox>
           <el-checkbox :value="4" label="餐饮"></el-checkbox>
           <el-checkbox :value="8" label="零售"></el-checkbox>
           <el-checkbox :value="16" label="线路"></el-checkbox>
@@ -82,7 +82,8 @@ const disabled = ref(false);
 
 const formRules = reactive({
   merchantName: [{ required: true, message: '商户名称不能为空', trigger: 'blur' }],
-  mobile: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' }],
+  mobile: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' },
+    { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }],
   account: [{ required: true, message: '账户名不能为空', trigger: 'blur' },
     { min: 6, max: 20, message: '账户名长度6~20位', trigger: 'blur' }
   ],
