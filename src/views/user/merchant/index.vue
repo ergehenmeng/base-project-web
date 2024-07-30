@@ -42,7 +42,7 @@
         <el-table-column prop="type" label="商家类型" width="250" :formatter="formatter" />
         <el-table-column prop="state" label="商家状态" width="100" :formatter="formatter" />
         <el-table-column prop="mobile" label="联系人电话" width="150" />
-        <el-table-column prop="authMobile" label="授权手机号" width="130" />
+        <el-table-column prop="authMobile" label="微信授权手机号" width="150" />
         <el-table-column prop="enterpriseType" label="企业类型" width="100" :formatter="formatter" />
         <el-table-column prop="legalName" label="法人姓名" width="120" />
         <el-table-column prop="legalIdCard" label="法人身份证" width="180" />

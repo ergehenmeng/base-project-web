@@ -65,6 +65,7 @@ const handleSave = () => {
       loading.value = true;
       unlockScreenApi({pwd: md5(formData.value.pwd)})
         .then(() => {
+          userStore.setLock(false);
           successMsg('解锁成功');
           showDialog.value = false;
         })
