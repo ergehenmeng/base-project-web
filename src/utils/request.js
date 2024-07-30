@@ -10,9 +10,9 @@ const sourceMap = new Map();
  * 特殊错误回调函数注册
  */
 const errorCallback = {
-  8848: (data, _response) => {
+  8848: ({ msg }, _response) => {
     cancelRequest();
-    errorMsg(data.msg);
+    errorMsg(msg);
     const userStore = useUserStore();
     const historyStore = useHistoryStore();
     userStore.logout(historyStore.getNowPage());
@@ -100,7 +100,7 @@ const post = ({ url, data, ...config }) => {
   });
 };
 
-const upload = ({ url, data, ...config }) => {
+const upload = ({ url, data, ..._config }) => {
   return service({
     url: url,
     method: 'post',
