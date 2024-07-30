@@ -1,5 +1,8 @@
 <template>
   <el-dialog title="二维码" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>二维码<QuestionTip v-if="props.tips" :content="props.tips"></QuestionTip></span>
+    </template>
     <div style="text-align: center">
       <el-image fit="cover" :src="imageData.url" style="width: 70%"></el-image>
       <div>{{ imageData.remark }}</div>
@@ -15,21 +18,31 @@
 
 <script setup>
 import QRCode from 'qrcode';
-import dayjs from 'dayjs'
+import {downloadImage} from "@/utils/common.js";
+import QuestionTip from "@/components/QuestionTip.vue";
 
 const showDialog = ref(false);
+
+const props = defineProps({
+  tips: {
+    type: String,
+    default: null
+  },
+  fileName: {
+    type: String,
+    default: null
+  }
+ })
 
 const imageData = ref({
   url: null,
   remark: null,
-  text: null,
-  fileName: null
+  text: null
 });
 
-const openDialog = ({ text, remark, fileName }) => {
+const openDialog = ({ text, remark }) => {
   showDialog.value = true;
   imageData.value.text = text;
-  imageData.value.fileName = fileName;
   generateQRCode(text).then((url) => {
     imageData.value.url = url;
     imageData.value.remark = remark;
@@ -38,18 +51,7 @@ const openDialog = ({ text, remark, fileName }) => {
 
 const handleDownload = () => {
   generateQRCode(imageData.value.text).then((data) => {
-    const url = window.URL.createObjectURL(new Blob([data], { type: '.png' }));
-    const link = document.createElement('a');
-    link.href = url;
-    const time = dayjs().format('YYYY-MM-DD HH_mm_ss');
-    link.style.display = 'none';
-    if (imageData.value.fileName) {
-      link.download = imageData.value.fileName + time + '.png';
-    } else {
-      link.download = time + '.png';
-    }
-    link.click();
-    URL.revokeObjectURL(link.href);
+    downloadImage(data.split(',')[1], props.fileName);
   });
 };
 

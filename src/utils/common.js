@@ -342,3 +342,29 @@ export const downloadExcel = (response, fileName) => {
   link.click();
   URL.revokeObjectURL(link.href);
 };
+
+/**
+ * 下载图片
+ * @param base64 base64图片 不含data:image/png;base64,
+ * @param fileName 文件名
+ */
+export const downloadImage = (base64, fileName) => {
+  const bytes = atob(base64);
+  const byteArray = new Array(bytes.length);
+  for (let i = 0; i < bytes.length; i++) {
+    byteArray[i] = bytes.charCodeAt(i);
+  }
+  const byteBuffer = new Uint8Array(byteArray);
+  const url = window.URL.createObjectURL(new Blob([byteBuffer], { type: 'image/png' }));
+  const link = document.createElement('a');
+  link.href = url;
+  const time = dayjs().format('YYYY-MM-DD HH_mm_ss');
+  link.style.display = 'none';
+  if (fileName) {
+    link.download = fileName + time + '.png';
+  } else {
+    link.download = time + '.png';
+  }
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
