@@ -35,6 +35,20 @@ export const lockApi = (data) => {
   });
 };
 
+export const lockScreenApi = (data) => {
+  return request.post({
+    url: '/manage/user/lockScreen',
+    data
+  });
+};
+
+export const unlockScreenApi = (data) => {
+  return request.post({
+    url: '/manage/user/unlockScreen',
+    data
+  });
+};
+
 export const unlockApi = (data) => {
   return request.post({
     url: '/manage/user/unlock',

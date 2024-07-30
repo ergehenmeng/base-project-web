@@ -10,12 +10,15 @@ const sourceMap = new Map();
  * 特殊错误回调函数注册
  */
 const errorCallback = {
-  8848: (data, response) => {
+  8848: (data, _response) => {
     cancelRequest();
     errorMsg(data.msg);
     const userStore = useUserStore();
     const historyStore = useHistoryStore();
     userStore.logout(historyStore.getNowPage());
+  },
+  1024: () => {
+    // 锁屏中
   }
 };
 

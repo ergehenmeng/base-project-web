@@ -19,7 +19,9 @@ const useUserStore = defineStore(
       // 按钮权限
       permList: [],
       // 是否为初始密码
-      init: false
+      init: false,
+      // 是否锁屏
+      isLock: false
     });
     // 用户是否登陆
     const isLogin = ref(false);
@@ -67,7 +69,10 @@ const useUserStore = defineStore(
       user.value.init = init;
     };
 
-    return { user, isLogin, login, hasAuth, logout, setInit };
+    const setLock = (isLock) => {
+      user.value.isLock = isLock;
+    }
+    return { user, isLogin, login, hasAuth, logout, setInit, setLock };
   },
   // 开启持久化
   { persist: true }
