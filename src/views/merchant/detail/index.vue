@@ -59,6 +59,7 @@
     </el-form>
   </div>
   <UnbindForm ref="formRef" @reload="handleReload"></UnbindForm>
+  <QRCodeForm ref="qrCodeRef"></QRCodeForm>
 </template>
 <script setup>
 import { detailApi, generateApi } from '@/api/merchant/detail';
@@ -66,11 +67,13 @@ import { Connection, Unlock } from '@element-plus/icons-vue';
 import UnbindForm from './UnbindForm.vue';
 import { useRouter } from 'vue-router';
 import useUserStore from '@/store/user.js';
+import QRCodeForm from '@/views/common/QRCodeForm.vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('nwu0');
 const router = useRouter();
 const formRef = ref();
+const qrCodeRef = ref();
 
 const detail = ref({
   merchantName: null,
@@ -96,8 +99,8 @@ onMounted(async () => {
 });
 
 const handleBind = () => {
-  generateApi().then((res) => {
-    console.log('生成二维码', res.data);
+  generateApi().then(({data: { authCode, expireTime}}) => {
+    qrCodeRef.value.openDialog({ text: "https://www.baidu.com?authCode=" + authCode, remark: '授权过期时间：' + expireTime});
   });
 };
 
