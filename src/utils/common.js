@@ -340,7 +340,7 @@ export const downloadExcel = (response, fileName) => {
     link.download = time + '.xlsx';
   }
   link.click();
-  URL.revokeObjectURL(link.href);
+  URL.revokeObjectURL(url);
 };
 
 /**
@@ -366,5 +366,5 @@ export const downloadImage = (base64, fileName) => {
     link.download = time + '.png';
   }
   link.click();
-  URL.revokeObjectURL(link.href);
+  URL.revokeObjectURL(url);
 }
