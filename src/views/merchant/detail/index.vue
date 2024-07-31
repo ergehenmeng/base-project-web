@@ -1,7 +1,7 @@
 <template>
   <div class="edit-content">
     <el-divider />
-    <el-form label-width="150" label-position="left">
+    <el-form label-width="150" label-position="left" v-loading="loading">
       <el-form-item label="商户名称：">
         {{ detail.merchantName }}
       </el-form-item>
@@ -74,6 +74,7 @@ const selectAuth = userStore.hasAuth('nwu0');
 const router = useRouter();
 const formRef = ref();
 const qrCodeRef = ref();
+const loading = ref(false);
 
 const detail = ref({
   merchantName: null,
@@ -99,8 +100,11 @@ onMounted(async () => {
 });
 
 const handleBind = () => {
+  loading.value = true
   generateApi().then(({data: { authCode, expireTime}}) => {
     qrCodeRef.value.openDialog({ base64: authCode, remark: '授权过期时间：' + expireTime});
+  }).finally(() => {
+    loading.value = false;
   });
 };
 
