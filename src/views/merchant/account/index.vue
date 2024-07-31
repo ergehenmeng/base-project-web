@@ -3,14 +3,14 @@
     <el-divider />
     <el-row>
       <el-col :span="8">
-        <el-statistic title="可提现金额" :value="amountValue" precision="2"> </el-statistic>
+        <el-statistic title="可提现金额" :value="amountValue" :precision="2"> </el-statistic>
         <el-button v-has-perm="'izu0'" type="primary" style="margin-top: 10px" @click="handleWithdraw" size="small"> 提现 </el-button>
       </el-col>
       <el-col :span="8">
-        <el-statistic title="支付冻结金额" :value="payFreeze" precision="2"> </el-statistic>
+        <el-statistic title="支付冻结金额" :value="payFreeze" :precision="2"> </el-statistic>
       </el-col>
       <el-col :span="8">
-        <el-statistic title="提现冻结金额" :value="withdrawFreeze" precision="2"> </el-statistic>
+        <el-statistic title="提现冻结金额" :value="withdrawFreeze" :precision="2"> </el-statistic>
       </el-col>
     </el-row>
   </div>

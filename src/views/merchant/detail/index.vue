@@ -100,7 +100,7 @@ onMounted(async () => {
 
 const handleBind = () => {
   generateApi().then(({data: { authCode, expireTime}}) => {
-    qrCodeRef.value.openDialog({ text: "https://www.baidu.com?authCode=" + authCode, remark: '授权过期时间：' + expireTime});
+    qrCodeRef.value.openDialog({ base64: authCode, remark: '授权过期时间：' + expireTime});
   });
 };
 

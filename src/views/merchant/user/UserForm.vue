@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :validate-on-rule-change="false">
       <el-form-item label="用户昵称" prop="nickName">
         <el-input v-model="formData.nickName" show-word-limit maxlength="20" />
       </el-form-item>
@@ -8,7 +8,11 @@
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="16" />
+        <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="20" >
+          <template #suffix>
+            <QuestionTip content="注意：编辑时，该字段填写后会覆盖旧密码"></QuestionTip>
+          </template>
+        </el-input>
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable>
@@ -29,9 +33,10 @@
 </template>
 
 <script setup>
-import { createApi, updateApi } from '@/api/merchant/user';
+import { createApi, roleIdsApi, updateApi } from '@/api/merchant/user';
 import { roleListApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -48,9 +53,9 @@ const formRules = reactive({
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
-    { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
+    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,16}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     }
@@ -73,6 +78,18 @@ const openDialog = (row) => {
   if (row.id) {
     dialogTitle.value = '编辑用户';
     formData.value = { ...row };
+    roleIdsApi({id: row.id}).then((res) => {
+      formData.value.roleIds = res.data;
+    });
+    formRules.password = [
+      { required: false, message: '', trigger: 'blur' },
+      { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+      {
+        pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
+        message: '密码必须包含英文字符、数字、@#&_',
+        trigger: 'blur'
+      }
+    ]
   } else {
     dialogTitle.value = '新增用户';
   }

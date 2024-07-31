@@ -49,9 +49,10 @@ export const deleteApi = (data) => {
   });
 };
 
-export const exportApi = (params) => {
-  return request.download({
-    url: '/manage/merchant/user/export',
+
+export const roleIdsApi = (params) => {
+  return request.get({
+    url: '/manage/merchant/user/roleList',
     params
   });
 };

@@ -4,7 +4,7 @@
       <span>二维码<QuestionTip v-if="props.tips" :content="props.tips"></QuestionTip></span>
     </template>
     <div style="text-align: center">
-      <el-image fit="cover" :src="imageData.url" style="width: 70%"></el-image>
+      <el-image fit="cover" :src="imageData.data" style="width: 70%"></el-image>
       <div>{{ imageData.remark }}</div>
     </div>
     <template #footer>
@@ -36,27 +36,35 @@ const props = defineProps({
  })
 
 const imageData = ref({
-  url: null,
+  data: null,
   remark: null,
-  text: null
 });
 
-const openDialog = ({ text, remark }) => {
+/**
+ * 打开弹窗并显示二维码
+ * @param text 二维码文字(二选一)
+ * @param base64 二维码base64图片(二选一)
+ * @param remark 备注
+ */
+const openDialog = ({ text, base64, remark }) => {
   showDialog.value = true;
-  imageData.value.text = text;
-  generateQRCode(text).then((url) => {
-    imageData.value.url = url;
-    imageData.value.remark = remark;
-  });
+  if (text) {
+    generateQRCode(text).then((data) => {
+      imageData.value.data = data;
+      imageData.value.remark = remark;
+    });
+  } else {
+    imageData.value.data = base64;
+  }
 };
 
 const handleDownload = () => {
   exportLoading.value = true;
-  generateQRCode(imageData.value.text).then((data) => {
-    downloadImage(data.split(',')[1], props.fileName);
-  }).finally(() => {
+  try {
+    downloadImage(imageData.value.data?.split(',')[1], props.fileName);
+  } finally {
     exportLoading.value = false;
-  });
+  }
 };
 
 const generateQRCode = (text) => {
