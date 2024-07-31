@@ -30,8 +30,8 @@
         <el-table-column prop="title" label="旅行社名称" min-width="200" />
         <el-table-column prop="detailAddress" label="详细地址" min-width="250" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
-        <el-table-column prop="phone" label="旅行社电话" width="120" />
-        <el-table-column prop="score" label="评分" width="80" />
+        <el-table-column prop="phone" label="旅行社电话" width="150" />
+        <el-table-column prop="score" label="店铺评分" width="80" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">

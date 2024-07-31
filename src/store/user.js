@@ -16,6 +16,8 @@ const useUserStore = defineStore(
       userType: null,
       // 昵称
       nickName: '',
+      // 菜单权限
+      menuList: [],
       // 按钮权限
       permList: [],
       // 是否为初始密码

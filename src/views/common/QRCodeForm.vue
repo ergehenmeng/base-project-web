@@ -10,7 +10,7 @@
     <template #footer>
       <span>
         <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleDownload">下载图片</el-button>
+        <el-button type="primary" @click="handleDownload" :loading="exportLoading">下载图片</el-button>
       </span>
     </template>
   </el-dialog>
@@ -22,6 +22,7 @@ import {downloadImage} from "@/utils/common.js";
 import QuestionTip from "@/components/QuestionTip.vue";
 
 const showDialog = ref(false);
+const exportLoading = ref(false);
 
 const props = defineProps({
   tips: {
@@ -50,8 +51,11 @@ const openDialog = ({ text, remark }) => {
 };
 
 const handleDownload = () => {
+  exportLoading.value = true;
   generateQRCode(imageData.value.text).then((data) => {
     downloadImage(data.split(',')[1], props.fileName);
+  }).finally(() => {
+    exportLoading.value = false;
   });
 };
 

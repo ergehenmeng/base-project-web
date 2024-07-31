@@ -97,7 +97,7 @@ const handleLogin = async () => {
         }).then(() => {
           const fullPath = route.fullPath;
           if (fullPath.startsWith('/login?redirect=')) {
-            router.replace(fullPath.replace('/login?redirect=', ''));
+            router.replace(getPath(fullPath.replace('/login?redirect=', '')));
           } else {
             router.replace('/');
           }
@@ -109,6 +109,24 @@ const handleLogin = async () => {
     }
   });
 };
+
+/**
+ * 因为浏览器原因或权限变更的原因, 可能会出现redirect的路径不在用户权限列表中, 则跳转到首页
+ * @param path
+ * @returns {string}
+ */
+const getPath = (path) => {
+  const menuList = userStore.user?.menuList
+  for (let menu of menuList) {
+    menu.children.forEach(subMenu => {
+      if (subMenu.path === path) {
+        return path;
+      }
+    });
+  }
+  return "/"
+}
+
 </script>
 
 <style lang="scss" scoped>

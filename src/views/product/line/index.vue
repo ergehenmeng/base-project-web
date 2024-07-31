@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="线路名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="旅行社">
-          <TravelSelect v-model="queryParams.travelAgencyId" class="w250"></TravelSelect>
+          <TravelSelect v-model="queryParams.travelAgencyId" class="w220"></TravelSelect>
         </el-form-item>
         <el-form-item label="游玩天数">
           <el-select v-model="queryParams.duration" clearable class="w120">

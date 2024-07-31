@@ -109,6 +109,10 @@ body {
   .el-select {
     width: 150px;
   }
+
+  .el-select.w220 {
+    width: 220px !important;
+  }
 }
 
 .el-input.w250 {
@@ -166,6 +170,7 @@ body {
 el-select.w250 {
   width: 250px !important;
 }
+
 
 .w220 {
   width: 220px !important;
