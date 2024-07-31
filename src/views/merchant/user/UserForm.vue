@@ -8,7 +8,7 @@
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="20" >
+        <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="20">
           <template #suffix>
             <QuestionTip content="注意：编辑时，该字段填写后会覆盖旧密码"></QuestionTip>
           </template>
@@ -37,6 +37,7 @@ import { createApi, roleIdsApi, updateApi } from '@/api/merchant/user';
 import { roleListApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
+import md5 from 'md5'
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -112,7 +113,7 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi(formData.value)
+        updateApi({ ...formData.value, password: formData.value.password ? md5(formData.value.password) : null })
           .then(() => {
             successMsg('修改用户成功');
             showDialog.value = false;
@@ -122,7 +123,7 @@ const handleSave = () => {
             loading.value = false;
           });
       } else {
-        createApi(formData.value)
+        createApi({ ...formData.value, password: md5(formData.value.password) })
           .then(() => {
             successMsg('新增用户成功');
             showDialog.value = false;

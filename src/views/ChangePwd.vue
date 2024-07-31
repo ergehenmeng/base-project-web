@@ -2,13 +2,13 @@
   <el-dialog title="修改密码" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="旧密码" prop="oldPwd">
-        <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" />
+        <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" show-password/>
       </el-form-item>
       <el-form-item label="密码" prop="newPwd">
-        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" />
+        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" show-password/>
       </el-form-item>
       <el-form-item label="确认密码" prop="confirmPwd">
-        <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" />
+        <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" show-password/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -23,6 +23,7 @@
 <script setup>
 import { changePwdApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
+import md5 from 'md5'
 
 const loading = ref(false);
 const formDataRef = ref();
@@ -37,13 +38,13 @@ const formRules = reactive({
     { required: true, message: '新密码不能为空', trigger: 'blur' },
     { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6, 20}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },
     {
       validator: (rule, value, callback) => {
-        if (value !== formData.value.confirmPwd) {
+        if (formData.value.confirmPwd && value !== formData.value.confirmPwd) {
           callback(new Error('两次输入密码不一致'));
         } else {
           callback();
@@ -56,7 +57,7 @@ const formRules = reactive({
     { required: true, message: '确认密码不能为空', trigger: 'blur' },
     { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6, 20}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },
@@ -97,7 +98,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      changePwdApi(formData.value)
+      changePwdApi({oldPwd: md5(formData.value.oldPwd), newPwd: md5(formData.value.newPwd)})
         .then(() => {
           successMsg('修改密码成功');
           showDialog.value = false;

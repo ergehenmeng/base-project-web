@@ -15,6 +15,7 @@ import { travelListApi } from '@/api/product/travel';
 import { restaurantListApi } from '@/api/product/restaurant';
 
 const storeList = ref([]);
+const storeMap = new Map();
 
 const props = defineProps({
   disabled: {
@@ -34,44 +35,89 @@ const storeId = defineModel();
 
 const loadingStore = (productType) => {
   switch (productType) {
-    case 'ticket':
+    case 'ticket': {
+      let list = storeMap.get('ticket');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       scenicListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('ticket', res.data);
       });
       break;
-    case 'homestay':
+    }
+    case 'homestay': {
+      let list = storeMap.get('homestay');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       homestayListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('homestay', res.data);
       });
       break;
-    case 'venue':
+    }
+    case 'venue': {
+      let list = storeMap.get('venue');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       venueListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('venue', res.data);
       });
       break;
-    case 'line':
+    }
+    case 'line': {
+      let list = storeMap.get('line');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       travelListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('line', res.data);
       });
       break;
-    case 'voucher':
+    }
+    case 'voucher': {
+      let list = storeMap.get('voucher');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       restaurantListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('voucher', res.data);
       });
       break;
-    case 'item':
+    }
+    case 'item': {
+      let list = storeMap.get('item');
+      if (list) {
+        storeList.value = list;
+        return;
+      }
       storeListApi().then((res) => {
         storeList.value = res.data;
+        storeMap.set('item', res.data);
       });
       break;
+    }
     default:
       break;
   }
-}
+};
 
-watch(() => props.productType, (val) => {
-  loadingStore(val);
-})
+watch(
+  () => props.productType,
+  (val) => {
+    loadingStore(val);
+  }
+);
 
 onMounted(() => {
   loadingStore(props.productType);

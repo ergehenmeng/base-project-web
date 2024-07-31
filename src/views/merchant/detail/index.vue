@@ -59,7 +59,7 @@
     </el-form>
   </div>
   <UnbindForm ref="formRef" @reload="handleReload"></UnbindForm>
-  <QRCodeForm ref="qrCodeRef" tips="请使用微信小程序扫码绑定手机号" file-name="商户授权手机号二维码"></QRCodeForm>
+  <QRCodeForm ref="qrCodeRef" tips="请使用微信扫码绑定手机号" file-name="商户授权手机号二维码"></QRCodeForm>
 </template>
 <script setup>
 import { detailApi, generateApi } from '@/api/merchant/detail';
