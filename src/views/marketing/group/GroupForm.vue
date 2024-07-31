@@ -23,6 +23,7 @@
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? '强制下架' : '已上架' }}</span>
           </el-option>
         </el-select>
+        <QuestionTip content="注意：拼团活动只支持零售类商品" ></QuestionTip>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
         <el-table :data="allSkuList" border style="width: 600px" @selection-change="handleSelectionChange">
@@ -73,6 +74,7 @@ import { createApi, itemListApi, selectApi, updateApi } from '@/api/marketing/gr
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();

@@ -14,6 +14,8 @@ const useUserStore = defineStore(
       token: '',
       // 用户类型 0:系统管理员 1:系统用户 2:商户管理员 3:商户用户
       userType: null,
+      // 商户类型 1 2 4 8 16 32
+      merchantType: 0,
       // 昵称
       nickName: '',
       // 菜单权限

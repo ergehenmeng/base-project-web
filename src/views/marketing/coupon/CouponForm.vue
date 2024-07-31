@@ -47,13 +47,14 @@
         <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="产品类型" prop="productType">
+        <!-- 默认只显示该商户拥有的产品类型,如果是系统用户默认都显示 -->
         <el-radio-group v-model="formData.productType" :disabled="editDisabled" @change="handleProductChange">
-          <el-radio label="门票" value="ticket"></el-radio>
-          <el-radio label="民宿" value="homestay"></el-radio>
-          <el-radio label="餐饮券" value="voucher"></el-radio>
-          <el-radio label="零售" value="item"></el-radio>
-          <el-radio label="线路" value="line"></el-radio>
-          <el-radio label="场馆" value="venue"></el-radio>
+          <el-radio label="门票" value="ticket" v-if="merchantType === 0 || (merchantType&1) === 1"></el-radio>
+          <el-radio label="民宿" value="homestay" v-if="merchantType === 0 || (merchantType&2) === 2"></el-radio>
+          <el-radio label="餐饮券" value="voucher" v-if="merchantType === 0 || (merchantType&4) === 4"></el-radio>
+          <el-radio label="零售" value="item" v-if="merchantType === 0 || (merchantType&8) === 8"></el-radio>
+          <el-radio label="线路" value="line" v-if="merchantType === 0 || (merchantType&16) === 16"></el-radio>
+          <el-radio label="场馆" value="venue" v-if="merchantType === 0 || (merchantType&32) === 32"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="使用范围" prop="useScope">
@@ -124,6 +125,7 @@ import { goBack, numberValidator } from '@/utils/common.js';
 import StoreTypeSelect from '@/components/StoreTypeSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import ProductDialog from '@/components/ProductDialog.vue';
+import useUserStore from '@/store/user.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -134,6 +136,9 @@ const editDisabled = ref(false);
 const thresholdProp = ref('useThreshold');
 const thresholdDisabled = ref(false);
 const formRef = ref();
+const userStore = useUserStore();
+
+const merchantType = userStore.user?.merchantType;
 
 const formRules = reactive({
   title: [{ required: true, message: '优惠券名称不能为空', trigger: 'blur' }],
@@ -164,7 +169,7 @@ const formData = ref({
   discountValue: null,
   threshold: 2,
   useThreshold: null,
-  productType: 'ticket',
+  productType: null,
   timeList: [],
   useTimeList: [],
   instruction: null,
