@@ -16,6 +16,9 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item v-has-perm="'KEO0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -61,13 +64,14 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/travel';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/travel';
 import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { downloadExcel } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -113,6 +117,22 @@ const handleDelete = (row) => {
       getPage();
     });
   });
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '旅行社列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const formatter = (_row, column, cellValue) => {

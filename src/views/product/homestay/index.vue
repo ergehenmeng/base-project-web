@@ -132,8 +132,6 @@ const handleDelete = (row) => {
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'level') {
     switch (cellValue) {
-      case 1:
-        return '一星';
       case 2:
         return '二星';
       case 3:
@@ -143,7 +141,7 @@ const formatter = (_row, column, cellValue) => {
       case 5:
         return '五星';
       default:
-        return cellValue;
+        return '无';
     }
   } else if (column.property === 'state') {
     if (cellValue === 0) {

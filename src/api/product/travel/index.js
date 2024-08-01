@@ -61,3 +61,10 @@ export const travelListApi = () => {
     url: '/manage/travel/list'
   });
 };
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/travel/export',
+    params
+  });
+};

@@ -61,3 +61,11 @@ export const platformUnShelvesApi = (data) => {
     data
   });
 };
+
+export const exportApi = (params) => {
+  return request.download({
+    url: '/manage/scenic/export',
+    params
+  });
+};
+

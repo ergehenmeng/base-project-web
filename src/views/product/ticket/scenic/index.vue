@@ -16,27 +16,16 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item v-has-perm="'CLl0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="scenicName" label="景区名称" min-width="200" />
-        <el-table-column prop="coverUrl" label="图片" width="100">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-image
-                fit="cover"
-                :src="scope.row.coverUrl.split(',')[0]"
-                :preview-src-list="scope.row.coverUrl.split(',')"
-                style="width: 50px; height: 50px"
-                preview-teleported
-                hide-on-click-modal
-              />
-            </div>
-          </template>
-        </el-table-column>
+        <el-table-column prop="scenicName" label="景区名称" min-width="150" />
         <el-table-column prop="level" label="景区等级" width="150" :formatter="formatter" />
-        <el-table-column prop="openTime" label="营业时间" width="120" />
+        <el-table-column prop="openTime" label="营业时间" width="150" />
         <el-table-column prop="phone" label="景区电话" width="140" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="score" label="评分" width="80" />
@@ -70,13 +59,14 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/scenic';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/scenic';
 import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { downloadExcel } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -163,6 +153,22 @@ const formatter = (row, column, cellValue) => {
   } else {
     return cellValue;
   }
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '景区列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const handleShelves = (row) => {
