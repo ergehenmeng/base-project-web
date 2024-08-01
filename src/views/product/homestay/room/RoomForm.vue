@@ -26,13 +26,13 @@
       </el-form-item>
       <el-form-item label="退款方式" prop="refundType">
         <el-radio-group v-model="formData.refundType">
-          <el-radio :value="0">不支持退款</el-radio>
           <el-radio :value="1">直接退款</el-radio>
           <el-radio :value="2">审核后退款</el-radio>
+          <el-radio :value="0">不支持退款</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款说明" prop="refundDescribe">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.refundDescribe" maxlength="100" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.refundDescribe" maxlength="100" show-word-limit />
       </el-form-item>
       <el-form-item label="面积" prop="dimension">
         <el-input v-model="formData.dimension" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
@@ -89,6 +89,8 @@ const formRules = reactive({
   title: [{ required: true, message: '房型名称不能为空', trigger: 'blur' }],
   homestayId: [{ required: true, message: '请选择所属民宿', trigger: 'change' }],
   roomType: [{ required: true, message: '请选择房型', trigger: 'change' }],
+  confirmType: [{ required: true, message: '请选择订单确认方式', trigger: 'change' }],
+  refundType: [{ required: true, message: '请选择退款方式', trigger: 'change' }],
   dimension: [{ required: true, message: '面积不能为空', trigger: 'blur' }],
   resident: [{ required: true, message: '居住人数不能为空', trigger: 'blur' }],
   infrastructureList: [{ required: true, message: '请选择屋内设施', trigger: 'change', type: 'array' }],
