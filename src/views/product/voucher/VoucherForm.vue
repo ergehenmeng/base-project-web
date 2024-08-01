@@ -160,7 +160,7 @@ onMounted(() => {
   if (params.id !== undefined) {
     loading.value = true;
     // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith('/product/restaurant/detail');
+    disabled.value = route.fullPath.startsWith('/product/voucher/detail');
     selectApi(params)
       .then((res) => {
         formData.value = { ...res.data };
