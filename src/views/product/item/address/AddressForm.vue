@@ -5,7 +5,7 @@
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="收货人手机号" prop="mobile">
-        <el-input v-model="formData.mobile" show-word-limit maxlength="12" />
+        <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>

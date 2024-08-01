@@ -23,7 +23,7 @@
           ~
           <el-input class="w80" v-model="queryParams.maxPrice" @keyup="queryParams.maxPrice = numberValidator(queryParams.maxPrice)" maxlength="6"></el-input>
         </el-form-item>
-        <el-form-item label="所属商品">
+        <el-form-item label="所属店铺">
           <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
         </el-form-item>
         <el-form-item label="标签">
@@ -59,7 +59,11 @@
         <el-table-column prop="quota" label="限购数量" width="100" />
         <el-table-column prop="deliveryType" label="交付方式" width="100" :formatter="formatter" />
         <el-table-column prop="minPrice" label="价格" width="130" :formatter="formatter" />
-        <el-table-column prop="saleNum" label="销量" width="80" />
+        <el-table-column prop="saleNum"  width="80" >
+          <template #header>
+            <span>销量<QuestionTip content="注意：该销量不含虚拟销量"></QuestionTip></span>
+          </template>
+        </el-table-column>
         <el-table-column prop="sort" label="排序" width="80">
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
@@ -105,6 +109,7 @@ import { downloadExcel, numberValidator } from '@/utils/common.js';
 import ItemTag from '@/components/ItemTag.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const userStore = useUserStore();

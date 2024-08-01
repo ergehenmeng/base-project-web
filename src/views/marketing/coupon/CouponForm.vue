@@ -67,8 +67,7 @@
         <StoreTypeSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled" @change="handleChange"></StoreTypeSelect>
       </el-form-item>
       <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
-        <el-button @click="handleProductSelect" type="primary"
-          >{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}
+        <el-button @click="handleProductSelect" type="primary">{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}
           <el-icon class="el-icon--right">
             <ArrowRight />
           </el-icon>

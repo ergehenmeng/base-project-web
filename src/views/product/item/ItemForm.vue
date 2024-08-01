@@ -164,8 +164,9 @@
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="购买须知" prop="purchaseNotes">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.purchaseNotes" maxlength="400" show-word-limit />
+      <el-form-item label="购买须知" prop="purchaseNotesText">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" v-model:text-value="formData.purchaseNotesText"></WangEditor>
+        <div v-else v-html="formData.purchaseNotes"></div>
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -216,7 +217,7 @@ const formRules = reactive({
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
   expressId: [{ required: true, message: '请选择物流模板', trigger: 'change' }],
   deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
-  purchaseNotes: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
+  purchaseNotesText: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
 
@@ -234,6 +235,7 @@ let formData = ref({
   introduceText: null,
   introduce: null,
   purchaseNotes: null,
+  purchaseNotesText: null,
   skuList: [
     {
       primarySpecValue: null,
@@ -467,6 +469,7 @@ const loadItemDetail = (id) => {
         formData.value.coverList = [];
       }
       formData.value.introduceText = res.data.introduce;
+      formData.value.purchaseNotesText = res.data.purchaseNotes;
     })
     .finally(() => {
       loading.value = false;

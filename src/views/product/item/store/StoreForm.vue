@@ -28,13 +28,14 @@
       <el-form-item label="商家电话" prop="telephone">
         <el-input v-model="formData.telephone" show-word-limit maxlength="13" />
       </el-form-item>
-      <el-form-item label="退换货地址" prop="depotAddressId">
+      <el-form-item label="收货地址" prop="depotAddressId">
         <el-select v-model="formData.depotAddressId" filterable>
           <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
             <span style="float: left">{{ item.detailAddress }}</span>
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}：{{ item.mobile }}</span>
           </el-option>
         </el-select>
+        <QuestionTip content="该地址是用户退换货时邮寄的商家收货地址"></QuestionTip>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
@@ -68,6 +69,7 @@ import AreaSelect from '@/components/AreaSelect.vue';
 import MapContainer from '@/components/MapContainer.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import MerchantSelect from '@/components/MerchantSelect.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
