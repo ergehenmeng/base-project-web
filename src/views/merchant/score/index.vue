@@ -8,11 +8,11 @@
         <el-button v-has-perm="'5Vu0'" type="primary" style="margin-top: 10px" @click="handleWithdraw" size="small"> 提现 </el-button>
       </el-col>
       <el-col :span="8">
-        <el-statistic title="支付冻结积分" :value="payFreeze"> </el-statistic>
+        <el-statistic title="支付冻结积分" :value="payFreezeRef"> </el-statistic>
         <el-button v-has-perm="'ZVu0'" type="primary" style="margin-top: 10px" @click="handleFreeze" size="small"> 冻结记录 </el-button>
       </el-col>
       <el-col :span="8">
-        <el-statistic title="提现冻结积分" :value="withdrawFreeze"> </el-statistic>
+        <el-statistic title="提现冻结积分" :value="withdrawFreezeRef"> </el-statistic>
       </el-col>
     </el-row>
   </div>
@@ -28,12 +28,12 @@ import WithdrawForm from '@/views/merchant/score/WithdrawForm.vue';
 const router = useRouter();
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('JVu0');
-const amount = ref(0.0);
-const payFreeze = ref(0);
-const withdrawFreeze = ref(0);
+const amountRef = ref(0.0);
+const payFreezeRef = ref(0);
+const withdrawFreezeRef = ref(0);
 const withdrawFormRef = ref();
 
-const amountValue = useTransition(amount.value, {
+const amountValue = useTransition(amountRef.value, {
   duration: 500
 });
 
@@ -42,13 +42,13 @@ onMounted(async () => {
     return;
   }
   const { data: { amount, payFreeze, withdrawFreeze } } = await accountApi();
-  amount.value = amount;
-  payFreeze.value = payFreeze;
-  withdrawFreeze.value = withdrawFreeze;
+  amountRef.value = amount;
+  payFreezeRef.value = payFreeze;
+  withdrawFreezeRef.value = withdrawFreeze;
 });
 
 const handleWithdraw = () => {
-  withdrawFormRef.value.openDialog({ useAmount: amount.value });
+  withdrawFormRef.value.openDialog({ useAmount: amountRef.value });
 };
 
 const handleRecharge = () => {
