@@ -19,7 +19,7 @@
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
-        <CustomTag v-model="formData.tagList" :width="350"></CustomTag>
+        <CustomTag v-model="formData.tagList" :width="350" :disabled="disabled"></CustomTag>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -115,7 +115,7 @@ const formRules = reactive({
 const formData = ref({
   id: null,
   homestayName: null,
-  level: 0,
+  level: null,
   merchantId: null,
   openTime: null,
   phone: null,

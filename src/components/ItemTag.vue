@@ -20,7 +20,6 @@ const props = defineProps({
 });
 const tagId = defineModel({
   type: Array,
-  required: true,
   default: () => []
 });
 

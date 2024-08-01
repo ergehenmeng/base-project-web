@@ -21,6 +21,6 @@ const props = defineProps({
 });
 const areaList = defineModel({
   type: Array,
-  required: true
+  default: () => []
 });
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="tag-box" @click="onclick" :style="{ width: props.width + 'px' }">
     <el-tag v-for="(item, index) in tagList" :type="props.type" :key="index" disable-transitions closable @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
-    <input :placeholder="tagList.length > 0 ? '' : props.placeholder" v-model="tagValue" @keydown.space.prevent="addTag" class="input-tag" ref="inputRef" type="text"
-           :maxlength="props.maxlength"/>
+    <input :placeholder="tagList.length > 0 || props.disabled ? '' : props.placeholder" v-model="tagValue" @keydown.space.prevent="addTag" :class="{'input-tag': true, 'is-disabled': disabled}" ref="inputRef" type="text"
+           :maxlength="props.maxlength" :disabled="props.disabled"/>
   </div>
 </template>
 
@@ -33,6 +33,10 @@ const props = defineProps({
   limit: {
     type: Number,
     default: 3
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   },
   maxlength: {
     type: Number,
@@ -104,6 +108,10 @@ const removeTag = (item) => {
   height: 30px;
   color: #495060;
   line-height: 30px;
+}
+.is-disabled {
+  background-color: #f5f7fa;
+  cursor: not-allowed;
 }
 
 .input-tag::-webkit-input-placeholder {

@@ -39,7 +39,7 @@ const localFile = ref([]);
 
 const fileList = defineModel('fileList', {
   type: Array,
-  required: true
+  default: () => []
 });
 
 const props = defineProps({
