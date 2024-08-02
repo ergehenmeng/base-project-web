@@ -26,7 +26,7 @@
         <el-input v-model="formData.openTime" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="客服电话" prop="telephone">
-        <el-input v-model="formData.telephone" show-word-limit maxlength="12" />
+        <el-input v-model="formData.telephone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>

@@ -58,7 +58,7 @@
       <div class="item" data="22:30" @click="selectHandle('22:30', $event)"></div>
       <div class="item" data="23:00" @click="selectHandle('23:00', $event)"></div>
       <div class="item" data="23:30" @click="selectHandle('23:30', $event)"></div>
-      <div style="display: flex; justify-content: center; margin-left: 10px" v-show="!props.disabled">
+      <div style="display: flex; justify-content: center; margin-left: 10px" v-show="!props.disabled" id="reset">
         <el-button type="primary" link :icon="Refresh" title="重置价格配置" @click="resetConfig"></el-button>
       </div>
     </div>
@@ -84,6 +84,7 @@ import dayjs from 'dayjs';
 import { confirmMsg, errorMsg } from '@/utils/message.js';
 import TimePhaseDialog from '@/components/TimePhaseDialog.vue';
 import { Refresh } from '@element-plus/icons-vue';
+import { renderMsg } from '@/utils/common.js'
 
 const popoverRef = ref();
 const dialogRef = ref();
@@ -97,6 +98,8 @@ const startItem = ref();
 const endItem = ref();
 const checkedItems = ref([]);
 const visible = ref(false);
+const moveInMap = new Map();
+const moveOutMap = new Map();
 
 const selectHandle = (value, event) => {
   if (!event.target.classList.contains('item') || event.target.classList.contains('checked')) {
@@ -223,6 +226,8 @@ const addTips = (item, startTime, endTime, price) => {
 
   item.addEventListener('mouseenter', mouseenterEvent);
   item.addEventListener('mouseleave', mouseleaveEvent);
+  moveInMap.set(item, mouseenterEvent);
+  moveOutMap.set(item, mouseleaveEvent);
 
   const element = document.createElement('div');
   element.style.width = '100%';
@@ -233,7 +238,8 @@ const addTips = (item, startTime, endTime, price) => {
 
 const bindDeleteEvent = (parent, item, startTime, endTime, mouseenterEvent, mouseleaveEvent) => {
   item.addEventListener('click', () => {
-    confirmMsg(`确定要删除 ${startTime}~${endTime} 时间的价格配置吗?`, () => {
+    const msg = renderMsg(["确定要删除", () => `${startTime}~${endTime}`, "时间段的价格配置吗?"]);
+    confirmMsg(msg, () => {
       parent.removeChild(item);
       const data = parent.getAttribute('data');
       phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
@@ -276,18 +282,7 @@ const resetBefore = (item, length) => {
 
 const resetConfig = () => {
   confirmMsg('确定要重置价格配置吗?', () => {
-    mainContentRef.value.childNodes.forEach((item) => {
-      item.classList.remove('checked');
-      item.classList.remove('right');
-      item.style.width = '30px';
-      start.value = null;
-      end.value = null;
-      item.innerHTML = '';
-      startItem.value = null;
-      endItem.value = null;
-      checkedItems.value = [];
-      phaseList.value = [];
-    });
+    doReset(true);
   });
 };
 
@@ -313,7 +308,7 @@ const generateHtml = (startTime, endTime, price) => {
           <span class="label-title">时间段:</span><span>${startTime}~${endTime}</span>
         </p>
         <p class="tips-content">
-          <span class="label-title">价格:</span><span>${formatPrice}</span>
+          <span class="label-title">价格:</span><span>${formatPrice} 元</span>
         </p>
       </div></div>`;
 };
@@ -327,6 +322,34 @@ const cancelChecked = () => {
   checkedItems.value = [];
   phaseList.value = phaseList.value.filter((item) => !(item.startTime === start.value && item.endTime === end.value));
   reset();
+};
+
+const doReset = (resetPhaseList = false) => {
+  mainContentRef.value.childNodes.forEach((item) => {
+    if (item.id === 'reset') {
+      return;
+    }
+    item.classList.remove('checked');
+    item.classList.remove('right');
+    item.style.width = '30px';
+    start.value = null;
+    end.value = null;
+    item.innerHTML = '';
+    startItem.value = null;
+    endItem.value = null;
+    checkedItems.value = [];
+    const mouseenterEvent = moveInMap.get(item);
+    const mouseleaveEvent = moveOutMap.get(item);
+    if (mouseenterEvent) {
+      item.removeEventListener('mouseenter', mouseenterEvent);
+    }
+    if (mouseleaveEvent) {
+      item.removeEventListener('mouseleave', mouseleaveEvent);
+    }
+    if (resetPhaseList) {
+      phaseList.value = [];
+    }
+  });
 };
 
 const reset = () => {
@@ -355,6 +378,8 @@ const phaseList = defineModel('phaseList', {
 watch(
   () => phaseList.value,
   () => {
+    // 切换日期时需要将之前的样式重置, 注意这里不能直接使用phaseList.value, 因为在watch中直接修改phaseList.value会死循环
+    doReset();
     if (phaseList.value.length > 0) {
       phaseList.value.forEach((item) => {
         const { startTime, endTime, price } = item;
@@ -454,6 +479,8 @@ onMounted(() => {
   .item.active {
     box-sizing: border-box;
     background-color: #1e90ff;
+    border-top: none;
+    border-bottom: none;
     border-right: 1px solid #cecece;
   }
 

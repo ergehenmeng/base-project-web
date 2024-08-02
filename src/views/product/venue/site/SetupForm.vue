@@ -19,7 +19,7 @@
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="价格配置" prop="priceList">
-        <TimePhase v-model="formData.priceList"></TimePhase>
+        <TimePhase v-model:phase-list="formData.priceList"></TimePhase>
       </el-form-item>
     </el-form>
     <div>

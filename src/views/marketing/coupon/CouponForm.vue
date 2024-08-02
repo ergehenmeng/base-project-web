@@ -31,7 +31,7 @@
             ></el-input>
             元使用
           </el-radio>
-          <el-radio label="不限制" :value="1"></el-radio>
+          <el-radio label="无门槛" :value="1"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="库存" prop="stock">

@@ -31,19 +31,19 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="优惠券名称" min-width="200" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="stock" label="库存" width="80" />
-        <el-table-column prop="receiveNum" label="已领取数量" width="120" />
-        <el-table-column prop="useNum" label="已使用数量" width="120" />
-        <el-table-column prop="mode" label="领取方式" width="100" :formatter="formatter"/>
+        <el-table-column prop="title" label="优惠券名称" min-width="150" />
+        <el-table-column prop="state" label="状态" width="60" :formatter="formatter" />
+        <el-table-column prop="stock" label="库存" width="60" />
+        <el-table-column prop="receiveNum" label="已领取数量" width="100" />
+        <el-table-column prop="useNum" label="已使用数量" width="100" />
+        <el-table-column prop="mode" label="领取方式" width="90" :formatter="formatter"/>
         <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
-        <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
         <el-table-column prop="discountValue" label="折扣比例" width="80" />
-        <el-table-column prop="useThreshold" label="使用门槛" width="100" :formatter="formatter" />
-        <el-table-column prop="useStartTime" label="使用时间段" min-width="280" :formatter="formatter" />
-        <el-table-column prop="startTime" label="发放开始段" min-width="280" :formatter="formatter" />
-        <el-table-column label="操作" fixed="right" min-width="200">
+        <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
+        <el-table-column prop="useThreshold" label="使用门槛" width="80" :formatter="formatter" />
+        <el-table-column prop="useStartTime" label="使用时间段" min-width="260" :formatter="formatter" />
+        <el-table-column prop="startTime" label="发放开始段" min-width="260" :formatter="formatter" />
+        <el-table-column label="操作" fixed="right" min-width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'PPi0'" title="新增优惠券" @click="handleCreate"></CreateButton>
@@ -119,11 +119,11 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'mode') {
     return cellValue === 1 ? '页面领取' : '手动发放';
   } else if (column.property === 'state') {
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : h('span', { style: 'color: red;' }, '禁用');
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : '禁用';
   } else if (column.property === 'couponType') {
     return cellValue === 1 ? '抵扣券' : '折扣券';
   } else if (column.property === 'useThreshold') {
-    return cellValue === '0' ? '不限制' : cellValue;
+    return parseFloat(cellValue) === 0 ? '无门槛' : cellValue;
   } else if (column.property === 'useStartTime') {
     return cellValue + '~' + row.useEndTime;
   } else if (column.property === 'startTime') {

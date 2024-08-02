@@ -13,14 +13,13 @@
         </el-button-group>
       </div>
     </div>
-    <div style="clear: both">
+    <div style="clear: both" v-loading="loading" >
       <el-tabs type="card" v-model="activeDay" @tab-change="handleTabChange">
-        <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item">
-          <div style="padding-top: 20px; display: flex; justify-content: center">
-            <TimePhase v-model:phase-list="phaseList"></TimePhase>
-          </div>
-        </el-tab-pane>
+        <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item"></el-tab-pane>
       </el-tabs>
+      <div style="padding-top: 20px; display: flex; justify-content: center">
+        <TimePhase v-model:phase-list="phaseList"></TimePhase>
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +35,7 @@ const route = useRoute();
 const dayList = ref([]);
 const activeDay = ref(dayjs().format('YYYY-MM-DD'));
 const phaseList = ref([]);
+const loading = ref(false);
 
 onMounted(() => {
   generateDayList(dayjs());
@@ -53,6 +53,7 @@ const changeMonth = (value) => {
   }
   activeDay.value = date.format('YYYY-MM-DD');
   generateDayList(date);
+  handleTabChange(activeDay.value)
 };
 
 const generateDayList = (date) => {
@@ -70,8 +71,11 @@ const handleSetting = () => {
 };
 
 const handleTabChange = (value) => {
+  loading.value = true
   priceListApi({ venueSiteId: route.params.id, nowDate: value }).then((res) => {
     phaseList.value = res.data;
+  }).finally(() => {
+    loading.value = false;
   });
 };
 </script>
