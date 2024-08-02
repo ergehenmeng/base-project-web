@@ -22,6 +22,19 @@ export const successMsg = (msg, func) => {
   alertMsg(msg, 'success', func)
 };
 
+export const messageBox = (msg, func) => {
+  ElMessageBox({
+    message: msg,
+    title: '提示',
+    confirmButtonText: '确定',
+    callback: () => {
+      if (func) {
+        func();
+      }
+    }
+  });
+};
+
 export const alertMsg = (msg, type, func) => {
   ElMessage({
     message: msg,

@@ -102,7 +102,7 @@
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/item';
 import { Bottom, Delete, Document, Download, Edit, Link, Star, Top } from '@element-plus/icons-vue';
-import { confirmMsg, successMsg } from '@/utils/message';
+import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { downloadExcel, numberValidator } from '@/utils/common.js';
@@ -110,7 +110,11 @@ import ItemTag from '@/components/ItemTag.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { shortUrlApi } from '@/api/common/index.js'
+import { useClipboard } from '@vueuse/core'
 
+const { copy, isSupported } = useClipboard();
+const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -269,6 +273,13 @@ const handleDetail = (row) => {
 };
 
 const handleLink = (row) => {
-  router.push('/product/item/link/' + row.id);
+  shortUrlApi({ pageUrl: shortUrl + row.id, pageTitle: row.title, persistent: true}).then(({data}) => {
+    if (isSupported) {
+      copy(data);
+      successMsg('链接复制成功');
+    } else {
+      messageBox(data);
+    }
+  })
 };
 </script>
