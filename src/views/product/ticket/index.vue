@@ -25,23 +25,25 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
+        <el-form-item v-has-perm="'mTl0'">
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="门票名称" min-width="200" />
-        <el-table-column prop="scenicName" label="所属景区" min-width="200" />
+        <el-table-column prop="title" label="门票名称" min-width="160" />
+        <el-table-column prop="scenicName" label="所属景区" min-width="160" />
         <el-table-column prop="category" label="票种" width="80" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="salePrice" label="销售价" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter" />
         <el-table-column prop="stock" label="剩余库存" width="80" />
-        <el-table-column prop="advanceDay" label="提前几天购票" width="120" :formatter="formatter" />
-        <el-table-column prop="verificationType" label="核销方式" width="120" :formatter="formatter" />
-        <el-table-column prop="realBuy" label="是否实名" width="100" :formatter="formatter" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="verificationType" label="核销方式" width="100" :formatter="formatter" />
+        <el-table-column prop="realBuy" label="是否实名" width="80" :formatter="formatter" />
+        <el-table-column prop="createTime" label="创建时间" width="170" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" fixed="right" width="200">
           <template #header>
             <span style="margin-right: 5px">操作</span>
@@ -69,13 +71,14 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/ticket';
+import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/ticket';
 import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import ScenicSelect from '@/components/ScenicSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { downloadExcel } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -165,8 +168,6 @@ const formatter = (row, column, cellValue) => {
       : h('span', { style: 'color: green;', title: '次日凌晨0点开始核销' }, '自动核销');
   } else if (column.property === 'realBuy') {
     return cellValue ? '是' : '否';
-  } else if (column.property === 'advanceDay') {
-    return cellValue + '天';
   } else {
     return cellValue;
   }
@@ -200,6 +201,22 @@ const handlePlatformUnShelves = (row) => {
       getPage();
     });
   });
+};
+
+const exportLoading = ref(false);
+
+const handleExcel = () => {
+  exportLoading.value = true;
+  exportApi(queryParams)
+    .then((res) => {
+      downloadExcel(res, '门票列表');
+    })
+    .catch((error) => {
+      successMsg('导出失败', error);
+    })
+    .finally(() => {
+      exportLoading.value = false;
+    });
 };
 
 const handleCreate = () => {

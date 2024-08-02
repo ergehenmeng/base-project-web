@@ -24,8 +24,8 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="scenicName" label="景区名称" min-width="150" />
-        <el-table-column prop="level" label="景区等级" width="150" :formatter="formatter" />
-        <el-table-column prop="openTime" label="营业时间" width="150" />
+        <el-table-column prop="level" label="景区等级" width="120" :formatter="formatter" />
+        <el-table-column prop="openTime" label="开放时间" width="180" />
         <el-table-column prop="phone" label="景区电话" width="140" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="score" label="评分" width="80" />

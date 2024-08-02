@@ -46,7 +46,7 @@
       </el-form-item>
       <el-form-item label="是否实名购票" prop="realBuy">
         <el-radio-group v-model="formData.realBuy">
-          <el-radio :value="true">实名制</el-radio>
+          <el-radio :value="true" title="在移动端购票时需要输入姓名及身份证号">实名制</el-radio>
           <el-radio :value="false">非实名制</el-radio>
         </el-radio-group>
       </el-form-item>

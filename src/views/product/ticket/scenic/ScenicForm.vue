@@ -13,7 +13,7 @@
           <el-option label="无" :value="0" />
         </el-select>
       </el-form-item>
-      <el-form-item label="营业时间" prop="openTime">
+      <el-form-item label="开放时间" prop="openTime">
         <el-input v-model="formData.openTime" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="景区电话" prop="phone">
@@ -38,7 +38,7 @@
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
-        <el-input v-model="formData.depict" show-word-limit maxlength="50" />
+        <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 3, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>

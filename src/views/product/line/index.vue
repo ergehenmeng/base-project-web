@@ -63,7 +63,7 @@
         </el-table-column>
         <el-table-column prop="title" label="线路名称" min-width="200" />
         <el-table-column prop="travelAgencyName" label="所属旅行社" min-width="200" />
-        <el-table-column prop="startProvinceId" label="出发城市" min-width="120" :formatter="formatter" />
+        <el-table-column prop="startCity" label="出发城市" min-width="120" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="duration" label="游玩天数" width="120" />
@@ -103,12 +103,10 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
-import useAreaStore from '@/store/area.js';
 import TravelSelect from '@/components/TravelSelect.vue';
 import { downloadExcel } from '@/utils/common.js';
 import CreateButton from '@/components/CreateButton.vue';
 
-const areaStore = useAreaStore();
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -163,9 +161,7 @@ const handleDelete = (row) => {
 };
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === 'startProvinceId') {
-    return areaStore.parseCity(row.startProvinceId, row.startCityId);
-  } else if (column.property === 'state') {
+  if (column.property === 'state') {
     if (cellValue === 0) {
       return '待上架';
     }
