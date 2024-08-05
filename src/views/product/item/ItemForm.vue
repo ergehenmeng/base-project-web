@@ -25,13 +25,13 @@
           <div class="item-spec">
             <div class="item-spec-content" v-for="(item, index) in formData.specList" :key="index">
               <el-form-item label="规格名称" :prop="`specList[${index}].specName`" :rules="{ required: true, message: '请输入规格名称', trigger: 'blur' }">
-                <el-input class="w140" v-model.trim="item.specName" @keyup="handleBlurSpec(index)" maxlength="10"></el-input>
+                <el-input class="w140" v-model.trim="item.specName" @keyup="handleBlurSpec(index)" maxlength="8"></el-input>
               </el-form-item>
               <el-form-item label="规格值" :prop="`specList[${index}].valueList`" :rules="{ required: true, message: '请输入规格值x', trigger: 'blur' }">
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList">
                     <el-form-item :prop="`specList[${index}].valueList[${idx}].name`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
-                      <el-input class="w140" v-model.trim="value.name" maxlength="10" @keyup="handleBlurValue(index, idx)"></el-input>
+                      <el-input class="w140" v-model.trim="value.name" maxlength="8" @keyup="handleBlurValue(index, idx)"></el-input>
                     </el-form-item>
                     <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)">
@@ -67,7 +67,7 @@
                   </el-form-item>
                 </template>
               </el-table-column>
-              <el-table-column prop="secondSpecValue" v-if="showSecondSpec" min-width="120">
+              <el-table-column prop="secondSpecValue"  :min-width="showSecondSpec ? '120' : '0'">
                 <template #header>
                   <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
