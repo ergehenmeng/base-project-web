@@ -156,23 +156,30 @@ const loadingItemList = (id) => {
   });
 };
 
+let indexValue = 0
 const objectSpanMethod = ({ row, rowIndex, columnIndex }) => {
   if (columnIndex === 0) {
-    if (rowIndex % row.skuSize === 0) {
+    if (row.skuSize === 1) {
+      indexValue++;
+      return {
+        rowspan: 1,
+        colspan: 1
+      };
+    }
+    if ((rowIndex-indexValue) % row.skuSize === 0) {
+      indexValue += row.skuSize;
       return {
         rowspan: row.skuSize,
         colspan: 1
       };
     } else {
-      return {
-        rowspan: 0,
-        colspan: 0
-      };
+      return { rowspan: 0, colspan: 0 };
     }
   }
 };
 
 const handleItemChange = (itemIds) => {
+  indexValue = 0;
   formData.value.skuList = [];
   itemIds.forEach((value) => {
     const item = itemMap.get(value);
