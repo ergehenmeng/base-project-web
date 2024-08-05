@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="title" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false" >
     <div class="product-list">
-      <el-transfer v-model="productIds" filterable :data="pageData" :props="props" :titles="['未选择', '已选择']" target-order="push" v-loading="loading">
+      <el-transfer v-model="productIds" filterable :data="pageData" :props="props" :titles="['未选择', '已选择']" target-order="push" v-loading="loading" >
         <template #default="{ option }">
           <span style="float: left" :title="option.title">{{ option.title }}</span>
           <span style="float: right; color: #8492a6; font-size: 13px; margin-right: 20px">{{ option.state === 0 ? '未上架' : option.state === 2 ? '强制下架' : '已上架' }}</span>
@@ -49,9 +49,9 @@ const queryParams = reactive({
 /**
  * 打开弹窗
  * @param productType 产品类型
- * @param productIds 已选中的产品id集合
+ * @param ids 已选中的产品id集合
  */
-const openDialog = (productType, productIds) => {
+const openDialog = (productType, ids) => {
   try {
     loading.value = true
     getPageApi(productType);
@@ -59,7 +59,7 @@ const openDialog = (productType, productIds) => {
     loading.value = false;
   }
   title.value = parseProductType(productType) + '列表';
-  productIds.value = productIds;
+  productIds.value = ids;
   showDialog.value = true;
 };
 

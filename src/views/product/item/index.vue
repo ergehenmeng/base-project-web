@@ -54,7 +54,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="商品名称" min-width="150" />
-        <el-table-column prop="storeName" label="所属商品" min-width="150" />
+        <el-table-column prop="storeName" label="所属店铺" min-width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="quota" label="限购数量" width="100" />
         <el-table-column prop="deliveryType" label="交付方式" width="100" :formatter="formatter" />
@@ -273,6 +273,7 @@ const handleDetail = (row) => {
 };
 
 const handleLink = (row) => {
+  loading.value = true
   shortUrlApi({ pageUrl: shortUrl + row.id, pageTitle: row.title, persistent: true}).then(({data}) => {
     if (isSupported) {
       copy(data);
@@ -280,6 +281,8 @@ const handleLink = (row) => {
     } else {
       messageBox(data);
     }
+  }).finally(() => {
+    loading.value = false
   })
 };
 </script>

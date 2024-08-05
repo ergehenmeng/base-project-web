@@ -34,25 +34,25 @@
                       <el-input class="w140" v-model.trim="value.name" maxlength="8" @keyup="handleBlurValue(index, idx)"></el-input>
                     </el-form-item>
                     <span class="close">
-                      <el-icon @click="handleCloseValue(index, idx)">
+                      <el-icon @click="handleCloseValue(index, idx)" v-if="!disabled">
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
                     <UploadImage v-model:img-url="value.pic" v-if="index === 0"></UploadImage>
                   </div>
-                  <span class="spec-value-patch">
+                  <span class="spec-value-patch" v-if="!disabled">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
                   </span>
                 </div>
               </el-form-item>
               <span class="spec-close" v-show="index === 1">
-                <el-icon @click="handleCloseSpec">
+                <el-icon @click="handleCloseSpec" v-if="!disabled">
                   <CircleCloseFilled />
                 </el-icon>
               </span>
             </div>
             <div style="margin-bottom: 10px" v-show="formData.specList.length === 1">
-              <el-button type="primary" size="small" @click="handleAddSpec">添加规格</el-button>
+              <el-button type="primary" size="small" @click="handleAddSpec" v-if="!disabled">添加规格</el-button>
             </div>
           </div>
           <div class="item-sku">

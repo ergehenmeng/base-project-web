@@ -3,22 +3,22 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
       <el-form-item label="优惠券名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="20" :disabled="editDisabled" />
+        <el-input v-model="formData.title" show-word-limit maxlength="20" :disabled="disabled" />
       </el-form-item>
       <el-form-item label="优惠券类型" prop="couponType">
-        <el-radio-group v-model="formData.couponType" @change="handleCouponType" :disabled="editDisabled">
+        <el-radio-group v-model="formData.couponType" @change="handleCouponType" :disabled="disabled">
           <el-radio label="抵扣券" :value="1"></el-radio>
           <el-radio label="折扣券" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="抵扣金额" prop="deductionValue" v-show="formData.couponType === 1">
-        <el-input v-model="formData.deductionValue" :disabled="editDisabled" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
+        <el-input v-model="formData.deductionValue" :disabled="disabled" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
       </el-form-item>
-      <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="editDisabled">
+      <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="disabled">
         <el-input v-model="formData.discountValue" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="使用门槛" :prop="thresholdProp">
-        <el-radio-group v-model="formData.threshold" @change="handleThreshold" :disabled="editDisabled">
+        <el-radio-group v-model="formData.threshold" @change="handleThreshold" :disabled="disabled">
           <el-radio :value="2"
             >满
             <el-input
@@ -27,7 +27,7 @@
               v-model="formData.useThreshold"
               maxlength="6"
               @keyup="formData.useThreshold = numberValidator(formData.useThreshold)"
-              :disabled="thresholdDisabled || editDisabled"
+              :disabled="thresholdDisabled || disabled"
             ></el-input>
             元使用
           </el-radio>
@@ -38,7 +38,7 @@
         <el-input v-model="formData.stock" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="领取方式" prop="mode">
-        <el-radio-group v-model="formData.mode" :disabled="editDisabled" @change="handleMode">
+        <el-radio-group v-model="formData.mode" :disabled="disabled" @change="handleMode">
           <el-radio label="页面领取" :value="1"></el-radio>
           <el-radio label="手动发放" :value="2"></el-radio>
         </el-radio-group>
@@ -46,9 +46,9 @@
       <el-form-item label="单人领取限制" prop="maxLimit">
         <el-input v-model="formData.maxLimit" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="产品类型" prop="productType">
+      <el-form-item label="适用类型" prop="productType">
         <!-- 默认只显示该商户拥有的产品类型,如果是系统用户默认都显示 -->
-        <el-radio-group v-model="formData.productType" :disabled="editDisabled" @change="handleProductChange">
+        <el-radio-group v-model="formData.productType" :disabled="disabled" @change="handleProductChange">
           <el-radio label="门票" value="ticket" v-if="merchantType === 0 || (merchantType&1) === 1"></el-radio>
           <el-radio label="民宿" value="homestay" v-if="merchantType === 0 || (merchantType&2) === 2"></el-radio>
           <el-radio label="餐饮券" value="voucher" v-if="merchantType === 0 || (merchantType&4) === 4"></el-radio>
@@ -58,13 +58,13 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="使用范围" prop="useScope">
-        <el-radio-group v-model="formData.useScope" @change="handleUseScope" :disabled="editDisabled">
+        <el-radio-group v-model="formData.useScope" @change="handleUseScope" :disabled="disabled">
           <el-radio label="店铺通用" :value="1"></el-radio>
           <el-radio label="指定商品" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="关联店铺" prop="storeId">
-        <StoreTypeSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="editDisabled" @change="handleChange"></StoreTypeSelect>
+        <StoreTypeSelect v-model="formData.storeId" :product-type="formData.productType" :clearable="false" :disabled="disabled" @change="handleChange"></StoreTypeSelect>
       </el-form-item>
       <el-form-item label="关联商品" prop="productIds" v-show="formData.useScope === 2">
         <el-button @click="handleProductSelect" type="primary">{{ formData.productIds.length > 0 ? `共计${formData.productIds.length}个商品` : '选择商品' }}
@@ -76,7 +76,7 @@
       <el-form-item label="发放时间" prop="timeList">
         <div style="width: 350px">
           <el-date-picker
-            :disabled="editDisabled"
+            :disabled="disabled"
             type="datetimerange"
             format="YYYY-MM-DD HH:mm"
             value-format="YYYY-MM-DD HH:mm"
@@ -89,7 +89,7 @@
       <el-form-item label="使用时间" prop="useTimeList">
         <div style="width: 350px">
           <el-date-picker
-            :disabled="editDisabled"
+            :disabled="disabled"
             type="datetimerange"
             format="YYYY-MM-DD HH:mm"
             value-format="YYYY-MM-DD HH:mm"
@@ -131,7 +131,6 @@ const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const editDisabled = ref(false);
 const thresholdProp = ref('useThreshold');
 const thresholdDisabled = ref(false);
 const formRef = ref();
@@ -302,7 +301,6 @@ onMounted(() => {
         }
         handleUseScope();
         handleThreshold(formData.value.threshold);
-        editDisabled.value = true;
       })
       .finally(() => {
         loading.value = false;

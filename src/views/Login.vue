@@ -87,6 +87,9 @@ const formRules = reactive({
 
 // 登录
 const handleLogin = async () => {
+  if (loading.value) {
+    return;
+  }
   await formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;

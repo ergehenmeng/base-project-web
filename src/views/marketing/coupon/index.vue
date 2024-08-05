@@ -73,11 +73,15 @@
 <script setup>
 import { closeApi, listPageApi, openApi } from '@/api/marketing/coupon';
 import { Bottom, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue';
-import { confirmMsg, successMsg } from '@/utils/message';
+import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
+import { shortUrlApi } from '@/api/common/index.js'
+import { useClipboard } from '@vueuse/core'
 
+const { copy, isSupported } = useClipboard();
+const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -153,8 +157,18 @@ const handleClose = (row) => {
   });
 };
 
-const handleLink = (_row) => {
-  console.log("待生成二维码链接")
+const handleLink = (row) => {
+  loading.value = true
+  shortUrlApi({ pageUrl: shortUrl + row.id, pageTitle: '优惠券领取', persistent: true}).then(({data}) => {
+    if (isSupported) {
+      copy(data);
+      successMsg('链接复制成功');
+    } else {
+      messageBox(data);
+    }
+  }).finally(() => {
+    loading.value = false
+  })
 };
 
 const handleGrant = (row) => {
