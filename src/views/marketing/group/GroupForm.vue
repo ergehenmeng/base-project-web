@@ -14,7 +14,9 @@
         <el-input v-model="formData.num" show-word-limit maxlength="1" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="拼团有效期" prop="expireTime">
-        <el-input v-model="formData.expireTime" placeholder="单位:分钟" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.expireTime" show-word-limit onkeyup="this.value=this.value.replace(/\D/g,'')" >
+          <template #append>分钟</template>
+        </el-input><QuestionTip content="指团长发起拼团最晚成团时间，超过该时间如果未成团，则拼团失败"></QuestionTip>
       </el-form-item>
       <el-form-item label="商品信息" prop="itemId">
         <el-select v-model="formData.itemId" filterable @change="handleItemChange">
@@ -26,8 +28,8 @@
         <QuestionTip content="注意：拼团活动只支持零售类商品" ></QuestionTip>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
-        <el-table :data="allSkuList" border style="width: 600px" @selection-change="handleSelectionChange">
-          <el-table-column prop="id" label="选择" type="selection" width="60"></el-table-column>
+        <el-table :data="allSkuList" border style="width: 600px" @selection-change="handleSelectionChange" ref="tableRef">
+          <el-table-column prop="skuId" label="选择" type="selection" width="60" ></el-table-column>
           <el-table-column prop="skuPic" label="封面图片" width="100">
             <template #default="scope">
               <div style="display: flex; align-items: center">
@@ -46,11 +48,21 @@
           <el-table-column prop="salePrice" label="销售价格" width="130" />
           <el-table-column width="110" >
             <template #header>
-              <span><span class="item-required">*</span>拼团价格</span>
+              <span><span class="item-required">*</span>拼团价格<QuestionTip content="注意：拼团价格必须低于销售价格"></QuestionTip></span>
             </template>
             <template #default="scope" >
-              <el-form-item :prop="`skuList[${scope.$index}].discountPrice`" validate-status="validating" :rules="getSkuRule(scope.row.skuId)">
-                <el-input v-if="showElement(scope.row.skuId)" v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
+              <el-form-item v-if="showElement(scope.row.skuId)" :prop="`skuList[${scope.$index}].discountPrice`" :rules="[
+                  { required: true, message: '拼团价格不能为空', trigger: 'blur' },
+                  { validator: (rule, value, callback) => {
+                      if (parseFloat(value) >= parseFloat(scope.row.salePrice)) {
+                        callback(new Error('拼团价格不能大于销售价格'));
+                      } else {
+                        callback();
+                      }
+                    },
+                    trigger: 'blur'
+                  }]">
+                <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)" />
               </el-form-item>
             </template>
           </el-table-column>
@@ -84,6 +96,7 @@ const disabled = ref(false);
 const itemList = ref([]);
 const skuMap = new Map();
 const allSkuList = ref([]);
+const tableRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -100,7 +113,7 @@ const formData = ref({
   itemId: null,
   timeList: [],
   num: null,
-  expireTime: null,
+  expireTime: 1440,
   // 选中的sku列表
   skuList: []
 });
@@ -109,6 +122,8 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
+      formData.value.startTime = formData.value.timeList[0];
+      formData.value.endTime = formData.value.timeList[1];
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -132,7 +147,11 @@ const handleSave = () => {
   });
 };
 
-const loadingItemList = (id) => {
+/**
+ * 渲染商品列表
+ * @param id
+ */
+const renderList = (id) => {
   itemListApi({ id: id }).then((res) => {
     itemList.value = res.data;
     itemList.value.forEach((item) => {
@@ -142,6 +161,11 @@ const loadingItemList = (id) => {
   });
 };
 
+/**
+ * 切换商品后重新渲染sku列表
+ *
+ * @param value value
+ */
 const handleItemChange = (value) => {
   const sku = skuMap.get(value);
   if (sku) {
@@ -149,6 +173,7 @@ const handleItemChange = (value) => {
   } else {
     allSkuList.value = [];
   }
+  setSelectedSku(allSkuList.value, formData.value.skuList);
 };
 
 const handleSelectionChange = (val) => {
@@ -156,24 +181,29 @@ const handleSelectionChange = (val) => {
 };
 
 /**
- * 该行选中则校验拼团价格,否则不校验
- * @type {ComputedRef<function(*): [{trigger: string, message: string, required: boolean}]|[]>}
+ * 设置选中的sku
+ * @param skuList
+ * @param selectList
  */
-const getSkuRule = computed(() => {
-  return (id) => {
-    const selectList = formData.value.skuList.filter((item) => item.skuId === id);
-    return selectList.length > 0
-      ? [
-          {
-            required: true,
-            message: '拼团价格不能为空',
-            trigger: 'blur'
-          }
-        ]
-      : [];
-  };
-});
+const setSelectedSku = (skuList, selectList) => {
+  if (skuList.length === 0) {
+    return;
+  }
+  nextTick(() => {
+    selectList.forEach((selected) => {
+      const item = skuList.filter(sku => sku.skuId === selected.skuId);
+      if (item.length > 0) {
+        item[0].discountPrice = selected.discountPrice;
+        tableRef.value.toggleRowSelection(item[0], true);
+      }
+    });
+  })
+}
 
+/**
+ * 判断是否显示拼团价格input
+ * @type {ComputedRef<function(*): boolean>}
+ */
 const showElement = computed(() => {
   return (id) => {
     const selectList = formData.value.skuList.filter((item) => item.skuId === id);
@@ -190,13 +220,13 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.timeList = [res.data.startTime, res.data.endTime];
-        loadingItemList(params.id);
+        renderList(params.id);
       })
       .finally(() => {
         loading.value = false;
       });
   } else {
-    loadingItemList();
+    renderList();
   }
 });
 </script>

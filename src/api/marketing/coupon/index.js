@@ -42,6 +42,13 @@ export const closeApi = (data) => {
   });
 };
 
+export const deleteApi = (data) => {
+  return request.post({
+    url: '/manage/coupon/delete',
+    data
+  });
+};
+
 export const grantApi = (data) => {
   return request.post({
     url: '/manage/coupon/grant',

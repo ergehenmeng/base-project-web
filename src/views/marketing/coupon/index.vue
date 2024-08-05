@@ -43,7 +43,7 @@
         <el-table-column prop="useThreshold" label="使用门槛" width="80" :formatter="formatter" />
         <el-table-column prop="useStartTime" label="使用时间段" min-width="260" :formatter="formatter" />
         <el-table-column prop="startTime" label="发放开始段" min-width="260" :formatter="formatter" />
-        <el-table-column label="操作" fixed="right" min-width="180">
+        <el-table-column label="操作" fixed="right" width="210">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'PPi0'" title="新增优惠券" @click="handleCreate"></CreateButton>
@@ -56,6 +56,7 @@
             <el-button v-has-perm="'1Pi0'" v-show="scope.row.mode === 2" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
             <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handleReceiveDetail(scope.row)" link title="领取详情"></el-button>
             <el-button v-has-perm="'zPi0'" v-show="scope.row.mode === 1" type="success" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
+            <el-button v-has-perm="'QPi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -71,8 +72,8 @@
   </div>
 </template>
 <script setup>
-import { closeApi, listPageApi, openApi } from '@/api/marketing/coupon';
-import { Bottom, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue';
+import { closeApi, deleteApi, listPageApi, openApi } from '@/api/marketing/coupon'
+import { Bottom, Delete, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue'
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -152,6 +153,16 @@ const handleClose = (row) => {
     const data = { id: row.id };
     closeApi(data).then(() => {
       successMsg('优惠券禁用成功');
+      getPage();
+    });
+  });
+};
+
+const handleDelete = (row) => {
+  confirmMsg('确定要删除该优惠券吗?', () => {
+    const data = { id: row.id };
+    deleteApi(data).then(() => {
+      successMsg('优惠券删除成功');
       getPage();
     });
   });

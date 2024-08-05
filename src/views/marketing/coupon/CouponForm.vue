@@ -74,7 +74,7 @@
         </el-button>
       </el-form-item>
       <el-form-item label="发放时间" prop="timeList">
-        <div style="width: 350px">
+        <div style="width: 370px">
           <el-date-picker
             :disabled="disabled"
             type="datetimerange"
@@ -83,7 +83,7 @@
             time-format="HH:mm"
             v-model="formData.timeList"
             style="width: 350px"
-          ></el-date-picker>
+          ></el-date-picker><QuestionTip content="注意：只有未开始的优惠券才支持删除"></QuestionTip>
         </div>
       </el-form-item>
       <el-form-item label="使用时间" prop="useTimeList">
@@ -125,6 +125,7 @@ import StoreTypeSelect from '@/components/StoreTypeSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import ProductDialog from '@/components/ProductDialog.vue';
 import useUserStore from '@/store/user.js'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
