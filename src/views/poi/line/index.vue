@@ -28,7 +28,7 @@
                 fit="cover"
                 :src="scope.row.coverUrl?.split(',')[0]"
                 :preview-src-list="scope.row.coverUrl?.split(',')"
-                style="width: 50px; height: 50px"
+                style="width: 30px; height: 30px"
                 preview-teleported
                 hide-on-click-modal
               />
@@ -41,7 +41,7 @@
         <el-table-column prop="playTime" label="预计游玩时间(小时)" min-width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" min-width="250">
+        <el-table-column label="操作" fixed="right" width="250">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'gjG0'" title="新增线路" @click="handleCreate"></CreateButton>

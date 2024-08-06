@@ -43,7 +43,7 @@
                 fit="cover"
                 :src="scope.row.coverUrl?.split(',')[0]"
                 :preview-src-list="scope.row.coverUrl?.split(',')"
-                style="width: 50px; height: 50px"
+                style="width: 30px; height: 30px"
                 preview-teleported
                 hide-on-click-modal
               />
@@ -63,7 +63,7 @@
                 fit="cover"
                 :src="scope.row.commentPic?.split(',')[0]"
                 :preview-src-list="scope.row.commentPic?.split(',')"
-                style="width: 50px; height: 50px"
+                style="width: 30px; height: 30px"
                 preview-teleported
                 hide-on-click-modal
               />

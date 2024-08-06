@@ -47,7 +47,7 @@
                 fit="cover"
                 :src="scope.row.coverUrl !== null ? scope.row.coverUrl.split(',')[0] : null"
                 :preview-src-list="scope.row.coverUrl?.split(',')"
-                style="width: 50px; height: 50px"
+                style="width: 30px; height: 30px"
                 preview-teleported
                 hide-on-click-modal
               />

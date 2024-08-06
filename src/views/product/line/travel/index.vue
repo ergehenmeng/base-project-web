@@ -26,7 +26,7 @@
         <el-table-column prop="coverUrl" label="店铺logo" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.logoUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.logoUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>

@@ -18,7 +18,7 @@
         <el-table-column prop="icon" label="图标">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.icon" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.icon" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
@@ -27,7 +27,7 @@
         <el-table-column prop="sort" label="排序" />
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column label="操作" fixed="right" min-width="150">
+        <el-table-column label="操作" fixed="right" width="250">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'AiG0'" title="新增点位类型" @click="handleCreate"></CreateButton>

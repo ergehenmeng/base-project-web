@@ -23,7 +23,7 @@
                     fit="cover"
                     :src="getPreview(scope.row)[0]"
                     :preview-src-list="getPreview(scope.row)"
-                    style="width: 50px; height: 50px"
+                    style="width: 30px; height: 30px"
                     preview-teleported
                     hide-on-click-modal
                     v-if="getPreview(scope.row).length > 0"

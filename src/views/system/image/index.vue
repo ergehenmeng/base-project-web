@@ -21,7 +21,7 @@
         <el-table-column prop="path" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.path" :preview-src-list="[scope.row.path]" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover" :src="scope.row.path" :preview-src-list="[scope.row.path]" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
