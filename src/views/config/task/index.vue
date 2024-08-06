@@ -31,7 +31,7 @@
         <el-table-column prop="lockTime" label="锁时间(ms)" width="100" :formatter="formatter" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column prop="remark" label="备注信息" />
-        <el-table-column label="操作" fixed="right">
+        <el-table-column label="操作" fixed="right" width="100">
           <template #default="scope">
             <el-button v-has-perm="'tOR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'KOR0'" @click="handleExecute(scope.row)" link title="执行定时任务">

@@ -61,10 +61,12 @@
             <el-button v-has-perm="'BYp0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'7Yp0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"></el-button>
             <el-button v-has-perm="'3Yp0'" v-show="scope.row.state !== 1" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
-            <el-button v-has-perm="'WYp0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
+            <el-button v-has-perm="'WYp0'" @click="handleReset(scope.row)" link title="重置密码">
+              <ResetPwd></ResetPwd>
+            </el-button>
             <el-button v-has-perm="'vYp0'" @click="handleServiceRate(scope.row)" link title="调整费率"><Rate></Rate></el-button>
             <el-button v-has-perm="'oYp0'" @click="handleUnbind(scope.row)" link title="解绑授权手机号"><Unbind></Unbind></el-button>
-            <el-button v-has-perm="'Iup0'" @click="handleCloseAccount(scope.row)" link title="注销商户"><Logout :size="13"></Logout></el-button>
+            <el-button v-has-perm="'Iup0'" @click="handleCloseAccount(scope.row)" link title="注销商户"><Logout :size="12"></Logout></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -92,6 +94,7 @@ import Logout from '@/components/icon/Logout.vue';
 import { useRouter } from 'vue-router';
 import { downloadExcel, parseMerchantType } from '@/utils/common.js';
 import ServiceRateForm from '@/views/user/merchant/ServiceRateForm.vue';
+import ResetPwd from '@/components/icon/ResetPwd.vue'
 
 const rateRef = ref();
 const router = useRouter();

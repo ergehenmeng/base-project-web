@@ -51,7 +51,7 @@
             <el-button v-has-perm="'2jG0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'3jG0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
             <el-button v-has-perm="'LjG0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
-            <el-button v-has-perm="'BjG0'" type="primary" :icon="Link" @click="handleBind(scope.row)" link title="绑定点位"></el-button>
+            <el-button v-has-perm="'BjG0'" type="primary" :icon="MapLocation" @click="handleBind(scope.row)" link title="绑定点位"></el-button>
             <el-button v-has-perm="'WjG0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -69,7 +69,7 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, shelvesApi, unShelvesApi } from '@/api/poi/line';
-import { Bottom, Delete, Document, Edit, Link, Top } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Edit, MapLocation, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

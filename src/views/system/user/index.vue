@@ -37,7 +37,9 @@
             <el-button v-has-perm="'iqK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'qqK0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"></el-button>
             <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
-            <el-button v-has-perm="'jqK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置密码"></el-button>
+            <el-button v-has-perm="'jqK0'" @click="handleReset(scope.row)" link title="重置密码">
+              <ResetPwd></ResetPwd>
+            </el-button>
             <el-button v-has-perm="'2qK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -62,6 +64,7 @@ import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import { parseDataType, parseUserType } from '@/utils/common.js'
+import ResetPwd from '@/components/icon/ResetPwd.vue'
 
 const loading = ref(false);
 const total = ref(0);

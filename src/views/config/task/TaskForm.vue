@@ -5,7 +5,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
       </el-form-item>
       <el-form-item label="状态" prop="state">
-        <el-radio-group v-model="formData.state" disabled>
+        <el-radio-group v-model="formData.state">
           <el-radio label="已启用" :value="true"></el-radio>
           <el-radio label="未启用" :value="false"></el-radio>
         </el-radio-group>

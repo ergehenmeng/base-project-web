@@ -21,7 +21,7 @@
         <el-table-column prop="includeVideo" label="包含视频" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right">
+        <el-table-column label="操作" fixed="right" width="100">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'TcR0'" title="新增资讯配置" @click="handleCreate"></CreateButton>
