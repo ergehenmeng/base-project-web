@@ -30,7 +30,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="优惠券名称" min-width="150" />
         <el-table-column prop="state" label="状态" width="60" :formatter="formatter" />
         <el-table-column prop="stock" label="库存" width="60" />

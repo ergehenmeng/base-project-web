@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="优惠券" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip highlight-current-row @current-change="handleCurrentChange">
+    <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip highlight-current-row @current-change="handleCurrentChange">
       <el-table-column prop="title" label="优惠券名称" min-width="200" />
       <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
       <el-table-column prop="stock" label="库存" width="80" />

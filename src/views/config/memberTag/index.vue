@@ -11,7 +11,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="标签名称" width="150" />
         <el-table-column prop="memberNum" label="会员数量" width="100" :formatter="formatter" />
         <el-table-column prop="registerStartDate" label="注册日期" width="120" />

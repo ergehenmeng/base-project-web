@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="beanName" label="类名" :formatter="formatter" min-width="200" />
         <el-table-column prop="methodName" label="方法名" min-width="150"/>
         <el-table-column prop="args" label="方法入参" min-width="150"/>

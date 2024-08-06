@@ -29,13 +29,20 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="objectName" label="文章名称" min-width="200" />
         <el-table-column prop="nickName" label="留言昵称" width="120" />
         <el-table-column prop="avatar" label="头像" width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.avatar" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
+              <el-image
+                fit="cover"
+                :src="scope.row.avatar?.split(',')[0]"
+                :preview-src-list="scope.row.avatar?.split(',')"
+                style="width: 30px; height: 30px"
+                preview-teleported
+                hide-on-click-modal
+              />
             </div>
           </template>
         </el-table-column>

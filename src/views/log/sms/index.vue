@@ -33,7 +33,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="smsType" label="短信类型" :formatter="formatter" width="200" />
         <el-table-column prop="mobile" label="手机号" width="200"/>
         <el-table-column prop="content" label="短信内容" min-width="300" />

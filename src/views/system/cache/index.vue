@@ -8,7 +8,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :row-class-name="tableRowClass" :data="pageData"  @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :row-class-name="tableRowClass" :data="pageData"  @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column type="selection" width="50" />
         <el-table-column prop="cacheName" label="缓存名称" />
         <el-table-column prop="updateTime" label="最近一次更新时间" />

@@ -11,7 +11,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="活动名称" min-width="200" />
         <el-table-column prop="startTime" label="活动时间" width="320" :formatter="formatter" />
         <el-table-column prop="advanceHour" label="提前预告(小时)" width="120" :formatter="formatter"/>

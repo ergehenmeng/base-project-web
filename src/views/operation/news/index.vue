@@ -13,7 +13,7 @@
     <div class="content-main">
       <el-tabs v-model="activeName" @tab-change="handleChange">
         <el-tab-pane v-for="config in configList" :label="config.title" :key="config.code" :name="config.code">
-          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
             <el-table-column prop="title" label="资讯标题" />
             <el-table-column prop="depict" label="描述信息" />
             <el-table-column prop="image" label="图集">

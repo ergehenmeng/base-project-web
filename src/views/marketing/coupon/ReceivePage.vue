@@ -18,7 +18,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="nickName" label="昵称" min-width="120" />
         <el-table-column prop="mobile" label="手机号码" min-width="120" />
         <el-table-column prop="state" label="状态" min-width="100" :formatter="formatter" />

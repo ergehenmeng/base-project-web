@@ -14,11 +14,18 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="icon" label="图标">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.icon" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
+              <el-image
+                fit="cover"
+                :src="scope.row.icon?.split(',')[0]"
+                :preview-src-list="scope.row.icon?.split(',')"
+                style="width: 30px; height: 30px"
+                preview-teleported
+                hide-on-click-modal
+              />
             </div>
           </template>
         </el-table-column>

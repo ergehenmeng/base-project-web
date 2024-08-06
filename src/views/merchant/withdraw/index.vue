@@ -32,7 +32,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" />
         <el-table-column prop="state" label="提现状态" :formatter="formatter" />
         <el-table-column prop="withdrawWay" label="提现方式" :formatter="formatter" />

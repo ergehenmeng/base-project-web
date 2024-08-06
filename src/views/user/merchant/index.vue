@@ -37,7 +37,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商家名称" width="200" />
         <el-table-column prop="type" label="商家类型" width="250" :formatter="formatter" />
         <el-table-column prop="state" label="商家状态" width="100" :formatter="formatter" />

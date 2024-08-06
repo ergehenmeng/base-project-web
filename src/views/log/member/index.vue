@@ -20,7 +20,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="nickName" label="用户昵称" width="120"/>
         <el-table-column prop="url" label="访问链接" width="250" />
         <el-table-column prop="ip" label="访问ip" width="120" />
