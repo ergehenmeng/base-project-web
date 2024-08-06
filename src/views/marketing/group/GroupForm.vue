@@ -54,7 +54,7 @@
               <el-form-item v-if="showElement(scope.row.skuId)" :prop="`skuList[${scope.$index}].discountPrice`" :rules="[
                   { required: true, message: '拼团价格不能为空', trigger: 'blur' },
                   { validator: (rule, value, callback) => {
-                      if (parseFloat(value) >= parseFloat(scope.row.salePrice)) {
+                      if (parseFloat(value) > parseFloat(scope.row.salePrice)) {
                         callback(new Error('拼团价格不能大于销售价格'));
                       } else {
                         callback();

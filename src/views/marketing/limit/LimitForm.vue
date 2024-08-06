@@ -11,7 +11,9 @@
         </div>
       </el-form-item>
       <el-form-item label="提前预告" prop="advanceHour">
-        <el-input v-model="formData.advanceHour" placeholder="单位:小时" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.advanceHour" maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+          <template #append>小时</template>
+        </el-input><QuestionTip content="注意：在活动开始之前的多少小时会在移动端展示，不能超过72小时"></QuestionTip>
       </el-form-item>
       <el-form-item label="商品信息" prop="itemIds">
         <el-select v-model="formData.itemIds" filterable @change="handleItemChange" multiple collapse-tags :max-collapse-tags="2">
@@ -48,11 +50,12 @@
                       } else {
                         callback();
                       }
-                    }
+                    },
+                    trigger: 'blur'
                   }
                 ]"
               >
-                <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)"></el-input>
+                <el-input v-model="scope.row.discountPrice" class="w80" maxlength="6" @keydown="indexValue=0" @keyup="scope.row.discountPrice = numberValidator(scope.row.discountPrice)"></el-input>
               </el-form-item>
             </template>
           </el-table-column>
@@ -147,8 +150,8 @@ const handleSave = () => {
   });
 };
 
-const loadingItemList = (id) => {
-  itemListApi({ id: id }).then((res) => {
+const renderItem = (id) => {
+  return itemListApi({ id: id }).then((res) => {
     allItemList.value = res.data;
     allItemList.value.forEach((item) => {
       itemMap.set(item.id, item);
@@ -196,15 +199,16 @@ onMounted(() => {
     disabled.value = route.fullPath.startsWith('/marketing/limit/detail');
     selectApi(params)
       .then((res) => {
-        formData.value = res.data;
-        formData.value.timeList = [res.data.startTime, res.data.endTime];
-        loadingItemList(params.id);
+        renderItem(params.id).finally(() => {
+          formData.value = res.data;
+          formData.value.timeList = [res.data.startTime, res.data.endTime];
+        });
       })
       .finally(() => {
         loading.value = false;
       });
   } else {
-    loadingItemList(params.id);
+    renderItem(params.id);
   }
 });
 </script>
