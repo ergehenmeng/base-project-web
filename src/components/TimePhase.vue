@@ -102,7 +102,7 @@ const moveInMap = new Map();
 const moveOutMap = new Map();
 
 const selectHandle = (value, event) => {
-  if (!event.target.classList.contains('item') || event.target.classList.contains('checked')) {
+  if (props.disabled || !event.target.classList.contains('item') || event.target.classList.contains('checked')) {
     return;
   }
   if (!start.value && !end.value) {
@@ -237,27 +237,28 @@ const addTips = (item, startTime, endTime, price) => {
 };
 
 const bindDeleteEvent = (parent, item, startTime, endTime, mouseenterEvent, mouseleaveEvent) => {
-  item.addEventListener('click', () => {
-    const msg = renderMsg(["确定要删除", () => `${startTime}~${endTime}`, "时间段的价格配置吗?"]);
-    confirmMsg(msg, () => {
-      parent.removeChild(item);
-      const data = parent.getAttribute('data');
-      phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
-      const length = parseInt(parent.style.width.split('px')[0]) / 30;
-      if (data === startTime) {
-        resetAfter(parent, length);
-      } else {
-        resetBefore(parent, length);
-      }
-      if (mouseenterEvent) {
-        parent.removeEventListener('mouseenter', mouseenterEvent);
-      }
-      if (mouseleaveEvent) {
-        parent.removeEventListener('mouseleave', mouseleaveEvent);
-      }
+  if (!props.disabled) {
+    item.addEventListener('click', () => {
+      const msg = renderMsg(["确定要删除", () => `${startTime}~${endTime}`, "时间段的价格配置吗?"]);
+      confirmMsg(msg, () => {
+        parent.removeChild(item);
+        const data = parent.getAttribute('data');
+        phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
+        const length = parseInt(parent.style.width.split('px')[0]) / 30;
+        if (data === startTime) {
+          resetAfter(parent, length);
+        } else {
+          resetBefore(parent, length);
+        }
+        if (mouseenterEvent) {
+          parent.removeEventListener('mouseenter', mouseenterEvent);
+        }
+        if (mouseleaveEvent) {
+          parent.removeEventListener('mouseleave', mouseleaveEvent);
+        }
+      });
     });
-  });
-  return () => parent.removeChild(item);
+  }
 };
 
 const resetAfter = (item, length) => {

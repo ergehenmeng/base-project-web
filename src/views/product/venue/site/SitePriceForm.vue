@@ -3,7 +3,7 @@
     <el-divider />
     <div style="display: flex; justify-content: space-between">
       <div>
-        <el-button type="primary" :icon="Setting" @click="handleSetting">批量设置</el-button>
+        <el-button v-has-perm="'ACO0'" type="primary" :icon="Setting" @click="handleSetting">批量设置</el-button>
       </div>
       <div>
         <el-button-group style="margin-bottom: 10px">
@@ -18,7 +18,7 @@
         <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item"></el-tab-pane>
       </el-tabs>
       <div style="padding-top: 20px; display: flex; justify-content: center">
-        <TimePhase v-model:phase-list="phaseList"></TimePhase>
+        <TimePhase v-model:phase-list="phaseList" :disabled="!setupAuth"></TimePhase>
       </div>
     </div>
   </div>
@@ -29,7 +29,10 @@ import dayjs from 'dayjs';
 import { Setting } from '@element-plus/icons-vue';
 import { useRoute, useRouter } from 'vue-router';
 import TimePhase from '@/components/TimePhase.vue';
+import useUserStore from '@/store/user';
 
+const userStore = useUserStore();
+const setupAuth = userStore.hasAuth('ACO0');
 const router = useRouter();
 const route = useRoute();
 const dayList = ref([]);
