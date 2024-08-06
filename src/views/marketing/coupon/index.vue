@@ -37,8 +37,8 @@
         <el-table-column prop="receiveNum" label="已领取数量" width="100" />
         <el-table-column prop="useNum" label="已使用数量" width="100" />
         <el-table-column prop="mode" label="领取方式" width="90" :formatter="formatter"/>
-        <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
-        <el-table-column prop="discountValue" label="折扣比例" width="80" />
+        <el-table-column prop="couponType" label="优惠券类型" width="110" :formatter="formatter" />
+        <el-table-column prop="discountValue" label="折扣比例" width="80" :formatter="(row, column, cellValue) => cellValue === null ? '': cellValue + '%' "/>
         <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
         <el-table-column prop="useThreshold" label="使用门槛" width="80" :formatter="formatter" />
         <el-table-column prop="useStartTime" label="使用时间段" min-width="260" :formatter="formatter" />

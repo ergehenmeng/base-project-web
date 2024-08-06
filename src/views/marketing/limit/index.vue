@@ -17,7 +17,7 @@
         <el-table-column prop="advanceHour" label="提前预告(小时)" width="120" :formatter="formatter"/>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column prop="remark" label="备注信息" width="200" />
+        <el-table-column prop="remark" label="备注信息" min-width="200" />
         <el-table-column label="操作" fixed="right" width="210">
           <template #header>
             <span style="margin-right: 5px">操作</span>

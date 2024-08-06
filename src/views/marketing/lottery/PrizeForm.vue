@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="发送站内信" v-model="showDialog" width="500" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="设置奖品" v-model="showDialog" width="500" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-width="150" label-position="right" style="width: 400px" :validate-on-rule-change="false">
       <el-form-item label="奖品类型" prop="prizeType">
         <el-select v-model="formData.prizeType" @change="handleChangePrizeType">
@@ -15,6 +15,7 @@
       </el-form-item>
       <el-form-item label="中奖发放数量" prop="num">
         <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <QuestionTip content="单次中奖发放的数量"></QuestionTip>
       </el-form-item>
       <el-form-item label="奖品总数量" prop="totalNum">
         <el-input v-model="formData.totalNum" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
@@ -36,13 +37,18 @@
 import UploadImage from '@/components/UploadImage.vue';
 import CouponSelect from '@/components/CouponSelect.vue';
 import { warningMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   prizeName: [{ required: true, message: '奖品名称不能为空', trigger: 'blur' }],
   prizeType: [{ required: true, message: '奖品类型不能为空', trigger: 'change' }],
-  num: [{ required: true, message: '单次中奖发放数量不能为空', trigger: 'blur' }],
+  num: [{ required: true, message: '单次中奖发放数量不能为空', trigger: 'blur' },{
+    min: 1,
+    message: '单次中奖发放数量不能小于1',
+    trigger: 'blur'
+  }],
   totalNum: [{ required: true, message: '奖品总数量不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '奖品图片不能为空', trigger: 'change' }]
 });

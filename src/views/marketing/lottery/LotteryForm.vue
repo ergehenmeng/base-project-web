@@ -93,7 +93,7 @@
                       <CreateButton v-show="formData.prizeList.length < 8 && !disabled" title="新增奖品信息" @click="handleCreatePrize"></CreateButton>
                     </template>
                     <template #default="scope">
-                      <el-button v-show="scope.$index !== 0" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
+                      <el-button v-show="scope.$index !== 0" v-if="!disabled" type="danger" :icon="Delete" @click="handleDeletePrize(scope.$index)" link title="删除"></el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -155,7 +155,9 @@
       </div>
     </div>
   </div>
-  <PrizeForm ref="prizeRef" @reload="addPrize" v-show="!disabled"></PrizeForm>
+  <template v-if="!disabled">
+    <PrizeForm ref="prizeRef" @reload="addPrize" ></PrizeForm>
+  </template>
 </template>
 
 <script setup>

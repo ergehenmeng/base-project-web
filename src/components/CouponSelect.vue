@@ -1,6 +1,6 @@
 <template>
   <el-select v-model="couponId" :disabled="props.disabled" :clearable="props.clearable" filterable>
-    <el-option v-for="item in couponList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 0">
+    <el-option v-for="item in couponList" :key="item.id" :value="item.id" :label="item.title" >
       <span style="float: left">{{ item.title }}</span>
       <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 1 ? '启用' : '禁用' }}</span>
     </el-option>

@@ -35,8 +35,8 @@
           <template #default="scope">
             <el-button v-has-perm="'F1i0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'I1i0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
             <el-button v-has-perm="'H1i0'" type="primary" :icon="Memo" @click="handleLog(scope.row)" link title="抽奖记录"></el-button>
+            <el-button v-has-perm="'b1i0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -15,7 +15,9 @@
         <el-input v-model="formData.deductionValue" :disabled="disabled" show-word-limit maxlength="6" @keyup="formData.deductionValue = numberValidator(formData.deductionValue)" />
       </el-form-item>
       <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="disabled">
-        <el-input v-model="formData.discountValue" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.discountValue" maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+          <template #append>折</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="使用门槛" :prop="thresholdProp">
         <el-radio-group v-model="formData.threshold" @change="handleThreshold" :disabled="disabled">
@@ -222,7 +224,7 @@ const handleProductChange = () => {
 
 const handleMode = (value) => {
   if (value === 2) {
-    warningMsg('手动发放模式下，需要联系运营人员进行手动发放');
+    warningMsg('手动发放模式下，只能通过抽奖或联系运营人员进行发放');
   }
 };
 
