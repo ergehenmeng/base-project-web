@@ -36,12 +36,12 @@
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="联系人姓名" min-width="100" />
         <el-table-column prop="mobile" label="联系人手机号" min-width="120" />
-        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
+        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="createTime" label="下单时间" width="180" />
         <el-table-column prop="payTime" label="支付时间" width="180" />
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'OaD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>

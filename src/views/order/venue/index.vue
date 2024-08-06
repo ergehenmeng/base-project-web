@@ -39,16 +39,16 @@
         <el-table-column prop="orderNo" label="订单编号" min-width="200" />
         <el-table-column prop="siteTitle" label="场地名称" min-width="150" />
         <el-table-column prop="title" label="场馆名称" min-width="150" />
+        <el-table-column prop="venueType" label="场馆类型" width="100" :formatter="formatter"/>
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
-        <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="联系人昵称" min-width="100" />
         <el-table-column prop="mobile" label="联系人电话" min-width="120" />
-        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
+        <el-table-column prop="discountAmount" label="优惠金额" width="100" />
         <el-table-column prop="createTime" label="下单时间" width="180" />
         <el-table-column prop="payTime" label="支付时间" width="180" />
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'Y8D0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
           </template>
@@ -70,7 +70,7 @@ import { exportApi, listPageApi } from '@/api/order/venue';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat, venueTypeFormat } from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 
@@ -123,6 +123,8 @@ const formatter = (_row, column, cellValue) => {
     closeTypeFormat(cellValue);
   } else if (column.property === 'payType') {
     payTypeFormat(cellValue);
+  } else if (column.property === 'venueType') {
+    return venueTypeFormat(cellValue);
   } else {
     return cellValue;
   }
