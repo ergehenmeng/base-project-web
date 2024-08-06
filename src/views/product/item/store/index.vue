@@ -33,7 +33,11 @@
         <el-table-column prop="title" label="店铺名称" min-width="150" />
         <el-table-column prop="merchantName" label="所属商户" min-width="150" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="recommend" label="平台推荐" width="80" :formatter="formatter" />
+        <el-table-column prop="recommend" width="100" :formatter="formatter" >
+          <template #header>
+            <span>平台推荐<QuestionTip content="被平台推荐的店铺会在首页展示"></QuestionTip></span>
+          </template>
+        </el-table-column>
         <el-table-column prop="telephone" label="商家电话" width="130" />
         <el-table-column prop="openTime" label="营业时间" min-width="120" />
         <el-table-column prop="score" label="评分" width="70" :formatter="(row, column, cellValue) => cellValue === null ? '无': cellValue "/>
@@ -83,6 +87,7 @@ import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import Recommend from '@/components/icon/Recommend.vue'
 import Recommended from '@/components/icon/Recommended.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -146,16 +151,7 @@ const formatter = (_row, column, cellValue) => {
           '强制下架'
         );
   } else if (column.property === 'recommend') {
-    return cellValue
-      ? h(
-          'span',
-          {
-            style: 'color: green;',
-            title: '平台推荐店铺优先在首页展示'
-          },
-          '是'
-        )
-      : h('span', { title: '平台推荐店铺优先在首页展示' }, '否');
+    return cellValue ? '是': '否';
   } else {
     return cellValue;
   }

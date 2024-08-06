@@ -44,10 +44,39 @@
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="屋内设施" prop="infrastructureList">
-        <div style="width: 800px">
-          <el-checkbox-group v-model="formData.infrastructureList">
-            <el-checkbox v-for="item in infrastructureTagList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
-          </el-checkbox-group>
+        <div style="padding: 0 10px;">
+          <el-collapse style="width: 780px;">
+            <el-collapse-item title="热门设施" name="1">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in hotInstitutionList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+            <el-collapse-item title="卫浴设施" name="2">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in bathroomList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+            <el-collapse-item title="媒体影音" name="3">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in mediaList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+            <el-collapse-item title="配套家电" name="4">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in applianceList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+            <el-collapse-item title="客房景观" name="5">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in landscapeList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+            <el-collapse-item title="儿童设施" name="6">
+              <el-checkbox-group v-model="formData.infrastructureList">
+                <el-checkbox v-for="item in childrenList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+              </el-checkbox-group>
+            </el-collapse-item>
+          </el-collapse>
         </div>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
@@ -78,7 +107,13 @@ import HomestaySelect from '@/components/HomestaySelect.vue';
 import { goBack } from '@/utils/common.js';
 
 const dictStore = useDictStore();
-const infrastructureTagList = dictStore.getDict('infrastructure_tag');
+const hotInstitutionList = dictStore.getDict('hot_institution');
+const bathroomList = dictStore.getDict('bathroom');
+const childrenList = dictStore.getDict('children');
+const mediaList = dictStore.getDict('media');
+const applianceList = dictStore.getDict('appliance');
+const landscapeList = dictStore.getDict('landscape');
+
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);

@@ -47,7 +47,11 @@ const areaStore = useAreaStore();
 areaStore.initArea();
 // 初始化数据字典
 const dictStore = useDictStore();
-dictStore.initDict('image_type', 'help_type', 'feedback_type', 'banner_type', 'notice_type', 'scenic_tag', 'homestay_tag', 'key_service', 'infrastructure_tag');
+dictStore.initDict('image_type', 'help_type', 'feedback_type',
+  'banner_type', 'notice_type', 'scenic_tag',
+  'homestay_tag', 'key_service', 'hot_institution',
+  'bathroom', 'children', 'media', 'appliance',
+  'landscape');
 
 onMounted(() => {
   const init = userStore.user?.init;

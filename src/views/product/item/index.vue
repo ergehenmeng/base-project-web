@@ -69,6 +69,11 @@
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
+        <el-table-column prop="recommend" width="100" :formatter="(row, column, cellValue) => cellValue ? '是': '否'" >
+          <template #header>
+            <span>平台推荐<QuestionTip content="被平台推荐的商品会在首页展示"></QuestionTip></span>
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="200">

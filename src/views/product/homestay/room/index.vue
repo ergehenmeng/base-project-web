@@ -50,7 +50,11 @@
         <el-table-column prop="homestayTitle" label="所属民宿" min-width="150" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="roomType" label="房型" min-width="80" :formatter="formatter" />
-        <el-table-column prop="recommend" label="平台推荐" min-width="80" :formatter="formatter" />
+        <el-table-column prop="recommend" min-width="80" :formatter="formatter" >
+          <template #header>
+            <span>平台推荐<QuestionTip content="被平台推荐的房型会在首页展示"></QuestionTip></span>
+          </template>
+        </el-table-column>
         <el-table-column prop="refundType" label="退款方式" min-width="80" :formatter="formatter" />
         <el-table-column prop="dimension" label="面积(m²)" width="80" />
         <el-table-column prop="resident" label="居住人数" min-width="80" />
@@ -100,6 +104,7 @@ import HomestaySelect from '@/components/HomestaySelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import Recommend from '@/components/icon/Recommend.vue'
 import Recommended from '@/components/icon/Recommended.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -187,16 +192,7 @@ const formatter = (_row, column, cellValue) => {
     }
     return cellValue === 1 ? '直接退款' : '审核后退款';
   } else if (column.property === 'recommend') {
-    return cellValue
-      ? h(
-          'span',
-          {
-            style: 'color: green;',
-            title: '被平台推荐的房型会在首页展示'
-          },
-          '是'
-        )
-      : h('span', { title: '被平台推荐的房型会在首页展示' }, '否');
+    return cellValue ? '是' : '否';
   } else {
     return cellValue;
   }
