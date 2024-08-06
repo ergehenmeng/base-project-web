@@ -67,9 +67,14 @@
             <el-button v-has-perm="'rbO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
             <el-button v-has-perm="'RbO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
             <el-button v-has-perm="'abO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
-            <el-button v-has-perm="'0bO0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link title="设置推荐状态"></el-button>
             <el-button v-has-perm="'hbO0'" type="success" :icon="Calendar" @click="handleCalendar(scope.row)" link title="房态价格日历"></el-button>
             <el-button v-has-perm="'dbO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'0bO0'" v-if="!scope.row.recommend" @click="handleRecommend(scope.row)" link title="设置平台推荐">
+              <Recommend></Recommend>
+            </el-button>
+            <el-button v-has-perm="'0bO0'" v-if="scope.row.recommend" @click="handleRecommend(scope.row)" link title="取消平台推荐">
+              <Recommended></Recommended>
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -86,13 +91,15 @@
 </template>
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/room';
-import { Bottom, Calendar, Delete, Document, Download, Edit, Star, Top } from '@element-plus/icons-vue';
+import { Bottom, Calendar, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import { downloadExcel } from '@/utils/common.js';
 import HomestaySelect from '@/components/HomestaySelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import Recommend from '@/components/icon/Recommend.vue'
+import Recommended from '@/components/icon/Recommended.vue'
 
 const router = useRouter();
 const userStore = useUserStore();

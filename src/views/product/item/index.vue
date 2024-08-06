@@ -83,8 +83,13 @@
             <el-button v-has-perm="'BSO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
             <el-button v-has-perm="'WSO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
             <el-button v-has-perm="'vSO0'" type="primary" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
-            <el-button v-has-perm="'3SO0'" type="warning" :icon="Star" @click="handleRecommend(scope.row)" link title="设置推荐状态"></el-button>
             <el-button v-has-perm="'TSO0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'3SO0'" v-show="!scope.row.recommend" @click="handleRecommend(scope.row)" link title="设置平台推荐">
+              <Recommend></Recommend>
+            </el-button>
+            <el-button v-has-perm="'3SO0'" v-show="scope.row.recommend" @click="handleRecommend(scope.row)" link title="取消平台推荐">
+              <Recommended></Recommended>
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +106,7 @@
 </template>
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/item';
-import { Bottom, Delete, Document, Download, Edit, Link, Star, Top } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Download, Edit, Link, Top } from '@element-plus/icons-vue';
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -112,6 +117,8 @@ import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { shortUrlApi } from '@/api/common/index.js'
 import { useClipboard } from '@vueuse/core'
+import Recommend from '@/components/icon/Recommend.vue'
+import Recommended from '@/components/icon/Recommended.vue'
 
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;

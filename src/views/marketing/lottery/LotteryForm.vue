@@ -40,11 +40,8 @@
               <el-form-item label="活动名称" prop="title">
                 <el-input v-model="formData.title" show-word-limit maxlength="8" />
               </el-form-item>
-              <el-form-item prop="storeId">
-                <template #label>
-                  <span>使用店铺<QuestionTip content="不选默认所有店铺生效"></QuestionTip></span>
-                </template>
-                <StoreAllSelect v-model:store-ids="formData.storeId" v-model:store-list="storeList"></StoreAllSelect>
+              <el-form-item prop="storeId" label="使用店铺">
+                <StoreAllSelect v-model:store-ids="formData.storeId" v-model:store-list="storeList"></StoreAllSelect><QuestionTip content="不选默认所有店铺生效"></QuestionTip>
               </el-form-item>
               <el-form-item label="活动时间" prop="timeList">
                 <div style="width: 350px">

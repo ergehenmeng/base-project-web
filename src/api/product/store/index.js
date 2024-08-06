@@ -69,6 +69,13 @@ export const storeListApi = () => {
   });
 };
 
+export const recommendApi = (data) => {
+  return request.post({
+    url: '/manage/item/store/recommend',
+    data
+  });
+};
+
 export const exportApi = (params) => {
   return request.download({
     url: '/manage/item/store/export',

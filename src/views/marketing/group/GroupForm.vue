@@ -25,7 +25,7 @@
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? '强制下架' : '已上架' }}</span>
           </el-option>
         </el-select>
-        <QuestionTip content="注意：拼团活动只支持零售类商品" ></QuestionTip>
+        <QuestionTip content="注意：拼团活动只支持零售类商品，且商品只能参加一个活动" ></QuestionTip>
       </el-form-item>
       <el-form-item label="商品详情" prop="skuList">
         <el-table :data="allSkuList" border style="width: 600px" @selection-change="handleSelectionChange" ref="tableRef">
