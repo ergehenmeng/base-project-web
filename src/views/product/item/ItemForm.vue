@@ -212,6 +212,7 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }
   ],
+  quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }, { min: 1, message: '限购数量不能小于1', trigger: 'blur' }],
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
   coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
