@@ -44,7 +44,7 @@
         <el-table-column prop="realBuy" label="是否实名" width="80" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
         <el-table-column prop="updateTime" label="更新时间" width="170" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'hTl0'" title="新增门票" @click="handleCreate"></CreateButton>

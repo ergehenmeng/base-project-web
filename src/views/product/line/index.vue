@@ -69,7 +69,7 @@
         <el-table-column prop="duration" label="游玩天数" width="120" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'tvl0'" title="新增线路" @click="handleCreate"></CreateButton>

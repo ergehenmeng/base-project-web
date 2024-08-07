@@ -45,7 +45,7 @@
         <el-table-column prop="phone" label="联系电话" width="120" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'TIO0'" title="新增民宿" @click="handleCreate"></CreateButton>

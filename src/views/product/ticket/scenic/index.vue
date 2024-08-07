@@ -32,7 +32,7 @@
         <el-table-column prop="minPrice" label="票价" width="150" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'MLl0'" title="新增景区" @click="handleCreate"></CreateButton>

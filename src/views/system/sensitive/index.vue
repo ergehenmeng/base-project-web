@@ -14,7 +14,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="keyword" label="敏感词" />
         <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'n450'" title="新增敏感词" @click="handleCreate"></CreateButton>
