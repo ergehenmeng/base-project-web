@@ -5,7 +5,7 @@
     </el-button>
   </el-tooltip>
 </template>
-<script setup lang="ts">
+<script setup>
 import Question from '@/components/icon/Question.vue';
 
 const props = defineProps({

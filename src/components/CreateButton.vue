@@ -3,6 +3,6 @@
     <Add></Add>
   </el-button>
 </template>
-<script setup lang="ts">
+<script setup>
 import Add from '@/components/icon/Add.vue';
 </script>
