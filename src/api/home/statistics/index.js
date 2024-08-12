@@ -34,3 +34,10 @@ export const dayAppendApi = (params) => {
     params
   });
 };
+
+export const dayCartApi = (params) => {
+  return request.get({
+    url: '/manage/statistics/cart',
+    params
+  });
+};
