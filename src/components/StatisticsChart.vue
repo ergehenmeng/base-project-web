@@ -24,7 +24,7 @@
   </el-col>
 </template>
 <script setup>
-import UserList from '@/components/icon/UserList.vue'
+import UserList from '@/components/icon/Member.vue'
 
 const props = defineProps({
   span: {

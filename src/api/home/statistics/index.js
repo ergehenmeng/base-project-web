@@ -27,3 +27,10 @@ export const dayOrderApi = (params) => {
     params
   });
 };
+
+export const dayAppendApi = (params) => {
+  return request.get({
+    url: '/manage/statistics/append',
+    params
+  });
+};

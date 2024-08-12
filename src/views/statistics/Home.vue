@@ -37,7 +37,7 @@
     <el-row>
       <StatisticsChart title="注册统计" :height="300" :span="24">
         <template #icon>
-          <UserList></UserList>
+          <Member></Member>
         </template>
         <template #action>
         <div style="display: flex; justify-content:center; align-items: center">
@@ -55,11 +55,69 @@
         </template>
       </StatisticsChart>
     </el-row>
+    <el-row>
+      <StatisticsChart title="新增商品" :height="300" :span="24">
+        <template #icon>
+          <Product></Product>
+        </template>
+        <template #action>
+          <div style="display: flex; justify-content:center; align-items: center">
+            <el-select v-model="productParams.productType" clearable class="w120" style="margin-right: 20px;" @change="queryProductHandler">
+              <el-option label="零售" value="item" />
+              <el-option label="门票" value="ticket" />
+              <el-option label="民宿" value="homestay" />
+              <el-option label="餐饮" value="voucher" />
+              <el-option label="场馆" value="venue" />
+              <el-option label="线路" value="line" />
+            </el-select>
+            <el-radio-group style="margin-right: 20px" v-model="productParams.selectType" @change="queryProductHandler">
+              <el-radio-button value="week">周</el-radio-button>
+              <el-radio-button value="month">月</el-radio-button>
+              <el-radio-button value="year">年</el-radio-button>
+              <el-radio-button value="custom">自定义</el-radio-button>
+            </el-radio-group>
+            <el-date-picker v-model="productParams.activeDate" :disabled="productDisabled" type="daterange" value-format="YYYY-MM-DD" class="w220" :disabled-date="(time) => disabledDate('product', time)" @calendar-change="calendarChangeHandler('product', $event)" @change="getDayProductData"></el-date-picker>
+          </div>
+        </template>
+        <template #content>
+          <div id="productApp" style="width: 100%; height: 100%"></div>
+        </template>
+      </StatisticsChart>
+    </el-row>
+    <el-row>
+      <StatisticsChart title="加购统计" :height="300" :span="24">
+        <template #icon>
+          <Product></Product>
+        </template>
+        <template #action>
+          <div style="display: flex; justify-content:center; align-items: center">
+            <el-select v-model="productParams.productType" clearable class="w120" style="margin-right: 20px;" @change="queryProductHandler">
+              <el-option label="零售" value="item" />
+              <el-option label="门票" value="ticket" />
+              <el-option label="民宿" value="homestay" />
+              <el-option label="餐饮" value="voucher" />
+              <el-option label="场馆" value="venue" />
+              <el-option label="线路" value="line" />
+            </el-select>
+            <el-radio-group style="margin-right: 20px" v-model="productParams.selectType" @change="queryProductHandler">
+              <el-radio-button value="week">周</el-radio-button>
+              <el-radio-button value="month">月</el-radio-button>
+              <el-radio-button value="year">年</el-radio-button>
+              <el-radio-button value="custom">自定义</el-radio-button>
+            </el-radio-group>
+            <el-date-picker v-model="productParams.activeDate" :disabled="productDisabled" type="daterange" value-format="YYYY-MM-DD" class="w220" :disabled-date="(time) => disabledDate('product', time)" @calendar-change="calendarChangeHandler('product', $event)" @change="getDayProductData"></el-date-picker>
+          </div>
+        </template>
+        <template #content>
+          <div id="productApp" style="width: 100%; height: 100%"></div>
+        </template>
+      </StatisticsChart>
+    </el-row>
   </div>
 </template>
 
 <script setup>
-import { registerApi, dayRegisterApi, orderApi, dayOrderApi } from '@/api/home/statistics';
+import { registerApi, dayRegisterApi, orderApi, dayOrderApi, dayAppendApi } from '@/api/home/statistics';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart } from 'echarts/charts';
 import { DatasetComponent, GridComponent, TitleComponent, TooltipComponent, TransformComponent, ToolboxComponent, LegendComponent } from 'echarts/components';
@@ -71,22 +129,24 @@ import PayAmount from '@/components/icon/PayAmount.vue'
 import PayNum from '@/components/icon/PayNum.vue'
 import RefundAmount from '@/components/icon/RefundAmount.vue'
 import StatisticsChart from '@/components/StatisticsChart.vue'
-import UserList from '@/components/icon/UserList.vue'
+import Member from '@/components/icon/Member.vue'
 import Line from '@/components/icon/Line.vue'
 import dayjs from "dayjs";
+import Product from '@/components/icon/Product.vue'
 
 // 注册必须的组件
 echarts.use([LineChart, TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, BarChart, LabelLayout, UniversalTransition, CanvasRenderer, ToolboxComponent, LegendComponent]);
 
 let orderChart;
 let registerChart;
+let productChart;
 
 const orderOption = (dataList) => {
   orderChart.setOption({
     color: ['#9dd3e8', '#fc8452'],
     grid: {
       left: '4%',
-      right: '4%',
+      right: '5%',
       bottom: '10%'
     },
     tooltip: {
@@ -104,7 +164,7 @@ const orderOption = (dataList) => {
         axisPointer: {
           type: 'shadow'
         },
-        data: dataList.map(item => item.createDate),
+        data: orderParams.selectType === 'year' ? dataList.map(item => item.createMonth) : dataList.map(item => item.createDate)
       }
     ],
     yAxis: [
@@ -144,6 +204,7 @@ const orderOption = (dataList) => {
         name: '订单数',
         type: 'bar',
         yAxisIndex: 0,
+        barWidth: '40%',
         data: dataList.map(item => item.orderNum)
       },
       {
@@ -163,7 +224,7 @@ const registerOption = (dataList) => {
     color: ['#9dd3e8', '#fc8452', '#2335ed', '#6ded23'],
     grid: {
       left: '4%',
-      right: '4%',
+      right: '5%',
       bottom: '10%'
     },
     tooltip: {
@@ -178,7 +239,7 @@ const registerOption = (dataList) => {
         axisTick: {
           alignWithLabel: true
         },
-        data: dataList.map(item => item.createDate),
+        data: registerParams.selectType === 'year' ? dataList.map(item => item.createMonth) : dataList.map(item => item.createDate)
       }
     ],
     yAxis: {
@@ -208,6 +269,56 @@ const registerOption = (dataList) => {
   });
 }
 
+
+const productOption = (dataList) => {
+  productChart.setOption({
+    grid: {
+      left: '4%',
+      right: '5%',
+      bottom: '10%'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['商品数']
+    },
+    xAxis: [
+      {
+        type: 'category',
+        axisTick: {
+          alignWithLabel: true
+        },
+        data: productParams.selectType === 'year' ? dataList.map(item => item.createMonth) : dataList.map(item => item.createDate)
+      }
+    ],
+    yAxis: {
+      type: 'value',
+      position: 'left',
+      name: '商品数',
+      alignTicks: true,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: '#aaa'
+        }
+      },
+      axisLabel: {
+        formatter: '{value}'
+      }
+    },
+    series: [
+      {
+        name: '商品数',
+        type: 'line',
+        smooth: true,
+        color: '#ffa502',
+        data: dataList.map(item => item.appendNum)
+      }
+    ]
+  });
+}
+
 const chooseMap = new Map();
 
 const orderParams = reactive({
@@ -220,9 +331,15 @@ const registerParams = reactive({
   selectType: 'week'
 });
 
+const productParams = reactive({
+  activeDate: [],
+  selectType: 'week',
+  productType: null
+});
 
 const registerDisabled = ref(true);
 const orderDisabled = ref(true);
+const productDisabled = ref(true);
 
 const disabledDate = (key, time) => {
   const choiceDate = chooseMap.get(key);
@@ -272,6 +389,20 @@ const queryRegisterHandler = (value) => {
   getDayRegisterData();
 }
 
+const queryProductHandler = (value) => {
+  if (value === 'custom') {
+    productDisabled.value = false;
+    productParams.activeDate = [];
+  } else if (value === 'week') {
+    productParams.activeDate = getWeekDate();
+  } else if (value === 'year') {
+    productParams.activeDate = getYearDate();
+  } else if (value === 'month') {
+    productParams.activeDate = getMonthDate();
+  }
+  getDayProductData();
+}
+
 const getDayOrderData = () => {
   const activeDate = orderParams.activeDate;
   if (activeDate && activeDate.length > 0) {
@@ -294,6 +425,17 @@ const getDayRegisterData = () => {
   }
 }
 
+const getDayProductData = () => {
+  const activeDate = productParams.activeDate;
+  if (activeDate && activeDate.length > 0) {
+    productParams.startDate = activeDate[0];
+    productParams.endDate = activeDate[1];
+    dayAppendApi(productParams).then(res => {
+      productOption(res.data);
+    })
+  }
+}
+
 const getWeekDate = () => {
   return [dayjs().subtract(7, 'day').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')];
 }
@@ -311,10 +453,13 @@ onMounted(() => {
   const weekDate = getWeekDate();
   registerParams.activeDate = weekDate;
   orderParams.activeDate = weekDate;
+  productParams.activeDate = weekDate;
   orderChart = echarts.init(document.getElementById('orderApp'));
   registerChart = echarts.init(document.getElementById('registerApp'));
+  productChart = echarts.init(document.getElementById('productApp'));
   getDayOrderData();
   getDayRegisterData();
+  getDayProductData();
 })
 </script>
 <style lang="scss" scoped>
