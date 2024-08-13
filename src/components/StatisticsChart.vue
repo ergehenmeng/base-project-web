@@ -16,13 +16,15 @@
         <div class="item-action">
           <div style="display: flex; justify-content:center; align-items: center">
             <slot name="action"></slot>
-            <el-radio-group style="margin-right: 20px" v-model="selectType" @change="queryHandler">
-              <el-radio-button value="week">周</el-radio-button>
-              <el-radio-button value="month">月</el-radio-button>
-              <el-radio-button value="year">年</el-radio-button>
-              <el-radio-button value="custom">自定义</el-radio-button>
-            </el-radio-group>
-            <el-date-picker v-model="activeDate" :disabled="disabled" type="daterange" value-format="YYYY-MM-DD" class="w220" :disabled-date="(time) => disabledDate('product', time)" @calendar-change="calendarChangeHandler('product', $event)" @change="reloadData"></el-date-picker>
+            <template v-if="!props.hiddenQuery">
+              <el-radio-group style="margin-right: 20px" v-model="selectType" @change="queryHandler">
+                <el-radio-button value="week">周</el-radio-button>
+                <el-radio-button value="month">月</el-radio-button>
+                <el-radio-button value="year">年</el-radio-button>
+                <el-radio-button value="custom">自定义</el-radio-button>
+              </el-radio-group>
+              <el-date-picker v-model="activeDate" :disabled="disabled" type="daterange" value-format="YYYY-MM-DD" class="w220" :disabled-date="(time) => disabledDate('product', time)" @calendar-change="calendarChangeHandler('product', $event)" @change="reloadData"></el-date-picker>
+            </template>
           </div>
         </div>
       </div>
@@ -70,6 +72,10 @@ const props = defineProps({
   height: {
     type: Number,
     default: 250
+  },
+  hiddenQuery: {
+    type: Boolean,
+    default: false
   }
 });
 

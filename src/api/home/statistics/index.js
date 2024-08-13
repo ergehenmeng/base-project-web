@@ -1,8 +1,8 @@
 import request from '@/utils/request';
 
-export const registerApi = (params) => {
+export const channelApi = (params) => {
   return request.get({
-    url: '/manage/statistics/register',
+    url: '/manage/statistics/channel',
     params
   });
 };

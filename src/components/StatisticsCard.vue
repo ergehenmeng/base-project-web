@@ -5,13 +5,14 @@
         <slot></slot>
       </div>
       <div class="item-box">
-        <span class="item-box-title">{{ props.title}}</span>
-        <span class="item-box-content">{{ props.amount }}</span>
+        <el-statistic :value="amountRef" :title="props.title" :precision="props.precision"> </el-statistic>
       </div>
     </div>
   </el-col>
 </template>
 <script setup>
+import { useTransition } from '@vueuse/core'
+
 const props = defineProps({
   span: {
     type: Number,
@@ -22,10 +23,31 @@ const props = defineProps({
     required: true
   },
   amount: {
-    type: String,
-    required: true
+    type: [String, Number],
+    default: 0
+  },
+  precision: {
+    type: Number,
+    default: 0
   }
 });
+
+const amount = ref(0);
+const amountRef = useTransition(amount, {
+  duration: 1000
+});
+
+watch(
+  () => props.amount,
+  (val) => {
+    if (typeof val === 'string') {
+      amount.value = Number(val);
+    } else if (typeof val === 'number'){
+      amount.value = val;
+    }
+  }
+)
+
 </script>
 <style lang="scss" scoped>
 .item-layout {

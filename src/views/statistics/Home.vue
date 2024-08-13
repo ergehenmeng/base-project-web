@@ -2,34 +2,42 @@
   <div class="edit-content">
     <el-divider />
     <el-row>
-      <StatisticsCard title="累计订单数" amount="321,123">
+      <StatisticsCard title="累计订单数" :amount="orderValue.orderNum">
         <PayNum :size="50"></PayNum>
       </StatisticsCard>
-      <StatisticsCard title="累计订单金额" amount="321,123">
+      <StatisticsCard title="累计订单金额" :amount="orderValue.payAmount" :precision="2">
         <PayAmount :size="50"></PayAmount>
       </StatisticsCard>
-      <StatisticsCard title="累计退单数" amount="321,123">
+      <StatisticsCard title="累计退单数" :amount="orderValue.refundNum">
         <RefundNum :size="50"></RefundNum>
       </StatisticsCard>
-      <StatisticsCard title="累计退款金额" amount="321,123">
+      <StatisticsCard title="累计退款金额" :amount="orderValue.refundAmount" :precision="2">
         <RefundAmount :size="50"></RefundAmount>
       </StatisticsCard>
+    </el-row>
+    <el-row>
+      <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
+        <template #icon>
+          <Member></Member>
+        </template>
+        <template #content>
+          <div id="registerApp" style="width: 100%; height: 100%"></div>
+        </template>
+      </StatisticsChart>
+      <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
+        <template #icon>
+          <Member></Member>
+        </template>
+        <template #content>
+          <div id="channelApp" style="width: 100%; height: 100%"></div>
+        </template>
+      </StatisticsChart>
     </el-row>
     <el-row>
       <StatisticsChart title="订单统计" :height="350" :span="24" v-model:active-date="orderParams.activeDate" v-model:select-type="orderParams.selectType" @reload="getDayOrderData">
         <template #icon><Order></Order></template>
         <template #content>
           <div id="orderApp" style="width: 100%; height: 100%"></div>
-        </template>
-      </StatisticsChart>
-    </el-row>
-    <el-row>
-      <StatisticsChart title="注册统计" :height="300" :span="24" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
-        <template #icon>
-          <Member></Member>
-        </template>
-        <template #content>
-          <div id="registerApp" style="width: 100%; height: 100%"></div>
         </template>
       </StatisticsChart>
     </el-row>
@@ -112,9 +120,9 @@
 </template>
 
 <script setup>
-import { registerApi, dayRegisterApi, orderApi, dayOrderApi, dayAppendApi, dayCartApi, dayVisitApi, dayCollectApi } from '@/api/home/statistics';
+import { channelApi, dayRegisterApi, orderApi, dayOrderApi, dayAppendApi, dayCartApi, dayVisitApi, dayCollectApi } from '@/api/home/statistics';
 import * as echarts from 'echarts/core';
-import { BarChart, LineChart } from 'echarts/charts';
+import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { DatasetComponent, GridComponent, TitleComponent, TooltipComponent, TransformComponent, ToolboxComponent, LegendComponent } from 'echarts/components';
 import { LabelLayout, UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -132,7 +140,7 @@ import Order from "@/components/icon/Order.vue";
 import Visit from '@/components/icon/Visit.vue'
 
 // 注册必须的组件
-echarts.use([LineChart, TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, BarChart, LabelLayout, UniversalTransition, CanvasRenderer, ToolboxComponent, LegendComponent]);
+echarts.use([ PieChart, LineChart, TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, BarChart, LabelLayout, UniversalTransition, CanvasRenderer, ToolboxComponent, LegendComponent]);
 
 let orderChart;
 let registerChart;
@@ -140,6 +148,7 @@ let productChart;
 let cartChart;
 let visitChart;
 let collectChart;
+let channelChart;
 
 const orderOption = (dataList) => {
   orderChart.setOption({
@@ -317,7 +326,6 @@ const productOption = (dataList) => {
   });
 }
 
-
 const cartOption = (dataList) => {
   cartChart.setOption({
     grid: {
@@ -464,6 +472,42 @@ const collectOption = (dataList) => {
   });
 }
 
+const channelOption = (dataList) => {
+  channelChart.setOption({
+    tooltip: {
+      trigger: 'item'
+    },
+    legend: {
+      top: '5%',
+      left: 'center'
+    },
+    series: [
+      {
+        name: '注册人数',
+        type: 'pie',
+        center: ['50%', '55%'],
+        radius: ['40%', '60%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center'
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 16,
+            fontWeight: 'bold'
+          }
+        },
+        labelLine: {
+          show: false
+        },
+        data: dataList
+      }
+    ]
+  });
+}
+
 const orderParams = reactive({
   activeDate: [],
   selectType: 'week'
@@ -563,11 +607,32 @@ const getDayProductData = () => {
   }
 }
 
+const getDayChannelData = () => {
+  channelApi({}).then(res => {
+    channelOption(res.data);
+  })
+}
+
 const getWeekDate = () => {
   return [dayjs().subtract(7, 'day').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')];
 }
 
+const orderValue = ref({
+  orderNum: 0,
+  orderAmount: "0",
+  refundNum: 0,
+  refundAmount: "0"
+})
+
 onMounted(() => {
+
+  orderApi().then(res => {
+    orderValue.value = {...res.data};
+  })
+  channelApi().then(res => {
+    console.log(res)
+  })
+
   const weekDate = getWeekDate();
   registerParams.activeDate = weekDate;
   orderParams.activeDate = weekDate;
@@ -581,6 +646,8 @@ onMounted(() => {
   cartChart = echarts.init(document.getElementById('cartApp'));
   visitChart = echarts.init(document.getElementById('visitApp'));
   collectChart = echarts.init(document.getElementById('collectApp'));
+  channelChart = echarts.init(document.getElementById('channelApp'));
+  getDayChannelData();
   getDayOrderData();
   getDayRegisterData();
   getDayProductData();
