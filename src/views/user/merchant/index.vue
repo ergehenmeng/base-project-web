@@ -49,8 +49,8 @@
         <el-table-column prop="legalIdCard" label="法人身份证" width="180" />
         <el-table-column prop="creditCode" label="社会统一信用代码" width="180" />
         <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="createTime" label="创建时间" width="170" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" min-width="250" fixed="right">
           <template #header>
             <span style="margin-right: 5px">操作</span>
