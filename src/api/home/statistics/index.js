@@ -41,3 +41,17 @@ export const dayCartApi = (params) => {
     params
   });
 };
+
+export const dayVisitApi = (params) => {
+  return request.get({
+    url: '/manage/statistics/visit',
+    params
+  });
+};
+
+export const dayCollectApi = (params) => {
+  return request.get({
+    url: '/manage/statistics/collect',
+    params
+  });
+};
