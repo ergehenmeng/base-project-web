@@ -26,7 +26,7 @@
       </StatisticsChart>
       <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
         <template #icon>
-          <Member></Member>
+          <Channel></Channel>
         </template>
         <template #content>
           <div id="channelApp" style="width: 100%; height: 100%"></div>
@@ -95,9 +95,9 @@
       </StatisticsChart>
     </el-row>
     <el-row>
-      <StatisticsChart title="浏览量" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
+      <StatisticsChart title="收藏量" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
         <template #icon>
-          <Visit></Visit>
+          <Collect></Collect>
         </template>
         <template #action>
           <el-select placeholder="访问类型" v-model="collectParams.collectType" clearable class="w120" style="margin-right: 20px;" @change="getDayCollectData">
@@ -138,6 +138,8 @@ import Product from '@/components/icon/Product.vue'
 import Cart from "@/components/icon/Cart.vue";
 import Order from "@/components/icon/Order.vue";
 import Visit from '@/components/icon/Visit.vue'
+import Channel from '@/components/icon/Channel.vue'
+import Collect from '@/components/icon/Collect.vue'
 
 // 注册必须的组件
 echarts.use([ PieChart, LineChart, TitleComponent, TooltipComponent, GridComponent, DatasetComponent, TransformComponent, BarChart, LabelLayout, UniversalTransition, CanvasRenderer, ToolboxComponent, LegendComponent]);
