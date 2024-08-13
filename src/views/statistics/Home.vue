@@ -154,7 +154,7 @@ let channelChart;
 
 const orderOption = (dataList) => {
   orderChart.setOption({
-    color: ['#9dd3e8', '#fc8452'],
+    color: ['#2ed5cf', '#fa4e06'],
     grid: {
       left: '4%',
       right: '5%',
@@ -321,7 +321,7 @@ const productOption = (dataList) => {
         name: '商品数',
         type: 'line',
         smooth: true,
-        color: '#ff7675',
+        color: '#ae3af3',
         data: dataList.map(item => item.appendNum)
       }
     ]
@@ -370,7 +370,7 @@ const cartOption = (dataList) => {
         name: '加购商品数',
         type: 'bar',
         barWidth: '30%',
-        color: '#eccc68',
+        color: '#fbcd33',
         data: dataList.map(item => item.cartNum)
       }
     ]
@@ -393,9 +393,7 @@ const visitOption = (dataList) => {
     xAxis: [
       {
         type: 'category',
-        axisTick: {
-          alignWithLabel: true
-        },
+        boundaryGap: false,
         data: visitParams.selectType === 'year' ? dataList.map(item => item.createMonth) : dataList.map(item => item.createDate)
       }
     ],
@@ -403,7 +401,6 @@ const visitOption = (dataList) => {
       type: 'value',
       position: 'left',
       name: '访问量',
-      alignTicks: true,
       axisLine: {
         show: true,
         lineStyle: {
@@ -418,6 +415,7 @@ const visitOption = (dataList) => {
       {
         name: '访问量',
         type: 'line',
+        areaStyle: {},
         smooth: true,
         color: '#68ec82',
         data: dataList.map(item => item.visitNum)
