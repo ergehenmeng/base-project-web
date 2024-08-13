@@ -233,7 +233,7 @@ const registerOption = (dataList) => {
   registerChart.setOption({
     color: ['#9dd3e8', '#fc8452', '#2335ed', '#6ded23'],
     grid: {
-      left: '4%',
+      left: '6%',
       right: '5%',
       bottom: '10%'
     },
@@ -481,7 +481,7 @@ const channelOption = (data) => {
     },
     legend: {
       top: 'middle',
-      left: '5%',
+      left: '8%',
       orient: 'vertical'
     },
     series: [
