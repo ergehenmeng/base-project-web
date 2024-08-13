@@ -120,7 +120,7 @@
 </template>
 
 <script setup>
-import { channelApi, dayRegisterApi, orderApi, dayOrderApi, dayAppendApi, dayCartApi, dayVisitApi, dayCollectApi } from '@/api/home/statistics';
+import { sexChannelApi, dayRegisterApi, orderApi, dayOrderApi, dayAppendApi, dayCartApi, dayVisitApi, dayCollectApi } from '@/api/home/statistics';
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { DatasetComponent, GridComponent, TitleComponent, TooltipComponent, TransformComponent, ToolboxComponent, LegendComponent } from 'echarts/components';
@@ -474,37 +474,46 @@ const collectOption = (dataList) => {
   });
 }
 
-const channelOption = (dataList) => {
+const channelOption = (data) => {
   channelChart.setOption({
     tooltip: {
       trigger: 'item'
     },
     legend: {
-      top: '5%',
-      left: 'center'
+      top: 'middle',
+      left: '5%',
+      orient: 'vertical'
     },
     series: [
       {
-        name: '注册人数',
+        name: '性别分布',
         type: 'pie',
-        center: ['50%', '55%'],
-        radius: ['40%', '60%'],
+        selectedMode: 'single',
+        radius: [0, '30%'],
+        center: ['55%', '50%'],
+        labelLine: {
+          show: false
+        },
+        label: {
+          position: 'inner',
+          fontSize: 14
+        },
+        data: data.sexList
+      },
+      {
+        name: '注册渠道',
+        type: 'pie',
+        radius: ['50%', '70%'],
+        center: ['55%', '50%'],
         avoidLabelOverlap: false,
         label: {
           show: false,
           position: 'center'
         },
-        emphasis: {
-          label: {
-            show: true,
-            fontSize: 16,
-            fontWeight: 'bold'
-          }
-        },
         labelLine: {
           show: false
         },
-        data: dataList
+        data: data.channelList
       }
     ]
   });
@@ -610,7 +619,7 @@ const getDayProductData = () => {
 }
 
 const getDayChannelData = () => {
-  channelApi({}).then(res => {
+  sexChannelApi({}).then(res => {
     channelOption(res.data);
   })
 }
@@ -627,12 +636,8 @@ const orderValue = ref({
 })
 
 onMounted(() => {
-
   orderApi().then(res => {
     orderValue.value = {...res.data};
-  })
-  channelApi().then(res => {
-    console.log(res)
   })
 
   const weekDate = getWeekDate();

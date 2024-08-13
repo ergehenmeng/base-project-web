@@ -1,8 +1,8 @@
 import request from '@/utils/request';
 
-export const channelApi = (params) => {
+export const sexChannelApi = (params) => {
   return request.get({
-    url: '/manage/statistics/channel',
+    url: '/manage/statistics/sexChannel',
     params
   });
 };
