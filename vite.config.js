@@ -8,6 +8,7 @@ import { resolve } from 'path'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd())
+
   return {
     // 插件注册
     plugins: [
@@ -70,7 +71,7 @@ export default defineConfig(({ mode }) => {
         }
       }
     },
-    // 本地运行配置
+    // 本地运行配置(生产环境不生效)
     server: {
       host: '0.0.0.0',
       port: 3000,
