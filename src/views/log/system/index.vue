@@ -17,14 +17,18 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="nickName" label="操作人姓名" width="150" />
-        <el-table-column prop="mobile" label="操作人手机号" width="150" />
         <el-table-column prop="url" label="请求地址" width="250" />
         <el-table-column prop="request" label="请求参数" min-width="300" />
-        <el-table-column prop="response" label="响应信息" width="300" />
+        <el-table-column prop="nickName" label="操作人姓名" width="150" />
+        <el-table-column prop="mobile" label="操作人手机号" width="150" />
         <el-table-column prop="ip" label="访问ip" width="120" />
         <el-table-column prop="businessTime" label="接口耗时(ms)" width="120" />
         <el-table-column prop="createTime" label="访问时间" width="180" />
+        <el-table-column label="操作" fixed="right" width="100">
+          <template #default="scope">
+            <el-button :icon="Document" @click="handleResponse(scope.row.response)" link title="响应信息"></el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
@@ -36,16 +40,25 @@
       />
     </div>
   </div>
+  <ContentDialog ref="contentRef" title="响应信息"></ContentDialog>
 </template>
 <script setup>
 import { listPageApi } from '@/api/log/system';
 import useUserStore from '@/store/user';
+import ContentDialog from '@/components/ContentDialog.vue'
+import { Document } from '@element-plus/icons-vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('IH00');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
+
+const contentRef = ref();
+
+const handleResponse = (content) => {
+  contentRef.value.openDialog(content);
+};
 
 const queryParams = reactive({
   queryName: '',

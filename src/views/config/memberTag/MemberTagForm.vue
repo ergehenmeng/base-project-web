@@ -28,13 +28,13 @@
         </div>
       </el-form-item>
       <el-form-item label="最近几天有消费" prop="consumeDay">
-        <el-input v-model="formData.consumeDay" placeholder="最近几天有消费" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.consumeDay" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="最低消费次数" prop="consumeNum">
-        <el-input v-model="formData.consumeNum" placeholder="最近几天有消费" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.consumeNum" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="最低消费金额" prop="consumeAmount">
-        <el-input v-model="formData.consumeAmount" placeholder="最近几天有消费" @keyup="formData.consumeAmount = numberValidator(formData.consumeAmount)" />
+        <el-input v-model="formData.consumeAmount" @keyup="formData.consumeAmount = numberValidator(formData.consumeAmount)" />
       </el-form-item>
       <el-form-item label="注册渠道" prop="channel">
         <el-select v-model="formData.channel" clearable>
