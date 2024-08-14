@@ -32,12 +32,12 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="优惠券名称" min-width="150" />
-        <el-table-column prop="state" label="状态" width="60" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="70" :formatter="formatter" />
         <el-table-column prop="stock" label="库存" width="60" />
         <el-table-column prop="receiveNum" label="已领取数量" width="100" />
         <el-table-column prop="useNum" label="已使用数量" width="100" />
         <el-table-column prop="mode" label="领取方式" width="90" :formatter="formatter"/>
-        <el-table-column prop="couponType" label="优惠券类型" width="110" :formatter="formatter" />
+        <el-table-column prop="couponType" label="优惠券类型" width="100" :formatter="formatter" />
         <el-table-column prop="discountValue" label="折扣比例" width="80" :formatter="(row, column, cellValue) => cellValue === null ? '': cellValue + '%' "/>
         <el-table-column prop="deductionValue" label="抵扣金额" width="80" />
         <el-table-column prop="useThreshold" label="使用门槛" width="80" :formatter="formatter" />
@@ -124,7 +124,7 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'mode') {
     return cellValue === 1 ? '页面领取' : '手动发放';
   } else if (column.property === 'state') {
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '启用') : '禁用';
+    return cellValue === 1 ? h('span', { style: 'color: green;' }, '已启用') : '未启用';
   } else if (column.property === 'couponType') {
     return cellValue === 1 ? '抵扣券' : '折扣券';
   } else if (column.property === 'useThreshold') {
