@@ -52,7 +52,7 @@
             <el-table-column label="操作" width="100" >
               <template #default="scope">
                 <el-button v-has-perm="'Xt20'" :icon="Document" @click="handleDetail(scope.row.orderNo)" link title="详情"></el-button>
-                <el-button v-has-perm="'ht20'" @click="handleAudit(scope.row)" link title="退款审核">
+                <el-button v-has-perm="'ht20'" v-show="scope.row.auditState === 0" @click="handleAudit(scope.row)" link title="退款审核">
                   <Audit></Audit>
                 </el-button>
               </template>
