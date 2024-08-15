@@ -64,7 +64,7 @@
           </template>
         </StatisticsChart>
       </el-row>
-      <el-row>
+      <el-row v-if="cartAuth">
         <StatisticsChart title="加购统计" :height="300" :span="24" @reload="getDayCartData" v-model:select-type="cartParams.selectType" v-model:active-date="cartParams.activeDate">
           <template #icon>
             <Cart></Cart>
@@ -151,6 +151,8 @@ const memberAuth = userStore.hasAuth('UX80');
 const visitAuth = userStore.hasAuth('cX80');
 const collectAuth = userStore.hasAuth('DX80');
 const productAuth = userStore.hasAuth('nX80');
+// 必须有零售类权限才显示购物车统计
+const cartAuth = (userStore.user?.merchantType & 8) === 8;
 
 // 注册必须的组件
 echarts.use([
@@ -671,18 +673,19 @@ onMounted(() => {
   visitParams.activeDate = weekDate;
   collectParams.activeDate = weekDate;
 
+  orderChart = echarts.init(document.getElementById('orderApp'));
+  getDayOrderData();
+
   if (memberAuth) {
     registerChart = echarts.init(document.getElementById('registerApp'));
     channelChart = echarts.init(document.getElementById('channelApp'));
     getDayChannelData();
     getDayRegisterData();
   }
-  orderChart = echarts.init(document.getElementById('orderApp'));
   if (productAuth) {
     productChart = echarts.init(document.getElementById('productApp'));
     getDayProductData();
   }
-  cartChart = echarts.init(document.getElementById('cartApp'));
   if (visitAuth) {
     visitChart = echarts.init(document.getElementById('visitApp'));
     getDayVisitData();
@@ -691,9 +694,11 @@ onMounted(() => {
     collectChart = echarts.init(document.getElementById('collectApp'));
     getDayCollectData();
   }
+  if (cartAuth) {
+    cartChart = echarts.init(document.getElementById('cartApp'));
+    getDayCartData();
+  }
 
-  getDayOrderData();
-  getDayCartData();
 });
 </script>
 <style lang="scss" scoped>

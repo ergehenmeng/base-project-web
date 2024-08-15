@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="homestayId" :disabled="props.disabled" :clearable="props.clearable" filterable>
+  <el-select v-model="homestayId" :disabled="props.disabled" :clearable="props.clearable" filterable :style="{width: props.width + 'px !important' }">
     <el-option v-for="item in homestayList" :key="item.id" :value="item.id" :label="item.title" :disabled="item.state === 2 || item.title === null">
       <span style="float: left">{{ item.title === null ? '未命名' : item.title }}</span>
       <span style="float: right; color: #8492a6; font-size: 13px">{{ item.state === 0 ? '未上架' : item.state === 2 ? '强制下架' : '已上架' }}</span>
@@ -19,6 +19,10 @@ const props = defineProps({
   clearable: {
     type: Boolean,
     default: true
+  },
+  width: {
+    type: Number,
+    default: 250
   }
 });
 const homestayId = defineModel();

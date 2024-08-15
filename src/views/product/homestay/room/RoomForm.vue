@@ -6,7 +6,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属民宿" prop="homestayId">
-        <HomestaySelect v-model="formData.homestayId" :disabled="disabled" :clearable="false"></HomestaySelect>
+        <HomestaySelect v-model="formData.homestayId" :disabled="disabled" :clearable="false" :width="350"></HomestaySelect>
       </el-form-item>
       <el-form-item label="房型" prop="roomType">
         <el-select v-model="formData.roomType">
