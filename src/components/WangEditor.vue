@@ -19,7 +19,7 @@ import { useRoute } from 'vue-router';
 const editorRef = shallowRef();
 const route = useRoute();
 const userStore = useUserStore();
-const uploadUrl = import.meta.env.VITE_API_URL + '/manage/file/upload';
+const uploadUrl = import.meta.env.VITE_API_PREFIX + '/manage/file/upload';
 
 /**
  * 用于接受编辑器内容, 为什么有get set方法, 是因为在父组件中对编辑器进行赋值操作时,如果值为空,在绑定时Editor内部会使用htmlValue中的值进行处理,导致空指针

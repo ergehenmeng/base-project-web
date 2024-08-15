@@ -31,7 +31,7 @@ const cancelRequest = () => {
 // 创建axios实例
 const service = axios.create({
   // 基础路径前缀
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: import.meta.env.VITE_API_PREFIX,
   // 请求超时时间：30s
   timeout: 30000
 });

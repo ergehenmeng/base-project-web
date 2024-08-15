@@ -82,11 +82,11 @@ export default defineConfig(({ mode }) => {
       // 允许跨域
       cors: true,
       proxy: {
-        [env.VITE_API_URL]: {
+        [env.VITE_API_PREFIX]: {
           target: env.VITE_BASE_URL,
           changeOrigin: true,
           rewrite: (path) =>
-            path.replace(new RegExp('^' + env.VITE_API_URL), '')
+            path.replace(new RegExp('^' + env.VITE_API_PREFIX), '')
         }
       }
     }

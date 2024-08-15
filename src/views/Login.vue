@@ -62,7 +62,7 @@ const formData = ref({
 });
 const formDataRef = ref();
 const loading = ref(false);
-const api = import.meta.env.VITE_API_URL;
+const api = import.meta.env.VITE_API_PREFIX;
 const verifyUrl = ref('');
 const getCode = () => {
   verifyUrl.value = api + '/manage/captcha?t=' + new Date().getTime();
