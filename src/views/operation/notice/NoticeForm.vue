@@ -5,6 +5,9 @@
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
+      </el-form-item>
       <el-form-item label="公告类型" prop="noticeType">
         <el-select v-model="formData.noticeType">
           <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
@@ -16,7 +19,7 @@
     </el-form>
     <div>
       <div class="edit-button-footer">
-        <el-button @click="getBack($router)">取消</el-button>
+        <el-button @click="goBack($router)">取消</el-button>
         <el-button type="primary" @click="handleSave">保存</el-button>
       </div>
     </div>
@@ -30,6 +33,7 @@ import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { goBack } from '@/utils/common.js';
+import UploadImage from '@/components/UploadImage.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -41,12 +45,14 @@ const formDataRef = ref();
 const formRules = reactive({
   title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
   contentText: [{ required: true, message: '内容不能为空', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   noticeType: [{ required: true, message: '请选择公告类型', trigger: 'change' }]
 });
 
 const formData = ref({
   id: null,
   title: '',
+  coverUrl: null,
   content: '',
   contentText: '',
   noticeType: null

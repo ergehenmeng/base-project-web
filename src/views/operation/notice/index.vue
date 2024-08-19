@@ -24,6 +24,20 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="标题" />
+        <el-table-column prop="coverUrl" label="封面图" >
+          <template #default="scope">
+            <div style="display: flex; align-items: center">
+              <el-image
+                fit="cover"
+                :src="scope.row.coverUrl?.split(',')[0]"
+                :preview-src-list="scope.row.coverUrl?.split(',')"
+                style="width: 30px; height: 30px"
+                preview-teleported
+                hide-on-click-modal
+              />
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column prop="noticeType" label="公告类型" :formatter="formatter" />
         <el-table-column prop="state" label="发布状态" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" />
