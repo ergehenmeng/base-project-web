@@ -13,11 +13,8 @@
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门" prop="deptCode">
-        <el-select v-model="formData.deptCode" clearable title="注意:部门模块尚未开发">
-          <el-option label="研发部" value="1"></el-option>
-          <el-option label="设计部" value="2"></el-option>
-          <el-option label="测试部" value="3"></el-option>
-        </el-select>
+        <el-tree-select check-strictly :props="defaultProps" :data="deptData" v-model="formData.deptCode" default-expand-all clearable>
+        </el-tree-select>
       </el-form-item>
       <el-form-item label="数据权限" prop="dataType">
         <el-select v-model="formData.dataType" clearable title="注意:数据权限需要按实际需求进行开发,且自定义数据权限需要手动选择">
@@ -43,6 +40,7 @@
 
 <script setup>
 import { createApi, roleListApi, selectApi, updateApi } from '@/api/system/user'
+import { listApi } from '@/api/system/dept';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);
@@ -61,6 +59,14 @@ const formRules = reactive({
   ],
   roleIds: [{ required: true, message: '请选择角色', trigger: 'change', type: 'array' }]
 });
+
+const deptData = ref([]);
+
+const defaultProps = {
+  label: 'title',
+  value: 'code',
+  children: 'children'
+};
 
 const formData = ref({
   id: null,
@@ -143,8 +149,15 @@ const loadingRoleList = () => {
   });
 };
 
+const loadingDeptList = () => {
+  listApi().then((res) => {
+    deptData.value = res.data;
+  });
+}
+
 onMounted(() => {
   loadingRoleList();
+  loadingDeptList();
 })
 
 defineExpose({

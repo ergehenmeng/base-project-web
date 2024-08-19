@@ -1,17 +1,8 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="标签名称" prop="title">
+      <el-form-item label="部门名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="8" />
-      </el-form-item>
-      <el-form-item label="图标" prop="icon">
-        <UploadImage v-model:img-url="formData.icon"></UploadImage>
-      </el-form-item>
-      <el-form-item label="状态" prop="state">
-        <el-radio-group v-model="formData.state">
-          <el-radio :value="true">启用</el-radio>
-          <el-radio :value="false">禁用</el-radio>
-        </el-radio-group>
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" maxlength="100" show-word-limit />
@@ -27,9 +18,8 @@
 </template>
 
 <script setup>
-import { createApi, updateApi } from '@/api/config/itemTag';
+import { createApi, updateApi } from '@/api/system/dept';
 import { successMsg } from '@/utils/message.js';
-import UploadImage from '@/components/UploadImage.vue';
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -38,16 +28,13 @@ const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  title: [{ required: true, message: '标签名称不能为空', trigger: 'blur' }],
-  icon: [{ required: true, message: '请上传图标', trigger: 'change' }]
+  title: [{ required: true, message: '部门名称不能为空', trigger: 'blur' }]
 });
 
 const formData = ref({
   id: null,
   title: '',
-  icon: '',
-  pid: '',
-  state: true,
+  parentCode: '',
   remark: null
 });
 
@@ -55,11 +42,11 @@ const openDialog = (row) => {
   showDialog.value = true;
   resetForm();
   if (row.id) {
-    dialogTitle.value = '编辑标签';
+    dialogTitle.value = '编辑部门';
     formData.value = { ...row };
   } else {
-    formData.value.pid = row.pid;
-    dialogTitle.value = '新增标签';
+    formData.value.parentCode = row.parentCode;
+    dialogTitle.value = '新增部门';
   }
 };
 
@@ -67,9 +54,7 @@ const resetForm = () => {
   formData.value = {
     id: null,
     title: '',
-    icon: '',
-    pid: '',
-    state: true,
+    parentCode: '',
     remark: null
   };
   formDataRef.value?.resetFields();
@@ -82,7 +67,7 @@ const handleSave = () => {
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('修改标签成功');
+            successMsg('修改部门成功');
             showDialog.value = false;
             emit('reload');
           })
@@ -92,7 +77,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('新增标签成功');
+            successMsg('新增部门成功');
             showDialog.value = false;
             emit('reload');
           })

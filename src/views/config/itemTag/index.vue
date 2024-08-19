@@ -138,35 +138,3 @@ const formatter = (_row, column, cellValue) => {
 };
 </script>
 
-<style lang="scss" scoped>
-.left-menu {
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.menu-content-main {
-  background-color: #fff;
-  padding: 20px 0;
-  border-radius: 3px;
-  min-height: calc(100vh - 120px);
-}
-
-.right-content-top {
-  .right-button {
-    float: right;
-  }
-
-  .el-input,
-  .el-select {
-    width: 200px;
-  }
-}
-
-.custom-tree-node {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  padding-right: 8px;
-}
-</style>
