@@ -84,10 +84,10 @@ const formData = ref({
 const openDialog = (row) => {
   showDialog.value = true;
   resetForm();
+  disabledIcon.value = false;
   if (row.id) {
     dialogTitle.value = '编辑菜单';
     formData.value = { ...row };
-    disabledIcon.value = false;
   } else {
     formData.value.pid = row.pid;
     // 菜单支持三级,第二级添加的一定是按钮
