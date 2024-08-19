@@ -35,7 +35,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="title" label="标题" min-width="100" />
+        <el-table-column prop="title" label="标题" min-width="150" />
         <el-table-column prop="imgUrl" label="预览" width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -60,8 +60,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="clientType" label="客户端类型" width="100" />
-        <el-table-column prop="startTime" label="开始时间" width="170" />
-        <el-table-column prop="endTime" label="截止时间" width="170" />
+        <el-table-column prop="startTime" label="显示时间段" width="280" :formatter="formatter"/>
         <el-table-column prop="click" label="是否点击" width="80">
           <template #default="scope">
             <el-switch v-model="scope.row.click" inline-prompt active-text="是" inactive-text="否" disabled />
@@ -179,9 +178,11 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (_row, column, cellValue) => {
+const formatter = (row, column, cellValue) => {
   if (column.property === 'bannerType') {
     return dictStore.parseDict('banner_type', cellValue);
+  } else if (column.property === 'startTime') {
+    return cellValue + "~" + row.endTime;
   } else {
     return cellValue;
   }

@@ -29,7 +29,8 @@
             range-separator="~"
             start-placeholder="开始时间"
             end-placeholder="截止时间"
-            value-format="YYYY-MM-DD HH:mm:ss"
+            format="YYYY-MM-DD HH:mm"
+            value-format="YYYY-MM-DD HH:mm" time-format="HH:mm"
             style="width: 400px"
           />
         </div>
