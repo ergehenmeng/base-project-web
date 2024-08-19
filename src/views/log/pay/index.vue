@@ -116,7 +116,7 @@ const formatter = (_row, column, cellValue) => {
   if (column.property === 'payChannel') {
     return cellValue === 'WECHAT' ? '微信' : '支付宝';
   } else if (column.property === 'stepType') {
-    return cellValue === 'PAY' ? '支付异步通知' : '退款异步通知';
+    return cellValue === 'PAY' ? '支付' : '退款';
   } else {
     return cellValue;
   }
