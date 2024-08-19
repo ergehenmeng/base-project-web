@@ -42,10 +42,10 @@
             <el-table-column prop="num" label="退款数量" width="100" />
             <el-table-column prop="refundAmount" width="150" >
               <template #header>
-                <span>申请退款金额<QuestionTip content="注意：含快递费"></QuestionTip></span>
+                <span>申请退款金额<QuestionTip v-if="activeName === 'LS'" content="注意：含快递费"></QuestionTip></span>
               </template>
             </el-table-column>
-            <el-table-column prop="expressFee" label="退款快递费" width="120" />
+            <el-table-column prop="expressFee" label="退款快递费" width="120" v-if="activeName === 'LS'"/>
             <el-table-column prop="reason" label="退款原因" min-width="100" />
             <el-table-column prop="applyTime" label="申请时间" width="180" />
             <el-table-column prop="auditTime" label="审核时间" width="180" />
