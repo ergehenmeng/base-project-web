@@ -200,6 +200,12 @@ el-select.w250 {
   }
 }
 
+.el-pagination {
+  .el-select {
+    width: 128px !important;
+  }
+}
+
 /*图片预览样式(缩小百分50%)*/
 .el-image-viewer__img {
   height: 50% !important;

@@ -34,6 +34,7 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   title: [{ required: true, message: '消息名称不能为空', trigger: 'blur' }],
+  noticeType: [{ required: true, message: '通知类型不能为空', trigger: 'blur' }],
   content: [
     { required: true, message: '短信内容不能为空', trigger: 'blur' },
     {

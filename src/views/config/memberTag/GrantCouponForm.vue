@@ -1,6 +1,10 @@
 <template>
-  <el-dialog title="优惠券" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip highlight-current-row @current-change="handleCurrentChange">
+  <el-dialog v-model="showDialog" width="1000px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>优惠券<QuestionTip content="点击列表即可选中要发放的优惠券"></QuestionTip></span>
+    </template>
+    <el-table :data="pageData" style="width: 100%; height: 500px;" stripe v-loading="loading" show-overflow-tooltip highlight-current-row @current-change="handleCurrentChange">
+      <el-table-column type="index" width="50" label="序号"/>
       <el-table-column prop="title" label="优惠券名称" min-width="200" />
       <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
       <el-table-column prop="stock" label="库存" width="80" />
@@ -28,9 +32,10 @@
 </template>
 
 <script setup>
-import { errorMsg, successMsg } from '@/utils/message.js';
+import { errorMsg, successMsg, warningMsg } from '@/utils/message.js'
 import { grantApi, listPageApi } from '@/api/marketing/coupon/index.js';
 import useUserStore from '@/store/user.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
@@ -53,13 +58,13 @@ const formData = ref({
 
 const openDialog = (row) => {
   showDialog.value = true;
-  resetForm();
   formData.value.tagId = row.tagId;
+  getPage();
 };
 
 const handleSave = () => {
   if (formData.value.couponId === null) {
-    errorMsg('请选择优惠券');
+    warningMsg('请点击选择要发放的优惠券');
     return;
   }
   loading.value = true;
@@ -74,8 +79,8 @@ const handleSave = () => {
     });
 };
 
-const handleCurrentChange = (val) => {
-  formData.value.couponId = val;
+const handleCurrentChange = (row) => {
+  formData.value.couponId = row.id;
 };
 
 const getPage = async () => {

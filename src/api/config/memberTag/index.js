@@ -28,6 +28,13 @@ export const deleteApi = (data) => {
     });
 };
 
+export const refreshApi = (data) => {
+    return request.post({
+        url: '/manage/member/tag/refresh',
+        data
+    });
+};
+
 export const selectApi = (params) => {
     return request.get({
         url: '/manage/member/tag/select',

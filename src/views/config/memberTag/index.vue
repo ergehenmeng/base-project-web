@@ -13,9 +13,9 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="标签名称" width="150" />
-        <el-table-column prop="memberNum" label="会员数量" width="100" :formatter="formatter" />
-        <el-table-column prop="registerStartDate" label="注册日期" width="120" />
-        <el-table-column prop="registerEndDate" label="截止日期" width="120" />
+        <el-table-column prop="memberNum" label="会员数量" width="80" :formatter="formatter" />
+        <el-table-column prop="registerStartDate" label="注册日期" width="100" />
+        <el-table-column prop="registerEndDate" label="截止日期" width="100" />
         <el-table-column prop="consumeDay" label="最近几天有消费" width="130" />
         <el-table-column prop="consumeNum" label="最低消费次数" width="120" />
         <el-table-column prop="consumeAmount" label="最低消费金额" width="130" />
@@ -24,17 +24,17 @@
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" width="100" fixed="right">
+        <el-table-column label="操作" width="210" fixed="right">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'NnR0'" title="新增标签" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'9nR0'" @click="handleMemberPage(scope.row)" link title="会员列表"></el-button>
+            <el-button v-has-perm="'9nR0'" :icon="Memo" @click="handleMemberPage(scope.row)" link title="会员列表"></el-button>
             <el-button v-has-perm="'GnR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'rnR0'" type="success" :icon="Connection" @click="handleRefresh(scope.row)" link title="刷新"></el-button>
-            <el-button v-has-perm="'0nR0'" type="primary" :icon="Message" @click="handleSms(scope.row)" link title="发送短信通知"> </el-button>
-            <el-button v-has-perm="'anR0'" :icon="ChatDotSquare" @click="handleNotice(scope.row)" link title="发送站内信通知"> </el-button>
+            <el-button v-has-perm="'rnR0'" type="success" :icon="Refresh" @click="handleRefresh(scope.row)" link title="刷新"></el-button>
+            <el-button v-has-perm="'0nR0'" type="primary" :icon="Message" @click="handleSms(scope.row)" link title="发送短信通知"></el-button>
+            <el-button v-has-perm="'anR0'" :icon="ChatDotSquare" @click="handleNotice(scope.row)" link title="发送站内信通知"></el-button>
             <el-button v-has-perm="'RnR0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -54,8 +54,8 @@
   <SendNoticeForm ref="noticeRef"></SendNoticeForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/config/memberTag';
-import { ChatDotSquare, Connection, Delete, Edit, Message } from '@element-plus/icons-vue';
+import { deleteApi, listPageApi, refreshApi } from '@/api/config/memberTag';
+import { ChatDotSquare, Refresh, Delete, Edit, Message, Memo } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
@@ -113,7 +113,7 @@ const formatter = (_row, _column, cellValue) => {
 const handleRefresh = (row) => {
   confirmMsg('确定要刷新该标签关联的会员吗?', () => {
     const data = { id: row.id };
-    deleteApi(data).then(() => {
+    refreshApi(data).then(() => {
       successMsg('标签刷新成功');
       getPage();
     });
@@ -121,7 +121,7 @@ const handleRefresh = (row) => {
 };
 
 const handleMemberPage = (row) => {
-  router.push('/member/member?tagId=' + row.id);
+  router.push('/config/memberTag/list/' + row.id);
 };
 
 const handleDelete = (row) => {
