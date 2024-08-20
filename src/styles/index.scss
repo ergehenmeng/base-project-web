@@ -82,9 +82,9 @@ body {
   --el-table-tr-bg-color: #e9f9e3;
 }
 
-/*分页组件样式*/
-.el-pagination {
-  margin: 10px 10px 0 0 !important;
+.current-row {
+  --el-table-current-row-bg-color: #b3fbe8;
+  --el-table-row-hover-bg-color: #b3fbe8;
 }
 
 /*消除element按钮边框颜色(icon按钮显示有问题)*/
@@ -200,11 +200,15 @@ el-select.w250 {
   }
 }
 
+
+/*分页组件样式*/
 .el-pagination {
+  margin: 10px 10px 0 0 !important;
   .el-select {
     width: 128px !important;
   }
 }
+
 
 /*图片预览样式(缩小百分50%)*/
 .el-image-viewer__img {
