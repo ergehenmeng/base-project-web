@@ -32,7 +32,6 @@
             <CreateButton v-has-perm="'ACi0'" title="新增兑换码" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'RCi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'rCi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'9Ci0'" v-show="scope.row.state === 0" type="success" :icon="Position" @click="handleGenerate(scope.row)" link title="生成cdKey"></el-button>
             <el-button v-has-perm="'0Ci0'" v-show="scope.row.state === 1" type="primary" :icon="Memo" @click="handleCdKeyPage(scope.row)" link title="兑换码列表"></el-button>
@@ -137,7 +136,4 @@ const handleEdit = (row) => {
   formRef.value.openDialog({ id: row.id, type: 'edit' });
 };
 
-const handleDetail = (row) => {
-  formRef.value.openDialog({ id: row.id, type: 'detail' });
-};
 </script>
