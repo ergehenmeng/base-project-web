@@ -24,6 +24,8 @@ const useUserStore = defineStore(
       permList: [],
       // 是否为初始密码
       init: false,
+      // 密码是否长时间未修改
+      expire: false,
       // 是否锁屏
       isLock: false
     });

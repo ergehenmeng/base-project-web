@@ -26,7 +26,7 @@
 <script setup>
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
-import { confirmMsg, warningMsg } from '@/utils/message'
+import { confirmMsg, errorMsg, warningMsg } from '@/utils/message'
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
@@ -58,6 +58,11 @@ onMounted(() => {
   if (init) {
     warningMsg('您的密码为初始化密码，请及时修改密码');
     userStore.setInit(false);
+    return;
+  }
+  const expire = userStore.user?.expire;
+  if (expire) {
+    errorMsg('密码已超过90天未修改，请及时修改保证账户安全');
   }
 })
 
