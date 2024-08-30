@@ -27,9 +27,9 @@
         <el-table-column prop="ip" label="登陆ip" min-width="120" />
         <el-table-column prop="deviceBrand" label="设备厂商" min-width="120" />
         <el-table-column prop="deviceModel" label="设备型号" min-width="150" />
-        <el-table-column prop="softwareVersion" label="软件版本" width="150" />
+        <el-table-column prop="softwareVersion" label="软件版本" min-width="150" />
         <el-table-column prop="serialNumber" label="设备唯一编号" min-width="180" />
-        <el-table-column prop="createTime" label="登录时间" width="150" />
+        <el-table-column prop="createTime" label="登录时间" min-width="180" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
@@ -67,9 +67,12 @@ const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.activityDate.length === 2) {
+      if (queryParams.activityDate?.length === 2) {
         queryParams.startDate = queryParams.activityDate[0];
         queryParams.endDate = queryParams.activityDate[1];
+      } else {
+        queryParams.startDate = null;
+        queryParams.endDate = null;
       }
       const { data } = await loginPageApi(queryParams);
       pageData.value = data.rows;

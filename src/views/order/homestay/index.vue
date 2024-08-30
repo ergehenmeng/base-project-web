@@ -87,9 +87,12 @@ const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.activityDate.length === 2) {
+      if (queryParams.activityDate?.length === 2) {
         queryParams.startDate = queryParams.activityDate[0];
         queryParams.endDate = queryParams.activityDate[1];
+      } else {
+        queryParams.startDate = null;
+        queryParams.endDate = null;
       }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
