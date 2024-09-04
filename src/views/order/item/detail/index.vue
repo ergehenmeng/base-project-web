@@ -89,10 +89,12 @@
               </el-table>
             </div>
             <div class="adjust-log">
-              <p v-for="(item, index) in data.adjustList" :key="index">
-                【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
-                <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
-              </p>
+              <el-scrollbar max-height="300">
+                <p v-for="(item, index) in data.adjustList" :key="index">
+                  【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
+                  <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
+                </p>
+              </el-scrollbar>
             </div>
           </div>
         </div>
@@ -113,8 +115,7 @@
                         <el-image fit="cover" :src="good.coverUrl" style="width: 30px; height: 30px" :preview-src-list="good.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
                       </div>
                       <div class="good-item-info">
-                        <div class="good-item-title">{{ good.title }} </div>
-                        <div class="good-item-sku" v-if="good.skuTitle">{{ good.skuTitle }} </div>
+                        <div class="good-item-title">{{ good.title }} <span v-if="good.skuTitle"> （{{ good.skuTitle }}） </span></div>
                         <div class="good-item-price">{{ good.salePrice }}元</div>
                       </div>
                       <div class="good-item-total"> x{{ good.num }}</div>
@@ -408,11 +409,16 @@ onBeforeMount(() => {
             padding: 10px;
             .good-item-img {
               width: 50px;
-              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
               margin-right: 10px;
             }
             .good-item-info {
               flex: 1;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
             }
             .good-item-total {
               width: 50px;
