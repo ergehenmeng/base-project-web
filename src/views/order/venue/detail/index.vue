@@ -12,6 +12,9 @@
           <span>订单联系人：</span><span> {{ data.nickName }}-{{ data.mobile }}</span>
           <span>游玩日期：</span><span>{{ data.visitDate }}</span>
           <span>下单时间：</span><span>{{ data.createTime }}</span>
+          <template v-if="data.cdKey">
+            <span>兑换码：</span><span>{{ data.cdKey }}</span>
+          </template>
           <template v-if="data.tradeNo">
             <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
           </template>
@@ -59,7 +62,7 @@
         </div>
       </div>
     </div>
-    <OrderAccountBar :pay-amount="data.payAmount" :amount="data.payAmount" :discount-amount="data.discountAmount" />
+    <OrderAccountBar :pay-amount="data.payAmount" :amount="data.payAmount" :discount-amount="data.discountAmount" :cd-key-amount="data.cdKeyAmount"/>
     <div>
       <div class="edit-button-footer">
         <el-button @click="goBack($router)">返回</el-button>
@@ -98,6 +101,8 @@ const data = ref({
   closeType: null,
   payAmount: '0',
   discountAmount: '0',
+  cdKey: null,
+  cdKeyAmount: '0',
   useTime: null,
   refundAmount: null,
   completeTime: null,
