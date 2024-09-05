@@ -12,7 +12,7 @@
           ><span>{{ data.num }} 间</span> <span>单价：</span><span>{{ data.price }}<QuestionTip content="按住离时间计算每间房的价格"></QuestionTip></span> <span>订单联系人：</span
           ><span>{{ data.mobile }}</span> <span>住离日期：</span
           ><span
-            >{{ data.startDate }}~{{ data.endDate }} 共计 <span style="color: #1e90ff">{{ data.days }}</span> 天</span
+            >{{ data.startDate }}~{{ data.endDate }} 共计 <span style="color: #1e90ff; font-size: 16px; font-weight: bold;">{{ data.days }}</span> 天</span
           >
           <span>下单时间：</span><span>{{ data.createTime }}</span>
           <template v-if="data.cdKey">

@@ -37,13 +37,13 @@
         <el-table-column prop="nickName" label="购买人姓名" min-width="100" />
         <el-table-column prop="mobile" label="购买人手机号" min-width="120" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
-        <el-table-column prop="discountAmount" width="100" >
+        <el-table-column prop="discountAmount" width="120" >
           <template #header>
             <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="下单时间" width="180" />
-        <el-table-column prop="payTime" label="支付时间" width="180" />
+        <el-table-column prop="createTime" label="下单时间" width="170" />
+        <el-table-column prop="payTime" label="支付时间" width="170" />
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
