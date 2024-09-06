@@ -35,8 +35,8 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="title" label="标题" min-width="150" />
-        <el-table-column prop="imgUrl" label="预览" width="100">
+        <el-table-column prop="title" label="标题" min-width="120" />
+        <el-table-column prop="imgUrl" label="预览" width="60">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image fit="cover" :src="scope.row.imgUrl" :preview-src-list="[scope.row.imgUrl]" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
@@ -72,9 +72,9 @@
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" width="180" />
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="remark" label="备注" min-width="100" />
+        <el-table-column prop="createTime" label="创建时间" width="170" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" fixed="right" width="120">
           <template #header>
             <span style="margin-right: 5px">操作</span>
@@ -159,9 +159,7 @@ const handleSort = (row) => {
 };
 
 const updateState = (row) => {
-  stateApi({ id: row.id, state: row.state }).then(() => {
-    getPage();
-  });
+  stateApi({ id: row.id, state: row.state });
 };
 
 const handleEdit = (row) => {

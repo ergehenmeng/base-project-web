@@ -175,9 +175,7 @@ const handleSort = (row) => {
 };
 
 const updateState = (row) => {
-  stateApi({ id: row.id, state: row.state }).then(() => {
-    getPage();
-  });
+  stateApi({ id: row.id, state: row.state });
 };
 </script>
 

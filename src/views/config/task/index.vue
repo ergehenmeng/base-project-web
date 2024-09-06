@@ -22,15 +22,15 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="任务名称" width="200" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
-        <el-table-column prop="beanName" label="类名" width="180" />
+        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="beanName" label="类名" width="200" />
         <el-table-column prop="methodName" label="方法名" width="150" />
-        <el-table-column prop="args" label="方法入参" width="150" />
-        <el-table-column prop="cronExpression" label="cron表达式" width="150" />
-        <el-table-column prop="alarmEmail" label="报警邮箱" width="200" />
+        <el-table-column prop="args" label="方法入参" width="100" />
+        <el-table-column prop="cronExpression" label="cron表达式" width="120" />
+        <el-table-column prop="alarmEmail" label="报警邮箱" width="180" />
         <el-table-column prop="lockTime" label="锁时间(ms)" width="100" :formatter="formatter" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column prop="remark" label="备注信息" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
+        <el-table-column prop="remark" label="备注信息" min-width="100"/>
         <el-table-column label="操作" fixed="right" width="100">
           <template #default="scope">
             <el-button v-has-perm="'tOR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
