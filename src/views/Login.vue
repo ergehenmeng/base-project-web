@@ -32,7 +32,7 @@
               </template>
             </el-input>
             <div class="login-form-verify">
-              <img :src="verifyUrl" @click="getCode" alt="点击刷新" />
+              <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle"/>
             </div>
           </el-form-item>
           <el-form-item>
@@ -51,7 +51,9 @@ import useUserStore from '@/store/user';
 import md5 from 'md5';
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
+import defaultPng from '@/assets/images/refresh.svg';
 
+const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
@@ -67,6 +69,11 @@ const verifyUrl = ref('');
 const getCode = () => {
   verifyUrl.value = api + '/manage/captcha?t=' + new Date().getTime();
 };
+
+const errorHandle = () => {
+  verifyUrl.value = defaultImg.value;
+};
+
 getCode();
 const formRules = reactive({
   userName: [
