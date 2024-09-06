@@ -22,7 +22,11 @@
         <el-table-column prop="mobile" label="手机号" width="150" />
         <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
         <el-table-column prop="dataType" label="数据权限" width="150" :formatter="formatter" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="100" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" inline-prompt active-text="正常" inactive-text="锁定" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="deptName" label="所属部门" width="150" />
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
@@ -58,7 +62,7 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/system/user';
-import { Delete, Document, Edit, Lock, Refresh, Unlock } from '@element-plus/icons-vue';
+import { Delete, Document, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
@@ -94,9 +98,7 @@ const getPage = async () => {
 };
 
 const formatter = (_row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue === 1 ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '锁定');
-  } else if (column.property === 'userType') {
+  if (column.property === 'userType') {
     return parseUserType(cellValue);
   } else if (column.property === 'dataType') {
     return parseDataType(cellValue);

@@ -26,7 +26,11 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="channel" label="客户端" width="100" />
         <el-table-column prop="version" label="版本号" width="100" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
+        <el-table-column prop="state" label="状态" width="120" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" inline-prompt active-text="已发布" inactive-text="未发布" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="forceUpdate" label="是否强更" :formatter="formatter" width="100" />
         <el-table-column prop="url" label="下载地址" width="350" />
         <el-table-column prop="remark" label="更新信息" />
