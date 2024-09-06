@@ -8,7 +8,7 @@
           <span>订单信息</span>
         </div>
         <div class="content-nav">
-          <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span> <span>房间数量：</span
+          <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.orderNo" /></span> <span>房间数量：</span
           ><span>{{ data.num }} 间</span> <span>单价：</span><span>{{ data.price }}<QuestionTip content="按住离时间计算每间房的价格"></QuestionTip></span> <span>订单联系人：</span
           ><span>{{ data.mobile }}</span> <span>住离日期：</span
           ><span
@@ -22,7 +22,7 @@
             <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
           </template>
           <template v-if="data.tradeNo">
-            <span>支付流水号：</span><span>{{ data.tradeNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.tradeNo)" link></el-button></span>
+            <span>支付流水号：</span><span>{{ data.tradeNo }}<CopyLink :content="data.tradeNo"/></span>
           </template>
           <template v-if="data.payTime">
             <span>支付时间：</span><span>{{ data.payTime }}</span>
@@ -91,6 +91,7 @@ import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 import dayjs from 'dayjs';
+import CopyLink from '@/components/CopyLink.vue'
 
 const { copy, isSupported } = useClipboard();
 const loading = ref(false);

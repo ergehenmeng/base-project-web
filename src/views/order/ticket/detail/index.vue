@@ -8,14 +8,14 @@
           <span>订单信息</span>
         </div>
         <div class="content-nav">
-          <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span> <span>购买数量：</span
+          <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.orderNo" /></span> <span>购买数量：</span
           ><span>{{ data.num }}</span> <span>单价：</span><span>{{ data.price }}</span> <span>订单联系人：</span><span>{{ data.mobile }}</span> <span>游玩日期：</span
           ><span>{{ data.visitDate }}</span> <span>下单时间：</span><span>{{ data.createTime }}</span>
           <template v-if="data.tradeNo">
             <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
           </template>
           <template v-if="data.tradeNo">
-            <span>支付流水号：</span><span>{{ data.tradeNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.tradeNo)" link></el-button></span>
+            <span>支付流水号：</span><span>{{ data.tradeNo }}<CopyLink :content="data.tradeNo"/></span>
           </template>
           <template v-if="data.payTime">
             <span>支付时间：</span><span>{{ data.payTime }}</span>
@@ -80,6 +80,7 @@ import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
+import CopyLink from '@/components/CopyLink.vue'
 
 const { copy, isSupported } = useClipboard();
 const loading = ref(false);

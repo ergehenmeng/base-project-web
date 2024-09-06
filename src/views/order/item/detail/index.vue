@@ -10,14 +10,14 @@
               <span>订单信息</span>
             </div>
             <div class="content-nav">
-              <span>订单编号：</span><span>{{ data.orderNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.orderNo)" link></el-button></span>
+              <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.orderNo" /></span>
               <span>店铺名称：</span><span>{{ data.storeName }}</span>
               <span>下单时间：</span><span>{{ data.createTime }}</span>
               <template v-if="data.tradeNo">
                 <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
               </template>
               <template v-if="data.tradeNo">
-                <span>支付流水号：</span><span>{{ data.tradeNo }}<el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.tradeNo)" link></el-button></span>
+                <span>支付流水号：</span><span>{{ data.tradeNo }}<CopyLink :content="data.tradeNo"/></span>
               </template>
               <template v-if="data.payTime">
                 <span>支付时间：</span><span>{{ data.payTime }}</span>
@@ -40,7 +40,7 @@
             <div class="content-nav">
               <span>昵称：</span><span> {{ data.nickName }}</span>
               <span>手机号：</span><span> {{ data.mobile }}</span>
-              <span>收货地址：</span><span>{{ data.detailAddress }} <el-button v-if="isSupported" :icon="DocumentCopy" @click="copyClipboard(data.detailAddress)" link></el-button> </span>
+              <span>收货地址：</span><span>{{ data.detailAddress }} <CopyLink :content="data.detailAddress"/></span>
               <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
             </div>
           </div>
@@ -165,6 +165,7 @@ import useUserStore from '@/store/user.js'
 import AdjustForm from '@/views/order/item/detail/AdjustForm.vue'
 import ExpressForm from '@/views/order/item/detail/ExpressForm.vue'
 import SippingForm from '@/views/order/item/detail/SippingForm.vue'
+import CopyLink from '@/components/CopyLink.vue'
 
 const userStore = useUserStore();
 const { copy, isSupported } = useClipboard();
