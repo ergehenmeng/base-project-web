@@ -39,7 +39,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="noticeType" label="公告类型" :formatter="formatter" />
-        <el-table-column prop="state" label="发布状态" :formatter="formatter" />
+        <el-table-column prop="state" label="发布状态" :formatter="formatter" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" :inactive-value="0" :active-value="1" inline-prompt active-text="已发布" inactive-text="未发布" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right" width="120">
@@ -152,8 +156,6 @@ const handleCancel = (row) => {
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'noticeType') {
     return dictStore.parseDict('notice_type', cellValue);
-  } else if (column.property === 'state') {
-    return cellValue === 0 ? h('span', { style: 'color: red;' }, '未发布') : h('span', { style: 'color: green;' }, '已发布');
   } else {
     return cellValue;
   }

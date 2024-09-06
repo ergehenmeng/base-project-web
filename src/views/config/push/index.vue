@@ -20,7 +20,14 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="消息标题" width="200" />
         <el-table-column prop="nid" label="消息编号" width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" width="100" >
+          <template #header>
+            <span>状态<QuestionTip content="关闭后不会触发消息推送" /></span>
+          </template>
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" inline-prompt active-text="启用" inactive-text="关闭" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="content" label="内容" min-width="250" />
         <el-table-column prop="tag" label="跳转页面" width="150" />
         <el-table-column prop="remark" label="备注信息" />
@@ -48,6 +55,7 @@ import { listPageApi } from '@/api/config/push';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import PushForm from '@/views/config/push/PushForm.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -84,23 +92,6 @@ const search = () => {
 onMounted(() => {
   getPage();
 });
-
-const formatter = (_row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue
-      ? h('span', { style: 'color: green;' }, '开启')
-      : h(
-          'span',
-          {
-            style: 'color: red;',
-            title: '关闭后不会触发消息推送'
-          },
-          '关闭'
-        );
-  } else {
-    return cellValue;
-  }
-};
 
 const handleEdit = (row) => {
   pushFormRef.value.openDialog(row);

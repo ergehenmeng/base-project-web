@@ -22,7 +22,11 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="任务名称" width="200" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="80" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeTitle" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="beanName" label="类名" width="200" />
         <el-table-column prop="methodName" label="方法名" width="150" />
         <el-table-column prop="args" label="方法入参" width="100" />
@@ -87,17 +91,7 @@ const getPage = async () => {
 };
 
 const formatter = (_row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue
-      ? h('span', { style: 'color: green;' }, '已启用')
-      : h(
-          'span',
-          {
-            style: 'color: red;'
-          },
-          '未启用'
-        );
-  } else if (column.property === 'lockTime') {
+  if (column.property === 'lockTime') {
     return h('span', { title: '定时任务持有锁时间(单位:ms)' }, cellValue);
   } else {
     return cellValue;

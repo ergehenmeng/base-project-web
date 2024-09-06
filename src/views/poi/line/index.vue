@@ -36,7 +36,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="title" label="线路名称" min-width="150" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="100" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0"  inline-prompt active-text="上架" inactive-text="下架" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="areaTitle" label="所属区域" min-width="150" />
         <el-table-column prop="playTime" label="预计游玩时间(小时)" min-width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
@@ -151,10 +155,6 @@ const handleBind = (row) => {
       lat: row.latitude
     }
   });
-};
-
-const formatter = (_row, _column, cellValue) => {
-  return cellValue === 0 ? '未上架' : h('span', { style: 'color: green;' }, '上架');
 };
 
 const handleCreate = () => {

@@ -40,7 +40,11 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商家名称" width="200" />
         <el-table-column prop="type" label="商家类型" width="250" :formatter="formatter" />
-        <el-table-column prop="state" label="商家状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="商家状态" width="100" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="mobile" label="联系人电话" width="150" />
         <el-table-column prop="account" label="账户名" width="100" />
         <el-table-column prop="authMobile" label="微信授权手机号" width="150" />
@@ -127,9 +131,7 @@ const getPage = async () => {
 };
 
 const formatter = (_row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue === 0 ? h('span', { style: 'color: blue;' }, '锁定') : h('span', { style: 'color: green;' }, '正常');
-  } else if (column.property === 'type') {
+  if (column.property === 'type') {
     return parseMerchantType(cellValue);
   } else if (column.property === 'enterpriseType') {
     return cellValue === 1 ? '个体工商户' : '企业';

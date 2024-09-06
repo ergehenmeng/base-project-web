@@ -14,11 +14,31 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="分类标题" />
         <el-table-column prop="code" label="资讯编码" />
-        <el-table-column prop="includeTitle" label="包含标题" :formatter="formatter" />
-        <el-table-column prop="includeDepict" label="包含描述信息" :formatter="formatter" />
-        <el-table-column prop="includeImage" label="包含图集" :formatter="formatter" />
-        <el-table-column prop="includeContent" label="包含详细信息" :formatter="formatter" />
-        <el-table-column prop="includeVideo" label="包含视频" :formatter="formatter" />
+        <el-table-column prop="includeTitle" label="包含标题">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeTitle" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="includeDepict" label="包含描述信息">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeDepict" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="includeImage" label="包含图集">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeImage" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="includeContent" label="包含详细信息">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeContent" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="includeVideo" label="包含视频">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeVideo" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="100">
@@ -100,10 +120,6 @@ const handleDelete = (row) => {
       getPage();
     });
   });
-};
-
-const formatter = (_row, _column, cellValue) => {
-  return cellValue ? '是' : '否';
 };
 
 const handleCreate = () => {

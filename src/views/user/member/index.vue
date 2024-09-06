@@ -62,7 +62,11 @@
         <el-table-column prop="nickName" label="昵称" min-width="100" />
         <el-table-column prop="mobile" label="手机号码" width="120" />
         <el-table-column prop="email" label="电子邮箱" width="200" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="80" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" inline-prompt active-text="正常" inactive-text="关闭" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="score" label="积分" width="100" />
         <el-table-column prop="inviteCode" label="邀请码" width="100" />
         <el-table-column prop="sex" label="性别" width="80" :formatter="formatter" />
@@ -106,6 +110,7 @@ import { useRouter } from 'vue-router';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import { downloadExcel } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const loading = ref(false);
@@ -164,9 +169,7 @@ const handleExcel = () => {
 };
 
 const formatter = (_row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue ? h('span', { style: 'color: green;' }, '正常') : h('span', { style: 'color: #ff3d3d;' }, '冻结');
-  } else if (column.property === 'sex') {
+  if (column.property === 'sex') {
     if (cellValue === 0) {
       return '未知';
     }

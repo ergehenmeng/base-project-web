@@ -14,7 +14,11 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="区域名称" min-width="120" />
         <el-table-column prop="code" label="区域编号" min-width="100" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="100" >
+          <template #default="scope">
+            <el-switch v-model="scope.row.state" inline-prompt active-text="上架" inactive-text="下架" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="latitude" label="经纬度" width="200" :formatter="formatter" />
         <el-table-column prop="detailAddress" label="详细地址" min-width="250" />
         <el-table-column prop="remark" label="备注" max-width="250" />
@@ -100,9 +104,7 @@ const handleDelete = (row) => {
 };
 
 const formatter = (row, column, cellValue) => {
-  if (column.property === 'state') {
-    return cellValue ? h('span', { style: 'color: green' }, '已上架') : '未上架';
-  } else if (column.property === 'latitude') {
+  if (column.property === 'latitude') {
     return row.longitude + '-' + cellValue;
   } else {
     return cellValue;
