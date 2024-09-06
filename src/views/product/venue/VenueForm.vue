@@ -46,7 +46,7 @@
       </el-form-item>
       <el-form-item label="场馆介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce"></div>
+        <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
     <div>

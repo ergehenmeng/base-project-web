@@ -166,11 +166,11 @@
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotesText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" v-model:text-value="formData.purchaseNotesText"></WangEditor>
-        <div v-else v-html="formData.purchaseNotes"></div>
+        <div v-else v-html="formData.purchaseNotes" class="html-preview"/>
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce"></div>
+        <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
     <div>

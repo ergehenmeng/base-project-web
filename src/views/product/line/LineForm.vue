@@ -52,7 +52,7 @@
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" :width="570" :height="300"></WangEditor>
-        <div v-html="formData.introduce" v-else></div>
+        <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
       <h4>游玩信息</h4>
       <el-divider />
@@ -82,7 +82,7 @@
           </el-form-item>
           <el-form-item label="游玩介绍" :prop="`configList[${index}].depictText`" :rules="{ required: true, message: '游玩介绍不能为空', trigger: 'blur' }">
             <WangEditor v-if="!disabled" v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
-            <div v-html="item.depict" v-else></div>
+            <div v-else v-html="item.depict" class="html-preview"/>
           </el-form-item>
         </div>
       </div>

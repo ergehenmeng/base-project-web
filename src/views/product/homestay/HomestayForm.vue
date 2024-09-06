@@ -49,11 +49,11 @@
       </el-form-item>
       <el-form-item label="入住须知" prop="notesInText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.notesIn" v-model:text-value="formData.notesInText"></WangEditor>
-        <div v-else v-html="formData.notesIn"></div>
+        <div v-else v-html="formData.notesIn" class="html-preview"/>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce"></div>
+        <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
     <div>
