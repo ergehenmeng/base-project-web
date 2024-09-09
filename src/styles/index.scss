@@ -78,8 +78,14 @@ body {
 }
 
 /*列表单行样式*/
-.el-table .success-row {
-  --el-table-tr-bg-color: #e9f9e3;
+.el-table {
+  .success-row {
+    --el-table-tr-bg-color: #e9f9e3;
+  }
+  .cell {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .current-row {

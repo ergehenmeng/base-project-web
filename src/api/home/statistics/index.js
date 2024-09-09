@@ -55,3 +55,15 @@ export const dayCollectApi = (params) => {
     params
   });
 };
+
+export const itemSaleApi = () => {
+  return request.get({
+    url: '/manage/statistics/itemSale'
+  });
+};
+
+export const merchantSaleApi = () => {
+  return request.get({
+    url: '/manage/statistics/merchantSale'
+  });
+};

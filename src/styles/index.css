@@ -68,6 +68,10 @@ body {
 .el-table .success-row {
   --el-table-tr-bg-color: #e9f9e3;
 }
+.el-table .cell {
+  display: flex;
+  align-items: center;
+}
 
 .current-row {
   --el-table-current-row-bg-color: #b3fbe8;

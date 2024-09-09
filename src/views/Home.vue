@@ -17,6 +17,77 @@
         </StatisticsCard>
       </el-row>
       <el-row v-if="memberAuth">
+        <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true">
+          <template #icon>
+            <Ranking></Ranking>
+          </template>
+          <template #content>
+            <div class="ranking-view">
+              <el-table :data="itemRankingList" style="width: 100%">
+                <el-table-column prop="num" label="排行" width="80" >
+                  <template #default="scope">
+                    <template v-if="scope.$index === 0">
+                      <First />
+                    </template>
+                    <template v-else-if="scope.$index === 1">
+                      <Second />
+                    </template>
+                    <template v-else-if="scope.$index === 2">
+                      <Third />
+                    </template>
+                    <template v-else>
+                      No.{{ scope.$index + 1 }}
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column label="图片" min-width="50" >
+                  <template #default="scope">
+                    <div style="display: flex; align-items: center">
+                      <el-image fit="cover" :src="scope.row.productImg" style="width: 20px; height: 20px" :preview-src-list="scope.row.productImg?.split(',')" preview-teleported hide-on-click-modal />
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="productName" label="商品名称" min-width="250" />
+                <el-table-column prop="amount" label="销售额(元)" min-width="80" />
+              </el-table>
+            </div>
+          </template>
+        </StatisticsChart>
+        <StatisticsChart title="商户销售额" :height="300" :span="12" :hidden-query="true">
+          <template #icon>
+            <Ranking color="#81ecec"></Ranking>
+          </template>
+          <template #content>
+            <div class="ranking-view">
+              <el-scrollbar height="100%">
+                <el-table :data="merchantRankingList" style="width: 100%">
+                  <el-table-column prop="num" label="排行" width="80" >
+                    <template #default="scope">
+                      <span style="line-height: 23px;">
+                        <template v-if="scope.$index === 0">
+                          <First />
+                        </template>
+                        <template v-else-if="scope.$index === 1">
+                          <Second />
+                        </template>
+                        <template v-else-if="scope.$index === 2">
+                          <Third />
+                        </template>
+                        <template v-else>
+                          No.{{ scope.$index + 1 }}
+                        </template>
+                      </span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="merchantName" label="商户名称" min-width="280" />
+                  <el-table-column prop="amount" label="总销售额(元)" min-width="100" />
+                </el-table>
+              </el-scrollbar>
+            </div>
+          </template>
+        </StatisticsChart>
+      </el-row>
+      <el-row v-if="memberAuth">
         <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
           <template #icon>
             <Member></Member>
@@ -124,7 +195,18 @@
 </template>
 
 <script setup>
-import { dayAppendApi, dayCartApi, dayCollectApi, dayOrderApi, dayRegisterApi, dayVisitApi, orderApi, sexChannelApi } from '@/api/home/statistics';
+import {
+  dayAppendApi,
+  dayCartApi,
+  dayCollectApi,
+  dayOrderApi,
+  dayRegisterApi,
+  dayVisitApi,
+  itemSaleApi,
+  merchantSaleApi,
+  orderApi,
+  sexChannelApi
+} from '@/api/home/statistics'
 import * as echarts from 'echarts/core';
 import { BarChart, LineChart, PieChart } from 'echarts/charts';
 import { DatasetComponent, GridComponent, LegendComponent, TitleComponent, ToolboxComponent, TooltipComponent, TransformComponent } from 'echarts/components';
@@ -145,6 +227,10 @@ import Visit from '@/components/icon/Visit.vue';
 import Channel from '@/components/icon/Channel.vue';
 import Collect from '@/components/icon/Collect.vue';
 import useUserStore from '@/store/user.js';
+import Ranking from '@/components/icon/Ranking.vue'
+import First from '@/components/icon/First.vue'
+import Second from '@/components/icon/Second.vue'
+import Third from '@/components/icon/Third.vue'
 
 const userStore = useUserStore();
 const memberAuth = userStore.hasAuth('UX80');
@@ -153,6 +239,12 @@ const collectAuth = userStore.hasAuth('DX80');
 const productAuth = userStore.hasAuth('nX80');
 // 必须有零售类权限才显示购物车统计
 const cartAuth = (userStore.user?.merchantType & 8) === 8;
+
+const itemRankingList = ref([
+])
+
+const merchantRankingList = ref([
+])
 
 // 注册必须的组件
 echarts.use([
@@ -599,6 +691,18 @@ const getDayOrderData = () => {
   }
 };
 
+const getItemSaleData = () => {
+  itemSaleApi().then((res) => {
+    itemRankingList.value = res.data;
+  })
+};
+
+const merchantSaleData = () => {
+  merchantSaleApi().then((res) => {
+    merchantRankingList.value = res.data;
+  })
+}
+
 const getDayVisitData = () => {
   const activeDate = visitParams.activeDate;
   if (activeDate && activeDate.length > 0) {
@@ -673,6 +777,10 @@ onMounted(() => {
   visitParams.activeDate = weekDate;
   collectParams.activeDate = weekDate;
 
+  getItemSaleData();
+
+  merchantSaleData();
+
   orderChart = echarts.init(document.getElementById('orderApp'));
   getDayOrderData();
 
@@ -704,5 +812,10 @@ onMounted(() => {
 <style lang="scss" scoped>
 .item-layout {
   padding: 10px;
+}
+.ranking-view {
+  width: 100%;
+  height: 100%;
+  padding: 0 10px;
 }
 </style>
