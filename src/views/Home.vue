@@ -16,8 +16,8 @@
           <RefundAmount :size="50"></RefundAmount>
         </StatisticsCard>
       </el-row>
-      <el-row v-if="memberAuth">
-        <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true">
+      <el-row v-if="merchantAuth || itemAuth">
+        <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true" v-if="itemAuth">
           <template #icon>
             <Ranking></Ranking>
           </template>
@@ -53,7 +53,7 @@
             </div>
           </template>
         </StatisticsChart>
-        <StatisticsChart title="商户销售额" :height="300" :span="12" :hidden-query="true">
+        <StatisticsChart title="商户销售额" :height="300" :span="12" :hidden-query="true" v-if="merchantAuth">
           <template #icon>
             <Ranking color="#81ecec"></Ranking>
           </template>
@@ -235,6 +235,8 @@ const memberAuth = userStore.hasAuth('UX80');
 const visitAuth = userStore.hasAuth('cX80');
 const collectAuth = userStore.hasAuth('DX80');
 const productAuth = userStore.hasAuth('nX80');
+const itemAuth = userStore.hasAuth('YX80');
+const merchantAuth = userStore.hasAuth('uX80');
 // 必须有零售类权限才显示购物车统计
 const cartAuth = (userStore.user?.merchantType & 8) === 8;
 
