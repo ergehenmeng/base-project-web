@@ -63,20 +63,18 @@
                 <el-table :data="merchantRankingList" style="width: 100%">
                   <el-table-column prop="num" label="排行" width="80" >
                     <template #default="scope">
-                      <span style="line-height: 23px;">
-                        <template v-if="scope.$index === 0">
-                          <First />
-                        </template>
-                        <template v-else-if="scope.$index === 1">
-                          <Second />
-                        </template>
-                        <template v-else-if="scope.$index === 2">
-                          <Third />
-                        </template>
-                        <template v-else>
-                          No.{{ scope.$index + 1 }}
-                        </template>
-                      </span>
+                      <template v-if="scope.$index === 0">
+                        <First />
+                      </template>
+                      <template v-else-if="scope.$index === 1">
+                        <Second />
+                      </template>
+                      <template v-else-if="scope.$index === 2">
+                        <Third />
+                      </template>
+                      <template v-else>
+                        No.{{ scope.$index + 1 }}
+                      </template>
                     </template>
                   </el-table-column>
                   <el-table-column prop="merchantName" label="商户名称" min-width="280" />
