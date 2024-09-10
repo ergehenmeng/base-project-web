@@ -777,9 +777,13 @@ onMounted(() => {
   visitParams.activeDate = weekDate;
   collectParams.activeDate = weekDate;
 
-  getItemSaleData();
+  if (itemAuth) {
+    getItemSaleData();
+  }
 
-  merchantSaleData();
+  if (merchantAuth) {
+    merchantSaleData();
+  }
 
   orderChart = echarts.init(document.getElementById('orderApp'));
   getDayOrderData();

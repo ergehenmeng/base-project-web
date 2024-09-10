@@ -55,7 +55,7 @@
         </el-table-column>
         <el-table-column prop="title" label="商品名称" min-width="150" />
         <el-table-column prop="storeName" label="所属店铺" min-width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="quota" label="限购数量" width="100" />
         <el-table-column prop="deliveryType" label="交付方式" width="100" :formatter="formatter" />
         <el-table-column prop="minPrice" label="价格" width="130" :formatter="formatter" />
@@ -74,15 +74,18 @@
             <span>平台推荐<QuestionTip content="被平台推荐的商品会在首页展示"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="180">
+        <el-table-column prop="createTime" label="创建时间" width="170" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
+        <el-table-column label="操作" fixed="right" width="210">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'jSO0'" title="新增零售商品" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'2SO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'IyO0'" @click="showStock(scope.row)" link title="增加库存">
+              <Stock></Stock>
+            </el-button>
             <el-button v-has-perm="'gSO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'mSO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
             <el-button v-has-perm="'BSO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
@@ -108,6 +111,7 @@
       />
     </div>
   </div>
+  <StockForm ref="stockFormRef" @reload="getPage"/>
 </template>
 <script setup>
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/item';
@@ -124,6 +128,8 @@ import { shortUrlApi } from '@/api/common/index.js'
 import { useClipboard } from '@vueuse/core'
 import Recommend from '@/components/icon/Recommend.vue'
 import Recommended from '@/components/icon/Recommended.vue'
+import StockForm from '@/views/product/item/StockForm.vue'
+import Stock from '@/components/icon/Stock.vue'
 
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
@@ -134,6 +140,8 @@ const total = ref(0);
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('8SO0');
 const sortAuth = userStore.hasAuth('LSO0');
+const stockFormRef = ref();
+
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -238,6 +246,10 @@ const handlePlatformUnShelves = (row) => {
       getPage();
     });
   });
+};
+
+const showStock = (row) => {
+  stockFormRef.value.openDialog({ itemId: row.id, title: row.title});
 };
 
 const handleRecommend = (row) => {

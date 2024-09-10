@@ -42,6 +42,20 @@ export const selectApi = (params) => {
   });
 };
 
+export const skuApi = (params) => {
+  return request.get({
+    url: '/manage/item/getSku',
+    params
+  });
+};
+
+export const addStockApi = (data) => {
+  return request.post({
+    url: '/manage/item/addStock',
+    data
+  });
+};
+
 export const sortApi = (data) => {
   return request.post({
     url: '/manage/item/sort',
