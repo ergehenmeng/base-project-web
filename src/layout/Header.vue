@@ -26,12 +26,13 @@
 <script setup>
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
-import { confirmMsg, errorMsg, warningMsg } from '@/utils/message'
+import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
 import useDictStore from '@/store/dict.js'
 import useAreaStore from '@/store/area.js'
+import { Client } from '@stomp/stompjs'
 
 const userStore = useUserStore();
 const changePwdRef = ref();
@@ -47,11 +48,36 @@ const areaStore = useAreaStore();
 areaStore.initArea();
 // 初始化数据字典
 const dictStore = useDictStore();
+
 dictStore.initDict('image_type', 'help_type', 'feedback_type',
   'banner_type', 'notice_type', 'scenic_tag',
   'homestay_tag', 'key_service', 'hot_institution',
   'bathroom', 'children', 'media', 'appliance',
   'landscape');
+
+const initWebSocket = () => {
+
+  const client = new Client({
+    // 后缀ws用来建立连接
+    brokerURL: import.meta.env.VITE_IOS_DOWNLOAD_URL,
+    reconnectDelay: 5000,
+    heartbeatIncoming: 10000,
+    heartbeatOutgoing: 10000
+  })
+
+  client.onConnect = frame => {
+    console.log('连接成功', frame)
+  }
+
+  client.onStompError = frame => {
+    console.log('连接错误', frame)
+  }
+
+  client.activate();
+  return client;
+}
+
+const client = initWebSocket();
 
 onMounted(() => {
   const init = userStore.user?.init;
@@ -66,11 +92,31 @@ onMounted(() => {
   }
 })
 
-const handleUser = () => {};
+const handleUser = () => {
+  console.log('待补全功能')
+};
 
 const handleChangePwd = () => {
   changePwdRef.value.openDialog();
 };
+
+/**
+ * 订阅消息,并进行消息展示 /ws前缀用来区分普通请求和websocket订阅请求
+ */
+const subscription = client.subscribe('/ws/order/broadcast/' + userStore.user?.token, msg => {
+  const data = JSON.parse(msg.body);
+  if (data.type === 'order') {
+    successMsg('您有新的订单待处理');
+  } else if (data.type === 'message') {
+    successMsg('您有新的消息待处理');
+  }
+})
+
+onUnmounted(() => {
+  subscription.unsubscribe();
+  client.deactivate();
+})
+
 </script>
 <style lang="scss" scoped>
 @import '@/styles/index.scss';
