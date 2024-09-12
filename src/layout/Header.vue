@@ -20,20 +20,24 @@
         </el-icon>
       </li>
     </ul>
-    <ChangePwd ref="changePwdRef"></ChangePwd>
+    <ChangePwd ref="changePwdRef" />
   </div>
 </template>
 <script setup>
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
-import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
+import { confirmMsg, errorMsg, warningMsg } from '@/utils/message'
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
 import useDictStore from '@/store/dict.js'
 import useAreaStore from '@/store/area.js'
-import { Client } from '@stomp/stompjs'
+import { Client } from '@stomp/stompjs';
+import { renderMsg } from '@/utils/common.js'
+import { ElLink } from 'element-plus'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const userStore = useUserStore();
 const changePwdRef = ref();
 const nickName = userStore.user?.nickName;
@@ -56,29 +60,24 @@ dictStore.initDict('image_type', 'help_type', 'feedback_type',
   'landscape');
 
 const initWebSocket = () => {
-
   const client = new Client({
     // 后缀ws用来建立连接
-    brokerURL: import.meta.env.VITE_IOS_DOWNLOAD_URL,
-    reconnectDelay: 5000,
+    brokerURL: import.meta.env.VITE_WEBSOCKET_URL,
+    connectHeaders: {
+      "token": userStore.user?.token
+    },
+    onConnect: () => {
+      subscribe();
+    },
+    reconnectDelay: 10000,
     heartbeatIncoming: 10000,
     heartbeatOutgoing: 10000
-  })
-
-  client.onConnect = frame => {
-    console.log('连接成功', frame)
-  }
-
-  client.onStompError = frame => {
-    console.log('连接错误', frame)
-  }
-
-  client.activate();
+  });
+  client.activate()
   return client;
 }
 
-const client = initWebSocket();
-
+let client;
 onMounted(() => {
   const init = userStore.user?.init;
   if (init) {
@@ -90,31 +89,71 @@ onMounted(() => {
   if (expire) {
     errorMsg('密码已超过90天未修改，请及时修改保证账户安全');
   }
+  // 商户用户才开启websocket用来接收订单消息
+  if (userStore.user?.userType === 2 || userStore.user?.userType === 3) {
+    client = initWebSocket();
+  }
 })
 
+const subscribe = () => {
+  client.subscribe('/websocket/order/broadcast/' + userStore.user?.merchantId, (frame) => {
+    showNotice(JSON.parse(frame.body));
+  })
+}
+
 const handleUser = () => {
-  console.log('待补全功能')
+  console.log("待补全逻辑")
 };
 
 const handleChangePwd = () => {
   changePwdRef.value.openDialog();
 };
 
+const showNotice = ({ type, data }) => {
+  let content;
+  if (type === 'delivery') {
+    content = resultMsg('BRD0', renderMsg(['你有', () => data.length, '笔订单待发货, 请及时处理']), () => {
+      router.push('/order/item')
+    })
+  } else {
+    content = resultMsg('WRD0', renderMsg(['你有', () => data.length, '笔订单待退款审核, 请及时处理']), () => {
+      router.push('service/refund')
+    })
+  }
+
+  ElNotification({
+    title: '提醒',
+    message: content,
+    type: 'warning',
+    position: 'bottom-right'
+  })
+}
+
+/**
+ * 判断是否有权限, 如果有则可以点击,否则不可点击
+ * @param auth 权限
+ * @param msg 要请点击的消息
+ * @param clickFunc 点击后的回调
+ * @returns {VNode|*}
+ */
+const resultMsg = (auth, msg, clickFunc) => {
+  const selectAuth = userStore.hasAuth(auth);
+  if (selectAuth) {
+    return h(ElLink, {
+      style: {
+        cursor: 'pointer'
+      },
+      onClick: clickFunc
+    }, () => msg)
+  }
+  return msg;
+}
+
 /**
  * 订阅消息,并进行消息展示 /ws前缀用来区分普通请求和websocket订阅请求
  */
-const subscription = client.subscribe('/ws/order/broadcast/' + userStore.user?.token, msg => {
-  const data = JSON.parse(msg.body);
-  if (data.type === 'order') {
-    successMsg('您有新的订单待处理');
-  } else if (data.type === 'message') {
-    successMsg('您有新的消息待处理');
-  }
-})
-
 onUnmounted(() => {
-  subscription.unsubscribe();
-  client.deactivate();
+  client?.deactivate();
 })
 
 </script>

@@ -27,7 +27,9 @@ const useUserStore = defineStore(
       // 密码是否长时间未修改
       expire: false,
       // 是否锁屏
-      isLock: false
+      isLock: false,
+      // 商户id
+      merchantId: ''
     });
     // 用户是否登陆
     const isLogin = ref(false);
