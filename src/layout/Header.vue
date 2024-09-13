@@ -52,7 +52,6 @@ const areaStore = useAreaStore();
 areaStore.initArea();
 // 初始化数据字典
 const dictStore = useDictStore();
-
 dictStore.initDict('image_type', 'help_type', 'feedback_type',
   'banner_type', 'notice_type', 'scenic_tag',
   'homestay_tag', 'key_service', 'hot_institution',
@@ -62,7 +61,7 @@ dictStore.initDict('image_type', 'help_type', 'feedback_type',
 const initWebSocket = () => {
   const client = new Client({
     // 后缀ws用来建立连接
-    brokerURL: import.meta.env.VITE_WEBSOCKET_URL,
+    brokerURL: import.meta.env.VITE_WEBSOCKET_URL + "?token=" + userStore.user?.token.split(' ')[1],
     connectHeaders: {
       "token": userStore.user?.token
     },
@@ -79,6 +78,12 @@ const initWebSocket = () => {
 
 let client;
 onMounted(() => {
+
+  // 只有零售商户才开启websocket用来接收订单消息
+  if ((userStore.user?.userType === 2 || userStore.user?.userType === 3) && (userStore.user?.merchantType & 8) === 8) {
+    client = initWebSocket();
+  }
+
   const init = userStore.user?.init;
   if (init) {
     warningMsg('您的密码为初始化密码，请及时修改密码');
@@ -88,10 +93,6 @@ onMounted(() => {
   const expire = userStore.user?.expire;
   if (expire) {
     errorMsg('密码已超过90天未修改，请及时修改保证账户安全');
-  }
-  // 只有零售商户才开启websocket用来接收订单消息
-  if ((userStore.user?.userType === 2 || userStore.user?.userType === 3) && (userStore.user?.merchantType & 8) === 8) {
-    client = initWebSocket();
   }
 })
 
