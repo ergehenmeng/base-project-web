@@ -89,8 +89,8 @@ onMounted(() => {
   if (expire) {
     errorMsg('密码已超过90天未修改，请及时修改保证账户安全');
   }
-  // 商户用户才开启websocket用来接收订单消息
-  if (userStore.user?.userType === 2 || userStore.user?.userType === 3) {
+  // 只有零售商户才开启websocket用来接收订单消息
+  if ((userStore.user?.userType === 2 || userStore.user?.userType === 3) && (userStore.user?.merchantType & 8) === 8) {
     client = initWebSocket();
   }
 })
@@ -111,7 +111,7 @@ const handleChangePwd = () => {
 
 const showNotice = ({ type, data }) => {
   let content;
-  if (type === 'delivery') {
+  if (type === 'DELIVERY') {
     content = resultMsg('BRD0', renderMsg(['你有', () => data.length, '笔订单待发货, 请及时处理']), () => {
       router.push('/order/item')
     })
