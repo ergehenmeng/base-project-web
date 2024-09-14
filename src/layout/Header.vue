@@ -62,9 +62,6 @@ const initWebSocket = () => {
   const client = new Client({
     // 后缀ws用来建立连接
     brokerURL: import.meta.env.VITE_WEBSOCKET_URL + "?token=" + userStore.user?.token.split(' ')[1],
-    connectHeaders: {
-      "token": userStore.user?.token
-    },
     onConnect: () => {
       subscribe();
     },

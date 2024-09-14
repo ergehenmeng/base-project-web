@@ -44,8 +44,13 @@ const formData = ref({
 const openDialog = (row) => {
   showDialog.value = true;
   formData.value = { ...row };
+  // 防止切换时显示上次的数据
+  skuData.value = [];
+  loading.value = true;
   skuApi({ id: row.itemId }).then((res) => {
     skuData.value = res.data;
+  }).finally(() => {
+    loading.value = false;
   })
 };
 
