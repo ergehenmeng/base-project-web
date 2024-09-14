@@ -2,7 +2,7 @@
   <el-scrollbar height="calc(100vh - 120px)">
     <div class="edit-content">
       <el-divider />
-      <el-row>
+      <el-row v-loading="orderLoading">
         <StatisticsCard title="累计订单数" :amount="orderValue.orderNum">
           <PayNum :size="50"></PayNum>
         </StatisticsCard>
@@ -17,12 +17,12 @@
         </StatisticsCard>
       </el-row>
       <el-row v-if="merchantAuth || itemAuth">
-        <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true" v-if="itemAuth">
+        <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true" v-if="itemAuth" >
           <template #icon>
             <Ranking></Ranking>
           </template>
           <template #content>
-            <div class="ranking-view">
+            <div class="ranking-view" v-loading="itemLoading">
               <el-table :data="itemRankingList" style="width: 100%">
                 <el-table-column prop="num" label="排行" width="80" >
                   <template #default="scope">
@@ -53,12 +53,12 @@
             </div>
           </template>
         </StatisticsChart>
-        <StatisticsChart title="商户销售额" :height="300" :span="12" :hidden-query="true" v-if="merchantAuth">
+        <StatisticsChart title="商户销售额" :height="300" :span="12" :hidden-query="true" v-if="merchantAuth" >
           <template #icon>
             <Ranking color="#81ecec"></Ranking>
           </template>
           <template #content>
-            <div class="ranking-view">
+            <div class="ranking-view" v-loading="merchantLoading">
               <el-scrollbar height="100%">
                 <el-table :data="merchantRankingList" style="width: 100%">
                   <el-table-column prop="num" label="排行" width="80" >
@@ -91,7 +91,7 @@
             <Member></Member>
           </template>
           <template #content>
-            <div id="registerApp" style="width: 100%; height: 100%"></div>
+            <div id="registerApp" style="width: 100%; height: 100%" v-loading="registerLoading" ></div>
           </template>
         </StatisticsChart>
         <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
@@ -99,7 +99,7 @@
             <Channel></Channel>
           </template>
           <template #content>
-            <div id="channelApp" style="width: 100%; height: 100%"></div>
+            <div id="channelApp" style="width: 100%; height: 100%" v-loading="sexLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -109,7 +109,7 @@
             <Order></Order>
           </template>
           <template #content>
-            <div id="orderApp" style="width: 100%; height: 100%"></div>
+            <div id="orderApp" style="width: 100%; height: 100%" v-loading="orderCountLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -129,7 +129,7 @@
             </el-select>
           </template>
           <template #content>
-            <div id="productApp" style="width: 100%; height: 100%"></div>
+            <div id="productApp" style="width: 100%; height: 100%" v-loading="productLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -139,7 +139,7 @@
             <Cart></Cart>
           </template>
           <template #content>
-            <div id="cartApp" style="width: 100%; height: 100%"></div>
+            <div id="cartApp" style="width: 100%; height: 100%" v-loading="cartLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -162,7 +162,7 @@
             </el-select>
           </template>
           <template #content>
-            <div id="visitApp" style="width: 100%; height: 100%"></div>
+            <div id="visitApp" style="width: 100%; height: 100%" v-loading="visitLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -184,7 +184,7 @@
             </el-select>
           </template>
           <template #content>
-            <div id="collectApp" style="width: 100%; height: 100%"></div>
+            <div id="collectApp" style="width: 100%; height: 100%" v-loading="collectLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
@@ -674,8 +674,11 @@ const getDayCartData = () => {
   if (activeDate && activeDate.length > 0) {
     cartParams.startDate = activeDate[0];
     cartParams.endDate = activeDate[1];
+    cartLoading.value = true;
     dayCartApi(cartParams).then((res) => {
       cartOption(res.data);
+    }).finally(() => {
+      cartLoading.value = false;
     });
   }
 };
@@ -685,21 +688,30 @@ const getDayOrderData = () => {
   if (activeDate && activeDate.length > 0) {
     orderParams.startDate = activeDate[0];
     orderParams.endDate = activeDate[1];
+    orderCountLoading.value = true;
     dayOrderApi(orderParams).then((res) => {
       orderOption(res.data);
+    }).finally(() => {
+      orderCountLoading.value = false;
     });
   }
 };
 
 const getItemSaleData = () => {
+  itemLoading.value = true;
   itemSaleApi().then((res) => {
     itemRankingList.value = res.data;
+  }).finally(() => {
+    itemLoading.value = false;
   })
 };
 
 const merchantSaleData = () => {
+  merchantLoading.value = true;
   merchantSaleApi().then((res) => {
     merchantRankingList.value = res.data;
+  }).finally(()=> {
+    merchantLoading.value = false;
   })
 }
 
@@ -708,8 +720,11 @@ const getDayVisitData = () => {
   if (activeDate && activeDate.length > 0) {
     visitParams.startDate = activeDate[0];
     visitParams.endDate = activeDate[1];
+    visitLoading.value = true
     dayVisitApi(visitParams).then((res) => {
       visitOption(res.data);
+    }).finally(() => {
+      visitLoading.value = false;
     });
   }
 };
@@ -719,8 +734,11 @@ const getDayCollectData = () => {
   if (activeDate && activeDate.length > 0) {
     collectParams.startDate = activeDate[0];
     collectParams.endDate = activeDate[1];
+    collectLoading.value = true;
     dayCollectApi(collectParams).then((res) => {
       collectOption(res.data);
+    }).finally(() => {
+      collectLoading.value = false;
     });
   }
 };
@@ -730,8 +748,11 @@ const getDayRegisterData = () => {
   if (activeDate && activeDate.length > 0) {
     registerParams.startDate = activeDate[0];
     registerParams.endDate = activeDate[1];
+    registerLoading.value = true;
     dayRegisterApi(registerParams).then((res) => {
       registerOption(res.data);
+    }).finally(() => {
+      registerLoading.value = false;
     });
   }
 };
@@ -741,21 +762,38 @@ const getDayProductData = () => {
   if (activeDate && activeDate.length > 0) {
     productParams.startDate = activeDate[0];
     productParams.endDate = activeDate[1];
+    productLoading.value = true;
     dayAppendApi(productParams).then((res) => {
       productOption(res.data);
+    }).finally(() => {
+      productLoading.value = false;
     });
   }
 };
 
 const getDayChannelData = () => {
+  sexLoading.value = true;
   sexChannelApi({}).then((res) => {
     channelOption(res.data);
+  }).finally(() => {
+    sexLoading.value = false;
   });
 };
 
 const getWeekDate = () => {
   return [dayjs().subtract(7, 'day').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')];
 };
+
+const orderLoading = ref(false);
+const itemLoading = ref(false);
+const merchantLoading = ref(false);
+const registerLoading = ref(false);
+const sexLoading = ref(false);
+const orderCountLoading = ref(false);
+const productLoading = ref(false);
+const cartLoading = ref(false);
+const visitLoading = ref(false);
+const collectLoading = ref(false);
 
 const orderValue = ref({
   orderNum: 0,
@@ -765,8 +803,11 @@ const orderValue = ref({
 });
 
 onMounted(() => {
+  orderLoading.value = true;
   orderApi().then((res) => {
     orderValue.value = { ...res.data };
+  }).finally(() => {
+    orderLoading.value = false;
   });
 
   const weekDate = getWeekDate();
