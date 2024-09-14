@@ -35,7 +35,7 @@
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}：{{ item.mobile }}</span>
           </el-option>
         </el-select>
-        <QuestionTip content="该地址是用户退换货时邮寄的商家收货地址"></QuestionTip>
+        <QuestionTip content="该地址是用户退换货时商家的收货地址"></QuestionTip>
       </el-form-item>
       <el-form-item label="封面图" prop="coverList">
         <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>

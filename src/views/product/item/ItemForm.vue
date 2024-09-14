@@ -38,7 +38,7 @@
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage v-model:img-url="value.pic" v-if="index === 0"></UploadImage>
+                    <UploadImage v-model:img-url="value.pic" v-if="index === 0" tips="规格图片"></UploadImage>
                   </div>
                   <span class="spec-value-patch" v-if="!disabled">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>

@@ -58,7 +58,7 @@
             <el-button v-has-perm="'EPi0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleOpen(scope.row)" link title="启用"></el-button>
             <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
             <el-button v-has-perm="'1Pi0'" v-show="scope.row.mode === 2" type="primary" :icon="Position" @click="handleGrant(scope.row)" link title="发放优惠券"></el-button>
-            <el-button v-has-perm="'CPi0'" type="info" :icon="Notebook" @click="handleReceiveDetail(scope.row)" link title="领取详情"></el-button>
+            <el-button v-has-perm="'CPi0'" type="info"  @click="handleReceiveDetail(scope.row)" link title="领取详情"><Receive/></el-button>
             <el-button v-has-perm="'zPi0'" v-show="scope.row.mode === 1" type="success" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
             <el-button v-has-perm="'QPi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
@@ -84,6 +84,7 @@ import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { shortUrlApi } from '@/api/common/index.js'
 import { useClipboard } from '@vueuse/core'
+import Receive from '@/components/icon/Receive.vue'
 
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
