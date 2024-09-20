@@ -8,7 +8,7 @@
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
           <el-radio :value="1">启用</el-radio>
-          <el-radio :value="0">禁用</el-radio>
+          <el-radio :value="0">禁用<QuestionTip content="注意:禁用后后续商品无法使用该物流模板，但之前已经选择的不受影响"/></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="计费方式" prop="chargeMode">
@@ -93,6 +93,7 @@ import { confirmMsg, successMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';
 import AreaTree from '@/components/AreaTree.vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -171,7 +172,12 @@ const handleSave = () => {
   });
 };
 
-const title = ref({});
+const title = ref({
+  firstPart: '首件',
+  nextPart: '续件',
+  firstPrice: '首件运费(元)',
+  nextUnitPrice: '续件运费(元)'
+});
 
 const switchMode = (val) => {
   if (val === 1) {
