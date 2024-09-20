@@ -22,6 +22,12 @@ body {
   height: 100%;
 }
 
+/* wangEditor H1被其他样式影响 */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
 .el-popper {
   max-width: 50% !important;
 }
