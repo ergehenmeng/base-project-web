@@ -16,6 +16,34 @@
           <RefundAmount :size="50"></RefundAmount>
         </StatisticsCard>
       </el-row>
+      <el-row v-if="memberAuth">
+        <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
+          <template #icon>
+            <Member></Member>
+          </template>
+          <template #content>
+            <div id="registerApp" style="width: 100%; height: 100%" v-loading="registerLoading" ></div>
+          </template>
+        </StatisticsChart>
+        <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
+          <template #icon>
+            <Channel></Channel>
+          </template>
+          <template #content>
+            <div id="channelApp" style="width: 100%; height: 100%" v-loading="sexLoading" ></div>
+          </template>
+        </StatisticsChart>
+      </el-row>
+      <el-row>
+        <StatisticsChart title="订单统计" :height="350" :span="24" v-model:active-date="orderParams.activeDate" v-model:select-type="orderParams.selectType" @reload="getDayOrderData">
+          <template #icon>
+            <Order></Order>
+          </template>
+          <template #content>
+            <div id="orderApp" style="width: 100%; height: 100%" v-loading="orderCountLoading" ></div>
+          </template>
+        </StatisticsChart>
+      </el-row>
       <el-row v-if="merchantAuth || itemAuth">
         <StatisticsChart title="商品销售(零售)" :height="300" :span="12" :hidden-query="true" v-if="itemAuth" >
           <template #icon>
@@ -82,34 +110,6 @@
                 </el-table>
               </el-scrollbar>
             </div>
-          </template>
-        </StatisticsChart>
-      </el-row>
-      <el-row v-if="memberAuth">
-        <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
-          <template #icon>
-            <Member></Member>
-          </template>
-          <template #content>
-            <div id="registerApp" style="width: 100%; height: 100%" v-loading="registerLoading" ></div>
-          </template>
-        </StatisticsChart>
-        <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
-          <template #icon>
-            <Channel></Channel>
-          </template>
-          <template #content>
-            <div id="channelApp" style="width: 100%; height: 100%" v-loading="sexLoading" ></div>
-          </template>
-        </StatisticsChart>
-      </el-row>
-      <el-row>
-        <StatisticsChart title="订单统计" :height="350" :span="24" v-model:active-date="orderParams.activeDate" v-model:select-type="orderParams.selectType" @reload="getDayOrderData">
-          <template #icon>
-            <Order></Order>
-          </template>
-          <template #content>
-            <div id="orderApp" style="width: 100%; height: 100%" v-loading="orderCountLoading" ></div>
           </template>
         </StatisticsChart>
       </el-row>
