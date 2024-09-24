@@ -44,6 +44,7 @@
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'AmK0'" title="新增数据字典" @click="handleCreate"></CreateButton>
+            <QuestionTip content="注意：数据字典的变更不会立即生效，需刷新缓存才能生效"/>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'9mK0'" type="success" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项"></el-button>
@@ -65,6 +66,7 @@ import DictForm from './DictForm.vue';
 import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('GmK0');

@@ -32,7 +32,10 @@
         <el-table-column prop="tag" label="跳转页面" width="150" />
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column fixed="right" width="100">
+          <template #header>
+            <span>操作<QuestionTip content="注意：推送模板的变更不会立即生效，需刷新缓存才能生效"/></span>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'QtR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
           </template>

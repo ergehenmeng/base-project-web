@@ -18,6 +18,9 @@
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="100">
+          <template #header>
+            <span>操作<QuestionTip content="注意：邮件模板的变更不会立即生效，需刷新缓存才能生效"/></span>
+          </template>
           <template #default="scope">
             <el-button v-has-perm="'MUR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
           </template>
@@ -40,6 +43,7 @@ import { listPageApi } from '@/api/config/email';
 import { Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import EmailForm from './EmailForm.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const userStore = useUserStore();
 const loading = ref(false);
