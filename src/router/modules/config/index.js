@@ -81,6 +81,14 @@ export default [
                }
            }
         ]
+      },
+      {
+        path: 'pay',
+        name: 'pay',
+        component: () => import('@/views/operation/pay/index.vue'),
+        meta: {
+          title: '支付配置'
+        }
       }
     ]
   }
