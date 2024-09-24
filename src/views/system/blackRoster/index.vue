@@ -8,9 +8,6 @@
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
-        <el-form-item v-has-perm="'HoK0'">
-          <el-button type="primary" :icon="Refresh" @click="handleReload">刷新黑名单</el-button>
-        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
@@ -41,8 +38,8 @@
   <BlackForm ref="formRef" @reload="getPage"></BlackForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi, reloadApi } from '@/api/system/black';
-import { Delete, Refresh } from '@element-plus/icons-vue';
+import { deleteApi, listPageApi } from '@/api/system/black';
+import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue';
@@ -94,13 +91,6 @@ const handleDelete = (row) => {
       successMsg('IP段删除成功');
       getPage();
     });
-  });
-};
-
-const handleReload = () => {
-  reloadApi().then(() => {
-    successMsg('黑名单刷新成功');
-    getPage();
   });
 };
 

@@ -20,9 +20,3 @@ export const deleteApi = (data) => {
     data
   });
 };
-
-export const reloadApi = () => {
-  return request.get({
-    url: '/manage/black/roster/reload'
-  });
-};
