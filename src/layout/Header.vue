@@ -2,7 +2,7 @@
   <div class="main-header">
     <ul class="">
       <li>
-        <span class="main-header-title">欢迎您: {{ nickName }}</span>
+        <span class="main-header-title" title="按ALT+L可以锁屏哟~">欢迎您: {{ nickName }}</span>
       </li>
       <li>
         <el-icon title="个人中心" @click="handleUser">
