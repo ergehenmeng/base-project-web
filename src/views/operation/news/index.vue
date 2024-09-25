@@ -48,6 +48,7 @@
               </template>
               <template #default="scope">
                 <el-button v-has-perm="'ymU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+                <el-button v-has-perm="'ymU0'" type="warning" :icon="ChatLineRound" @click="handleComment(scope.row)" link title="评论信息"></el-button>
                 <el-button v-has-perm="'MmU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
               </template>
             </el-table-column>
@@ -67,7 +68,7 @@
 </template>
 <script setup>
 import { configListApi, deleteApi, listPageApi, sortApi } from '@/api/operation/news';
-import { Delete, Edit } from '@element-plus/icons-vue';
+import { ChatDotRound, ChatLineRound, Delete, Edit } from '@element-plus/icons-vue'
 import { confirmMsg, errorMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -176,5 +177,9 @@ const handleEdit = (row) => {
       code: activeName.value
     }
   });
+};
+
+const handleComment = (row) => {
+  router.push('/operation/comment/' + row.id);
 };
 </script>

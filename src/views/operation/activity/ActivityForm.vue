@@ -14,6 +14,12 @@
         <el-form-item label="活动时间" prop="activityTime">
           <el-input v-model="formData.activityTime" show-word-limit maxlength="20" placeholder="例如：18:00~22:00" />
         </el-form-item>
+        <el-form-item label="留言" prop="commentSupport">
+          <el-radio-group v-model="formData.commentSupport">
+            <el-radio :value="true">开启</el-radio>
+            <el-radio :value="false">关闭</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="封面图" prop="coverUrl">
           <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
         </el-form-item>
@@ -51,7 +57,8 @@ const formRules = reactive({
   activityTime: [{ required: true, message: '请选择活动时间', trigger: 'blur' }],
   address: [{ required: true, message: '活动地点不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '请上传封面', trigger: 'blur' }],
-  introduceText: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }]
+  introduceText: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }],
+  commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -59,6 +66,7 @@ const formData = ref({
   title: '',
   nowDate: null,
   activityTime: null,
+  commentSupport: false,
   introduce: '',
   introduceText: '',
   address: null,

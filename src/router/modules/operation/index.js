@@ -112,7 +112,7 @@ export default [
         ]
       },
       {
-        path: 'comment',
+        path: 'comment/:id?',
         name: 'comment',
         component: () => import('@/views/operation/comment/index.vue'),
         meta: {

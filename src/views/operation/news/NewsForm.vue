@@ -14,6 +14,12 @@
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input type="textarea" v-model="formData.video"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="200" />
       </el-form-item>
+      <el-form-item label="留言" prop="commentSupport" >
+        <el-radio-group v-model="formData.commentSupport">
+          <el-radio :value="true">开启</el-radio>
+          <el-radio :value="false">关闭</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="详细信息" prop="contentText">
         <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
       </el-form-item>
@@ -42,7 +48,8 @@ const formDataRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '资讯标题不能为空', trigger: 'blur' }],
-  contentText: [{ required: true, message: '详细信息不能为空', trigger: 'change' }]
+  contentText: [{ required: true, message: '详细信息不能为空', trigger: 'blur' }],
+  commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
 
 const showField = ref({
@@ -56,6 +63,7 @@ const formData = ref({
   title: '',
   depict: '',
   content: '',
+  commentSupport: false,
   contentText: '',
   imageList: [],
   video: '',
