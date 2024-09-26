@@ -188,7 +188,7 @@ const formatter = (row, column, cellValue) => {
       'a',
       {
         style: 'color: red; cursor: pointer;',
-        onClick(e) {
+        onClick() {
           router.push({
             name: 'commentReport',
             query: { commentId: row.id }
