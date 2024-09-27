@@ -64,7 +64,7 @@
         <el-table-column prop="email" label="电子邮箱" width="200" />
         <el-table-column prop="state" label="状态" width="80" >
           <template #default="scope">
-            <el-switch v-model="scope.row.state" inline-prompt active-text="正常" inactive-text="关闭" disabled style="--el-switch-off-color: #ff4949" />
+            <el-switch v-model="scope.row.state" inline-prompt active-text="正常" inactive-text="冻结" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
         <el-table-column prop="score" label="积分" width="100" />

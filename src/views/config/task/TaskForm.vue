@@ -6,8 +6,8 @@
       </el-form-item>
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
-          <el-radio label="已启用" :value="true"></el-radio>
-          <el-radio label="未启用" :value="false"></el-radio>
+          <el-radio label="启用" :value="true"></el-radio>
+          <el-radio label="禁用" :value="false"></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="类名" prop="beanName">
