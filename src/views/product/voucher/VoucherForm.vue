@@ -8,7 +8,7 @@
       <el-form-item label="所属店铺" prop="restaurantId">
         <RestaurantSelect v-model="formData.restaurantId" :disabled="disabled" :clearable="false"></RestaurantSelect>
       </el-form-item>
-      <el-form-item label="有效日期">
+      <el-form-item label="有效日期" prop="validType">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
           <el-radio :value="0">按购买日计算</el-radio>
           <el-radio :value="1">按时间段计算</el-radio>
@@ -87,6 +87,7 @@ const validTypeRules = ref({});
 const formRules = reactive({
   title: [{ required: true, message: '餐饮券名称不能为空', trigger: 'blur' }],
   restaurantId: [{ required: true, message: '请选择所属店铺', trigger: 'change' }],
+  validType: [{ required: true, message: '请选择有效期', trigger: 'change' }],
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '可用时间段不能为空', trigger: 'blur', type: 'array' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],

@@ -448,6 +448,36 @@ export default [
         ]
       },
       {
+        path: 'voucherTag',
+        name: 'voucherTag',
+        meta: {
+          title: '餐饮券标签'
+        },
+        children: [
+          {
+            path: '',
+            name: 'voucherTagIndex',
+            component: () => import('@/views/product/voucher/tag/index.vue')
+          },
+          {
+            path: 'create',
+            name: 'voucherTagCreate',
+            component: () => import('@/views/product/voucher/tag/TagForm.vue'),
+            meta: {
+              title: '新增'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'voucherTagEdit',
+            component: () => import('@/views/product/voucher/tag/TagForm.vue'),
+            meta: {
+              title: '编辑'
+            }
+          }
+        ]
+      },
+      {
         path: 'venue',
         name: 'venue',
         meta: {
