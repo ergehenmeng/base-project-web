@@ -160,9 +160,6 @@ onUnmounted(() => {
 
 .main-header {
   height: 60px;
-  background:
-    url($main-header-logo-url) no-repeat 50px 5px,
-    $main-header-color;
   display: flex;
   justify-content: flex-end;
   align-items: center;
