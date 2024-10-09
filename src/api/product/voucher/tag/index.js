@@ -7,6 +7,12 @@ export const listPageApi = (params) => {
   });
 };
 
+export const listApi = (params) => {
+  return request.get({
+    url: '/manage/voucher/tag/list',
+    params
+  });
+};
 
 export const createApi = (data) => {
   return request.post({

@@ -8,6 +8,9 @@
       <el-form-item label="所属店铺" prop="restaurantId">
         <RestaurantSelect v-model="formData.restaurantId" :disabled="disabled" :clearable="false"></RestaurantSelect>
       </el-form-item>
+      <el-form-item label="标签" prop="tagId">
+        <VoucherTag v-model="formData.tagId" :restaurant-id="formData.restaurantId"/>
+      </el-form-item>
       <el-form-item label="有效日期" prop="validType">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
           <el-radio :value="0">按购买日计算</el-radio>
@@ -75,6 +78,7 @@ import { successMsg } from '@/utils/message.js';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
 import { disableBeforeDate, goBack, numberValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
+import VoucherTag from '@/components/VoucherTag.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -101,6 +105,7 @@ let formData = ref({
   id: null,
   title: null,
   restaurantId: null,
+  tagId: null,
   linePrice: null,
   salePrice: null,
   stock: null,
@@ -172,6 +177,7 @@ onMounted(() => {
         }
         formData.value.timeList = [res.data.effectTime, res.data.expireTime];
         formData.value.introduceText = res.data.introduce;
+        formData.value.validType = formData.value.validDays > 0 ? 0 : 1;
         validTypeChange(formData.value.validType);
         if (res.data.validDays > 0) {
           formData.value.validType = 0;
@@ -185,8 +191,9 @@ onMounted(() => {
       .finally(() => {
         loading.value = false;
       });
+  } else {
+    validTypeChange(formData.value.validType);
   }
-  validTypeChange(formData.value.validType);
 });
 
 const validTypeChange = (val) => {
