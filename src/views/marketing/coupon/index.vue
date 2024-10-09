@@ -77,7 +77,7 @@
 </template>
 <script setup>
 import { closeApi, deleteApi, listPageApi, openApi } from '@/api/marketing/coupon'
-import { Bottom, Delete, Document, Edit, Link, Notebook, Position, Top } from '@element-plus/icons-vue'
+import { Bottom, Delete, Document, Edit, Link, Position, Top } from '@element-plus/icons-vue'
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';

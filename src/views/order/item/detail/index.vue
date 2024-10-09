@@ -155,9 +155,7 @@
 import { selectApi } from '@/api/order/item';
 import { formatExpressType, goBack } from '@/utils/common.js';
 import { useRoute } from 'vue-router';
-import { successMsg } from '@/utils/message.js';
-import { useClipboard } from '@vueuse/core';
-import { DocumentCopy, Edit, EditPen } from '@element-plus/icons-vue';
+import { Edit, EditPen } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
@@ -168,7 +166,6 @@ import SippingForm from '@/views/order/item/detail/SippingForm.vue'
 import CopyLink from '@/components/CopyLink.vue'
 
 const userStore = useUserStore();
-const { copy, isSupported } = useClipboard();
 const loading = ref(false);
 const route = useRoute();
 const selected = ref([]);
@@ -201,11 +198,6 @@ const data = ref({
   adjustList: [],
   remark: null
 });
-
-const copyClipboard = (value) => {
-  copy(value);
-  successMsg('复制成功');
-};
 
 const handleSelected = (val) => {
   selected.value = val.map((item) => item.id);

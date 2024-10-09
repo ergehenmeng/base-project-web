@@ -63,16 +63,12 @@
 import { selectApi } from '@/api/order/voucher';
 import { goBack } from '@/utils/common.js';
 import { useRoute } from 'vue-router';
-import { successMsg } from '@/utils/message.js';
-import { useClipboard } from '@vueuse/core';
-import { DocumentCopy } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 import CopyLink from '@/components/CopyLink.vue'
 
-const { copy, isSupported } = useClipboard();
 const loading = ref(false);
 const route = useRoute();
 const data = ref({
@@ -106,11 +102,6 @@ const data = ref({
   createTime: null,
   remark: null
 });
-
-const copyClipboard = (value) => {
-  copy(value);
-  successMsg('复制成功');
-};
 
 onBeforeMount(() => {
   loading.value = true;

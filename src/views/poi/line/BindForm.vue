@@ -118,7 +118,7 @@ const handleSave = () => {
     lineId: route.params.id,
     pointIds: pointList.value
   };
-  bindApi(formData).then((res) => {
+  bindApi(formData).then(() => {
     successMsg('线路点位绑定成功');
     goBack(router);
   });

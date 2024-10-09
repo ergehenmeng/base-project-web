@@ -45,7 +45,7 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/merchant/role';
-import { Connection, Delete, Edit } from '@element-plus/icons-vue';
+import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';

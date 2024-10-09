@@ -110,7 +110,6 @@ import { useRouter } from 'vue-router';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import { downloadExcel } from '@/utils/common.js';
-import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const loading = ref(false);

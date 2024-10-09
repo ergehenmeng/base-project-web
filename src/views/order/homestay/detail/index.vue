@@ -84,8 +84,6 @@ import { selectApi, confirmApi } from '@/api/order/homestay';
 import { goBack, renderMsg } from '@/utils/common.js'
 import { useRoute, useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js'
-import { useClipboard } from '@vueuse/core';
-import { DocumentCopy } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
@@ -93,7 +91,6 @@ import OrderStateBar from '@/components/OrderStateBar.vue';
 import dayjs from 'dayjs';
 import CopyLink from '@/components/CopyLink.vue'
 
-const { copy, isSupported } = useClipboard();
 const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
@@ -126,11 +123,6 @@ const data = ref({
   days: 1
 });
 
-const copyClipboard = (value) => {
-  copy(value);
-  successMsg('复制成功');
-};
-
 const formatter = (_row, column, cellValue) => {
   if (cellValue === 0) {
     return '待支付';
@@ -162,7 +154,7 @@ const formatConfirmState = (state) => {
 const handleYesConfirm = () => {
   const msg  = renderMsg(["你的民宿确定有", () => data.value.title, "吗？"])
   confirmMsg(msg, () => {
-    confirmApi({ orderNo: route.params.orderNo, confirmState: 1 }).then((res) => {
+    confirmApi({ orderNo: route.params.orderNo, confirmState: 1 }).then(() => {
       successMsg('确认成功');
       goBack(router);
     });
@@ -179,8 +171,8 @@ const handleNoConfirm = () => {
     inputValidator: (str) => {
       return str !== '' && str !== null && str !== undefined && str.length <= 50;
     }
-  }).then(({ value }) => {
-    confirmApi({ orderNo: route.params.orderNo, confirmState: 2 }).then((res) => {
+  }).then(() => {
+    confirmApi({ orderNo: route.params.orderNo, confirmState: 2 }).then(() => {
       successMsg('确认成功');
       goBack(router);
     }).catch(() => {

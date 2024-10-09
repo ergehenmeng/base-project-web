@@ -53,7 +53,7 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/marketing/lottery';
-import { Delete, Document, Edit, Memo } from '@element-plus/icons-vue';
+import { Delete, Document, Edit } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';

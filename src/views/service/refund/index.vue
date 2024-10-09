@@ -177,7 +177,7 @@ const formatter = (_row, column, cellValue) => {
   }
 };
 
-const handleDetail = (orderNo) => {
+const handleDetail = (_orderNo) => {
   errorMsg('暂未开放');
 };
 
