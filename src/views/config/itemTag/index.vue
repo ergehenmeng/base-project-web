@@ -18,7 +18,7 @@
     </div>
     <div class="content-main">
       <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="title" label="标签名称" width="150"/>
+        <el-table-column prop="title" label="标签名称" width="200"/>
         <el-table-column prop="icon" label="图标" width="120">
           <template #default="scope">
             <div style="display: flex; align-items: center">
@@ -34,7 +34,7 @@
           </template>
         </el-table-column>
         <el-table-column prop="state" label="状态" :formatter="formatter" width="120"/>
-        <el-table-column prop="sort" label="排序" width="120" >
+        <el-table-column prop="sort" label="排序" width="100" >
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
