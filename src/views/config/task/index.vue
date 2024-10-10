@@ -124,10 +124,13 @@ const handleExecute = (row) => {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     inputPlaceholder: '请输入方法入参',
-    inputErrorMessage: '方法入参最大300字符',
+    inputErrorMessage: '方法入参不能为空且长度小于300',
     inputType: 'textarea',
     inputValue: row.args,
     inputValidator: (str) => {
+      if (row.args && (str === null || str.length === 0 )) {
+        return false;
+      }
       return str === null || str.length < 300;
     }
   })
