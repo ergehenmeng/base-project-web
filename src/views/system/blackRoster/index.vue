@@ -19,6 +19,7 @@
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"></CreateButton>
+            <QuestionTip content="注意：黑名单那的变更不会立即生效，需刷新缓存才能生效" />
           </template>
           <template #default="scope">
             <el-button v-has-perm="'4oK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
@@ -44,6 +45,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const total = ref(0);
