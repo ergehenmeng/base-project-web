@@ -12,7 +12,7 @@
 const props = defineProps({
   color: {
     type: String,
-    default: '#2ecc71'
+    default: '#2e60cc'
   },
   size: {
     type: Number,
