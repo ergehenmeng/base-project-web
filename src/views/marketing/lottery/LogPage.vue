@@ -21,7 +21,12 @@
         <el-table-column prop="avatar" label="头像" width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image fit="cover" :src="scope.row.avatar" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+              <el-image fit="cover"
+                        :src="scope.row.avatar?.split(',')[0]"
+                        :preview-src-list="scope.row.avatar?.split(',')"
+                        style="width: 30px; height: 30px"
+                        preview-teleported
+                        hide-on-click-modal/>
             </div>
           </template>
         </el-table-column>
