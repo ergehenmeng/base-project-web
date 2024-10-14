@@ -16,7 +16,7 @@
       </el-form-item>
       <el-form-item label="折扣比例" prop="discountValue" v-show="formData.couponType === 2" :disabled="disabled">
         <el-input v-model="formData.discountValue" maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" >
-          <template #append>折</template>
+          <template #append>%</template>
         </el-input>
       </el-form-item>
       <el-form-item label="使用门槛" :prop="thresholdProp">
