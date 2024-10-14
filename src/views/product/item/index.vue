@@ -23,11 +23,11 @@
           ~
           <el-input class="w80" v-model="queryParams.maxPrice" @keyup="queryParams.maxPrice = numberValidator(queryParams.maxPrice)" maxlength="6"></el-input>
         </el-form-item>
-        <el-form-item label="所属店铺">
-          <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
-        </el-form-item>
         <el-form-item label="标签">
           <ItemTag v-model="queryParams.tagList"></ItemTag>
+        </el-form-item>
+        <el-form-item label="所属店铺">
+          <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>

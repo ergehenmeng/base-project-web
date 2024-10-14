@@ -9,7 +9,8 @@ const options = ref([]);
 const selectProps = {
   expandTrigger: 'hover',
   label: 'title',
-  value: 'id'
+  value: 'id',
+  checkStrictly: true
 };
 
 const props = defineProps({
