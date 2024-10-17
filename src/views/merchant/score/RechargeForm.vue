@@ -3,7 +3,10 @@
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
       <el-form-item label="剩余积分"
-        ><span style="font-size: 18px">{{ amount }}</span></el-form-item
+        ><span style="font-size: 18px">{{ scoreAmount }}</span></el-form-item
+      >
+      <el-form-item label="可用余额"
+      ><span style="font-size: 18px">{{ amount }}</span></el-form-item
       >
       <el-form-item label="充值方式" prop="rechargeType">
         <el-radio-group v-model="formData.rechargeType">
@@ -37,7 +40,8 @@ const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const amount = ref(0);
+const amount = ref('0.00');
+const scoreAmount = ref(0);
 const minRecharge = ref(0);
 
 const formRules = reactive({
@@ -91,8 +95,9 @@ const handleSave = () => {
 };
 
 onMounted(async () => {
-  const { data } = await rechargeDetailApi();
-  amount.value = data.amount;
-  minRecharge.value = parseFloat(data.minRecharge);
+  const { data: { amount, scoreAmount, minRecharge} } = await rechargeDetailApi();
+  amount.value = amount;
+  scoreAmount.value = scoreAmount;
+  minRecharge.value = parseFloat(minRecharge);
 });
 </script>
