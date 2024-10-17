@@ -77,7 +77,7 @@ const resetForm = () => {
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
-      if (formData.value.memberIds.length === 0 && !formData.value.tagId) {
+      if (formData.value.memberIds?.length === 0 && !formData.value.tagId) {
         errorMsg('请选择会员或标签');
         return;
       }

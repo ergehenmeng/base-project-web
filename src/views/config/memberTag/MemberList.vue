@@ -158,15 +158,15 @@ onMounted(() => {
   getPage();
 });
 
-const handleSms = (row) => {
-  smsRef.value.openDialog({ tagId: [row.id] });
+const handleSms = () => {
+  smsRef.value.openDialog({ tagId: queryParams.tagId });
 };
 
-const handleCoupon = (row) => {
-  couponRef.value.openDialog({ tagId: [row.id] });
+const handleCoupon = () => {
+  couponRef.value.openDialog({ tagId: queryParams.tagId });
 };
 
 const handleNotice = (row) => {
-  noticeRef.value.openDialog({ tagId: [row.id] });
+  noticeRef.value.openDialog({ tagId: queryParams.tagId });
 };
 </script>
