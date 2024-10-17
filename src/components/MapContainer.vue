@@ -13,6 +13,7 @@ const secret = import.meta.env.VITE_MAP_SECRET;
 const key = import.meta.env.VITE_MAP_KEY;
 const defaultLng = import.meta.env.VITE_MAP_LNG;
 const defaultLat = import.meta.env.VITE_MAP_LAT;
+const defaultZoom = import.meta.env.VITE_MAP_ZOOM;
 
 watch(showDialog, (val) => {
   if (val) {
@@ -42,7 +43,7 @@ const initMap = () => {
   })
     .then((AMap) => {
       mapRef.value = new AMap.Map('mapContainer', {
-        zoom: 11,
+        zoom: defaultZoom,
         center: [defaultLng, defaultLat]
       });
       const autoComplete = new AMap.AutoComplete({ input: 'searchName' });

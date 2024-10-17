@@ -7,7 +7,8 @@
       <el-form-item label="所属区域" prop="areaCode">
         <PoiAreaSelect v-model="formData.areaCode"></PoiAreaSelect>
       </el-form-item>
-      <el-form-item label="图标" prop="icon">
+      <el-form-item prop="icon">
+        <template #label><span>图表<QuestionTip content="请上传24*24大小的图标"/></span></template>
         <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
@@ -27,6 +28,7 @@ import { createApi, updateApi } from '@/api/poi/type';
 import { successMsg } from '@/utils/message.js';
 import UploadImage from '@/components/UploadImage.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const dialogTitle = ref('');
 const formDataRef = ref();

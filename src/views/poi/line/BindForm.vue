@@ -11,6 +11,7 @@ const secret = import.meta.env.VITE_MAP_SECRET;
 const key = import.meta.env.VITE_MAP_KEY;
 const defaultLng = import.meta.env.VITE_MAP_LNG;
 const defaultLat = import.meta.env.VITE_MAP_LAT;
+const defaultZoom = import.meta.env.VITE_MAP_ZOOM;
 
 const route = useRoute();
 const router = useRouter();
@@ -56,7 +57,7 @@ const initMap = (callback, lng = defaultLng, lat = defaultLat) => {
   })
     .then((AMap) => {
       mapRef.value = new AMap.Map('mapContainer', {
-        zoom: 13,
+        zoom: defaultZoom,
         center: [lng, lat]
       });
       callback();

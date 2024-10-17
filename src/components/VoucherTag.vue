@@ -2,7 +2,7 @@
   <el-select v-model="tagId" :disabled="props.disabled" :clearable="props.clearable" filterable>
     <el-option v-for="tag in tagList" :key="tag.id" :value="tag.id" :label="tag.title" :disabled="tag.state === false">
       <span style="float: left">{{ tag.title }}</span>
-      <span style="float: right; color: #8492a6; font-size: 13px">{{ tag.state ? '禁用' : '启用'}}</span>
+      <span style="float: right; color: #8492a6; font-size: 13px">{{ tag.state ? '正常': '禁用' }}</span>
     </el-option>
   </el-select>
 </template>
