@@ -38,10 +38,13 @@
           <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="formData.dueDate" style="width: 350px"></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="核销方式" prop="verificationType">
+      <el-form-item prop="verificationType">
+        <template #label>
+          <span>核销方式<QuestionTip content="手动核销：核销端核销，自动核销：次日凌晨自动核销" /></span>
+        </template>
         <el-radio-group v-model="formData.verificationType">
-          <el-radio :value="1" title="核销端核销">手动核销</el-radio>
-          <el-radio :value="0" title="次日凌晨自动核销">自动核销</el-radio>
+          <el-radio :value="1" >手动核销</el-radio>
+          <el-radio :value="0" >自动核销</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="是否实名购票" prop="realBuy">
@@ -74,6 +77,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import { goBack, numberValidator } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -84,6 +88,8 @@ const disabled = ref(false);
 const formRules = reactive({
   title: [{ required: true, message: '门票名称不能为空', trigger: 'blur' }],
   scenicId: [{ required: true, message: '请选择所属景区', trigger: 'change' }],
+  verificationType: [{ required: true, message: '请选择核销方式', trigger: 'change' }],
+  realBuy: [{ required: true, message: '请选择是否实名购票', trigger: 'change' }],
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
