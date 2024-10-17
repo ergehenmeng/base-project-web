@@ -28,7 +28,7 @@
         <el-radio-group v-model="formData.refundType">
           <el-radio :value="1">直接退款</el-radio>
           <el-radio :value="2">审核后退款</el-radio>
-          <el-radio :value="0">不支持退款</el-radio>
+          <el-radio :value="0">不支持退款<QuestionTip content="注意：支持商户人员发起退款"/></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款说明" prop="refundDescribe">
@@ -105,6 +105,7 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import useDictStore from '@/store/dict.js';
 import HomestaySelect from '@/components/HomestaySelect.vue';
 import { goBack } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const dictStore = useDictStore();
 const hotInstitutionList = dictStore.getDict('hot_institution');
