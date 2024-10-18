@@ -14,8 +14,8 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="nickName" label="收货人昵称" />
         <el-table-column prop="mobile" label="收货人手机号码" />
-        <el-table-column prop="detailAddress" label="详细地址" min-width="300" />
-        <el-table-column prop="remark" label="备注信息" />
+        <el-table-column prop="detailAddress" label="详细地址" min-width="200" />
+        <el-table-column prop="remark" label="备注信息" min-width="150"/>
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right">

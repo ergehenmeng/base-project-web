@@ -67,7 +67,7 @@
                   </el-form-item>
                 </template>
               </el-table-column>
-              <el-table-column prop="secondSpecValue"  :min-width="showSecondSpec ? '120' : '0'">
+              <el-table-column prop="secondSpecValue" min-width="120" v-if="showSecondSpec">
                 <template #header>
                   <span>{{ formData.specList[1]?.specName }}</span>
                 </template>
@@ -342,29 +342,29 @@ const handleBlurValue = (index, idx) => {
 };
 
 const generateSkuTable = () => {
-  const spec = formData.value.specList[0];
+  const specPrimary = formData.value.specList[0];
   formData.value.skuList = [];
-  if (!spec.specName || filterSpec(spec).length === 0) {
+  if (!specPrimary.specName || filterSpec(specPrimary).length === 0) {
     return;
   }
   let size = 0;
   if (formData.value.specList.length === 1 || !formData.value.specList[1].specName || (size = filterSpec(formData.value.specList[1]).length) === 0) {
-    createPrimarySpec(spec);
+    createPrimarySpec(specPrimary);
     showSecondSpec.value = false;
   } else {
     const secondSpec = formData.value.specList[1];
-    createSecondTable(spec, secondSpec, size);
+    createSecondTable(specPrimary, secondSpec, size);
   }
 };
 
-const createSecondTable = (spec, secondSpec, size) => {
-  for (let item of spec.valueList) {
-    if (item.name) {
-      for (let secondItem of secondSpec.valueList) {
-        if (secondItem.name) {
+const createSecondTable = (specPrimary, secondSpec, size) => {
+  for (let primary of specPrimary.valueList) {
+    if (primary.name) {
+      for (let second of secondSpec.valueList) {
+        if (second.name) {
           formData.value.skuList.push({
-            primarySpecValue: item.name,
-            secondSpecValue: secondItem.name,
+            primarySpecValue: primary.name,
+            secondSpecValue: second.name,
             secondSize: size,
             linePrice: null,
             costPrice: null,
@@ -378,6 +378,7 @@ const createSecondTable = (spec, secondSpec, size) => {
     }
   }
   showSecondSpec.value = true;
+  console.log(formData.value.skuList)
 };
 
 const filterSpec = (spec) => {
@@ -463,6 +464,7 @@ onMounted(() => {
 const loadItemDetail = (id) => {
   selectApi({ id: id })
     .then((res) => {
+      showSecondSpec.value = res.data.specList?.length > 1;
       formData.value = { ...res.data };
       if (res.data.coverUrl) {
         formData.value.coverList = res.data.coverUrl.split(',');

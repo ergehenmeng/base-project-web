@@ -44,12 +44,12 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="商品名称" min-width="250" />
-        <el-table-column prop="minPrice" label="价格" width="250" :formatter="formatter"/>
-        <el-table-column prop="hotSell" label="是否热销" width="120" :formatter="(row, column, cellValue) => cellValue ? '是' : '否'"/>
-        <el-table-column prop="quantity" label="商品数量" width="120" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter"/>
-        <el-table-column prop="saleNum" label="销售数量" width="120" />
+        <el-table-column prop="title" label="商品名称" min-width="150" />
+        <el-table-column prop="minPrice" label="价格" min-width="100" :formatter="formatter"/>
+        <el-table-column prop="hotSell" label="是否热销" min-width="80" :formatter="(row, column, cellValue) => cellValue ? '是' : '否'"/>
+        <el-table-column prop="quantity" label="商品数量" min-width="80" />
+        <el-table-column prop="state" label="状态" min-width="100" :formatter="formatter"/>
+        <el-table-column prop="saleNum" label="销售数量" min-width="100" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
