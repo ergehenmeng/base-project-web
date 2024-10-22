@@ -166,7 +166,7 @@ const handleCoupon = () => {
   couponRef.value.openDialog({ tagId: queryParams.tagId });
 };
 
-const handleNotice = (row) => {
+const handleNotice = () => {
   noticeRef.value.openDialog({ tagId: queryParams.tagId });
 };
 </script>

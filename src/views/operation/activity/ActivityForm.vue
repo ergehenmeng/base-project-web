@@ -26,6 +26,9 @@
         <el-form-item label="活动地址" prop="address">
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
         </el-form-item>
+        <el-form-item label="关联景区" prop="scenicId">
+          <ScenicSelect v-model="formData.scenicId"/>
+        </el-form-item>
         <el-form-item label="公告内容" prop="introduceText">
           <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         </el-form-item>
@@ -46,6 +49,7 @@ import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import UploadImage from '@/components/UploadImage.vue';
+import ScenicSelect from '@/components/ScenicSelect.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -70,6 +74,7 @@ const formData = ref({
   introduce: '',
   introduceText: '',
   address: null,
+  scenicId: null,
   coverUrl: null
 });
 
