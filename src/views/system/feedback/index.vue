@@ -54,7 +54,7 @@
         <el-table-column prop="deviceModel" label="设备型号" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
-            <el-button v-has-perm="'7b50'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"></el-button>
+            <el-button v-has-perm="'YTU0'" type="primary" :icon="ChatLineSquare" @click="handleDispose(scope.row)" link title="回复"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -81,7 +81,7 @@ const dictStore = useDictStore();
 const dictList = dictStore.getDict('feedback_type');
 
 const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('Bb50');
+const selectAuth = userStore.hasAuth('nTU0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

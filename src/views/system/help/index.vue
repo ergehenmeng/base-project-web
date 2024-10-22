@@ -37,11 +37,11 @@
         <el-table-column label="操作" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'QF50'" title="新增帮助问答" @click="handleCreate"></CreateButton>
+            <CreateButton v-has-perm="'33U0'" title="新增帮助问答" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'VF50'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'6F50'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'L3U0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'T3U0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,8 +68,8 @@ import CreateButton from '@/components/CreateButton.vue';
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
 const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('zF50');
-const sortAuth = userStore.hasAuth('xF50');
+const selectAuth = userStore.hasAuth('W3U0');
+const sortAuth = userStore.hasAuth('o3U0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
