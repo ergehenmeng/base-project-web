@@ -10,9 +10,12 @@
       </el-form-item>
       <el-form-item label="票种" prop="category">
         <el-select v-model="formData.category">
-          <el-option label="成人票" :value="1" />
-          <el-option label="老人票" :value="2" />
-          <el-option label="儿童票" :value="3" />
+          <el-option label="成人" :value="1" />
+          <el-option label="老人" :value="2" />
+          <el-option label="儿童" :value="3" />
+          <el-option label="演出" :value="4" />
+          <el-option label="活动" :value="5" />
+          <el-option label="研学" :value="6" />
         </el-select>
       </el-form-item>
       <el-form-item label="划线价">

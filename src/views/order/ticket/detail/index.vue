@@ -37,7 +37,7 @@
         </div>
         <div class="content-nav">
           <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}</span> <span>票种类型：</span
-          ><span>{{ data.category === 1 ? '成人票' : data.category === 2 ? '老人票' : '儿童票' }}</span> <span>核销方式：</span
+          ><span>{{ ticketType }}</span> <span>核销方式：</span
           ><span
             >{{ data.verificationType === 1 ? '手动核销' : '自动核销' }}<QuestionTip :content="data.verificationType === 1 ? '在核销端进行扫码核销' : '游玩日期次日凌晨自动核销'"></QuestionTip
           ></span>
@@ -121,6 +121,22 @@ const formatter = (_row, _column, cellValue) => {
     return '已退款';
   }
 };
+
+const ticketType = computed(() => {
+  if (data.value.category === 1) {
+    return '成人';
+  } else if (data.value.category === 2) {
+    return '老人';
+  } else if (data.value.category === 3) {
+    return '儿童';
+  } else if (data.value.category === 4) {
+    return '演出';
+  } else if (data.value.category === 5) {
+    return '活动';
+  } else if (data.value.category === 6) {
+    return '研学';
+  }
+})
 
 onBeforeMount(() => {
   loading.value = true;

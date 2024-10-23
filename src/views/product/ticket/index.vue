@@ -17,9 +17,12 @@
         </el-form-item>
         <el-form-item label="票种">
           <el-select v-model="queryParams.category" clearable>
-            <el-option label="成人票" :value="1" />
-            <el-option label="老人票" :value="2" />
-            <el-option label="儿童票" :value="3" />
+            <el-option label="成人" :value="1" />
+            <el-option label="老人" :value="2" />
+            <el-option label="儿童" :value="3" />
+            <el-option label="演出" :value="4" />
+            <el-option label="活动" :value="5" />
+            <el-option label="研学" :value="6" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -131,11 +134,17 @@ const formatter = (row, column, cellValue) => {
   if (column.property === 'category') {
     switch (cellValue) {
       case 1:
-        return '成人票';
+        return '成人';
       case 2:
-        return '老人票';
+        return '老人';
       case 3:
-        return '儿童票';
+        return '儿童';
+      case 4:
+        return '演出';
+      case 5:
+        return '活动';
+      case 6:
+        return '研学';
       default:
         return '无';
     }
