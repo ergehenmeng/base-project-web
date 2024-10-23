@@ -8,7 +8,7 @@
       <el-form-item label="所属景区" prop="scenicId">
         <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled"></ScenicSelect>
       </el-form-item>
-      <el-form-item label="票种" prop="category">
+      <el-form-item label="票种类型" prop="category">
         <el-select v-model="formData.category">
           <el-option label="成人" :value="1" />
           <el-option label="老人" :value="2" />
@@ -16,6 +16,7 @@
           <el-option label="演出" :value="4" />
           <el-option label="活动" :value="5" />
           <el-option label="研学" :value="6" />
+          <el-option label="组合" :value="7" />
         </el-select>
       </el-form-item>
       <el-form-item label="划线价">

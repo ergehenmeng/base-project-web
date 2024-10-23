@@ -135,6 +135,8 @@ const ticketType = computed(() => {
     return '活动';
   } else if (data.value.category === 6) {
     return '研学';
+  } else if (data.value.category === 7) {
+    return '组合';
   }
 })
 

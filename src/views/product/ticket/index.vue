@@ -15,7 +15,7 @@
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="票种">
+        <el-form-item label="票种票种">
           <el-select v-model="queryParams.category" clearable>
             <el-option label="成人" :value="1" />
             <el-option label="老人" :value="2" />
@@ -23,6 +23,7 @@
             <el-option label="演出" :value="4" />
             <el-option label="活动" :value="5" />
             <el-option label="研学" :value="6" />
+            <el-option label="组合" :value="7" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -37,7 +38,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="门票名称" min-width="160" />
         <el-table-column prop="scenicName" label="所属景区" min-width="160" />
-        <el-table-column prop="category" label="票种" width="80" :formatter="formatter" />
+        <el-table-column prop="category" label="票种类型" width="100" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="salePrice" label="销售价" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
@@ -145,6 +146,8 @@ const formatter = (row, column, cellValue) => {
         return '活动';
       case 6:
         return '研学';
+      case 7:
+        return '组合'
       default:
         return '无';
     }
