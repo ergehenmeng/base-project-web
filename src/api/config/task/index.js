@@ -8,7 +8,7 @@ export const listPageApi = (params) => {
 };
 
 export const refreshApi = () => {
-  return request.get({
+  return request.post({
     url: '/manage/task/refresh'
   });
 };
