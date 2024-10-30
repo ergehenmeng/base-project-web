@@ -805,11 +805,13 @@ const orderValue = ref({
 
 onMounted(() => {
   orderLoading.value = true;
-  orderApi().then((res) => {
-    orderValue.value = { ...res.data };
-  }).finally(() => {
-    orderLoading.value = false;
-  });
+  if (orderAuth) {
+    orderApi().then((res) => {
+      orderValue.value = { ...res.data };
+    }).finally(() => {
+      orderLoading.value = false;
+    });
+  }
 
   const weekDate = getWeekDate();
   registerParams.activeDate = weekDate;
@@ -826,9 +828,10 @@ onMounted(() => {
   if (merchantAuth) {
     merchantSaleData();
   }
-
-  orderChart = echarts.init(document.getElementById('orderApp'));
-  getDayOrderData();
+  if (orderDayAuth) {
+    orderChart = echarts.init(document.getElementById('orderApp'));
+    getDayOrderData();
+  }
 
   if (memberAuth) {
     registerChart = echarts.init(document.getElementById('registerApp'));
