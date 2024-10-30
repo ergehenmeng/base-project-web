@@ -2,7 +2,7 @@
   <el-scrollbar height="calc(100vh - 120px)">
     <div class="edit-content">
       <el-divider />
-      <el-row v-loading="orderLoading">
+      <el-row v-loading="orderLoading" v-if="orderAuth">
         <StatisticsCard title="累计订单数" :amount="orderValue.orderNum">
           <PayNum :size="50"></PayNum>
         </StatisticsCard>
@@ -34,7 +34,7 @@
           </template>
         </StatisticsChart>
       </el-row>
-      <el-row>
+      <el-row v-if="orderDayAuth">
         <StatisticsChart title="订单统计" :height="350" :span="24" v-model:active-date="orderParams.activeDate" v-model:select-type="orderParams.selectType" @reload="getDayOrderData">
           <template #icon>
             <Order></Order>
@@ -237,8 +237,9 @@ const collectAuth = userStore.hasAuth('DX80');
 const productAuth = userStore.hasAuth('nX80');
 const itemAuth = userStore.hasAuth('YX80');
 const merchantAuth = userStore.hasAuth('uX80');
-// 必须有零售类权限才显示购物车统计
-const cartAuth = (userStore.user?.merchantType & 8) === 8;
+const orderAuth = userStore.hasAuth('GX80');
+const orderDayAuth = userStore.hasAuth('AX80');
+const cartAuth = userStore.hasAuth('rX80');
 
 const itemRankingList = ref([
 ])
