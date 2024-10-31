@@ -4,8 +4,11 @@
       <el-form-item label="用户名称" prop="nickName">
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
+      <el-form-item label="账户名" prop="userName">
+        <el-input v-model="formData.userName" show-word-limit maxlength="15" title="账户名"/>
+      </el-form-item>
       <el-form-item label="手机号" prop="mobile">
-        <el-input v-model="formData.mobile" show-word-limit maxlength="11" title="默认手机号后6位为初始密码"/>
+        <el-input v-model="formData.mobile" show-word-limit maxlength="11" title="注意:手机号后6位为初始密码"/>
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
@@ -57,6 +60,19 @@ const formRules = reactive({
     { required: true, message: '手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
   ],
+  userName: [
+    { required: true, message: '账户名不能为空', trigger: 'blur' },
+    {
+      validator: (rule, value, callback) => {
+        if (!value || value.length < 6 || value.length > 15) {
+          callback(new Error('账户名长度为6-15位'));
+        } else {
+          callback();
+        }
+      },
+      trigger: 'blur'
+    }
+  ],
   roleIds: [{ required: true, message: '请选择角色', trigger: 'change', type: 'array' }]
 });
 
@@ -71,6 +87,7 @@ const defaultProps = {
 const formData = ref({
   id: null,
   nickName: '',
+  userName: '',
   mobile: '',
   deptCode: '',
   roleIds: [],
@@ -105,6 +122,7 @@ const resetForm = () => {
   formData.value = {
     id: null,
     nickName: '',
+    userName: '',
     mobile: '',
     deptCode: '',
     roleIds: [],
