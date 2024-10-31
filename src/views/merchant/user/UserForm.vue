@@ -47,7 +47,7 @@ const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  nickName: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
+  nickName: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
   mobile: [
     { required: true, message: '手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }

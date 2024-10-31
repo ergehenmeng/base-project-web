@@ -6,7 +6,7 @@
         <h3>后台管理系统</h3>
         <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData">
           <el-form-item prop="userName">
-            <el-input placeholder="请输入账号" maxlength="20" v-model="formData.userName" size="large">
+            <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large" >
               <template #prefix>
                 <el-icon :size="20">
                   <User />
@@ -78,14 +78,14 @@ getCode();
 const formRules = reactive({
   userName: [
     { required: true, message: '账号不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
+    { min: 6, max: 15, message: '账号长度6~15字符', trigger: 'blur' }
   ],
   pwd: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
     {
       min: 6,
-      max: 20,
-      message: '长度在 6 到 20 个字符',
+      max: 16,
+      message: '密码长度6~20字符',
       trigger: 'blur'
     }
   ],

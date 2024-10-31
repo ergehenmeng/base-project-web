@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="用户名称" prop="nickName">
+      <el-form-item label="昵称" prop="nickName">
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="账户名" prop="userName">
@@ -55,23 +55,14 @@ const emit = defineEmits(['reload']);
 const disabled = ref(false);
 
 const formRules = reactive({
-  nickName: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
+  nickName: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
   mobile: [
     { required: true, message: '手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
   ],
   userName: [
     { required: true, message: '账户名不能为空', trigger: 'blur' },
-    {
-      validator: (rule, value, callback) => {
-        if (!value || value.length < 6 || value.length > 15) {
-          callback(new Error('账户名长度为6-15位'));
-        } else {
-          callback();
-        }
-      },
-      trigger: 'blur'
-    }
+    { min: 6, max: 15, message: '账户名长度6~15字符', trigger: 'blur'}
   ],
   roleIds: [{ required: true, message: '请选择角色', trigger: 'change', type: 'array' }]
 });
