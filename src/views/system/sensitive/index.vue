@@ -87,10 +87,10 @@ const handleDelete = (row) => {
 };
 
 const handleCreate = () => {
-  ElMessageBox.prompt('', '提示', {
+  ElMessageBox.prompt('', '添加', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
-    inputPlaceholder: '请输入敏感词',
+    inputPlaceholder: '请录入敏感词',
     inputErrorMessage: '敏感词不能为空',
     inputValidator: (str) => {
       return str !== '' && str !== null && str !== undefined;
