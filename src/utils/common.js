@@ -346,7 +346,7 @@ export const downloadExcel = (response, fileName) => {
 /**
  * 下载图片
  * @param base64 base64图片 不含data:image/png;base64,
- * @param fileName 文件名
+ * @param fileName 文件名 如果为空则使用当前时间作为文件名
  */
 export const downloadImage = (base64, fileName) => {
   const bytes = atob(base64);
@@ -361,7 +361,7 @@ export const downloadImage = (base64, fileName) => {
   const time = dayjs().format('YYYY-MM-DD HH_mm_ss');
   link.style.display = 'none';
   if (fileName) {
-    link.download = fileName + time + '.png';
+    link.download = fileName + '_' + time + '.png';
   } else {
     link.download = time + '.png';
   }

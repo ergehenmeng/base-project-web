@@ -26,7 +26,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="channel" label="客户端" width="100" />
         <el-table-column prop="version" label="版本号" width="100" />
-        <el-table-column prop="state" label="状态" width="120" >
+        <el-table-column prop="state" label="状态" width="100" >
           <template #default="scope">
             <el-switch v-model="scope.row.state" inline-prompt active-text="已发布" inactive-text="未发布" disabled style="--el-switch-off-color: #ff4949" />
           </template>
@@ -36,7 +36,7 @@
         <el-table-column prop="remark" label="更新信息" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="操作" fixed="right" width="150">
           <template #header>
             <span style="margin-right: 5px">操作</span>
             <CreateButton v-has-perm="'QkU0'" title="新增版本" @click="handleCreate"></CreateButton>
@@ -45,6 +45,7 @@
             <el-button v-has-perm="'VkU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'UJU0'" v-if="!scope.row.state" type="success" :icon="Top" @click="handleState(scope.row.id, true, scope.row.version)" link title="上架"></el-button>
             <el-button v-has-perm="'UJU0'" v-if="scope.row.state" type="warning" :icon="Bottom" @click="handleState(scope.row.id, false, scope.row.version)" link title="下架"></el-button>
+            <el-button @click="showQrcode(scope.row.url, scope.row.channel, scope.row.version)" link title="生成二维码"><QrCode/></el-button>
             <el-button v-has-perm="'tkU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -60,6 +61,7 @@
     </div>
   </div>
   <VersionForm ref="formRef" @reload="getPage"></VersionForm>
+  <QRCodeForm ref="qrCodeRef" tips="请使用微信扫码绑定手机号" :file-name="versionName"></QRCodeForm>
 </template>
 <script setup>
 import { deleteApi, listPageApi, stateApi } from '@/api/operation/version';
@@ -71,17 +73,21 @@ import { useRouter } from 'vue-router';
 import VersionForm from './VersionForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
+import QrCode from '@/components/icon/QrCode.vue'
+import QRCodeForm from '@/views/common/QRCodeForm.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('notice_type');
+const qrCodeRef = ref();
 
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('zkU0');
+const versionName = ref('');
 
 const queryParams = reactive({
   queryName: '',
@@ -132,6 +138,11 @@ const handleState = (id, state, version) => {
     });
     successMsg(`版本${type}成功`);
   });
+};
+
+const showQrcode = (url, channel, version) => {
+  versionName.value = channel + "版本V" + version;
+  qrCodeRef.value.openDialog({ text: url, remark: '软件版本号:' + version});
 };
 
 const formatter = (_row, column, cellValue) => {

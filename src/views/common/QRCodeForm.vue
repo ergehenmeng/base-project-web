@@ -48,10 +48,10 @@ const imageData = ref({
  */
 const openDialog = ({ text, base64, remark }) => {
   showDialog.value = true;
+  imageData.value.remark = remark;
   if (text) {
     generateQRCode(text).then((data) => {
       imageData.value.data = data;
-      imageData.value.remark = remark;
     });
   } else {
     imageData.value.data = base64;
