@@ -5,10 +5,12 @@
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="账户名" prop="userName">
-        <el-input v-model="formData.userName" show-word-limit maxlength="15" title="账户名"/>
+        <el-input v-model="formData.userName" show-word-limit maxlength="15" />
       </el-form-item>
       <el-form-item label="手机号" prop="mobile">
-        <el-input v-model="formData.mobile" show-word-limit maxlength="11" title="注意:手机号后8位为初始密码"/>
+        <el-input v-model="formData.mobile" maxlength="11" >
+          <template #suffix><QuestionTip content="提示：手机号后8位为初始密码"/></template>
+        </el-input>
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
@@ -45,6 +47,7 @@
 import { createApi, roleListApi, selectApi, updateApi } from '@/api/system/user'
 import { listApi } from '@/api/system/dept';
 import { successMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const dialogTitle = ref('');
