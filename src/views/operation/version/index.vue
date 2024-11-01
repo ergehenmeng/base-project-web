@@ -61,7 +61,7 @@
     </div>
   </div>
   <VersionForm ref="formRef" @reload="getPage"></VersionForm>
-  <QRCodeForm ref="qrCodeRef" tips="请使用微信扫码绑定手机号" :file-name="versionName"></QRCodeForm>
+  <QRCodeForm ref="qrCodeRef" tips="请用浏览器扫码下载" :file-name="versionName"></QRCodeForm>
 </template>
 <script setup>
 import { deleteApi, listPageApi, stateApi } from '@/api/operation/version';
