@@ -54,9 +54,9 @@ const formRules = reactive({
   ],
   password: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+    { min: 8, max: 20, message: '密码长度8~20字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     }
@@ -84,9 +84,9 @@ const openDialog = (row) => {
     });
     formRules.password = [
       { required: false, message: '', trigger: 'blur' },
-      { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+      { min: 8, max: 20, message: '密码长度8~20字符', trigger: 'blur' },
       {
-        pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
+        pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,20}$/,
         message: '密码必须包含英文字符、数字、@#&_',
         trigger: 'blur'
       }

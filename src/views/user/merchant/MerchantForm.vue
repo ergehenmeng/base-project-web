@@ -6,12 +6,16 @@
         <el-input v-model="formData.merchantName" show-word-limit maxlength="30" />
       </el-form-item>
       <el-form-item label="联系人电话" prop="mobile">
-        <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
+        <el-input v-model="formData.mobile" maxlength="11">
+          <template #suffix>
+            <QuestionTip content="该手机号可以登录管理后台，默认密码联系人电话后8位"></QuestionTip>
+          </template>
+        </el-input>
       </el-form-item>
       <el-form-item label="账户名" prop="account">
         <el-input v-model="formData.account" maxlength="20" @keyup="formData.account=formData.account.replace(/\W/g,'')">
           <template #suffix>
-            <QuestionTip content="该账号是商户用于登录管理后台的账户，默认密码请查看系统参数"></QuestionTip>
+            <QuestionTip content="该账号可以登录管理后台，默认密码联系人电话后8位"></QuestionTip>
           </template>
         </el-input>
       </el-form-item>
@@ -85,7 +89,7 @@ const formRules = reactive({
   mobile: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }],
   account: [{ required: true, message: '账户名不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '账户名长度6~20位', trigger: 'blur' }
+    { min: 6, max: 15, message: '账户名长度6~15位', trigger: 'blur' }
   ],
   typeList: [{ required: true, message: '请选择商家类型', trigger: 'change', type: 'array' }],
   creditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],

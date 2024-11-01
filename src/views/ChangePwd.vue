@@ -32,13 +32,13 @@ const showDialog = ref(false);
 const formRules = reactive({
   oldPwd: [
     { required: true, message: '原密码不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
+    { min: 8, max: 20, message: '密码长度8~20字符', trigger: 'blur' }
   ],
   newPwd: [
     { required: true, message: '新密码不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+    { min: 8, max: 20, message: '新密码长度8~20字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },
@@ -55,9 +55,9 @@ const formRules = reactive({
   ],
   confirmPwd: [
     { required: true, message: '确认密码不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' },
+    { min: 8, max: 20, message: '确认密码长度8~20字符', trigger: 'blur' },
     {
-      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{6,20}$/,
+      pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#&_]).{8,20}$/,
       message: '密码必须包含英文字符、数字、@#&_',
       trigger: 'blur'
     },

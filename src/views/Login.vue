@@ -15,7 +15,7 @@
             </el-input>
           </el-form-item>
           <el-form-item prop="pwd">
-            <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="16" size="large" type="password" show-password autocomplete="off">
+            <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="20" size="large" type="password" show-password autocomplete="off">
               <template #prefix>
                 <el-icon :size="20">
                   <Lock />
@@ -83,9 +83,9 @@ const formRules = reactive({
   pwd: [
     { required: true, message: '密码不能为空', trigger: 'blur' },
     {
-      min: 6,
-      max: 16,
-      message: '密码长度6~20字符',
+      min: 8,
+      max: 20,
+      message: '密码长度8~20字符',
       trigger: 'blur'
     }
   ],
