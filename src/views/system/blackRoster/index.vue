@@ -17,9 +17,8 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"></CreateButton>
-            <QuestionTip content="注意：黑名单那的变更不会立即生效，需刷新缓存才能生效" />
+            <span style="margin-right: 5px">操作<QuestionTip content="注意：黑名单那的变更不会立即生效，需刷新缓存才能生效" /></span>
+            <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"/>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'4oK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>

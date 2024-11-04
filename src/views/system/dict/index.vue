@@ -42,9 +42,8 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'AmK0'" title="新增数据字典" @click="handleCreate"></CreateButton>
-            <QuestionTip content="注意：数据字典的变更不会立即生效，需刷新缓存才能生效"/>
+            <span style="margin-right: 5px">操作<QuestionTip content="注意：数据字典的变更不会立即生效，需刷新缓存才能生效"/></span>
+            <CreateButton v-has-perm="'AmK0'" title="新增数据字典" @click="handleCreate"/>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'9mK0'" type="success" :icon="CirclePlus" @click="handleItemCreate(scope.row)" link title="添加数据字典子项"></el-button>
