@@ -59,7 +59,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" min-width="100" />
+        <el-table-column prop="nickName" label="昵称" width="100" />
         <el-table-column prop="mobile" label="手机号码" width="120" />
         <el-table-column prop="email" label="电子邮箱" width="200" />
         <el-table-column prop="state" label="状态" width="80" >
@@ -70,10 +70,10 @@
         <el-table-column prop="score" label="积分" width="100" />
         <el-table-column prop="inviteCode" label="邀请码" width="100" />
         <el-table-column prop="sex" label="性别" width="80" :formatter="formatter" />
-        <el-table-column prop="realName" label="真实姓名" min-width="100" />
+        <el-table-column prop="realName" label="真实姓名" width="100" />
         <el-table-column prop="birthday" label="生日" width="100" />
         <el-table-column prop="channel" label="注册渠道" width="100" />
-        <el-table-column prop="createTime" label="注册时间" width="180" />
+        <el-table-column prop="createTime" label="注册时间" min-width="180" />
         <el-table-column label="操作" width="180">
           <template #default="scope">
             <el-button v-has-perm="'YNp0'" :icon="Tickets" @click="handleLoginLog(scope.row)" link title="登录日志"></el-button>
