@@ -11,12 +11,6 @@
             <el-option label="禁用" :value="false" />
           </el-select>
         </el-form-item>
-        <el-form-item label="菜单类型">
-          <el-select v-model="queryParams.grade" clearable>
-            <el-option label="导航" :value="1" />
-            <el-option label="按钮" :value="2" />
-          </el-select>
-        </el-form-item>
         <el-form-item label="菜单权限">
           <el-select v-model="queryParams.displayState" clearable>
             <el-option label="商户菜单" :value="1" />
