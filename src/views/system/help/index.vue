@@ -41,6 +41,8 @@
           </template>
           <template #default="scope">
             <el-button v-has-perm="'L3U0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'v3U0'" v-if="!scope.row.state" type="success" :icon="Top" @click="handleState(scope.row.id, true)" link title="显示"></el-button>
+            <el-button v-has-perm="'v3U0'" v-if="scope.row.state" type="warning" :icon="Bottom" @click="handleState(scope.row.id, false)" link title="隐藏"></el-button>
             <el-button v-has-perm="'T3U0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -57,8 +59,8 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi, sortApi } from '@/api/system/help';
-import { Delete, Edit } from '@element-plus/icons-vue';
+import { deleteApi, listPageApi, sortApi, stateApi } from '@/api/system/help';
+import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
@@ -94,6 +96,17 @@ const getPage = async () => {
   } finally {
     loading.value = false;
   }
+};
+
+const handleState = (id, state) => {
+  const type = state ? '显示' : '隐藏';
+  const msg = `确定要${type}该帮助信息吗?`
+  confirmMsg(msg, () => {
+    stateApi({ id: id, state: state }).then(() => {
+      getPage();
+    });
+    successMsg(`帮助${type}成功`);
+  });
 };
 
 const formatter = (_row, column, cellValue) => {
