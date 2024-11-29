@@ -21,6 +21,13 @@ export const updateApi = (data) => {
   });
 };
 
+export const stateApi = (data) => {
+  return request.post({
+    url: '/manage/news/updateState',
+    data
+  });
+};
+
 export const deleteApi = (data) => {
   return request.post({
     url: '/manage/news/delete',

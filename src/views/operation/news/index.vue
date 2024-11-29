@@ -33,7 +33,8 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="likeNum" label="点赞数" />
+            <el-table-column prop="state" label="状态" :formatter="formatter" width="80"/>
+            <el-table-column prop="likeNum" label="点赞数" width="100"/>
             <el-table-column prop="sort" label="排序" width="80">
               <template #default="scope">
                 <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
@@ -49,6 +50,8 @@
               <template #default="scope">
                 <el-button v-has-perm="'ymU0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
                 <el-button v-has-perm="'PmU0'" v-if="scope.row.commentSupport" type="warning" :icon="ChatLineRound" @click="handleComment(scope.row)" link title="评论信息"></el-button>
+                <el-button v-has-perm="'fmU0'" v-if="!scope.row.state" type="success" :icon="Top" @click="handleState(scope.row.id, true)" link title="显示"></el-button>
+                <el-button v-has-perm="'fmU0'" v-if="scope.row.state" type="warning" :icon="Bottom" @click="handleState(scope.row.id, false)" link title="隐藏"></el-button>
                 <el-button v-has-perm="'MmU0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
               </template>
             </el-table-column>
@@ -67,8 +70,8 @@
   </div>
 </template>
 <script setup>
-import { configListApi, deleteApi, listPageApi, sortApi } from '@/api/operation/news';
-import { ChatLineRound, Delete, Edit } from '@element-plus/icons-vue'
+import { configListApi, deleteApi, listPageApi, sortApi, stateApi } from '@/api/operation/news';
+import { Bottom, ChatLineRound, Delete, Edit, Top } from '@element-plus/icons-vue'
 import { confirmMsg, errorMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -90,6 +93,25 @@ const queryParams = reactive({
   pageSize: 10,
   code: null
 });
+
+const handleState = (id, state) => {
+  const type = state ? '显示' : '隐藏';
+  const msg = `确定要${type}该资讯吗?`
+  confirmMsg(msg, () => {
+    stateApi({ id: id, state: state }).then(() => {
+      getPage();
+    });
+    successMsg(`资讯${type}成功`);
+  });
+};
+
+const formatter = (_row, column, cellValue) => {
+  if (column.property === 'state') {
+    return cellValue ? h('span', { style: 'color: green;' }, '显示') : h('span', { style: 'color: #ff3d3d;' }, '隐藏');
+  } else {
+    return cellValue;
+  }
+};
 
 const getPage = async () => {
   if (!queryParams.code) {
