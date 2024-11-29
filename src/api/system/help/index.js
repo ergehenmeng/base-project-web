@@ -20,13 +20,6 @@ export const updateApi = (data) => {
   });
 };
 
-export const stateApi = (data) => {
-  return request.post({
-    url: '/manage/help/updateState',
-    data
-  });
-};
-
 export const selectApi = (params) => {
   return request.get({
     url: '/manage/help/select',

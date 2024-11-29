@@ -107,7 +107,7 @@ const handleState = (id, state) => {
 
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
-    return cellValue ? h('span', { style: 'color: green;' }, '显示') : h('span', { style: 'color: #ff3d3d;' }, '隐藏');
+    return cellValue ? h('span', { style: 'color: green;' }, '显示') : h('span', { style: 'color: #ff6b81;' }, '隐藏');
   } else {
     return cellValue;
   }
