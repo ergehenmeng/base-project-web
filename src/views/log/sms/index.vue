@@ -6,14 +6,13 @@
           <el-input v-model="queryParams.queryName" placeholder="手机号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="资金类型">
-          <el-select v-model="queryParams.smsType" clearable style="width: 180px">
+          <el-select v-model="queryParams.templateType" clearable style="width: 180px">
             <el-option label="自定义短信" value="default" />
-            <el-option label="登陆发送短信" value="login" />
-            <el-option label="忘记密码发送短信" value="forget" />
-            <el-option label="注册发送短信" value="register" />
-            <el-option label="商户解绑微信号短信" value="merchant_unbind" />
-            <el-option label="更换邮箱发送短信验证码" value="change_email" />
-            <el-option label="确认无房,发送通知短信" value="confirm_no_room" />
+            <el-option label="登陆(后台)" value="user_login" />
+            <el-option label="登陆" value="member_login" />
+            <el-option label="注册" value="register" />
+            <el-option label="忘记密码" value="forget" />
+            <el-option label="更换邮箱" value="change_email" />
           </el-select>
         </el-form-item>
         <el-form-item label="发送状态">
@@ -34,7 +33,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="smsType" label="短信类型" :formatter="formatter" width="200" />
+        <el-table-column prop="templateType" label="短信类型" :formatter="formatter" width="200" />
         <el-table-column prop="mobile" label="手机号" width="200"/>
         <el-table-column prop="content" label="短信内容" min-width="300" />
         <el-table-column prop="state" label="发送状态" :formatter="formatter" width="150"/>
@@ -66,7 +65,7 @@ const queryParams = reactive({
   page: 1,
   pageSize: 10,
   state: null,
-  smsType: null,
+  templateType: null,
   activityDate: []
 });
 
@@ -91,22 +90,20 @@ const getPage = async () => {
 };
 
 const formatter = (_row, column, cellValue) => {
-  if (column.property === 'smsType') {
+  if (column.property === 'templateType') {
     switch (cellValue) {
       case 'default':
         return '自定义短信';
-      case 'login':
-        return '登陆发送短信';
+      case 'user_login':
+        return '登陆(后台)';
+      case 'member_login':
+        return '登陆';
       case 'forget':
-        return '忘记密码发送短信';
+        return '忘记密码';
       case 'register':
-        return '注册发送短信';
-      case 'merchant_unbind':
-        return '商户解绑微信号短信';
+        return '注册';
       case 'change_email':
-        return '更换邮箱发送短信验证码';
-      case 'confirm_no_room':
-        return '确认无房,发送通知短信';
+        return '更换邮箱';
       default:
         return '未知';
     }
