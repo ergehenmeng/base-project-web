@@ -82,3 +82,10 @@ export const changePwdApi = (data) => {
     data
   });
 };
+
+export const unbindApi = () => {
+  return request.post({
+    url: '/manage/unbindWeChat',
+    data: {}
+  });
+};

@@ -10,6 +10,11 @@
         </el-icon>
       </li>
       <li>
+        <el-icon title="解绑微信" @click="handleUnbind">
+          <Unbind color="#FFFFFF"></Unbind>
+        </el-icon>
+      </li>
+      <li>
         <el-icon title="修改密码" @click="handleChangePwd">
           <Password color="#FFFFFF"></Password>
         </el-icon>
@@ -26,7 +31,8 @@
 <script setup>
 import useUserStore from '@/store/user';
 import ChangePwd from '@/views/ChangePwd.vue';
-import { confirmMsg, errorMsg, warningMsg } from '@/utils/message'
+import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
+import { unbindApi } from '@/api/system/user';
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
@@ -36,6 +42,7 @@ import { Client } from '@stomp/stompjs';
 import { renderMsg } from '@/utils/common.js'
 import { ElLink } from 'element-plus'
 import { useRouter } from 'vue-router'
+import Unbind from '@/components/icon/Unbind.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -47,6 +54,15 @@ const handleLogout = () => {
     userStore.logout();
   });
 };
+
+const handleUnbind = () => {
+  confirmMsg('确定要解绑微信吗?', () => {
+    unbindApi().then(() => {
+      successMsg('解绑成功');
+    });
+  });
+};
+
 // 初始化地区字典
 const areaStore = useAreaStore();
 areaStore.initArea();
