@@ -91,21 +91,22 @@ const initWebSocket = () => {
 
 let client;
 onMounted(() => {
-
   // 只有零售商户才开启websocket用来接收订单消息
   if ((userStore.user?.userType === 2 || userStore.user?.userType === 3) && (userStore.user?.merchantType & 8) === 8) {
     client = initWebSocket();
   }
-
   const init = userStore.user?.init;
   if (init) {
     warningMsg('您的密码为初始化密码，请及时修改密码');
+    // 每次登录只提示一次
     userStore.setInit(false);
     return;
   }
   const expire = userStore.user?.expire;
   if (expire) {
     errorMsg('密码已超过90天未修改，请及时修改保证账户安全');
+    // 每次登录只提示一次
+    userStore.setExpire(false);
   }
 })
 

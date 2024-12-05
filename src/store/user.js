@@ -80,7 +80,12 @@ const useUserStore = defineStore(
     const setLock = (isLock) => {
       user.value.isLock = isLock;
     }
-    return { user, isLogin, login, hasAuth, logout, setInit, setLock };
+
+    const setExpire = (expire) => {
+      user.value.expire = expire;
+    }
+
+    return { user, isLogin, login, hasAuth, logout, setInit, setLock, setExpire };
   },
   // 开启持久化
   { persist: true }
