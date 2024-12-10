@@ -12,6 +12,7 @@ import { ref } from 'vue';
 const useDictStore = defineStore(
   'dict',
   () => {
+
     const dictMap = ref({});
 
     /**

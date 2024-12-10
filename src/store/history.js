@@ -15,7 +15,6 @@ const useHistoryStore = defineStore(
         const getNowPage = () => {
             return nowPage.value;
         };
-
         const setPage = (before, now) => {
             beforePage.value = before;
             nowPage.value = now;

@@ -100,6 +100,8 @@ onMounted(() => {
     warningMsg('您的密码为初始化密码，请及时修改密码');
     // 每次登录只提示一次
     userStore.setInit(false);
+    // 防止刷新后提示90天提醒
+    userStore.setExpire(false);
     return;
   }
   const expire = userStore.user?.expire;

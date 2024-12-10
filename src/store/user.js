@@ -33,7 +33,6 @@ const useUserStore = defineStore(
     });
     // 用户是否登陆
     const isLogin = ref(false);
-
     // 判断是否有指定的按钮权限
     const hasAuth = (authCode) => {
       const permList = user.value.permList;
@@ -62,7 +61,6 @@ const useUserStore = defineStore(
         });
       }
     };
-
     // 登录并设置用户信息
     const login = async (loginData) => {
       if (isLogin.value) {
@@ -76,15 +74,12 @@ const useUserStore = defineStore(
     const setInit = (init) => {
       user.value.init = init;
     };
-
     const setLock = (isLock) => {
       user.value.isLock = isLock;
     }
-
     const setExpire = (expire) => {
       user.value.expire = expire;
     }
-
     return { user, isLogin, login, hasAuth, logout, setInit, setLock, setExpire };
   },
   // 开启持久化
