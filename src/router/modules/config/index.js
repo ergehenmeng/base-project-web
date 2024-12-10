@@ -14,14 +14,6 @@ export default [
         }
       },
       {
-        path: 'push',
-        name: 'pushConfig',
-        component: () => import('@/views/config/push/index.vue'),
-        meta: {
-          title: '推送模板'
-        }
-      },
-      {
         path: 'itemTag',
         name: 'itemTagConfig',
         component: () => import('@/views/config/itemTag/index.vue'),
@@ -43,14 +35,6 @@ export default [
         component: () => import('@/views/config/email/index.vue'),
         meta: {
           title: '邮件模板'
-        }
-      },
-      {
-        path: 'sms',
-        name: 'smsConfig',
-        component: () => import('@/views/config/sms/index.vue'),
-        meta: {
-          title: '短信模板'
         }
       },
       {
