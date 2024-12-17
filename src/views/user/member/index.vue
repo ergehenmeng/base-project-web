@@ -82,7 +82,7 @@
             <el-button v-has-perm="'DNp0'" @click="handleLogout(scope.row)" link title="强制下线">
               <Offline/>
             </el-button>
-            <el-button v-has-perm="'DNp0'" @click="handleScore(scope.row)" link title="更新积分">
+            <el-button v-has-perm="'GNp0'" @click="handleScore(scope.row)" link title="更新积分">
               <Score/>
             </el-button>
             <el-button v-has-perm="'uNp0'" type="primary" :icon="Message" @click="handleSms(scope.row)" link title="发送短信通知"> </el-button>
