@@ -55,3 +55,10 @@ export const sendSmsApi = (data) => {
     data
   });
 };
+
+export const updateScoreApi = (data) => {
+  return request.post({
+    url: '/manage/member/updateScore',
+    data
+  });
+};

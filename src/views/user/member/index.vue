@@ -59,7 +59,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" width="100" />
+        <el-table-column prop="nickName" label="昵称" min-width="100" />
         <el-table-column prop="mobile" label="手机号码" width="120" />
         <el-table-column prop="email" label="电子邮箱" width="200" />
         <el-table-column prop="state" label="状态" width="80" >
@@ -73,14 +73,17 @@
         <el-table-column prop="realName" label="真实姓名" width="100" />
         <el-table-column prop="birthday" label="生日" width="100" />
         <el-table-column prop="channel" label="注册渠道" width="100" />
-        <el-table-column prop="createTime" label="注册时间" min-width="180" />
-        <el-table-column label="操作" width="180">
+        <el-table-column prop="createTime" label="注册时间" width="180" />
+        <el-table-column label="操作" width="220">
           <template #default="scope">
             <el-button v-has-perm="'YNp0'" :icon="Tickets" @click="handleLoginLog(scope.row)" link title="登录日志"></el-button>
             <el-button v-has-perm="'ONp0'" v-show="scope.row.state" type="warning" :icon="Lock" @click="handleFreeze(scope.row)" link title="冻结"></el-button>
             <el-button v-has-perm="'cNp0'" v-show="!scope.row.state" type="success" :icon="Unlock" @click="handleUnFreeze(scope.row)" link title="解冻"></el-button>
             <el-button v-has-perm="'DNp0'" @click="handleLogout(scope.row)" link title="强制下线">
-              <Offline></Offline>
+              <Offline/>
+            </el-button>
+            <el-button v-has-perm="'DNp0'" @click="handleScore(scope.row)" link title="更新积分">
+              <Score/>
             </el-button>
             <el-button v-has-perm="'uNp0'" type="primary" :icon="Message" @click="handleSms(scope.row)" link title="发送短信通知"> </el-button>
             <el-button v-has-perm="'NNp0'" :icon="ChatDotSquare" @click="handleNotice(scope.row)" link title="发送站内信通知"> </el-button>
@@ -99,6 +102,7 @@
   </div>
   <SendSmsForm ref="smsRef"></SendSmsForm>
   <SendNoticeForm ref="noticeRef"></SendNoticeForm>
+  <ScoreForm ref="scoreRef"></ScoreForm>
 </template>
 <script setup>
 import { exportApi, freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
@@ -110,6 +114,8 @@ import { useRouter } from 'vue-router';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import { downloadExcel } from '@/utils/common.js';
+import Score from '@/components/icon/Score.vue'
+import ScoreForm from '@/views/user/member/ScoreForm.vue'
 
 const router = useRouter();
 const loading = ref(false);
@@ -118,6 +124,7 @@ const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('XqK0');
 const smsRef = ref();
 const noticeRef = ref();
+const scoreRef = ref();
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -205,6 +212,10 @@ const handleUnFreeze = (row) => {
       getPage();
     });
   });
+};
+
+const handleScore = (row) => {
+  scoreRef.value.openDialog({ id: row.id });
 };
 
 const handleLogout = (row) => {
