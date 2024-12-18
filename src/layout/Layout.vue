@@ -2,7 +2,7 @@
   <el-container class="main-container" v-if="isLogin">
     <el-header class="main-header">
       <div class="logo">
-        <span class="logo-text">{{ systemName }}</span>
+        <span class="logo-text">{{ userStore.user?.systemName }}</span>
       </div>
       <Header></Header>
     </el-header>
@@ -29,7 +29,6 @@ import LockScreen from '@/views/LockScreen.vue';
 const userStore = useUserStore();
 const { isLogin } = toRefs(userStore);
 const lockRef = ref();
-const systemName = import.meta.env.VITE_SYSTEM_NAME;
 const handleLockScreen = () => {
   lockRef.value.openDialog();
 };
@@ -60,11 +59,16 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 40px;
     .logo-text {
-      font-size: 36px;
+      text-align: center;
+      font-size: 32px;
+      display: block;
       color: white;
-      font-family: 'Viner Hand ITC', 'Brush Script MT', 'Snell Roundhand', Schoolbell, Pacifico, cursive, Arial, sans-serif;
+      font-family: 'STXingkai', 'STLiti', cursive, Arial, sans-serif;
       -webkit-user-select: none; /* Safari */
       -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* IE 10+ */

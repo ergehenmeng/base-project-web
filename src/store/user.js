@@ -18,6 +18,8 @@ const useUserStore = defineStore(
       merchantType: 0,
       // 昵称
       nickName: '',
+      // 系统名称
+      systemName: '',
       // 用户名
       userName: '',
       // 菜单权限
