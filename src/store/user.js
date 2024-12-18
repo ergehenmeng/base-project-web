@@ -32,6 +32,8 @@ const useUserStore = defineStore(
       expire: false,
       // 是否锁屏
       isLock: false,
+      // 是否绑定微信
+      bindWechat: false,
       // 商户id
       merchantId: ''
     });
@@ -84,7 +86,10 @@ const useUserStore = defineStore(
     const setExpire = (expire) => {
       user.value.expire = expire;
     }
-    return { user, isLogin, login, hasAuth, logout, setInit, setLock, setExpire };
+    const setBindWechat = (bindWechat) => {
+      user.value.bindWechat = bindWechat;
+    }
+    return { user, isLogin, login, hasAuth, logout, setInit, setLock, setExpire, setBindWechat };
   },
   // 开启持久化
   { persist: true }

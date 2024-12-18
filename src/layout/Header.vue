@@ -6,26 +6,29 @@
       </li>
       <li>
         <el-icon title="个人中心" @click="handleUser">
-          <User color="#FFFFFF"></User>
+          <User color="#FFFFFF"/>
         </el-icon>
       </li>
       <li>
-        <el-icon title="解绑微信" @click="handleUnbind">
-          <Unbind color="#FFFFFF"></Unbind>
+        <el-icon title="解绑微信" @click="handleUnbind" v-if="userStore.user?.bindWechat">
+          <Unbind color="#FFFFFF"/>
+        </el-icon>
+        <el-icon v-else title="绑定微信" @click="handleBind">
+          <Bind color="#FFFFFF"/>
         </el-icon>
       </li>
       <li>
         <el-icon title="修改密码" @click="handleChangePwd">
-          <Password color="#FFFFFF"></Password>
+          <Password color="#FFFFFF"/>
         </el-icon>
       </li>
       <li>
         <el-icon title="退出系统" @click="handleLogout">
-          <Logout color="#FFFFFF"></Logout>
+          <Logout color="#FFFFFF"/>
         </el-icon>
       </li>
     </ul>
-    <ChangePwd ref="changePwdRef" />
+    <ChangePwd ref="changePwdRef"/>
   </div>
 </template>
 <script setup>
@@ -43,6 +46,7 @@ import { renderMsg } from '@/utils/common.js'
 import { ElLink } from 'element-plus'
 import { useRouter } from 'vue-router'
 import Unbind from '@/components/icon/Unbind.vue'
+import Bind from '@/components/icon/Bind.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -61,6 +65,10 @@ const handleUnbind = () => {
       successMsg('解绑成功');
     });
   });
+};
+
+const handleBind = () => {
+  successMsg('在登陆界面进行扫码并登录, 登录成功自动绑定微信');
 };
 
 // 初始化地区字典
