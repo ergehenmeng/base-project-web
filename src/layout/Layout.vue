@@ -60,7 +60,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   .logo {
-    margin-left: 20px;
+    margin-left: 40px;
     .logo-text {
       font-size: 36px;
       color: white;

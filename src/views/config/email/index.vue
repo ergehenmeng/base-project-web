@@ -13,7 +13,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="邮件标题" width="200" />
-        <el-table-column prop="nid" label="邮件编号" width="150" />
+        <el-table-column prop="nid" label="Code" width="150" />
         <el-table-column prop="content" label="邮件内容" min-width="250" />
         <el-table-column prop="remark" label="备注信息" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />

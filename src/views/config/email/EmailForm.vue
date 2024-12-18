@@ -4,7 +4,7 @@
       <el-form-item label="模板标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="模板编号" prop="nid">
+      <el-form-item label="Code" prop="nid">
         <el-input v-model="formData.nid" show-word-limit maxlength="20" disabled />
       </el-form-item>
       <el-form-item label="模板内容" prop="content">

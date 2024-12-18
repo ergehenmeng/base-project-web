@@ -111,7 +111,7 @@ const formatter = (_row, _column, cellValue) => {
 };
 
 const handleRefresh = (row) => {
-  confirmMsg('确定要刷新该标签关联的会员吗?', () => {
+  confirmMsg('刷新后将重新计算符合该条件的会员数量, 是否刷新?', () => {
     const data = { id: row.id };
     refreshApi(data).then(() => {
       successMsg('标签刷新成功');
