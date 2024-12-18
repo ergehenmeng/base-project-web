@@ -107,7 +107,9 @@ const handleLogin = async () => {
         }).then(() => {
           const fullPath = route.fullPath;
           if (fullPath.startsWith('/login?redirect=')) {
-            router.replace(getPath(fullPath.replace('/login?redirect=', '')));
+            const path = getPath(fullPath.replace('/login?redirect=', ''))
+            console.log('redirect to: ' + path);
+            router.replace(path);
           } else {
             router.replace('/');
           }

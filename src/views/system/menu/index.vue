@@ -29,7 +29,7 @@
         <el-table-column prop="icon" label="图标" width="80">
           <template #default="scope">
             <el-icon :size="18">
-              <component :is="scope.row.icon"></component>
+              <component :is="scope.row.icon" v-if="scope.row.icon"></component>
             </el-icon>
           </template>
         </el-table-column>

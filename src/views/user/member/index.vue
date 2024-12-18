@@ -67,7 +67,11 @@
             <el-switch v-model="scope.row.state" inline-prompt active-text="正常" inactive-text="冻结" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
-        <el-table-column prop="score" label="积分" width="100" />
+        <el-table-column prop="score" label="积分" width="100" >
+          <template #default="scope" v-if="scoreAuth">
+            <el-link type="primary" :underline="false" @click="handleScoreLog(scope.row)">{{ scope.row.score }}</el-link>
+          </template>
+        </el-table-column>
         <el-table-column prop="inviteCode" label="邀请码" width="100" />
         <el-table-column prop="sex" label="性别" width="80" :formatter="formatter" />
         <el-table-column prop="realName" label="真实姓名" width="100" />
@@ -102,7 +106,8 @@
   </div>
   <SendSmsForm ref="smsRef"></SendSmsForm>
   <SendNoticeForm ref="noticeRef"></SendNoticeForm>
-  <ScoreForm ref="scoreRef"></ScoreForm>
+  <ScoreForm ref="scoreRef" @reload="getPage"></ScoreForm>
+  <ScoreLogForm ref="scoreLogRef"/>
 </template>
 <script setup>
 import { exportApi, freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
@@ -116,15 +121,18 @@ import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import { downloadExcel } from '@/utils/common.js';
 import Score from '@/components/icon/Score.vue'
 import ScoreForm from '@/views/user/member/ScoreForm.vue'
+import ScoreLogForm from '@/views/user/member/ScoreLogForm.vue'
 
 const router = useRouter();
 const loading = ref(false);
 const total = ref(0);
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('XqK0');
+const scoreAuth = userStore.hasAuth('ANp0');
 const smsRef = ref();
 const noticeRef = ref();
 const scoreRef = ref();
+const scoreLogRef = ref();
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -216,6 +224,10 @@ const handleUnFreeze = (row) => {
 
 const handleScore = (row) => {
   scoreRef.value.openDialog({ id: row.id });
+};
+
+const handleScoreLog = (row) => {
+  scoreLogRef.value.openDialog({ id: row.id });
 };
 
 const handleLogout = (row) => {

@@ -62,3 +62,10 @@ export const updateScoreApi = (data) => {
     data
   });
 };
+
+export const scoreLogPageApi = (params) => {
+  return request.get({
+    url: '/manage/member/score/listPage',
+    params
+  });
+};
