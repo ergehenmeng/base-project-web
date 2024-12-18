@@ -62,6 +62,7 @@ const handleLogout = () => {
 const handleUnbind = () => {
   confirmMsg('确定要解绑微信吗?', () => {
     unbindApi().then(() => {
+      userStore.setBindWechat(false);
       successMsg('解绑成功');
     });
   });
