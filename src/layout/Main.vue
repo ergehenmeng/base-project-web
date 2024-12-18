@@ -1,5 +1,5 @@
 <template>
-  <el-watermark :content="content" :font="font">
+  <el-watermark :content="userStore.user?.userName" :font="font">
     <div class="main-center">
       <div class="main-navigation">
         <el-breadcrumb>
@@ -21,23 +21,22 @@
 </template>
 <script setup>
 import useBreadcrumbStore from '@/store/breadcrumb';
+import useUserStore from '@/store/user.js'
 
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {
   return breadcrumbStore.breadcrumb;
 });
 
-const content = computed(() => {
-  return ["E", "G", "H", "M"].join("");
-});
+const userStore = useUserStore();
 
 const font = reactive({
   color: 'rgba(0, 0, 0, .05)',
   fontSize: 14
 })
 
-
 </script>
+
 <style lang="scss" scoped>
 .main-navigation {
   padding: 10px;

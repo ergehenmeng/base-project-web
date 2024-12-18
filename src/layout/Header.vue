@@ -1,5 +1,5 @@
 <template>
-  <div class="main-header">
+  <div class="layer-main-header">
     <ul class="">
       <li>
         <span class="main-header-title" title="按ALT+L可以锁屏哟~">欢迎您: {{ nickName }}</span>
@@ -177,7 +177,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 @import '@/styles/index.scss';
 
-.main-header {
+.layer-main-header {
   height: 60px;
   display: flex;
   justify-content: flex-end;
