@@ -19,14 +19,14 @@
             <el-switch v-model="scope.row.includeTitle" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
+        <el-table-column prop="includeTag" label="包含标签">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeTag" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="includeDepict" label="包含描述信息">
           <template #default="scope">
             <el-switch v-model="scope.row.includeDepict" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
-          </template>
-        </el-table-column>
-        <el-table-column prop="includeTag" label="包含描述标签">
-          <template #default="scope">
-            <el-switch v-model="scope.row.includeTag" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
         <el-table-column prop="includeImage" label="包含图集">
