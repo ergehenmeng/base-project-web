@@ -378,7 +378,6 @@ const createSecondTable = (specPrimary, secondSpec, size) => {
     }
   }
   showSecondSpec.value = true;
-  console.log(formData.value.skuList)
 };
 
 const filterSpec = (spec) => {

@@ -77,7 +77,6 @@ const formData = ref({
 });
 
 const handleSave = () => {
-  console.log('formData', formData.value.tagList)
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
