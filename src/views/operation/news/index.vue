@@ -5,6 +5,12 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="资讯标题" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable>
+            <el-option label="显示" :value="true" />
+            <el-option label="隐藏" :value="false" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
@@ -90,6 +96,7 @@ const sortAuth = userStore.hasAuth('smU0');
 
 const queryParams = reactive({
   queryName: '',
+  state: null,
   page: 1,
   pageSize: 10,
   code: null
