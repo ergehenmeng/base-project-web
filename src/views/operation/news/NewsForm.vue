@@ -8,11 +8,14 @@
       <el-form-item label="描述信息" prop="depict" v-if="showField.includeDepict">
         <el-input v-model="formData.depict" show-word-limit maxlength="50" />
       </el-form-item>
+      <el-form-item label="标签" prop="tagList" v-if="showField.includeTag">
+        <CustomTag v-model="formData.tagList" :width="350" />
+      </el-form-item>
       <el-form-item label="图集" prop="imageList" v-if="showField.includeImage">
         <UploadImageList v-model:file-list="formData.imageList"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
-        <el-input type="textarea" v-model="formData.video"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="200" />
+        <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="200" />
       </el-form-item>
       <el-form-item label="留言" prop="commentSupport" >
         <el-radio-group v-model="formData.commentSupport">
@@ -40,6 +43,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack } from '@/utils/common.js';
+import CustomTag from '@/components/CustomTag.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -55,7 +59,8 @@ const formRules = reactive({
 const showField = ref({
   includeDepict: false,
   includeImage: false,
-  includeVideo: false
+  includeVideo: false,
+  includeTag: false
 });
 
 const formData = ref({
@@ -66,18 +71,20 @@ const formData = ref({
   commentSupport: false,
   contentText: '',
   imageList: [],
+  tagList: [],
   video: '',
   code: ''
 });
 
 const handleSave = () => {
+  console.log('formData', formData.value.tagList)
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('公告更新成功');
+            successMsg('资讯更新成功');
             goBack(router);
           })
           .finally(() => {
@@ -86,7 +93,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('公告添加成功');
+            successMsg('资讯添加成功');
             goBack(router);
           })
           .finally(() => {
@@ -106,7 +113,8 @@ onMounted(() => {
   }
   formData.value.code = query.code;
   configApi({ code: query.code }).then((res) => {
-    const { includeDepict, includeImage, includeVideo } = res.data;
+    const { includeDepict, includeImage, includeVideo, includeTag } = res.data;
+    showField.value.includeTag = includeTag;
     if (includeDepict === true) {
       showField.value.includeDepict = true;
       formRules.depict = [{ required: true, message: '资讯描述不能为空', trigger: 'blur' }];
@@ -130,6 +138,12 @@ onMounted(() => {
             formData.value.imageList = image.split(',');
           } else {
             formData.value.imageList = [];
+          }
+          const tagName = res.data.tagName;
+          if (tagName) {
+            formData.value.tagList = tagName.split(',');
+          } else {
+            formData.value.tagList = [];
           }
         })
         .finally(() => {

@@ -19,7 +19,7 @@
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="标签" prop="tagList">
-        <CustomTag v-model="formData.tagList" :width="350" :disabled="disabled"></CustomTag>
+        <CustomTag v-model="formData.tagList" :width="350" :disabled="disabled"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>

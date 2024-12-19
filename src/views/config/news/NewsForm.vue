@@ -19,6 +19,12 @@
           <el-radio label="否" :value="false"></el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="包含标签" prop="includeTag">
+        <el-radio-group v-model="formData.includeTag">
+          <el-radio label="是" :value="true"></el-radio>
+          <el-radio label="否" :value="false"></el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="包含图集" prop="includeImage">
         <el-radio-group v-model="formData.includeImage">
           <el-radio label="是" :value="true"></el-radio>
@@ -69,6 +75,7 @@ const formData = ref({
   includeTitle: true,
   includeDepict: false,
   includeImage: false,
+  includeTag: false,
   includeContent: true,
   includeVideo: false
 });
