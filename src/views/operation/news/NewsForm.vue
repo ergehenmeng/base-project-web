@@ -6,7 +6,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="描述信息" prop="depict" v-if="showField.includeDepict">
-        <el-input v-model="formData.depict" show-word-limit maxlength="50" />
+        <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="标签" prop="tagList" v-if="showField.includeTag">
         <CustomTag v-model="formData.tagList" :width="350" />
@@ -15,7 +15,7 @@
         <UploadImageList v-model:file-list="formData.imageList"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
-        <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="200" />
+        <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 4 }" show-word-limit maxlength="200" />
       </el-form-item>
       <el-form-item label="留言" prop="commentSupport" >
         <el-radio-group v-model="formData.commentSupport">
