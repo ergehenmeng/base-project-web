@@ -50,7 +50,7 @@
         <el-table-column prop="content" label="评论信息" min-width="300" />
         <el-table-column prop="state" label="状态" :formatter="formatter" width="80" />
         <el-table-column prop="topState" label="置顶状态" width="80" :formatter="formatter" />
-        <el-table-column prop="likeNum" label="点赞数量" width="100" />
+        <el-table-column prop="praiseNum" label="点赞数" width="100" />
         <el-table-column prop="reportNum" label="举报次数" width="100" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column label="操作" fixed="right" align="center" width="120">

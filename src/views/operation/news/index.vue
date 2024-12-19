@@ -41,7 +41,7 @@
               </template>
             </el-table-column>
             <el-table-column prop="state" label="状态" :formatter="formatter" width="80"/>
-            <el-table-column prop="likeNum" label="点赞数" width="90"/>
+            <el-table-column prop="praiseNum" label="点赞数" width="90"/>
             <el-table-column prop="sort" label="排序" width="80">
               <template #default="scope">
                 <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
