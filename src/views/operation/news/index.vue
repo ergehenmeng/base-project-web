@@ -73,7 +73,7 @@
 <script setup>
 import { configListApi, deleteApi, listPageApi, sortApi, stateApi } from '@/api/operation/news';
 import { Bottom, ChatLineRound, Delete, Edit, Top } from '@element-plus/icons-vue'
-import { confirmMsg, errorMsg, successMsg } from '@/utils/message';
+import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
@@ -153,6 +153,9 @@ onMounted(() => {
 
 const getConfigList = async () => {
   const { data } = await configListApi();
+  if (data.length === 0) {
+    warningMsg('请先在运营配置/资讯配置中添加资讯类型');
+  }
   configList.value = data;
 };
 
