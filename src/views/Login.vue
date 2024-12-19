@@ -108,7 +108,6 @@ const handleLogin = async () => {
           const fullPath = route.fullPath;
           if (fullPath.startsWith('/login?redirect=')) {
             const path = getPath(fullPath.replace('/login?redirect=', ''))
-            console.log('redirect to: ' + path);
             router.replace(path);
           } else {
             router.replace('/');
@@ -130,11 +129,11 @@ const handleLogin = async () => {
 const getPath = (path) => {
   const menuList = userStore.user?.menuList
   for (let menu of menuList) {
-    menu.children.forEach(subMenu => {
-      if (subMenu.path === path) {
+    for (let item of menu.children) {
+      if (item.path === path) {
         return path;
       }
-    });
+    }
   }
   return "/"
 }
