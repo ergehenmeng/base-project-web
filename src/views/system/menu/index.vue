@@ -24,7 +24,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
         <el-table-column prop="title" label="菜单名称" width="150" />
         <el-table-column prop="icon" label="图标" width="80">
           <template #default="scope">
@@ -49,16 +49,16 @@
           </template>
         </el-table-column>
         <el-table-column prop="grade" label="菜单类型" :formatter="formatter" width="100" />
-        <el-table-column prop="displayState" label="菜单权限" :formatter="formatter" />
-        <el-table-column prop="path" label="路由地址" />
+        <el-table-column prop="displayState" label="菜单权限" :formatter="formatter" width="100" />
+        <el-table-column prop="path" label="路由地址" width="150"/>
         <el-table-column prop="subPath" label="权限URL" />
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="remark" label="备注"  width="180" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" width="180">
           <template #header>
             <span style="margin-right: 5px">操作</span>
