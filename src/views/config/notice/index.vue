@@ -12,11 +12,11 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="title" label="消息标题" width="200" />
+        <el-table-column prop="title" label="消息标题" width="180" />
         <el-table-column prop="code" label="消息编号" width="150" />
         <el-table-column prop="content" label="模板内容" min-width="250" />
         <el-table-column prop="remark" label="备注信息" />
-        <el-table-column prop="updateTime" label="更新时间" width="180" />
+        <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" fixed="right" width="100">
           <template #header>
             <span>操作<QuestionTip content="注意：站内信模板的变更不会立即生效，需刷新缓存才能生效"/></span>

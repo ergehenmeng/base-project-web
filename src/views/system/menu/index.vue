@@ -50,7 +50,7 @@
         </el-table-column>
         <el-table-column prop="grade" label="菜单类型" :formatter="formatter" width="100" />
         <el-table-column prop="displayState" label="菜单权限" :formatter="formatter" width="100" />
-        <el-table-column prop="path" label="路由地址" width="150"/>
+        <el-table-column prop="path" label="路由地址" width="160"/>
         <el-table-column prop="subPath" label="权限URL" />
         <el-table-column prop="sort" label="排序" width="75">
           <template #default="scope">
