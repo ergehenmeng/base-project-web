@@ -5,10 +5,10 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="资讯标题、活动名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
-        <el-form-item label="类型">
+        <el-form-item label="文章类型">
           <el-select v-model="queryParams.objectType" clearable>
-            <el-option label="资讯评论" :value="1" />
-            <el-option label="活动评论" :value="2" />
+            <el-option label="资讯" :value="1" />
+            <el-option label="活动" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
