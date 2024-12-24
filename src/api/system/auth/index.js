@@ -27,3 +27,10 @@ export const deleteApi = (data) => {
     data
   });
 };
+
+export const resetApi = (data) => {
+  return request.post({
+    url: '/manage/auth/reset',
+    data
+  });
+};

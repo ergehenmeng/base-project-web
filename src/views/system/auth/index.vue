@@ -51,7 +51,7 @@
   <AuthForm ref="formRef" @reload="getPage"></AuthForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/system/auth';
+import { deleteApi, listPageApi, resetApi } from '@/api/system/auth'
 import { Delete, Edit, Refresh } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
@@ -104,6 +104,16 @@ const handleDelete = (row) => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('授权信息删除成功');
+      getPage();
+    });
+  });
+};
+
+const handleReset = (row) => {
+  confirmMsg('确定要重置签名信息吗?', () => {
+    const data = { id: row.id };
+    resetApi(data).then(() => {
+      successMsg('签名信息重置成功');
       getPage();
     });
   });
