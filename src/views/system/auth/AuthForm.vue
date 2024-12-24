@@ -5,7 +5,7 @@
     </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="单位名称" prop="title">
-        <el-input v-model="formData.title" show-word-limit maxlength="30" />
+        <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="签名方式" prop="signType">
         <el-select v-model="formData.signType" :disabled="formData.id !== null">
@@ -42,7 +42,7 @@ const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  title: [{ required: true, message: '单位名称不能为空', trigger: 'blur' }],
+  title: [{ required: true, message: '单位名称不能为空', trigger: 'blur' }, { min: 2, max: 20, message: '单位名称长度2~20位', trigger: 'blur' }],
   signType: [{ required: true, message: '签名方式不能为空', trigger: 'change' }]
 });
 
