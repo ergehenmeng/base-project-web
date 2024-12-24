@@ -1,11 +1,11 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="显示值" prop="showValue">
-        <el-input v-model="formData.showValue" show-word-limit maxlength="10" />
+        <el-input v-model="formData.showValue" show-word-limit maxlength="10" style="width: 230px !important;"/>
       </el-form-item>
       <el-form-item label="隐藏值" prop="hiddenValue">
-        <el-input v-model="formData.hiddenValue" show-word-limit maxlength="3" type="number" />
+        <el-input v-model="formData.hiddenValue" show-word-limit maxlength="3" type="number" style="width: 230px !important;" />
       </el-form-item>
     </el-form>
     <template #footer>
