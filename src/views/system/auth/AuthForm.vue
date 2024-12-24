@@ -1,5 +1,8 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+    <template #title>
+      <span>{{ dialogTitle }}<QuestionTip content="注意：相关业务代码需要开发人员额外开发"/></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="单位名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
@@ -30,6 +33,7 @@
 import { createApi, updateApi } from '@/api/system/auth';
 import { successMsg } from '@/utils/message.js';
 import { disableBeforeDate } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const dialogTitle = ref('');
