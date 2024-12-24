@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <template #title>
+    <template #header>
       <span>{{ dialogTitle }}<QuestionTip content="注意：相关业务代码需要开发人员额外开发"/></span>
     </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
