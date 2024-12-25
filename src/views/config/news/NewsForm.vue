@@ -65,7 +65,13 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   title: [{ required: true, message: '分类标题不能为空', trigger: 'blur' }],
-  code: [{ required: true, message: '资讯编码不能为空', trigger: 'blur' }]
+  code: [{ required: true, message: '资讯编码不能为空', trigger: 'blur' }],
+  includeTitle: [{ required: true, message: '包含标题不能为空', trigger: 'change' }],
+  includeDepict: [{ required: true, message: '包含描述信息不能为空', trigger: 'change' }],
+  includeTag: [{ required: true, message: '包含标签不能为空', trigger: 'change' }],
+  includeImage: [{ required: true, message: '包含图集不能为空', trigger: 'change' }],
+  includeContent: [{ required: true, message: '包含详细信息不能为空', trigger: 'change' }],
+  includeVideo: [{ required: true, message: '包含视频不能为空',trigger: 'change' }]
 });
 
 const formData = ref({
