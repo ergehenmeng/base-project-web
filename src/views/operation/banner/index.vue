@@ -73,8 +73,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="remark" label="备注" min-width="100" />
-        <el-table-column prop="createTime" label="创建时间" width="170" />
-        <el-table-column prop="updateTime" label="更新时间" width="170" />
+        <el-table-column prop="createTime" label="创建时间" width="160" />
+        <el-table-column prop="updateTime" label="更新时间" width="160" />
         <el-table-column label="操作" fixed="right" width="120">
           <template #header>
             <span style="margin-right: 5px">操作</span>
