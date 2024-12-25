@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" >
       <el-form-item label="标题" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
@@ -41,11 +41,11 @@
           <el-radio :value="false">不可点击</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="点击跳转地址" prop="jumpUrl">
-        <el-input v-model="formData.jumpUrl" show-word-limit maxlength="100" :disabled="formData.click === false" />
+      <el-form-item label="跳转地址" prop="jumpUrl">
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.jumpUrl" show-word-limit maxlength="100" :disabled="formData.click === false" />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -76,6 +76,7 @@ const formRules = reactive({
   clientType: [{ required: true, message: '请选择客户端', trigger: 'change' }],
   bannerType: [{ required: true, message: '请选择轮播类型', trigger: 'change' }],
   imgUrl: [{ required: true, message: '请上传图片', trigger: 'blur' }],
+  click: [{ required: true, message: '是否可点击', trigger: 'change' }],
   showTime: [{ required: true, message: '请选择展示时间', trigger: 'blur' }]
 });
 
@@ -151,7 +152,10 @@ const handleSave = () => {
 
 const changeClick = (value) => {
   if (value === false) {
+    formRules.jumpUrl = [{required: false, message: '请输入跳转地址', trigger: 'blur'}];
     formData.value.jumpUrl = '';
+  } else {
+    formRules.jumpUrl = [{ required: true, message: '请输入跳转地址', trigger: 'blur' }];
   }
 };
 
