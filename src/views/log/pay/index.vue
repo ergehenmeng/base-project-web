@@ -49,10 +49,18 @@
             <el-table-column prop="payChannel" label="支付方式" :formatter="formatter" width="100" />
             <el-table-column prop="notifyId" label="异步通知ID" width="220" />
             <el-table-column prop="stepType" label="通知类型" :formatter="formatter" width="150"/>
+            <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
             <el-table-column prop="tradeNo" label="交易流水号" width="220" />
             <el-table-column prop="refundNo" label="退款流水号" width="220" />
             <el-table-column prop="params" label="通知原始参数" min-width="250" />
             <el-table-column prop="createTime" label="请求时间" width="180"/>
+            <el-table-column label="操作" fixed="right" width="100">
+              <template #default="scope">
+                <el-button v-has-perm="'UF00'" v-if="scope.row.state === 0" @click="handlePlayback(scope.row)" link title="回调重新执行">
+                  <Playback/>
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
           <el-pagination
             v-model:current-page="queryParams.page"
@@ -69,9 +77,11 @@
   <ContentDialog ref="contentRef"></ContentDialog>
 </template>
 <script setup>
-import { asyncPageApi, syncPageApi } from '@/api/log/pay';
+import { asyncPageApi, syncPageApi, playbackApi } from '@/api/log/pay';
 import useUserStore from '@/store/user';
 import ContentDialog from '@/components/ContentDialog.vue';
+import Playback from '@/components/icon/Playback.vue'
+import { confirmMsg, successMsg } from '@/utils/message.js'
 
 const userStore = useUserStore();
 const syncAuth = userStore.hasAuth('5F00');
@@ -112,11 +122,23 @@ const getPage = async () => {
   }
 };
 
+const handlePlayback = (row) => {
+  confirmMsg('开始模拟第三方回调, 确定要执行吗?', () => {
+    const data = { id: row.id };
+    playbackApi(data).then(() => {
+      successMsg('回放执行成功');
+      getPage();
+    });
+  });
+};
+
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'payChannel') {
     return cellValue === 'WECHAT' ? '微信' : '支付宝';
   } else if (column.property === 'stepType') {
     return cellValue === 'PAY' ? '支付' : '退款';
+  } else if (column.property === 'state') {
+    return cellValue === 0 ? '未回放' : h('span', { style: 'color: green;' }, '回放成功');
   } else {
     return cellValue;
   }

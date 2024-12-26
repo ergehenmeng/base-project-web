@@ -13,3 +13,10 @@ export const asyncPageApi = (params) => {
     params
   });
 };
+
+export const playbackApi = (data) => {
+  return request.post({
+    url: '/manage/pay/log/async/playback',
+    data
+  });
+};
