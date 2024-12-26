@@ -1,20 +1,22 @@
 <template>
-  <el-container class="main-container" v-if="isLogin">
-    <el-header class="main-header">
-      <div class="logo">
-        <span class="logo-text">{{ userStore.user?.systemName }}</span>
-      </div>
-      <Header></Header>
-    </el-header>
-    <el-container>
-      <el-aside width="200px">
-        <Aside></Aside>
-      </el-aside>
-      <el-main style="height: calc(100vh - 60px)">
-        <Main></Main>
-      </el-main>
+  <el-watermark :content="userStore.user?.userName" :font="font">
+    <el-container class="main-container" v-if="isLogin">
+      <el-header class="main-header">
+        <div class="logo">
+          <span class="logo-text">{{ userStore.user?.systemName }}</span>
+        </div>
+        <Header></Header>
+      </el-header>
+      <el-container>
+        <el-aside width="200px">
+          <Aside></Aside>
+        </el-aside>
+        <el-main style="height: calc(100vh - 60px)">
+          <Main></Main>
+        </el-main>
+      </el-container>
     </el-container>
-  </el-container>
+  </el-watermark>
   <!-- fullScreen:需要全屏显示的页面 -->
   <router-view v-if="!isLogin" name="fullScreen"></router-view>
   <LockScreen ref="lockRef"></LockScreen>
@@ -38,6 +40,11 @@ const keyupListener = (e) => {
     handleLockScreen();
   }
 };
+
+const font = reactive({
+  color: 'rgba(0, 0, 0, .05)',
+  fontSize: 14
+})
 
 onMounted(() => {
   if (userStore.user?.isLock) {

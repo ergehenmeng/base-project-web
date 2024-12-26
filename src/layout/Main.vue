@@ -1,40 +1,29 @@
 <template>
-  <el-watermark :content="userStore.user?.userName" :font="font">
-    <div class="main-center">
-      <div class="main-navigation">
-        <el-breadcrumb>
-          <template v-for="(breadcrumb, index) in breadcrumbList" :key="index">
-            <el-breadcrumb-item v-if="index !== 0 && index !== 1 && index !== breadcrumbList.length - 1" :to="breadcrumb?.path">
-              {{ breadcrumb.meta?.title }}
-            </el-breadcrumb-item>
-            <el-breadcrumb-item v-else>{{ breadcrumb.meta?.title }}</el-breadcrumb-item>
-          </template>
-        </el-breadcrumb>
-      </div>
-      <div class="main-content">
-        <el-scrollbar>
-          <router-view></router-view>
-        </el-scrollbar>
-      </div>
+  <div class="main-center">
+    <div class="main-navigation">
+      <el-breadcrumb>
+        <template v-for="(breadcrumb, index) in breadcrumbList" :key="index">
+          <el-breadcrumb-item v-if="index !== 0 && index !== 1 && index !== breadcrumbList.length - 1" :to="breadcrumb?.path">
+            {{ breadcrumb.meta?.title }}
+          </el-breadcrumb-item>
+          <el-breadcrumb-item v-else>{{ breadcrumb.meta?.title }}</el-breadcrumb-item>
+        </template>
+      </el-breadcrumb>
     </div>
-  </el-watermark>
+    <div class="main-content">
+      <el-scrollbar>
+        <router-view></router-view>
+      </el-scrollbar>
+    </div>
+  </div>
 </template>
 <script setup>
 import useBreadcrumbStore from '@/store/breadcrumb';
-import useUserStore from '@/store/user.js'
 
 const breadcrumbStore = useBreadcrumbStore();
 const breadcrumbList = computed(() => {
   return breadcrumbStore.breadcrumb;
 });
-
-const userStore = useUserStore();
-
-const font = reactive({
-  color: 'rgba(0, 0, 0, .05)',
-  fontSize: 14
-})
-
 </script>
 
 <style lang="scss" scoped>
