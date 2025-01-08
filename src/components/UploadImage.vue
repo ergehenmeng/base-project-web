@@ -8,7 +8,7 @@
     :before-upload="beforeImageUpload"
     :disabled="prop.disabled"
     accept="image/*"
-    :title="prop.tips"
+    :title="prop.disabled ? '图标不可编辑' : prop.tips"
   >
     <img v-if="imgUrl" :src="imgUrl" class="image-uploader-preview" alt="预览" />
     <el-icon v-else class="image-uploader-icon">
