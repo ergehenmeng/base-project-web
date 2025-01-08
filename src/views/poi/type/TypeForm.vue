@@ -8,11 +8,11 @@
         <PoiAreaSelect v-model="formData.areaCode"></PoiAreaSelect>
       </el-form-item>
       <el-form-item prop="icon">
-        <template #label><span>图表<QuestionTip content="请上传24*24大小的图标"/></span></template>
+        <template #label><span>图标<QuestionTip content="请上传24*24大小的图标"/></span></template>
         <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
-        <el-input v-model="formData.sort" placeholder="不填写默认1" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.sort" placeholder="不填写默认1" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
     </el-form>
     <template #footer>
