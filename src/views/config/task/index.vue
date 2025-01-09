@@ -24,7 +24,7 @@
         <el-table-column prop="title" label="任务名称" width="200" />
         <el-table-column prop="state" label="状态" width="80" >
           <template #default="scope">
-            <el-switch v-model="scope.row.includeTitle" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
+            <el-switch v-model="scope.row.state" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
         <el-table-column prop="beanName" label="类名" width="200" />

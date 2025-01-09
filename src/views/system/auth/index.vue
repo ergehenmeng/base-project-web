@@ -28,8 +28,8 @@
         <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
-            <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"></CreateButton>
+            <span style="margin-right: 5px">操作<QuestionTip content="注意：授权信息不会立即生效，需刷新缓存才能生效" /></span>
+            <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
@@ -57,6 +57,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const total = ref(0);
