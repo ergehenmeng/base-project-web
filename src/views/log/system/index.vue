@@ -19,7 +19,7 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="url" label="请求地址" width="250" />
         <el-table-column prop="request" label="请求参数" min-width="300" />
-        <el-table-column prop="nickName" label="操作人姓名" width="150" />
+        <el-table-column prop="nickName" label="昵称" width="100" />
         <el-table-column prop="mobile" label="操作人手机号" width="150" />
         <el-table-column prop="ip" label="访问ip" width="120" />
         <el-table-column prop="businessTime" label="接口耗时(ms)" width="120" />
