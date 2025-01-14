@@ -37,7 +37,7 @@
         <el-table-column prop="remark" label="备注信息" min-width="100"/>
         <el-table-column label="操作" fixed="right" width="100">
           <template #header>
-            <span>操作<QuestionTip content="注意：所有任务均由开发人员手动配置"/></span>
+            <span>操作<QuestionTip content="注意：所有任务均由开发人员手动配置，修改后需刷新才生效"/></span>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'tOR0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
