@@ -5,7 +5,7 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="类名、方法名、执行机器IP" clearable @keyup.enter="search" style="width: 300px" maxlength="30" />
         </el-form-item>
-        <el-form-item label="执行状态">
+        <el-form-item label="执行结果">
           <el-select v-model="queryParams.state" clearable class="w100">
             <el-option label="成功" :value="true" />
             <el-option label="失败" :value="false" />
@@ -21,7 +21,7 @@
         <el-table-column prop="beanName" label="类名" :formatter="formatter" min-width="200" />
         <el-table-column prop="methodName" label="方法名" min-width="150"/>
         <el-table-column prop="args" label="方法入参" min-width="150"/>
-        <el-table-column prop="state" label="执行状态" :formatter="formatter" width="120"/>
+        <el-table-column prop="state" label="执行结果" :formatter="formatter" width="120"/>
         <el-table-column prop="startTime" label="执行时间" width="180"/>
         <el-table-column prop="elapsedTime" label="任务耗时(ms)" width="150"/>
         <el-table-column prop="ip" label="机器IP" width="150"/>
