@@ -49,7 +49,7 @@
             <el-table-column prop="payChannel" label="支付方式" :formatter="formatter" width="100" />
             <el-table-column prop="notifyId" label="异步通知ID" width="220" />
             <el-table-column prop="stepType" label="通知类型" :formatter="formatter" width="150"/>
-            <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
+            <el-table-column prop="state" label="状态" width="90" :formatter="formatter" />
             <el-table-column prop="tradeNo" label="交易流水号" width="220" />
             <el-table-column prop="refundNo" label="退款流水号" width="220" />
             <el-table-column prop="params" label="通知原始参数" min-width="250" />
