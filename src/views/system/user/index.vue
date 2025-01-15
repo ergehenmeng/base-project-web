@@ -76,14 +76,14 @@ const total = ref(0);
 const formRef = ref();
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('XqK0');
+const pageData = ref([]);
+
 const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
   state: null
 });
-
-const pageData = ref([]);
 
 const getPage = async () => {
   loading.value = true;

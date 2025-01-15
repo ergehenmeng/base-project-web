@@ -21,10 +21,6 @@ import useUserStore from '@/store/user';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const defaultProps = {
-  label: 'title',
-  children: 'children'
-};
 const treeRef = ref();
 const showDialog = ref(false);
 const loading = ref(false);
@@ -33,8 +29,12 @@ const userStore = useUserStore();
 const checkedKeys = ref([]);
 const expendKeys = ref([]);
 const roleIdRef = ref(null);
-
 const emit = defineEmits(['reload']);
+
+const defaultProps = {
+  label: 'title',
+  children: 'children'
+};
 
 const openDialog = async (row) => {
   showDialog.value = true;

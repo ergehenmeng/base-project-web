@@ -12,7 +12,6 @@ const key = import.meta.env.VITE_MAP_KEY;
 const defaultLng = import.meta.env.VITE_MAP_LNG;
 const defaultLat = import.meta.env.VITE_MAP_LAT;
 const defaultZoom = import.meta.env.VITE_MAP_ZOOM;
-
 const route = useRoute();
 const router = useRouter();
 const disabled = ref(false);
@@ -24,7 +23,6 @@ const dataList = ref([]);
 const sortList = ref([]);
 // 点位 <-> 经纬度
 const pointMap = new Map();
-
 const polylineRef = ref(null);
 
 /**

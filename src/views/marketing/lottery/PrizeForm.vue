@@ -39,6 +39,9 @@ import CouponSelect from '@/components/CouponSelect.vue';
 import { warningMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
 
+const couponRef = ref();
+const formDataRef = ref();
+const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
@@ -61,9 +64,6 @@ const formData = ref({
   totalNum: null,
   coverUrl: null
 });
-const couponRef = ref();
-const formDataRef = ref();
-const showDialog = ref(false);
 
 const openDialog = (row) => {
   showDialog.value = true;

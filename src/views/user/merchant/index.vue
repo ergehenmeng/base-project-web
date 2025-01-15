@@ -102,6 +102,8 @@ const loading = ref(false);
 const total = ref(0);
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('2Yp0');
+const pageData = ref([]);
+
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -110,8 +112,6 @@ const queryParams = reactive({
   type: null,
   enterpriseType: null
 });
-
-const pageData = ref([]);
 
 const getPage = async () => {
   loading.value = true;

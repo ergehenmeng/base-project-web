@@ -83,7 +83,6 @@ const router = useRouter();
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('notice_type');
-
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

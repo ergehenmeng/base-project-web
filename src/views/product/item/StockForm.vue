@@ -32,7 +32,6 @@ import QuestionTip from '@/components/QuestionTip.vue'
 const loading = ref(false);
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
-
 const skuData = ref([]);
 
 const formData = ref({

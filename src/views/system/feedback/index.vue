@@ -79,7 +79,6 @@ import useDictStore from '@/store/dict.js';
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('feedback_type');
-
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('nTU0');
 const loading = ref(false);

@@ -53,7 +53,6 @@ const selectAuth = userStore.hasAuth('IH00');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-
 const contentRef = ref();
 
 const handleResponse = (content) => {

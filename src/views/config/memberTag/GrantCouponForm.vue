@@ -42,14 +42,15 @@ const emit = defineEmits(['reload']);
 const total = ref(0);
 const pageData = ref([]);
 const showDialog = ref(false);
+const userStore = useUserStore();
+const selectAuth = userStore.hasAuth('dnR0');
+
 const queryParams = reactive({
   queryName: null,
   page: 1,
   pageSize: 10,
   mode: 1
 });
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('dnR0');
 
 const formData = ref({
   tagId: null,

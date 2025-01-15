@@ -114,7 +114,6 @@ const childrenList = dictStore.getDict('children');
 const mediaList = dictStore.getDict('media');
 const applianceList = dictStore.getDict('appliance');
 const landscapeList = dictStore.getDict('landscape');
-
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);

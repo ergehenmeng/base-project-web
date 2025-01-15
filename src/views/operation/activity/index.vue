@@ -64,11 +64,9 @@ const router = useRouter();
 const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('banner_type');
-
 const loading = ref(false);
 const calendar = ref();
 const nowDate = ref(new Date());
-
 const dataMap = ref({});
 const selectAuth = userStore.hasAuth('5dU0');
 

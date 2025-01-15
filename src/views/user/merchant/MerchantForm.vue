@@ -13,7 +13,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="账户名" prop="account">
-        <el-input v-model="formData.account" maxlength="20" @keyup="formData.account=formData.account.replace(/\W/g,'')">
+        <el-input v-model="formData.account" maxlength="20" @keyup="formData.account = formData.account.replace(/\W/g, '')">
           <template #suffix>
             <QuestionTip content="该账号可以登录管理后台，默认密码联系人电话后8位"></QuestionTip>
           </template>
@@ -76,7 +76,7 @@ import { successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import { goBack } from '@/utils/common.js';
-import QuestionTip from '@/components/QuestionTip.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -86,9 +86,12 @@ const disabled = ref(false);
 
 const formRules = reactive({
   merchantName: [{ required: true, message: '商户名称不能为空', trigger: 'blur' }],
-  mobile: [{ required: true, message: '联系人电话不能为空', trigger: 'blur' },
-    { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }],
-  account: [{ required: true, message: '账户名不能为空', trigger: 'blur' },
+  mobile: [
+    { required: true, message: '联系人电话不能为空', trigger: 'blur' },
+    { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
+  ],
+  account: [
+    { required: true, message: '账户名不能为空', trigger: 'blur' },
     { min: 6, max: 15, message: '账户名长度6~15位', trigger: 'blur' }
   ],
   typeList: [{ required: true, message: '请选择商家类型', trigger: 'change', type: 'array' }],

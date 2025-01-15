@@ -81,7 +81,6 @@ const userStore = useUserStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('notice_type');
 const qrCodeRef = ref();
-
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
