@@ -18,7 +18,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="title" label="图片名称" width="150" />
-        <el-table-column prop="path" label="预览" width="100">
+        <el-table-column prop="path" label="预览" width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image fit="cover" :src="scope.row.path" :preview-src-list="[scope.row.path]" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
@@ -29,8 +29,8 @@
         <el-table-column prop="path" label="url" />
         <el-table-column prop="size" label="图片大小" width="100" :formatter="formatter" />
         <el-table-column prop="remark" label="备注" width="100"/>
-        <el-table-column prop="createTime" label="创建时间" width="180"/>
-        <el-table-column prop="updateTime" label="更新时间" width="180"/>
+        <el-table-column prop="createTime" label="创建时间" width="170"/>
+        <el-table-column prop="updateTime" label="更新时间" width="170"/>
         <el-table-column label="操作" width="100">
           <template #header>
             <span style="margin-right: 5px">操作</span>
