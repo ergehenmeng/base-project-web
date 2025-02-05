@@ -31,7 +31,14 @@ import LockScreen from '@/views/LockScreen.vue';
 const userStore = useUserStore();
 const { isLogin } = toRefs(userStore);
 const lockRef = ref();
+
+const refreshToast = (e) => {
+  e.preventDefault();
+  e.returnValue = '';
+};
+
 const handleLockScreen = () => {
+  window.addEventListener('beforeunload', refreshToast);
   lockRef.value.openDialog();
 };
 
@@ -55,6 +62,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('keyup', keyupListener);
+  window.removeEventListener('beforeunload', refreshToast);
 });
 </script>
 

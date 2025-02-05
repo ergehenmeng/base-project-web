@@ -70,6 +70,7 @@ const handleSave = () => {
           showDialog.value = false;
         })
         .finally(() => {
+          resetForm();
           loading.value = false;
         });
     }
