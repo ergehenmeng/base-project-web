@@ -124,7 +124,7 @@ export default [
         name: 'version',
         component: () => import('@/views/operation/version/index.vue'),
         meta: {
-          title: '版本管理'
+          title: 'App版本'
         }
       },
       {
