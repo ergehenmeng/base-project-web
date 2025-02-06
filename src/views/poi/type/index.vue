@@ -36,7 +36,7 @@
         <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作" fixed="right" width="250">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
+            <span>操作</span>
             <CreateButton v-has-perm="'AiG0'" title="新增点位类型" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">

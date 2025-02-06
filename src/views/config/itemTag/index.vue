@@ -41,7 +41,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
+            <span>操作</span>
             <CreateButton v-has-perm="'7JR0'" title="新增标签" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">

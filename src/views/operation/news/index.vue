@@ -51,7 +51,7 @@
             <el-table-column prop="updateTime" label="更新时间" width="170"/>
             <el-table-column label="操作" fixed="right" width="150">
               <template #header>
-                <span style="margin-right: 5px">操作</span>
+                <span>操作</span>
                 <CreateButton v-has-perm="'SmU0'" title="新增资讯" @click="handleCreate"></CreateButton>
               </template>
               <template #default="scope">

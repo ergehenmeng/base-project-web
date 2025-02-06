@@ -33,7 +33,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="170"/>
         <el-table-column label="操作" width="100">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
+            <span>操作</span>
             <CreateButton v-has-perm="'vgK0'" title="新增图片" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">

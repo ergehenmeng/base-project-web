@@ -77,7 +77,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="160" />
         <el-table-column label="操作" fixed="right" width="120">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
+            <span>操作</span>
             <CreateButton v-has-perm="'gxU0'" title="新增轮播图" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">

@@ -78,7 +78,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" fixed="right" width="210">
           <template #header>
-            <span style="margin-right: 5px">操作</span>
+            <span>操作</span>
             <CreateButton v-has-perm="'jSO0'" title="新增零售商品" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
