@@ -14,7 +14,12 @@
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
-          <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"></el-option>
+          <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"/>
+          <template v-if="roleList.length === 0 && roleAuth" #footer>
+            <div style="display: flex; justify-content: center;">
+              <el-link type="primary" @click="addRoleHandle" :underline="false">添加角色</el-link>
+            </div>
+          </template>
         </el-select>
       </el-form-item>
       <el-form-item label="所属部门" prop="deptCode">
@@ -48,7 +53,10 @@ import { createApi, roleListApi, selectApi, updateApi } from '@/api/system/user'
 import { listApi } from '@/api/system/dept';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
+import useUserStore from '@/store/user.js'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const loading = ref(false);
 const dialogTitle = ref('');
 const roleList = ref([]);
@@ -56,6 +64,8 @@ const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 const disabled = ref(false);
+const userStore = useUserStore();
+const roleAuth = userStore.hasAuth('KjK0');
 
 const formRules = reactive({
   nickName: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
@@ -124,6 +134,10 @@ const resetForm = () => {
     remark: ''
   };
   formDataRef.value?.resetFields();
+};
+
+const addRoleHandle = () => {
+  router.push('/sys/role');
 };
 
 const handleSave = () => {
