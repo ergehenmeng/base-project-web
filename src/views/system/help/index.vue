@@ -24,16 +24,16 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="ask" label="问" width="300" />
-        <el-table-column prop="helpType" label="问题分类" :formatter="formatter" />
-        <el-table-column prop="state" label="状态" :formatter="formatter" />
+        <el-table-column prop="ask" label="问" min-width="300" />
+        <el-table-column prop="helpType" label="问题分类" :formatter="formatter" width="120"/>
+        <el-table-column prop="state" label="状态" :formatter="formatter" width="100"/>
         <el-table-column prop="sort" label="排序" width="80">
           <template #default="scope">
             <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
+        <el-table-column prop="createTime" label="创建时间" width="180"/>
+        <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column label="操作" width="180">
           <template #header>
             <span>操作</span>
