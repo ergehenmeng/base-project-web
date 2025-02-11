@@ -17,7 +17,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="收支类型">
-          <el-select v-model="queryParams.direction" clearable style="width: 90px">
+          <el-select v-model="queryParams.direction" clearable style="width: 100px">
             <el-option label="收入" value="1" />
             <el-option label="支出" value="2" />
           </el-select>
