@@ -37,10 +37,7 @@
         </div>
         <div class="content-nav">
           <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}</span> <span>票种类型：</span
-          ><span>{{ ticketType }}</span> <span>核销方式：</span
-          ><span
-            >{{ data.verificationType === 1 ? '手动核销' : '自动核销' }}<QuestionTip :content="data.verificationType === 1 ? '在核销端进行扫码核销' : '游玩日期次日凌晨自动核销'"></QuestionTip
-          ></span>
+          ><span>{{ ticketType }}</span>
           <span>是否实名：</span><span>{{ data.realBuy ? '是' : '否' }}</span> <span>备注信息：</span
           ><span
             ><span class="order-remark">{{ data.remark }}</span></span

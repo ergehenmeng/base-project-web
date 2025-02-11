@@ -44,7 +44,6 @@
         <el-table-column prop="saleNum" label="真实销量" width="80" />
         <el-table-column prop="startDate" label="可预订时间" width="180" :formatter="formatter" />
         <el-table-column prop="stock" label="剩余库存" width="80" />
-        <el-table-column prop="verificationType" label="核销方式" width="100" :formatter="formatter" />
         <el-table-column prop="realBuy" label="是否实名" width="80" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
         <el-table-column prop="updateTime" label="更新时间" width="170" />
@@ -167,17 +166,6 @@ const formatter = (row, column, cellValue) => {
         );
   } else if (column.property === 'startDate') {
     return row.startDate + '~' + row.endDate;
-  } else if (column.property === 'verificationType') {
-    return cellValue === 1
-      ? h(
-          'span',
-          {
-            style: 'color: green;',
-            title: '核销端核销'
-          },
-          '手动核销'
-        )
-      : h('span', { style: 'color: green;', title: '次日凌晨0点开始核销' }, '自动核销');
   } else if (column.property === 'realBuy') {
     return cellValue ? '是' : '否';
   } else {
