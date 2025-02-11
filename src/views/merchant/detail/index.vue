@@ -44,6 +44,9 @@
       <el-form-item label="联系人电话：">
         {{ detail.mobile }}
       </el-form-item>
+      <el-form-item label="提现方式：">
+        {{ detail.withdrawWay === 1 ? '手动提现' : '自动提现' }}<el-button v-has-perm="'Ywu0'" type="primary" :icon="Edit" @click="changeWithdrawWay" link></el-button>
+      </el-form-item>
       <el-form-item label="微信授权手机号：">
         <div v-if="detail.authMobile" style="display: flex; align-items: center"
           ><span>{{ detail.authMobile }}</span
@@ -59,20 +62,23 @@
     </el-form>
   </div>
   <UnbindForm ref="formRef" @reload="handleReload"></UnbindForm>
+  <WithdrawForm ref="withdrawFormRef" @reload="handleReload"></WithdrawForm>
   <QRCodeForm ref="qrCodeRef" tips="请使用微信扫码绑定手机号" file-name="商户授权手机号二维码"></QRCodeForm>
 </template>
 <script setup>
 import { detailApi, generateApi } from '@/api/merchant/detail';
-import { Connection, Unlock } from '@element-plus/icons-vue';
+import { Connection, Edit, Unlock } from '@element-plus/icons-vue';
 import UnbindForm from './UnbindForm.vue';
 import { useRouter } from 'vue-router';
 import useUserStore from '@/store/user.js';
-import QRCodeForm from '@/views/common/QRCodeForm.vue'
+import QRCodeForm from '@/views/common/QRCodeForm.vue';
+import WithdrawForm from '@/views/merchant/detail/WithdrawForm.vue';
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('nwu0');
 const router = useRouter();
 const formRef = ref();
+const withdrawFormRef = ref();
 const qrCodeRef = ref();
 const loading = ref(false);
 
@@ -87,6 +93,7 @@ const detail = ref({
   typeList: [],
   platformServiceRate: null,
   mobile: null,
+  withdrawWay: null,
   authMobile: null,
   detailAddress: null
 });
@@ -100,12 +107,14 @@ onMounted(async () => {
 });
 
 const handleBind = () => {
-  loading.value = true
-  generateApi().then(({data: { authCode, expireTime}}) => {
-    qrCodeRef.value.openDialog({ base64: authCode, remark: '授权过期时间：' + expireTime});
-  }).finally(() => {
-    loading.value = false;
-  });
+  loading.value = true;
+  generateApi()
+    .then(({ data: { authCode, expireTime } }) => {
+      qrCodeRef.value.openDialog({ base64: authCode, remark: '授权过期时间：' + expireTime });
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 
 const handleReload = () => {
@@ -114,5 +123,9 @@ const handleReload = () => {
 
 const handleUnBind = () => {
   formRef.value.openDialog();
+};
+
+const changeWithdrawWay = () => {
+  withdrawFormRef.value.openDialog({ withdrawWay: detail.value.withdrawWay });
 };
 </script>

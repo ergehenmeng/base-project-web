@@ -18,6 +18,13 @@ export const sendSmsApi = () => {
   });
 };
 
+export const withdrawWayApi = (data) => {
+  return request.post({
+    url: '/manage/merchant/center/withdrawWay',
+    data
+  });
+};
+
 export const unbindApi = (data) => {
   return request.post({
     url: '/manage/merchant/center/unbind',

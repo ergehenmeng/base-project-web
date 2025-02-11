@@ -23,7 +23,6 @@ import { sendSmsApi, unbindApi } from '@/api/merchant/detail';
 import { successMsg } from '@/utils/message.js';
 
 const loading = ref(false);
-const dialogTitle = ref('');
 const formDataRef = ref();
 const showDialog = ref(false);
 const disabled = ref(false);
