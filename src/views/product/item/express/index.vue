@@ -11,7 +11,7 @@
       <el-collapse-item v-for="item in expressList" :name="item.id" :key="item.id">
         <template #title>
           <div style="width: 100%">
-            <div style="float: left">
+            <div style="float: left; margin-left: 10px">
               <h3>{{ item.title }}</h3>
             </div>
             <div style="float: right; margin-right: 30px">
