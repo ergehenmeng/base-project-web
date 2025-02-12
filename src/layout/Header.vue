@@ -150,6 +150,7 @@ const showNotice = ({ type, data }) => {
   ElNotification({
     title: '提醒',
     message: content,
+    duration: 3500,
     type: 'warning',
     position: 'bottom-right'
   })
