@@ -60,7 +60,7 @@ const handleEdit = (item) => {
 };
 const handleDelete = (item) => {
   confirmMsg('确定要删除该快递模板吗?', () => {
-    deleteApi({ id: item.id }).then((res) => {
+    deleteApi({ id: item.id }).then(() => {
       successMsg('快递模板删除成功');
       getPage();
     });
