@@ -20,9 +20,7 @@
         <Plus />
       </el-icon>
     </el-upload>
-    <el-dialog v-model="dialogVisible" width="550">
-      <img :src="dialogImageUrl" alt="图片预览" style="width: 515px; height: 350px" />
-    </el-dialog>
+    <el-image-viewer v-if="showViewer" @close="closeViewer" hide-on-click-modal :url-list="previewList"></el-image-viewer>
   </div>
 </template>
 
@@ -31,11 +29,12 @@ import useUserStore from '@/store/user.js';
 import { errorMsg } from '@/utils/message.js';
 import { imageCheck } from '@/utils/image.js';
 import { useRoute } from 'vue-router';
+import { Plus } from '@element-plus/icons-vue'
 
-const dialogVisible = ref(false);
-const dialogImageUrl = ref('');
 const route = useRoute();
 const localFile = ref([]);
+const showViewer = ref(false);
+const previewList = ref([]);
 
 const fileList = defineModel('fileList', {
   type: Array,
@@ -54,9 +53,7 @@ const props = defineProps({
 });
 
 const disabled = toRef(props, 'disabled');
-
 const limit = toRef(props, 'limit');
-
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_PREFIX + '/manage/file/upload';
 const headers = {
@@ -76,20 +73,24 @@ const handleImageSuccess = (res, file) => {
   fileList.value.push(file.url);
 };
 
+const closeViewer = () => {
+  showViewer.value = false;
+};
+
 const beforeImageUpload = (rawFile) => {
   return imageCheck(rawFile);
 };
 
 const imagePreview = (uploadFile) => {
-  dialogImageUrl.value = uploadFile.url;
-  dialogVisible.value = true;
+  previewList.value = [uploadFile.url];
+  showViewer.value = true;
 };
 
 const handleExceed = () => {
   errorMsg('最多只能上传' + limit.value + '张图片');
 };
 
-const handleRemoveImage = (uploadFile, uploadFiles) => {
+const handleRemoveImage = (uploadFile, _uploadFiles) => {
   let removeIndex;
   localFile.value.forEach((item, index) => {
     if (item['url'] === uploadFile.url) {
