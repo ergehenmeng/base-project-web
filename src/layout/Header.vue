@@ -143,7 +143,7 @@ const showNotice = ({ type, data }) => {
     })
   } else {
     content = resultMsg('WRD0', renderMsg(['你有', () => data.length, '笔订单待退款审核, 请及时处理']), () => {
-      router.push('service/refund')
+      router.push('/service/refund')
     })
   }
 
