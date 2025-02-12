@@ -142,11 +142,10 @@ const showNotice = ({ type, data }) => {
       router.push('/order/item')
     })
   } else {
-    content = resultMsg('WRD0', renderMsg(['你有', () => data.length, '笔订单待退款审核, 请及时处理']), () => {
+    content = resultMsg('WRD0', renderMsg(['你有', () => data.length, '笔退款订单待审核, 请及时处理']), () => {
       router.push('/service/refund')
     })
   }
-
   ElNotification({
     title: '提醒',
     message: content,
