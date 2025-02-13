@@ -14,6 +14,13 @@ export const ticketPageApi = (params) => {
   });
 };
 
+export const listApi = (params) => {
+  return request.get({
+    url: '/manage/scenic/ticket/list',
+    params
+  });
+};
+
 export const createApi = (data) => {
   return request.post({
     url: '/manage/scenic/ticket/create',
