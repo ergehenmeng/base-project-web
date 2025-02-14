@@ -165,7 +165,7 @@ const formatState = computed(() => {
 
 const handleChangeCategory = (value) => {
   if (value === 7) {
-    warningMsg('注意：选择组合票时不受原始门票的库存和预订时间限制，销量却与原始门票同步');
+    warningMsg('注意：选择组合票时不受原始门票库存、上下架状态、预订时间的限制，销量却与原始门票同步');
   }
   formData.value.ticketIds = [];
   loadTicketList(value);
