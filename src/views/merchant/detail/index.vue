@@ -18,7 +18,7 @@
       <el-form-item label="企业类型：">
         {{ detail.enterpriseType === 1 ? '个人' : '企业' }}
       </el-form-item>
-      <el-form-item label="平台服务费："> {{ detail.platformServiceRate }} % </el-form-item>
+      <el-form-item label="平台服务费："> {{ detail.platformServiceRate }}% <QuestionTip content="交易成功的订单会抽取平台服务费，退款不收取服务费"/> </el-form-item>
       <el-form-item label="社会统一信用代码：">
         {{ detail.creditCode }}
       </el-form-item>
@@ -73,6 +73,7 @@ import { useRouter } from 'vue-router';
 import useUserStore from '@/store/user.js';
 import QRCodeForm from '@/views/common/QRCodeForm.vue';
 import WithdrawForm from '@/views/merchant/detail/WithdrawForm.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('nwu0');
