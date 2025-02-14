@@ -35,10 +35,10 @@ const formData = ref({
   withdrawWay: null
 });
 
-const openDialog = (data) => {
+const openDialog = ({ withdrawWay }) => {
   showDialog.value = true;
-  formData.value.withdrawWay = data.withdrawWay;
   formDataRef.value?.resetFields();
+  formData.value.withdrawWay = withdrawWay;
 };
 
 const handleSave = () => {
@@ -49,7 +49,7 @@ const handleSave = () => {
         .then(() => {
           successMsg('提现方式修改成功');
           showDialog.value = false;
-          emit('reload');
+          emit('reload', { withdrawWay: formData.value.withdrawWay });
         })
         .finally(() => {
           loading.value = false;
