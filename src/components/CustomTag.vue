@@ -1,6 +1,6 @@
 <template>
-  <div class="tag-box" @click="onclick" :style="{ width: props.width + 'px' }">
-    <el-tag v-for="(item, index) in tagList" :type="props.type" :key="index" disable-transitions closable @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
+  <div :class="{'tag-box': true, 'is-disabled': disabled}" @click="onclick" :style="{ width: props.width + 'px' }">
+    <el-tag v-for="(item, index) in tagList" :type="props.type" :key="index" disable-transitions :closable="!props.disabled" @close="removeTag(item)" class="tag-item">{{ item }}</el-tag>
     <input :placeholder="tagList.length > 0 || props.disabled ? '' : props.placeholder" v-model="tagValue" @keydown.space.prevent="addTag" :class="{'input-tag': true, 'is-disabled': disabled}" ref="inputRef" type="text"
            :maxlength="props.maxlength" :disabled="props.disabled"/>
   </div>
