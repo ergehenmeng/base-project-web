@@ -27,6 +27,7 @@ import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
 import QuestionTip from '@/components/QuestionTip.vue';
 import useUserStore from '@/store/user.js';
+import Big from 'big.js'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
@@ -40,6 +41,8 @@ const formRules = reactive({
       validator: (rule, value, callback) => {
         if (parseFloat(value) < minWithdraw.value) {
           callback(new Error(`提现金额不能低于${minWithdraw.value}元`));
+        } else if (new Big(parseFloat(value)).times(100).toNumber() > formData.value.useAmount) {
+          callback(new Error(`可提现金额不足`));
         } else {
           callback();
         }
