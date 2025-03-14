@@ -21,8 +21,8 @@
       <el-form-item label="详细地址" prop="detailAddress">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="30" />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" v-if="!disabled" ></WangEditor>
@@ -66,7 +66,7 @@ const formRules = reactive({
   typeId: [{ required: true, message: '请选择点位类型', trigger: 'change' }],
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -80,7 +80,7 @@ const formData = ref({
   detailAddress: null,
   introduceText: '',
   introduce: '',
-  coverList: []
+  coverUrl: []
 });
 
 const handleSave = () => {
@@ -127,11 +127,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
       })
       .finally(() => {
         loading.value = false;

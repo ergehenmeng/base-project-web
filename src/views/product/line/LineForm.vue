@@ -47,8 +47,8 @@
       <el-form-item label="退款说明" prop="refundDescribe">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.refundDescribe" maxlength="100" show-word-limit />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" :width="570" :height="300"></WangEditor>
@@ -119,7 +119,7 @@ const formRules = reactive({
   travelAgencyId: [{ required: true, message: '请选择所属旅行社', trigger: 'change' }],
   startCity: [{ required: true, message: '请选择出发城市', trigger: 'change', type: 'array' }],
   refundType: [{ required: true, message: '请选择退款方式', trigger: 'change' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   duration: [{ required: true, message: '游玩天数不能为空', trigger: 'change' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
@@ -130,7 +130,7 @@ const formData = ref({
   title: null,
   travelAgencyId: null,
   startCity: [],
-  coverList: [],
+  coverUrl: [],
   virtualNum: 0,
   duration: 1,
   refundType: 1,
@@ -211,9 +211,6 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.startCity = [res.data.startProvinceId, res.data.startCityId];
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        }
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {

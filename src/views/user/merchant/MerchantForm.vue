@@ -38,8 +38,8 @@
       <el-form-item label="社会统一信用代码" prop="creditCode">
         <el-input v-model="formData.creditCode" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="营业执照图片" prop="licenseUrlList">
-        <UploadImageList v-model:file-list="formData.licenseUrlList" :limit="4" :disabled="disabled"></UploadImageList>
+      <el-form-item label="营业执照图片" prop="businessLicenseUrl">
+        <UploadImageList v-model:file-list="formData.businessLicenseUrl" :limit="4" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="法人姓名" prop="legalName">
         <el-input v-model="formData.legalName" show-word-limit maxlength="20" />
@@ -47,8 +47,8 @@
       <el-form-item label="法人身份证" prop="legalIdCard">
         <el-input v-model="formData.legalIdCard" show-word-limit maxlength="18" />
       </el-form-item>
-      <el-form-item label="法人身份证图片" prop="cardUrlList">
-        <UploadImageList v-model:file-list="formData.cardUrlList" :limit="2" :disabled="disabled"></UploadImageList>
+      <el-form-item label="法人身份证图片" prop="legalUrl">
+        <UploadImageList v-model:file-list="formData.legalUrl" :limit="2" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -96,11 +96,11 @@ const formRules = reactive({
   ],
   typeList: [{ required: true, message: '请选择商家类型', trigger: 'change', type: 'array' }],
   creditCode: [{ required: true, message: '社会统一信用代码不能为空', trigger: 'blur' }],
-  licenseUrlList: [{ required: true, message: '请上传营业执照图片', trigger: 'change', type: 'array' }],
+  businessLicenseUrl: [{ required: true, message: '请上传营业执照图片', trigger: 'change', type: 'array' }],
   enterpriseType: [{ required: true, message: '请选择企业类型', trigger: 'change' }],
   legalName: [{ required: true, message: '法人姓名不能为空', trigger: 'blur' }],
   legalIdCard: [{ required: true, message: '法人身份证不能为空', trigger: 'blur' }],
-  cardUrlList: [{ required: true, message: '请上传法人身份证图片', trigger: 'change', type: 'array' }],
+  legalUrl: [{ required: true, message: '请上传法人身份证图片', trigger: 'change', type: 'array' }],
   areaList: [{ required: true, message: '请选择省市县', trigger: 'change', type: 'array' }],
   detailAddress: [
     { required: true, message: '详细地址不能为空', trigger: 'blur' },
@@ -117,8 +117,8 @@ const formData = ref({
   enterpriseType: 1,
   creditCode: null,
   areaList: [],
-  licenseUrlList: [],
-  cardUrlList: [],
+  businessLicenseUrl: [],
+  legalUrl: [],
   legalName: null,
   legalIdCard: null,
   detailAddress: null
@@ -131,8 +131,6 @@ const handleSave = () => {
       formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
-      formData.value.businessLicenseUrl = formData.value.licenseUrlList.join(',');
-      formData.value.legalUrl = formData.value.cardUrlList.join(',');
       formData.value.type = formData.value.typeList.reduce((pre, cur) => pre + cur, 0);
       if (formData.value.id) {
         updateApi(formData.value)
@@ -166,16 +164,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        if (res.data.legalUrl) {
-          formData.value.cardUrlList = res.data.legalUrl.split(',');
-        } else {
-          formData.value.cardUrlList = [];
-        }
-        if (res.data.businessLicenseUrl) {
-          formData.value.licenseUrlList = res.data.businessLicenseUrl.split(',');
-        } else {
-          formData.value.licenseUrlList = [];
-        }
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
       })
       .finally(() => {

@@ -37,8 +37,8 @@
         </el-select>
         <QuestionTip content="该地址是用户退换货时商家的收货地址"></QuestionTip>
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="商家介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -92,7 +92,7 @@ const formRules = reactive({
   ],
   depotAddressId: [{ required: true, message: '请选择退换货地址', trigger: 'change' }],
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
 
@@ -107,7 +107,7 @@ let formData = ref({
   longitude: null,
   latitude: null,
   openTime: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null,
   depotAddressId: null
@@ -152,11 +152,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = { ...res.data };
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
         formData.value.introduceText = res.data.introduce;
         handleMerchantChange(res.data.merchantId);

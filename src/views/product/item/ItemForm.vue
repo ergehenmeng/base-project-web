@@ -161,8 +161,8 @@
       <el-form-item label="物流模板" prop="expressId">
         <ExpressSelect v-model="formData.expressId" :clearable="false"></ExpressSelect>
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotesText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" v-model:text-value="formData.purchaseNotesText"></WangEditor>
@@ -214,7 +214,7 @@ const formRules = reactive({
   ],
   quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }, { min: 1, message: '限购数量不能小于1', type: "number", trigger: 'blur' }],
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
   expressId: [{ required: true, message: '请选择物流模板', trigger: 'change' }],
   deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
@@ -231,7 +231,7 @@ let formData = ref({
   quota: 99,
   deliveryType: 1,
   expressId: null,
-  coverList: [],
+  coverUrl: [],
   multiSpec: false,
   introduceText: null,
   introduce: null,
@@ -465,11 +465,6 @@ const loadItemDetail = (id) => {
     .then((res) => {
       showSecondSpec.value = res.data.specList?.length > 1;
       formData.value = { ...res.data };
-      if (res.data.coverUrl) {
-        formData.value.coverList = res.data.coverUrl.split(',');
-      } else {
-        formData.value.coverList = [];
-      }
       formData.value.introduceText = res.data.introduce;
       formData.value.purchaseNotesText = res.data.purchaseNotes;
     })

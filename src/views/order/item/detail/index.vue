@@ -67,7 +67,7 @@
                 <el-table-column label="图片" prop="coverUrl" width="80">
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
-                      <el-image fit="cover" :src="scope.row.coverUrl" style="width: 30px; height: 30px" :preview-src-list="scope.row.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                      <el-image fit="cover" :src="scope.row.coverUrl[0]" style="width: 30px; height: 30px" :preview-src-list="scope.row.coverUrl" preview-teleported hide-on-click-modal />
                     </div>
                   </template>
                 </el-table-column>
@@ -112,7 +112,7 @@
                   <div class="good-content">
                     <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
                       <div class="good-item-img">
-                        <el-image fit="cover" :src="good.coverUrl" style="width: 30px; height: 30px" :preview-src-list="good.coverUrl?.split(',')" preview-teleported hide-on-click-modal />
+                        <el-image fit="cover" :src="good.coverUrl[0]" style="width: 30px; height: 30px" :preview-src-list="good.coverUrl" preview-teleported hide-on-click-modal />
                       </div>
                       <div class="good-item-info">
                         <div class="good-item-title">{{ good.title }} <span v-if="good.skuTitle"> （{{ good.skuTitle }}） </span></div>

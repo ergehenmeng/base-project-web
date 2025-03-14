@@ -41,8 +41,8 @@
         &nbsp;
         <el-button type="primary" @click="handleMap">选择</el-button>
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="场馆介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -90,7 +90,7 @@ const formRules = reactive({
   ],
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   openTime: [{ required: true, message: '营业时间不能为空', trigger: 'blur' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -100,13 +100,12 @@ const formData = ref({
   level: 0,
   openTime: null,
   phone: null,
-  tagList: [],
   areaList: [],
   detailAddress: null,
   longitude: null,
   latitude: null,
   depict: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null
 });
@@ -151,11 +150,6 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {

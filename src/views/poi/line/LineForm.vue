@@ -11,8 +11,8 @@
       <el-form-item label="预计游玩时间" prop="playTime">
         <el-input v-model="formData.playTime" show-word-limit maxlength="3" placeholder="单位:小时" @keyup="formData.playTime = numberValidator(formData.playTime, 1)" />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
@@ -50,7 +50,7 @@ const formRules = reactive({
   title: [{ required: true, message: '线路名称不能为空', trigger: 'blur' }],
   areaCode: [{ required: true, message: '所属区域', trigger: 'change' }],
   playTime: [{ required: true, message: '预计游玩时间不能为空', trigger: 'blur' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -61,7 +61,7 @@ const formData = ref({
   playTime: null,
   introduceText: '',
   introduce: '',
-  coverList: []
+  coverUrl: []
 });
 
 const handleSave = () => {
@@ -99,11 +99,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
       })
       .finally(() => {
         loading.value = false;

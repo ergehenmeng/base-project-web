@@ -25,8 +25,8 @@
       <el-form-item label="营业执照图片：">
         <el-image
           fit="cover"
-          :src="detail.businessLicenseUrl?.split(',')[0]"
-          :preview-src-list="detail.businessLicenseUrl?.split(',')"
+          :src="detail.businessLicenseUrl[0]"
+          :preview-src-list="detail.businessLicenseUrl"
           style="width: 50px; height: 50px"
           preview-teleported
           hide-on-click-modal
@@ -39,7 +39,7 @@
         {{ detail.legalIdCard }}
       </el-form-item>
       <el-form-item label="法人身份证图片：">
-        <el-image fit="cover" :src="detail.legalUrl?.split(',')[0]" :preview-src-list="detail.legalUrl?.split(',')" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
+        <el-image fit="cover" :src="detail.legalUrl[0]" :preview-src-list="detail.legalUrl" style="width: 50px; height: 50px" preview-teleported hide-on-click-modal />
       </el-form-item>
       <el-form-item label="联系人电话：">
         {{ detail.mobile }}
@@ -87,10 +87,10 @@ const detail = ref({
   merchantName: null,
   enterpriseType: null,
   creditCode: null,
-  businessLicenseUrl: null,
+  businessLicenseUrl: [],
   legalName: null,
   legalIdCard: null,
-  legalUrl: null,
+  legalUrl: [],
   typeList: [],
   platformServiceRate: null,
   mobile: null,

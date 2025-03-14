@@ -40,39 +40,39 @@
       <el-form-item label="居住人数" prop="resident">
         <el-input v-model="formData.resident" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="屋内设施" prop="infrastructureList">
+      <el-form-item label="屋内设施" prop="infrastructure">
         <div style="padding: 0 10px;">
           <el-collapse style="width: 780px;">
             <el-collapse-item title="热门设施" name="1">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in hotInstitutionList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
             <el-collapse-item title="卫浴设施" name="2">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in bathroomList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
             <el-collapse-item title="媒体影音" name="3">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in mediaList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
             <el-collapse-item title="配套家电" name="4">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in applianceList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
             <el-collapse-item title="客房景观" name="5">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in landscapeList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
             <el-collapse-item title="儿童设施" name="6">
-              <el-checkbox-group v-model="formData.infrastructureList">
+              <el-checkbox-group v-model="formData.infrastructure">
                 <el-checkbox v-for="item in childrenList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
               </el-checkbox-group>
             </el-collapse-item>
@@ -128,8 +128,8 @@ const formRules = reactive({
   refundType: [{ required: true, message: '请选择退款方式', trigger: 'change' }],
   dimension: [{ required: true, message: '面积不能为空', trigger: 'blur' }],
   resident: [{ required: true, message: '居住人数不能为空', trigger: 'blur' }],
-  infrastructureList: [{ required: true, message: '请选择屋内设施', trigger: 'change', type: 'array' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  infrastructure: [{ required: true, message: '请选择屋内设施', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }],
   notesInText: [{ required: true, message: '入住须知不能为空', trigger: 'change' }]
 });
@@ -144,10 +144,10 @@ const formData = ref({
   refundDescribe: null,
   dimension: null,
   resident: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null,
-  infrastructureList: []
+  infrastructure: []
 });
 
 const handleSave = () => {
@@ -186,16 +186,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
-        if (res.data.infrastructure) {
-          formData.value.infrastructureList = res.data.infrastructure.split(',').map((item) => parseInt(item));
-        } else {
-          formData.value.infrastructureList = [];
-        }
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {

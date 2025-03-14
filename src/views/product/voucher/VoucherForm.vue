@@ -50,8 +50,8 @@
       <el-form-item label="购买说明" prop="depict">
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.depict" maxlength="400" show-word-limit />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="餐饮券介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -95,7 +95,7 @@ const formRules = reactive({
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '可用时间段不能为空', trigger: 'blur', type: 'array' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
-  coverList: [{ required: true, message: '封面图不能为空', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '封面图不能为空', trigger: 'change', type: 'array' }],
   quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }],
   depict: [{ required: true, message: '购买说明不能为空', trigger: 'blur' }],
   introduceText: [{ required: true, message: '餐饮券介绍不能为空', trigger: 'change' }]
@@ -119,7 +119,7 @@ let formData = ref({
   timeList: [],
   effectTime: null,
   expireTime: null,
-  coverList: [],
+  coverUrl: [],
   activityDate: [],
   introduceText: null,
   introduce: null
@@ -170,11 +170,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = { ...res.data };
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
         formData.value.timeList = [res.data.effectTime, res.data.expireTime];
         formData.value.introduceText = res.data.introduce;
         formData.value.validType = formData.value.validDays > 0 ? 0 : 1;

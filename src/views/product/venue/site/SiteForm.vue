@@ -7,8 +7,8 @@
       <el-form-item label="所属场地" prop="venueId">
         <VenueSelect v-model="formData.venueId" :clearable="false"></VenueSelect>
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled" :limit="8"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled" :limit="8"></UploadImageList>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -36,14 +36,14 @@ const emit = defineEmits(['reload']);
 const formRules = reactive({
   title: [{ required: true, message: '场地名称不能为空', trigger: 'blur' }],
   venueId: [{ required: true, message: '请选择场馆', trigger: 'change' }],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }]
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }]
 });
 
 const formData = ref({
   id: null,
   title: null,
   venueId: null,
-  coverList: []
+  coverUrl: []
 });
 
 const handleSave = () => {
@@ -81,11 +81,6 @@ const openDialog = (row) => {
   if (row.id) {
     dialogTitle.value = '编辑场地';
     formData.value = { ...row };
-    if (row.coverUrl) {
-      formData.value.coverList = row.coverUrl.split(',');
-    } else {
-      formData.value.coverList = [];
-    }
   } else {
     dialogTitle.value = '新增场地';
   }
@@ -96,7 +91,7 @@ const resetForm = () => {
     id: null,
     title: null,
     venueId: null,
-    coverList: []
+    coverUrl: []
   };
   formDataRef.value?.resetFields();
 };

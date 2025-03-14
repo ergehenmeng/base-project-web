@@ -18,8 +18,8 @@
       <el-form-item label="民宿电话" prop="phone">
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
-      <el-form-item label="标签" prop="tagList">
-        <CustomTag v-model="formData.tagList" :width="350" :disabled="disabled"/>
+      <el-form-item label="标签" prop="tag">
+        <CustomTag v-model="formData.tag" :width="350" :disabled="disabled"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -37,12 +37,12 @@
       <el-form-item label="描述信息" prop="intro">
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.intro" maxlength="100" show-word-limit />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="特色服务" prop="serviceList">
+      <el-form-item label="特色服务" prop="keyService">
         <div style="width: 800px">
-          <el-checkbox-group v-model="formData.serviceList">
+          <el-checkbox-group v-model="formData.keyService">
             <el-checkbox v-for="item in keyServiceList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
           </el-checkbox-group>
         </div>
@@ -107,7 +107,7 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
   ],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }],
   notesInText: [{ required: true, message: '入住须知不能为空', trigger: 'change' }]
 });
@@ -119,18 +119,18 @@ const formData = ref({
   merchantId: null,
   openTime: null,
   phone: null,
-  tagList: [],
+  tag: [],
   areaList: [],
   detailAddress: null,
   longitude: null,
   latitude: null,
   intro: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null,
   notesIn: null,
   notesInText: null,
-  serviceList: []
+  keyService: []
 });
 
 const handleSave = () => {
@@ -140,7 +140,6 @@ const handleSave = () => {
       formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
-      formData.value.tag = formData.value.tagList.join(',');
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -173,22 +172,7 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-        if (res.data.tag) {
-          formData.value.tagList = res.data.tag.split(',');
-        } else {
-          formData.value.tagList = [];
-        }
-        if (res.data.keyService) {
-          formData.value.serviceList = res.data.keyService.split(',').map((item) => parseInt(item));
-        } else {
-          formData.value.serviceList = [];
-        }
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {

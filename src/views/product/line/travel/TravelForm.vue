@@ -28,8 +28,8 @@
       <el-form-item label="描述信息" prop="depict">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }"  v-model="formData.depict" show-word-limit maxlength="50" />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -83,7 +83,7 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
   ],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -98,7 +98,7 @@ let formData = ref({
   longitude: null,
   latitude: null,
   depict: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null
 });
@@ -142,11 +142,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = { ...res.data };
-        if (res.data.coverUrl) {
-          formData.value.coverList = res.data.coverUrl.split(',');
-        } else {
-          formData.value.coverList = [];
-        }
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
         formData.value.introduceText = res.data.introduce;
       })

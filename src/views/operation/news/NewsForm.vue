@@ -8,11 +8,11 @@
       <el-form-item label="描述信息" prop="depict" v-if="showField.includeDepict">
         <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
-      <el-form-item label="标签" prop="tagList" v-if="showField.includeTag">
-        <CustomTag v-model="formData.tagList" :width="350" />
+      <el-form-item label="标签" prop="tagName" v-if="showField.includeTag">
+        <CustomTag v-model="formData.tagName" :width="350" />
       </el-form-item>
-      <el-form-item label="图集" prop="imageList" v-if="showField.includeImage">
-        <UploadImageList v-model:file-list="formData.imageList"></UploadImageList>
+      <el-form-item label="图集" prop="image" v-if="showField.includeImage">
+        <UploadImageList v-model:file-list="formData.image"></UploadImageList>
       </el-form-item>
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 4 }" show-word-limit maxlength="200" />
@@ -70,8 +70,8 @@ const formData = ref({
   content: '',
   commentSupport: false,
   contentText: '',
-  imageList: [],
-  tagList: [],
+  image: [],
+  tagName: [],
   video: '',
   code: ''
 });
@@ -120,7 +120,7 @@ onMounted(() => {
     }
     if (includeImage === true) {
       showField.value.includeImage = true;
-      formRules.imageList = [{ required: true, message: '请上传图片', trigger: 'change' }];
+      formRules.image = [{ required: true, message: '请上传图片', trigger: 'change' }];
     }
     if (includeVideo === true) {
       showField.value.includeVideo = true;
@@ -132,18 +132,6 @@ onMounted(() => {
         .then((res) => {
           formData.value = res.data;
           formData.value.answerText = res.data.answer;
-          const image = res.data.image;
-          if (image) {
-            formData.value.imageList = image.split(',');
-          } else {
-            formData.value.imageList = [];
-          }
-          const tagName = res.data.tagName;
-          if (tagName) {
-            formData.value.tagList = tagName.split(',');
-          } else {
-            formData.value.tagList = [];
-          }
         })
         .finally(() => {
           loading.value = false;

@@ -19,8 +19,8 @@
       <el-form-item label="景区电话" prop="phone">
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
-      <el-form-item label="标签" prop="tagList">
-        <el-select v-model="formData.tagList" multiple :multiple-limit="3" filterable>
+      <el-form-item label="标签" prop="tag">
+        <el-select v-model="formData.tag" multiple :multiple-limit="3" filterable>
           <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
         </el-select>
       </el-form-item>
@@ -40,8 +40,8 @@
       <el-form-item label="描述信息" prop="depict">
         <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 3, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
-      <el-form-item label="封面图" prop="coverList">
-        <UploadImageList v-model:file-list="formData.coverList" :disabled="disabled"></UploadImageList>
+      <el-form-item label="封面图" prop="coverUrl">
+        <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -95,7 +95,7 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
   ],
-  coverList: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
+  coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -105,13 +105,13 @@ const formData = ref({
   level: 0,
   openTime: null,
   phone: null,
-  tagList: [],
+  tag: [],
   areaList: [],
   detailAddress: null,
   longitude: null,
   latitude: null,
   depict: null,
-  coverList: [],
+  coverUrl: [],
   introduceText: null,
   introduce: null
 });
@@ -123,7 +123,6 @@ const handleSave = () => {
       formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
-      formData.value.tag = formData.value.tagList.join(',');
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -156,9 +155,7 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.coverList = res.data.coverUrl.split(',');
         formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
-        formData.value.tagList = res.data.tag.split(',');
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
