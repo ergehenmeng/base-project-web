@@ -21,7 +21,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="封面图" prop="coverUrl">
-          <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
+          <UploadImageList v-model:img-url="formData.coverUrl" :limit="4"></UploadImageList>
         </el-form-item>
         <el-form-item label="活动地址" prop="address">
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
@@ -48,8 +48,8 @@ import { createApi, selectApi, updateApi } from '@/api/operation/activity';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import UploadImage from '@/components/UploadImage.vue';
 import ScenicSelect from '@/components/ScenicSelect.vue'
+import UploadImageList from '@/components/UploadImageList.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -60,7 +60,7 @@ const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   activityTime: [{ required: true, message: '请选择活动时间', trigger: 'blur' }],
   address: [{ required: true, message: '活动地点不能为空', trigger: 'blur' }],
-  coverUrl: [{ required: true, message: '请上传封面', trigger: 'blur' }],
+  coverUrl: [{ required: true, message: '请上传封面', trigger: 'change' }],
   introduceText: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }],
   commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
@@ -75,7 +75,7 @@ const formData = ref({
   introduceText: '',
   address: null,
   scenicId: null,
-  coverUrl: null
+  coverUrl: []
 });
 
 const handleSave = () => {

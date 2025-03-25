@@ -59,7 +59,7 @@
             <el-button v-has-perm="'wPi0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleClose(scope.row)" link title="禁用"></el-button>
             <el-button v-has-perm="'1Pi0'" v-show="scope.row.mode === 2" @click="handleGrant(scope.row)" link title="发放优惠券"><Grant/></el-button>
             <el-button v-has-perm="'CPi0'" type="info"  @click="handleReceiveDetail(scope.row)" link title="领取详情"><Receive/></el-button>
-            <el-button v-has-perm="'zPi0'" v-show="scope.row.mode === 1" @click="handleLink(scope.row)" link title="生成链接"><Link/></el-button>
+            <el-button v-has-perm="'zPi0'" v-show="scope.row.mode === 1" :icon="Link" @click="handleLink(scope.row)" link title="生成链接"></el-button>
             <el-button v-has-perm="'QPi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -77,7 +77,7 @@
 </template>
 <script setup>
 import { closeApi, deleteApi, listPageApi, openApi } from '@/api/marketing/coupon'
-import { Bottom, Delete, Document, Edit, Top } from '@element-plus/icons-vue'
+import { Bottom, Delete, Document, Edit, Top, Link } from '@element-plus/icons-vue'
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -86,7 +86,6 @@ import { shortUrlApi } from '@/api/common/index.js'
 import { useClipboard } from '@vueuse/core'
 import Receive from '@/components/icon/Receive.vue'
 import Grant from '@/components/icon/Grant.vue'
-import Link from '@/components/icon/Link.vue'
 
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
