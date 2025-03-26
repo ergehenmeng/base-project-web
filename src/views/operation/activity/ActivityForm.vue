@@ -21,7 +21,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="封面图" prop="coverUrl">
-          <UploadImageList v-model:img-url="formData.coverUrl" :limit="4"></UploadImageList>
+          <UploadImageList v-model:file-list="formData.coverUrl"  :limit="4"></UploadImageList>
         </el-form-item>
         <el-form-item label="活动地址" prop="address">
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
@@ -60,7 +60,7 @@ const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
   activityTime: [{ required: true, message: '请选择活动时间', trigger: 'blur' }],
   address: [{ required: true, message: '活动地点不能为空', trigger: 'blur' }],
-  coverUrl: [{ required: true, message: '请上传封面', trigger: 'change' }],
+  coverUrl: [{ required: true, message: '请上传封面', trigger: 'change', type: 'array'}],
   introduceText: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }],
   commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
