@@ -26,7 +26,7 @@
           <el-input v-model="formData.activityTime" show-word-limit maxlength="20" placeholder="例如：18:00~22:00" />
         </el-form-item>
         <el-form-item label="封面图" prop="coverUrl">
-          <UploadImage v-model:img-url="formData.coverUrl"></UploadImage>
+          <UploadImageList v-model:file-list="formData.coverUrl"  :limit="4"></UploadImageList>
         </el-form-item>
         <el-form-item label="活动地址" prop="address">
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
@@ -56,6 +56,7 @@ import { successMsg } from '@/utils/message.js';
 import UploadImage from '@/components/UploadImage.vue';
 import { goBack } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue'
+import UploadImageList from '@/components/UploadImageList.vue'
 
 const router = useRouter();
 const loading = ref(false);
@@ -80,7 +81,7 @@ const formData = ref({
   introduceText: '',
   address: null,
   scenicId: null,
-  coverUrl: null
+  coverUrl: []
 });
 
 const handleSave = () => {
