@@ -7,12 +7,12 @@
       </el-form-item>
       <el-form-item label="商家类型：">
         <el-checkbox-group v-model="detail.typeList" disabled>
-          <el-checkbox :value="1" label="景区"></el-checkbox>
-          <el-checkbox :value="2" label="民宿"></el-checkbox>
-          <el-checkbox :value="4" label="餐饮"></el-checkbox>
-          <el-checkbox :value="8" label="零售"></el-checkbox>
-          <el-checkbox :value="16" label="线路"></el-checkbox>
-          <el-checkbox :value="32" label="场馆"></el-checkbox>
+          <el-checkbox :value="1" label="景区" v-if="showType(1)"></el-checkbox>
+          <el-checkbox :value="2" label="民宿" v-if="showType(2)"></el-checkbox>
+          <el-checkbox :value="4" label="餐饮" v-if="showType(4)"></el-checkbox>
+          <el-checkbox :value="8" label="零售" v-if="showType(8)"></el-checkbox>
+          <el-checkbox :value="16" label="线路" v-if="showType(16)"></el-checkbox>
+          <el-checkbox :value="32" label="场馆" v-if="showType(32)"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="企业类型：">
@@ -106,6 +106,12 @@ onMounted(async () => {
   const { data } = await detailApi();
   detail.value = data;
 });
+
+const showType = computed(() => {
+  return val => {
+    return detail.value.typeList.filter((item) => item === val).length !== 0;
+  }
+})
 
 const handleBind = () => {
   loading.value = true;
