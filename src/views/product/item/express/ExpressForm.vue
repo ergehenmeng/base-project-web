@@ -117,17 +117,19 @@ const formData = ref({
 });
 
 const handleAddRegion = () => {
-  const regionCodes = formData.value.regionList.map((item) => item.regionCode).join(',');
-  areaRef.value.openDialog(regionCodes.split(','));
+  const regionCodes = formData.value.regionList.map((item) => item.regionCode);
+  areaRef.value.openDialog(regionCodes, []);
 };
 
 const handleEdit = (regionCode) => {
+  // 其他配置的区域信息
   const regionCodes = formData.value.regionList
-    .map((item) => item.regionCode)
-    .filter((item) => item.regionCode !== regionCode)
-    .join(',');
-  areaRef.value.openDialog(regionCodes.split(','), regionCode);
+    .map((item) => item.regionCode).filter((item) => {
+      return item !== regionCode;
+    });
+  areaRef.value.openDialog(regionCodes, regionCode.split(','));
 };
+
 const handleDelete = (regionCode) => {
   confirmMsg('确定要删除该区域配置吗?', () => {
     formData.value.regionList = formData.value.regionList.filter((item) => item.regionCode !== regionCode);

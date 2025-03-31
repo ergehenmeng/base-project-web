@@ -35,7 +35,13 @@ const openDialog = (shieldList, selectedList) => {
   checkedKeys.value = selectedList;
   showDialog.value = true;
 };
-
+/**
+ * 获取所有没有被选中的子节点
+ *
+ * @param areaList
+ * @param shieldList 其他已经选中的区域id [110000,110100]
+ * @returns {*|*[]}
+ */
 const getNoCheckedChildren = (areaList, shieldList) => {
   if (shieldList.length === 0) {
     return areaList;
@@ -48,8 +54,12 @@ const getNoCheckedChildren = (areaList, shieldList) => {
         item.children = children;
         nodeList.push(item);
       }
-    } else if (!shieldList.includes(item.id)) {
-      nodeList.push(item);
+    } else {
+      shieldList.forEach(ids => {
+        if (!ids.includes(item.id)) {
+          nodeList.push(item);
+        }
+      })
     }
   });
   return nodeList;
