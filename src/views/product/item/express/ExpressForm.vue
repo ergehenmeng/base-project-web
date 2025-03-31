@@ -118,6 +118,7 @@ const formData = ref({
 
 const handleAddRegion = () => {
   const regionCodes = formData.value.regionList.map((item) => item.regionCode);
+  console.log('handleAddRegion', regionCodes);
   areaRef.value.openDialog(regionCodes, []);
 };
 
@@ -127,6 +128,7 @@ const handleEdit = (regionCode) => {
     .map((item) => item.regionCode).filter((item) => {
       return item !== regionCode;
     });
+  console.log('handleEdit', regionCodes);
   areaRef.value.openDialog(regionCodes, regionCode.split(','));
 };
 

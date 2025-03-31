@@ -32,6 +32,7 @@ const defaultProps = {
 
 const openDialog = (shieldList, selectedList) => {
   areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList);
+  console.log('areaList', areaList.value.length)
   checkedKeys.value = selectedList;
   showDialog.value = true;
 };
@@ -55,11 +56,12 @@ const getNoCheckedChildren = (areaList, shieldList) => {
         nodeList.push(item);
       }
     } else {
-      shieldList.forEach(ids => {
-        if (!ids.includes(item.id)) {
+      for (let ids of shieldList) {
+        if (ids.indexOf(item.id) === -1) {
           nodeList.push(item);
+          break;
         }
-      })
+      }
     }
   });
   return nodeList;
