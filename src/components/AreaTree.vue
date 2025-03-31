@@ -32,7 +32,6 @@ const defaultProps = {
 
 const openDialog = (shieldList, selectedList) => {
   areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList);
-  console.log('areaList', areaList.value.length)
   checkedKeys.value = selectedList;
   showDialog.value = true;
 };
