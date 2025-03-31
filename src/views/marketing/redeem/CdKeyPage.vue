@@ -23,11 +23,11 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
         <el-table-column prop="cdKey" label="cdKey" min-width="200" />
-        <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="createTime" label="生成时间" width="180" />
+        <el-table-column prop="state" label="状态" min-width="80" :formatter="formatter" />
+        <el-table-column prop="createTime" label="生成时间" min-width="180" />
         <el-table-column prop="nickName" label="用户昵称" min-width="200" />
         <el-table-column prop="mobile" label="手机号" min-width="200" />
-        <el-table-column prop="useTime" label="使用时间" width="180" />
+        <el-table-column prop="useTime" label="使用时间" min-width="180" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"
