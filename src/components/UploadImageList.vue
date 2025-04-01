@@ -4,7 +4,7 @@
       class="image-uploader"
       :action="uploadUrl"
       :headers="headers"
-      v-model:file-list="localFile"
+      v-model:file-list="showFile"
       list-type="picture-card"
       :on-success="handleImageSuccess"
       :before-upload="beforeImageUpload"
@@ -13,7 +13,7 @@
       :multiple="true"
       :limit="limit"
       :on-exceed="handleExceed"
-      :class="{ 'upload-image-hide-box': localFile.length >= limit || disabled }"
+      :class="{ 'upload-image-hide-box': showFile.length >= limit || disabled }"
       :on-remove="handleRemoveImage"
     >
       <el-icon class="image-uploader-icon">
@@ -32,10 +32,12 @@ import { useRoute } from 'vue-router';
 import { Plus } from '@element-plus/icons-vue'
 
 const route = useRoute();
-const localFile = ref([]);
+// 上传后显示的文件列表
+const showFile = ref([]);
 const showViewer = ref(false);
+// 点击预览显示的文件列表
 const previewList = ref([]);
-
+// 父组件传入的文件列表
 const fileList = defineModel('fileList', {
   type: Array,
   default: () => []
@@ -92,7 +94,7 @@ const handleExceed = () => {
 
 const handleRemoveImage = (uploadFile, _uploadFiles) => {
   let removeIndex;
-  localFile.value.forEach((item, index) => {
+  showFile.value.forEach((item, index) => {
     if (item['url'] === uploadFile.url) {
       removeIndex = index;
     }
@@ -114,13 +116,13 @@ const convert = (fileList) => {
 
 watch(fileList, (newVal, oldVal) => {
   if (Array.isArray(newVal) && oldVal.length === 0) {
-    localFile.value = convert(newVal);
+    showFile.value = convert(newVal);
   }
 });
 
 onMounted(() => {
   if (Array.isArray(fileList.value)) {
-    localFile.value = convert(fileList.value);
+    showFile.value = convert(fileList.value);
   }
 });
 </script>
