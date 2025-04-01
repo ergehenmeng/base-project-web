@@ -332,7 +332,7 @@ export const downloadExcel = (response, fileName) => {
   const url = window.URL.createObjectURL(new Blob([response.data], { type: '.xlsx' }));
   const link = document.createElement('a');
   link.href = url;
-  const time = dayjs().format('YYYY-MM-DD HH_mm_ss');
+  const time = dayjs().format('YYYYMMDDHHmm');
   link.style.display = 'none';
   if (fileName) {
     link.download = fileName + time + '.xlsx';
@@ -358,7 +358,7 @@ export const downloadImage = (base64, fileName) => {
   const url = window.URL.createObjectURL(new Blob([byteBuffer], { type: 'image/png' }));
   const link = document.createElement('a');
   link.href = url;
-  const time = dayjs().format('YYYY-MM-DD HH_mm_ss');
+  const time = dayjs().format('YYYYMMDDHHmm');
   link.style.display = 'none';
   if (fileName) {
     link.download = fileName + '_' + time + '.png';
