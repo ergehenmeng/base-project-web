@@ -24,6 +24,7 @@ const checkedKeys = ref([]);
 const expendKeys = ref([]);
 const areaList = ref([]);
 const emit = defineEmits(['reload']);
+const before = ref('');
 
 const defaultProps = {
   label: 'title',
@@ -34,6 +35,7 @@ const openDialog = (shieldList, selectedList) => {
   areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList);
   checkedKeys.value = selectedList;
   showDialog.value = true;
+  before.value = selectedList.join(',');
 };
 /**
  * 获取所有没有被选中的子节点
@@ -88,7 +90,7 @@ const handleSave = () => {
     });
   }
   const checkedKeys = treeRef.value?.getCheckedKeys(false);
-  emit('reload', { regionName: regionList.join(','), regionCode: checkedKeys.join(',') });
+  emit('reload', before.value, { regionName: regionList.join(','), regionCode: checkedKeys.join(',') });
   showDialog.value = false;
 };
 

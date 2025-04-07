@@ -137,15 +137,25 @@ const handleDelete = (regionCode) => {
   });
 };
 
-const handleReload = (json) => {
-  formData.value.regionList.push({
-    regionCode: json.regionCode,
-    regionName: json.regionName,
-    firstPart: null,
-    firstPrice: null,
-    nextPart: null,
-    nextUnitPrice: null
-  });
+const handleReload = (before, json) => {
+  // 新增
+  if (!before) {
+    formData.value.regionList.push({
+      regionCode: json.regionCode,
+      regionName: json.regionName,
+      firstPart: null,
+      firstPrice: null,
+      nextPart: null,
+      nextUnitPrice: null
+    });
+  } else {
+    for (let item of formData.value.regionList) {
+      if (before === item.regionCode) {
+        item.regionCode = json.regionCode;
+        item.regionName = json.regionName;
+      }
+    }
+  }
 };
 
 const handleSave = () => {
