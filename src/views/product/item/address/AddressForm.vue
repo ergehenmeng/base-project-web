@@ -8,7 +8,7 @@
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
-        <AreaSelect v-model="formData.areaList"></AreaSelect>
+        <AreaSelect v-model="formData.areaList" :clearable="false"></AreaSelect>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
