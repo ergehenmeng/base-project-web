@@ -169,51 +169,57 @@ export const payTypeFormat = (cellValue) => {
 
 export const formatExpressType = (value) => {
   switch (value) {
-    case "yuantong":
+    case 'yuantong':
       return '圆通速递';
-    case "shentong":
+    case 'shentong':
       return '申通快递';
-    case "jtexpress":
+    case 'jtexpress':
       return '极兔速递';
-    case "zhongtong":
+    case 'zhongtong':
       return '中通快递';
-    case "yunda":
+    case 'yunda':
       return '韵达快递';
-    case "youzhengguonei":
+    case 'youzhengguonei':
       return '邮政快递';
-    case "shunfeng":
+    case 'shunfeng':
       return '顺丰速运';
-    case "jd":
+    case 'jd':
       return '京东物流';
-    case "ems":
+    case 'ems':
       return 'EMS';
-    case "debangkuaidi":
+    case 'debangkuaidi':
       return '德邦快递';
-    case "huitongkuaidi":
+    case 'huitongkuaidi':
       return '百世快递';
-    case "other":
+    case 'other':
       return '其他';
   }
-}
+};
 
 /**
  * 只能输入整数或包含两位的小数
  *
  * @param value
- * @param point 小数点位数(1或2)
+ * @param decimalPlaces 小数点位数(1或2)
  */
-export const numberValidator = (value, point = 2) => {
+export const numberValidator = (value, decimalPlaces = 2) => {
   if (value) {
-    value = value
-      .replace(/[^0-9.]/g, '') // 移除非数字和小数点
-      .replace(/(\..*)\./g, '$1')
-      .replace(/(\..{2}).*/g, '$1');
-    value = value === '.' ? '' : value;
-    // 移除前导零，但保留小数点前至少一个数字
-    value = value.replace(/^0+(?=\d)/, '');
-    // 特殊处理：确保小数点前至少有一个数字
-    if (value.startsWith('.')) {
-      value = '0' + value;
+    // 多余的字符，只保留数字和小数点
+    value = value.replace(/[^\d.]/g, '');
+    if (value.startsWith('0') && !value.startsWith('0.')) {
+      value = value.replace(/^0+/, '0');
+      // 禁止001这类输入
+      value = value.replace(/^0([1-9])/, '$1');
+    }
+    const [integerPart, decimalPart] = value.split('.');
+    if (decimalPart !== undefined) {
+      // 动态截断超长小数位（但保留未完成的输入）
+      value = `${integerPart}.${decimalPart.slice(0, decimalPlaces)}`;
+    }
+    // 第四步：应用最终校验
+    const regPattern = decimalPlaces === 0 ? /^\d*$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);
+    if (!regPattern.test(value)) {
+      value = value.slice(0, -1);
     }
   }
   return value;
@@ -262,14 +268,14 @@ export const parseProductType = (value) => {
 export const renderMsg = (msgList) => {
   const hMsg = [];
   msgList.forEach((item) => {
-    if (typeof item  === 'function') {
-      hMsg.push(h('span',  { style: 'color: #e6a23c; font-weight: bold'}, " " + item() + " "));
+    if (typeof item === 'function') {
+      hMsg.push(h('span', { style: 'color: #e6a23c; font-weight: bold' }, ' ' + item() + ' '));
     } else {
       hMsg.push(item);
     }
   });
   return h('span', null, hMsg);
-}
+};
 
 export const parseDataType = (value) => {
   switch (value) {
@@ -286,7 +292,7 @@ export const parseDataType = (value) => {
     default:
       return '';
   }
-}
+};
 
 export const parseUserType = (value) => {
   switch (value) {
@@ -301,7 +307,7 @@ export const parseUserType = (value) => {
     default:
       return '';
   }
-}
+};
 
 /**
  * 返回上一页,如果上一页是登录页则跳转到首页
@@ -367,4 +373,4 @@ export const downloadImage = (base64, fileName) => {
   }
   link.click();
   URL.revokeObjectURL(url);
-}
+};
