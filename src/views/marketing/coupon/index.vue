@@ -78,7 +78,7 @@
 <script setup>
 import { closeApi, deleteApi, listPageApi, openApi } from '@/api/marketing/coupon'
 import { Bottom, Delete, Document, Edit, Top, Link } from '@element-plus/icons-vue'
-import { confirmMsg, messageBox, successMsg } from '@/utils/message'
+import { confirmMsg, messageBox, successMsg, warningMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
@@ -175,6 +175,10 @@ const handleDelete = (row) => {
 };
 
 const handleLink = (row) => {
+  if (row.state === 0) {
+    warningMsg('优惠券未启用，请先启用优惠券')
+    return;
+  }
   loading.value = true
   shortUrlApi({ pageUrl: shortUrl + row.id, pageTitle: '优惠券领取', persistent: true}).then(({data}) => {
     if (isSupported) {
