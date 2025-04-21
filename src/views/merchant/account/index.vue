@@ -19,6 +19,7 @@
 import { accountApi } from '@/api/merchant/account';
 import { useTransition } from '@vueuse/core';
 import useUserStore from '@/store/user.js';
+import { successMsg, warningMsg } from '@/utils/message.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('Xzu0');
@@ -40,7 +41,7 @@ onMounted(async () => {
 });
 
 const handleWithdraw = () => {
-  console.log('提现逻辑待补全');
+  warningMsg('提现逻辑待补全');
 };
 </script>
 
