@@ -5,26 +5,13 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="菜单名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="正常" :value="true" />
-            <el-option label="禁用" :value="false" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="菜单权限">
-          <el-select v-model="queryParams.displayState" clearable>
-            <el-option label="商户菜单" :value="1" />
-            <el-option label="系统菜单" :value="2" />
-            <el-option label="通用菜单" :value="3" />
-          </el-select>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
-      <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
+      <el-table row-key="id" :data="pageData" style="width: 100%" lazy :load="loadTree" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
         <el-table-column prop="title" label="菜单名称" width="150" />
         <el-table-column prop="icon" label="图标" width="80">
           <template #default="scope">
@@ -73,7 +60,7 @@
       </el-table>
     </div>
   </div>
-  <MenuForm ref="formRef" @reload="loadData"></MenuForm>
+  <MenuForm ref="formRef" @reload="search"></MenuForm>
 </template>
 <script setup>
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
@@ -93,11 +80,9 @@ const formRef = ref();
 
 const queryParams = reactive({
   queryName: '',
-  page: 1,
-  pageSize: 10,
   state: null,
   grade: null,
-  displayState: null
+  pid: '0'
 });
 
 const getPage = async () => {
@@ -113,16 +98,25 @@ const getPage = async () => {
 };
 
 const search = () => {
-  queryParams.page = 1;
+  queryParams.pid = '0';
   getPage();
 };
 
 onMounted(() => {
-  loadData();
+  search();
 });
 
-const loadData = () => {
-  getPage();
+const loadTree = async (row, _treeNode, resolve) => {
+  queryParams.pid = row.id
+  loading.value = true;
+  try {
+    if (selectAuth) {
+      const { data } = await listMenuApi(queryParams);
+      resolve(data);
+    }
+  } finally {
+    loading.value = false;
+  }
 };
 
 const handleDelete = (id) => {
@@ -130,7 +124,7 @@ const handleDelete = (id) => {
     const data = { id };
     deleteApi(data).then(() => {
       successMsg('菜单删除成功');
-      getPage();
+      search();
     });
   });
 };
@@ -164,7 +158,7 @@ const handleSort = (row) => {
     sortBy: row.sort
   };
   sortApi(data).then(() => {
-    getPage();
+    search();
   });
 };
 
