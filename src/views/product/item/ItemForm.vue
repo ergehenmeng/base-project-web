@@ -518,7 +518,7 @@ const handleChangeSpec = (value) => {
 </script>
 <style lang="scss" scoped>
 .item-group {
-  width: 1100px;
+  width: 1000px;
   border: 1px solid #dcdfe6;
   padding: 10px;
 }
@@ -546,6 +546,7 @@ const handleChangeSpec = (value) => {
 
   .spec-value-patch {
     margin-right: 20px;
+    padding: 5px;
     text-align: center;
     position: relative;
 

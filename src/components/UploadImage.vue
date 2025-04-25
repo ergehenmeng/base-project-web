@@ -94,6 +94,8 @@ onMounted(() => {
 watch(imgUrl, (newVal) => {
   if (newVal) {
     showFile.value = [{ url: newVal}]
+  } else {
+    showFile.value = [];
   }
 });
 </script>

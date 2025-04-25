@@ -261,6 +261,7 @@ el-select.w250 {
 /*多图片上传后的展示样式*/
 .el-upload-list--picture-card {
   .el-upload-list__item {
+    margin-bottom: 0 !important;
     width: 80px !important;
     height: 80px !important;
   }
