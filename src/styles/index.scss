@@ -361,6 +361,11 @@ el-select.w250 {
   color: #f56c6c;
 }
 
+/*wangEditor全屏模式显示不是最顶层问题*/
+.w-e-full-screen-container {
+  z-index: 10000;
+}
+
 /*wangEditor预览时的默认样式, 注意:需要在外层div上添加html-preview*/
 
 .html-preview {
