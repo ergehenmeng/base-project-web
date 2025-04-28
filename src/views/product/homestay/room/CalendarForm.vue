@@ -42,7 +42,7 @@
             <div class="item-date">{{ data.day.split('-')[2] }}</div>
             <div class="item-bottom">已过期</div>
           </div>
-          <div class="item-price" v-else-if="hasSetPrice(data)" @click="handleEdit(dayPrice(data))">
+          <div class="item-price" v-else-if="hasSetPrice(data)" @click.stop.prevent="handleEdit(dayPrice(data))">
             <div class="item-header">
               <div class="item-date">{{ data.day.split('-')[2] }}</div>
               <p class="item-price-num">划线价:{{ dayPrice(data)?.linePrice }}</p>
@@ -50,7 +50,7 @@
             <p class="item-price-num">销售价:{{ dayPrice(data)?.salePrice }}</p>
             <div :class="['item-stock', dayPrice(data)?.state === false ? 'item-forbid' : '']">库存:{{ dayPrice(data)?.stock }} </div>
           </div>
-          <div class="item-no-price" v-else @click="handleCreate(data.day)">
+          <div class="item-no-price" v-else @click.stop.prevent="handleCreate(data.day)">
             <div class="item-date">{{ data.day.split('-')[2] }}</div>
             <div class="item-bottom">暂未录入</div>
           </div>

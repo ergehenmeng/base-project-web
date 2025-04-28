@@ -2,7 +2,7 @@
   <el-dialog title="设置价格" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="日期">
-        <div style="width: 350px">
+        <div style="width: 350px; font-weight: bold;">
           {{ formData.configDate }}
         </div>
       </el-form-item>
