@@ -50,6 +50,7 @@ import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import Auth from '@/components/icon/Auth.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('JjK0');
@@ -97,7 +98,8 @@ const handleAuth = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该角色吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该角色吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('角色删除成功');

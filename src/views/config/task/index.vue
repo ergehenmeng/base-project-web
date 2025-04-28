@@ -67,6 +67,7 @@ import SmsForm from './TaskForm.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import Execute from '@/components/icon/Execute.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -103,7 +104,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleRefresh = () => {
-  confirmMsg('确定要刷新任务配置吗?', () => {
+  const msg = renderMsg(["确定要", () => "刷新", "任务配置吗?"]);
+  confirmMsg(msg, () => {
     refreshApi().then(() => {
       successMsg('任务刷新成功');
     });

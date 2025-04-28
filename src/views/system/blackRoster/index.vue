@@ -45,6 +45,7 @@ import useUserStore from '@/store/user';
 import BlackForm from './BlackForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const loading = ref(false);
 const total = ref(0);
@@ -86,7 +87,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该IP段吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该IP段吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('IP段删除成功');

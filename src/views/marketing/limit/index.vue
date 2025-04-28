@@ -48,6 +48,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -93,7 +94,8 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该限时购活动吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该限时购活动吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('限时购活动删除成功');

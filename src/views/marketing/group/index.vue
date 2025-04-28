@@ -56,6 +56,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -97,7 +98,8 @@ const formatter = (row, _column, cellValue) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该拼团活动吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该拼团活动吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('拼团活动删除成功');

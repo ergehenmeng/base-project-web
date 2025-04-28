@@ -76,6 +76,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import NewsForm from './NewsForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -117,7 +118,8 @@ const handleEdit = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该资讯配置吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该资讯配置吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('资讯配置删除成功');

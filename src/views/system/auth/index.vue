@@ -58,6 +58,7 @@ import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const loading = ref(false);
 const total = ref(0);
@@ -101,7 +102,8 @@ const handleEdit = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该授权信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该授权信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('授权信息删除成功');
@@ -111,7 +113,8 @@ const handleDelete = (row) => {
 };
 
 const handleReset = (row) => {
-  confirmMsg('确定要重置签名信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "重置", "签名信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     resetApi(data).then(() => {
       successMsg('签名信息重置成功');

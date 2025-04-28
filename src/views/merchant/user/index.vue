@@ -56,6 +56,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const loading = ref(false);
 const total = ref(0);
@@ -106,7 +107,8 @@ const handleEdit = (row) => {
 };
 
 const handleLock = (row) => {
-  confirmMsg('确定要锁定该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "锁定", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
       successMsg('用户锁定成功');
@@ -116,7 +118,8 @@ const handleLock = (row) => {
 };
 
 const handleUnlock = (row) => {
-  confirmMsg('确定要解锁该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "解锁", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
       successMsg('用户解锁成功');
@@ -126,7 +129,8 @@ const handleUnlock = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('用户删除成功');

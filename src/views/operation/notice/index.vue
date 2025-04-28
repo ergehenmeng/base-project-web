@@ -78,6 +78,7 @@ import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -123,7 +124,8 @@ const handleEdit = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该公告信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该公告信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('公告信息删除成功');
@@ -133,7 +135,8 @@ const handleDelete = (row) => {
 };
 
 const handlePublish = (row) => {
-  confirmMsg('确定要上架该公告信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "发布", "该公告信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     publishApi(data).then(() => {
       successMsg('公告上架成功');
@@ -143,7 +146,8 @@ const handlePublish = (row) => {
 };
 
 const handleCancel = (row) => {
-  confirmMsg('确定要下架该公告信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该公告信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     cancelApi(data).then(() => {
       successMsg('公告下架成功');

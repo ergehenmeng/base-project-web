@@ -89,7 +89,7 @@ import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/ico
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import Recommend from '@/components/icon/Recommend.vue'
@@ -133,7 +133,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该店铺吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该店铺吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('店铺删除成功');
@@ -165,7 +166,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该店铺吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('店铺上架成功');
@@ -175,7 +177,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该店铺吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('店铺下架成功');
@@ -185,7 +188,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该店铺吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('店铺强制下架成功');
@@ -197,9 +201,9 @@ const handlePlatformUnShelves = (row) => {
 const handleRecommend = (row) => {
   let msg;
   if (row.recommend) {
-    msg = '确定要取消推荐该店铺吗?';
+    msg = renderMsg(["确定要", () => "取消推荐", "该店铺吗?"]);
   } else {
-    msg = '确定要推荐该店铺吗?';
+    msg = renderMsg(["确定要", () => "推荐", "该店铺吗?"]);
   }
   confirmMsg(msg, () => {
     const data = { id: row.id, recommend: !row.recommend };

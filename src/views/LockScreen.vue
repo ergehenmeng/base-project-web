@@ -19,6 +19,7 @@ import { unlockScreenApi, lockScreenApi } from '@/api/system/user';
 import { confirmMsg, successMsg } from '@/utils/message.js'
 import useUserStore from '@/store/user.js'
 import md5 from 'md5';
+import { renderMsg } from '@/utils/common.js'
 
 const loading = ref(false);
 const formDataRef = ref();
@@ -46,7 +47,8 @@ const openDialog = () => {
 };
 
 const handleLogout = () => {
-  confirmMsg('确定要退出系统吗?', () => {
+  const msg = renderMsg(["确定要", () => "退出", "系统吗?"]);
+  confirmMsg(msg, () => {
     showDialog.value = false;
     userStore.logout();
   });

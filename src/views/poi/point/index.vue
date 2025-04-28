@@ -71,6 +71,7 @@ import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
 import PoiTypeSelect from '@/components/PoiTypeSelect.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -110,7 +111,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该线路吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该线路吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('线路删除成功');

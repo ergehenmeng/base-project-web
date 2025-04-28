@@ -99,7 +99,7 @@ import { Bottom, Calendar, Delete, Document, Download, Edit, Top } from '@elemen
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 import HomestaySelect from '@/components/HomestaySelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import Recommend from '@/components/icon/Recommend.vue'
@@ -145,7 +145,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该房型吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该房型吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('房型删除成功');
@@ -199,7 +200,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该房型吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该房型吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('房型上架成功');
@@ -209,7 +211,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该房型吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该房型吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('房型下架成功');
@@ -219,7 +222,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该房型吗?', () => {
+  const msg = renderMsg(["确定要强制", () => "下架", "该房型吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('房型强制下架成功');
@@ -231,9 +235,9 @@ const handlePlatformUnShelves = (row) => {
 const handleRecommend = (row) => {
   let msg;
   if (row.recommend) {
-    msg = '确定要取消推荐该房型吗?';
+    msg = renderMsg(["确定要", () => "取消推荐", "该房型吗?"]);
   } else {
-    msg = '确定要推荐该房型吗?';
+    msg = renderMsg(["确定要", () => "推荐", "该房型吗?"]);
   }
   confirmMsg(msg, () => {
     const data = { id: row.id, recommend: !row.recommend };

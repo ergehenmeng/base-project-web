@@ -54,13 +54,15 @@ const changePwdRef = ref();
 const nickName = userStore.user?.nickName;
 
 const handleLogout = () => {
-  confirmMsg('确定要退出系统吗?', () => {
+  const msg = renderMsg(["确定要", () => "退出", "系统吗?"]);
+  confirmMsg(msg, () => {
     userStore.logout();
   });
 };
 
 const handleUnbind = () => {
-  confirmMsg('确定要解绑微信吗?', () => {
+  const msg = renderMsg(["确定要", () => "解绑", "微信吗?"]);
+  confirmMsg(msg, () => {
     unbindApi().then(() => {
       userStore.setBindWechat(false);
       successMsg('解绑成功');

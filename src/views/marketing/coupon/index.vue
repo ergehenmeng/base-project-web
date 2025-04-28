@@ -86,6 +86,7 @@ import { shortUrlApi } from '@/api/common/index.js'
 import { useClipboard } from '@vueuse/core'
 import Receive from '@/components/icon/Receive.vue'
 import Grant from '@/components/icon/Grant.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
@@ -145,7 +146,8 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleOpen = (row) => {
-  confirmMsg('确定要启用该优惠券吗?', () => {
+  const msg = renderMsg(["确定要", () => "启用", "该优惠券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     openApi(data).then(() => {
       successMsg('优惠券启用成功');
@@ -155,7 +157,8 @@ const handleOpen = (row) => {
 };
 
 const handleClose = (row) => {
-  confirmMsg('确定要禁用该优惠券吗?', () => {
+  const msg = renderMsg(["确定要", () => "禁用", "该优惠券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     closeApi(data).then(() => {
       successMsg('优惠券禁用成功');
@@ -165,7 +168,8 @@ const handleClose = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该优惠券吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该优惠券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('优惠券删除成功');

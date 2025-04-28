@@ -41,6 +41,7 @@ import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('svU0');
@@ -77,7 +78,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该敏感词吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该敏感词吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('敏感词删除成功');

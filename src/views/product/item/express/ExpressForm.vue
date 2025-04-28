@@ -90,7 +90,7 @@
 import { createApi, selectApi, updateApi } from '@/api/product/express';
 import { useRoute, useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js';
-import { goBack, numberValidator } from '@/utils/common.js';
+import { goBack, numberValidator, renderMsg } from '@/utils/common.js'
 import AreaTree from '@/components/AreaTree.vue';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
@@ -132,7 +132,8 @@ const handleEdit = (regionCode) => {
 };
 
 const handleDelete = (regionCode) => {
-  confirmMsg('确定要删除该区域配置吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该区域配置吗?"]);
+  confirmMsg(msg, () => {
     formData.value.regionList = formData.value.regionList.filter((item) => item.regionCode !== regionCode);
   });
 };

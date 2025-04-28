@@ -66,7 +66,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
@@ -106,7 +106,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该餐饮券吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该餐饮券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('餐饮券删除成功');
@@ -136,7 +137,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该餐饮券吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该餐饮券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('餐饮券上架成功');
@@ -146,7 +148,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该餐饮券吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该餐饮券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('餐饮券下架成功');
@@ -156,7 +159,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该餐饮券吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该餐饮券吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('餐饮券强制下架成功');

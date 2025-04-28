@@ -46,6 +46,7 @@ import { Delete, Edit, Plus } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user.js';
 import { useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -59,7 +60,8 @@ const handleEdit = (item) => {
   router.push('/product/express/edit/' + item.id);
 };
 const handleDelete = (item) => {
-  confirmMsg('确定要删除该快递模板吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该快递模板吗?"]);
+  confirmMsg(msg, () => {
     deleteApi({ id: item.id }).then(() => {
       successMsg('快递模板删除成功');
       getPage();

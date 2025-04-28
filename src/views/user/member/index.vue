@@ -118,7 +118,7 @@ import Offline from '@/components/icon/Offline.vue';
 import { useRouter } from 'vue-router';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 import Score from '@/components/icon/Score.vue'
 import ScoreForm from '@/views/user/member/ScoreForm.vue'
 import ScoreLogForm from '@/views/user/member/ScoreLogForm.vue'
@@ -203,7 +203,8 @@ onMounted(() => {
 });
 
 const handleFreeze = (row) => {
-  confirmMsg('确定要冻结该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "冻结", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     freezeApi(data).then(() => {
       successMsg('用户冻结成功');
@@ -213,7 +214,8 @@ const handleFreeze = (row) => {
 };
 
 const handleUnFreeze = (row) => {
-  confirmMsg('确定要解冻该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "解冻", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unfreezeApi(data).then(() => {
       successMsg('用户解冻成功');
@@ -231,7 +233,8 @@ const handleScoreLog = (row) => {
 };
 
 const handleLogout = (row) => {
-  confirmMsg('确定要强制下线该用户?', () => {
+  const msg = renderMsg(["确定要", () => "强制下线", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     offlineApi(data).then(() => {
       successMsg('用户强制下线成功');

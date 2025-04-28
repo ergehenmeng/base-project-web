@@ -106,6 +106,7 @@ import BannerForm from './BannerForm.vue';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const dictStore = useDictStore();
@@ -167,7 +168,8 @@ const handleEdit = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该轮播图吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该轮播图吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('轮播图删除成功');

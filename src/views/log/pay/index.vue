@@ -82,6 +82,7 @@ import useUserStore from '@/store/user';
 import ContentDialog from '@/components/ContentDialog.vue';
 import Playback from '@/components/icon/Playback.vue'
 import { confirmMsg, successMsg } from '@/utils/message.js'
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const syncAuth = userStore.hasAuth('5F00');
@@ -123,7 +124,8 @@ const getPage = async () => {
 };
 
 const handlePlayback = (row) => {
-  confirmMsg('开始模拟第三方回调, 确定要执行吗?', () => {
+  const msg = renderMsg(["开始", () => "模拟第三方回调", "确定要执行吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     playbackApi(data).then(() => {
       successMsg('回放执行成功');

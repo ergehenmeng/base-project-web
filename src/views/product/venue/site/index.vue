@@ -82,7 +82,7 @@ import { useRouter } from 'vue-router';
 import VenueSelect from '@/components/VenueSelect.vue';
 import SiteForm from '@/views/product/venue/site/SiteForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
-import { venueTypeFormat } from '@/utils/common.js';
+import { renderMsg, venueTypeFormat } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -131,7 +131,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该场地吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该场地吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('场地删除成功');
@@ -163,7 +164,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该场地吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该场地吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('场地上架成功');
@@ -173,7 +175,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该场地吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该场地吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('场地下架成功');
@@ -183,7 +186,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该场地吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该场地吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('场地强制下架成功');

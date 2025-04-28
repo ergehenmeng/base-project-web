@@ -59,6 +59,7 @@ import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import Lottery from '@/components/icon/Lottery.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -108,7 +109,8 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该抽奖活动吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该抽奖活动吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('抽奖活动删除成功');

@@ -83,6 +83,7 @@ import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const activeName = ref('');
 const configList = ref([]);
@@ -167,7 +168,8 @@ const getConfigList = async () => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除资讯信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "资讯信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('资讯信息删除成功');

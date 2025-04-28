@@ -66,6 +66,7 @@ import ItemForm from './ItemForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('GmK0');
@@ -102,7 +103,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该选项吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该选项吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('字典删除成功');
@@ -140,7 +142,8 @@ const handleExpend = (_row, expandedRow) => {
 }
 
 const handleItemDelete = (row) => {
-  confirmMsg('确定要删除该子项数据吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该子项数据吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteItemApi(data).then(() => {
       successMsg('子项数据删除成功');

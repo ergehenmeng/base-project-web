@@ -79,6 +79,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -118,7 +119,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该线路吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该线路吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('线路删除成功');
@@ -128,7 +130,8 @@ const handleDelete = (row) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该线路吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该线路吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('线路上架成功');
@@ -138,7 +141,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该线路吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该线路吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('线路下架成功');

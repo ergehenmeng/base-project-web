@@ -78,7 +78,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
-import { downloadExcel } from '@/utils/common.js'
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -117,7 +117,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该旅行社吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该旅行社吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('旅行社删除成功');
@@ -163,7 +164,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该旅行社吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该旅行社吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('旅行社上架成功');
@@ -173,7 +175,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该旅行社吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该旅行社吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('旅行社下架成功');
@@ -183,7 +186,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该旅行社吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该旅行社吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('旅行社强制下架成功');

@@ -77,7 +77,7 @@ import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/ico
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel } from '@/utils/common.js';
+import { downloadExcel, renderMsg } from '@/utils/common.js'
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 
@@ -119,7 +119,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该商家吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该商家吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('商家删除成功');
@@ -149,7 +150,8 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该商家吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该商家吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('商家上架成功');
@@ -159,7 +161,8 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该商家吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该商家吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('商家下架成功');
@@ -169,7 +172,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该商家吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该商家吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('商家强制下架成功');

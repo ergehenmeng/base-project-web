@@ -63,6 +63,7 @@ import MemberTagForm from './MemberTagForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import { useRouter } from 'vue-router';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -125,7 +126,8 @@ const handleMemberPage = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该标签吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该标签吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('标签删除成功');

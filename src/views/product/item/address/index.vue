@@ -49,6 +49,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import AddressForm from '@/views/product/item/address/AddressForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -87,7 +88,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该收货地址吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该收货地址吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('收货地址删除成功');

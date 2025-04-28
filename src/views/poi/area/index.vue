@@ -57,6 +57,7 @@ import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import AreaForm from '@/views/poi/area/AreaForm.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -94,7 +95,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该区域吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该区域吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('区域删除成功');

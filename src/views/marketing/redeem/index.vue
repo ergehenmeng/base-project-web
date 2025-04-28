@@ -59,6 +59,7 @@ import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import RedeemForm from '@/views/marketing/redeem/RedeemForm.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -105,7 +106,8 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleGenerate = (row) => {
-  confirmMsg('确定要生成兑换码吗?', () => {
+  const msg = renderMsg(["确定要", () => "生成兑换码", "吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     generateApi(data).then(() => {
       successMsg('兑换码生成成功');
@@ -115,7 +117,8 @@ const handleGenerate = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该兑换码配置吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该兑换码配置吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('兑换码配置删除成功');

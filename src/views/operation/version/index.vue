@@ -119,7 +119,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该版本信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该版本信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('版本信息删除成功');

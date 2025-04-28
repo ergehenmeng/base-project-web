@@ -92,7 +92,7 @@ import Rate from '@/components/icon/Rate.vue';
 import Unbind from '@/components/icon/Unbind.vue';
 import Logout from '@/components/icon/Logout.vue';
 import { useRouter } from 'vue-router';
-import { downloadExcel, parseMerchantType } from '@/utils/common.js';
+import { downloadExcel, parseMerchantType, renderMsg } from '@/utils/common.js'
 import ServiceRateForm from '@/views/user/merchant/ServiceRateForm.vue';
 import ResetPwd from '@/components/icon/ResetPwd.vue'
 
@@ -151,7 +151,8 @@ onMounted(() => {
 });
 
 const handleLock = (row) => {
-  confirmMsg('确定要锁定该商户吗?', () => {
+  const msg = renderMsg(["确定要", () => "锁定", "该商户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
       successMsg('商户锁定成功');
@@ -161,7 +162,8 @@ const handleLock = (row) => {
 };
 
 const handleUnlock = (row) => {
-  confirmMsg('确定要解锁该商户吗?', () => {
+  const msg = renderMsg(["确定要", () => "解锁", "该商户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
       successMsg('商户解锁成功');
@@ -171,7 +173,8 @@ const handleUnlock = (row) => {
 };
 
 const handleReset = (row) => {
-  confirmMsg('确定要重置该商户的密码?', () => {
+  const msg = renderMsg(["确定要", () => "重置", "该商户的密码吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     resetPwdApi(data).then(() => {
       successMsg('密码重置成功');
@@ -181,7 +184,8 @@ const handleReset = (row) => {
 };
 
 const handleCloseAccount = (row) => {
-  confirmMsg('确定要注销该商户吗?', () => {
+  const msg = renderMsg(["确定要", () => "注销", "该商户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     logoutApi(data).then(() => {
       successMsg('商户注销成功');
@@ -190,7 +194,8 @@ const handleCloseAccount = (row) => {
 };
 
 const handleUnbind = (row) => {
-  confirmMsg('确定要解绑该商户授权手机号吗?', () => {
+  const msg = renderMsg(["确定要", () => "解绑", "该商户授权手机号吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unbindApi(data).then(() => {
       successMsg('授权手机号解绑成功');

@@ -64,6 +64,7 @@ import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
@@ -131,7 +132,8 @@ const handleSort = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该问答吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该问答吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('问答删除成功');

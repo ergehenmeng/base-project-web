@@ -282,7 +282,8 @@ const resetBefore = (item, length) => {
 };
 
 const resetConfig = () => {
-  confirmMsg('确定要重置价格配置吗?', () => {
+  const msg = renderMsg(["确定要", () => "重置", "价格配置吗?"]);
+  confirmMsg(msg, () => {
     doReset(true);
   });
 };

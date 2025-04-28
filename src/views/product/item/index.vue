@@ -119,7 +119,7 @@ import { Bottom, Delete, Document, Download, Edit, Link, Top } from '@element-pl
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel, numberValidator } from '@/utils/common.js';
+import { downloadExcel, numberValidator, renderMsg } from '@/utils/common.js'
 import ItemTag from '@/components/ItemTag.vue';
 import StoreSelect from '@/components/StoreSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
@@ -141,6 +141,7 @@ const pageData = ref([]);
 const selectAuth = userStore.hasAuth('8SO0');
 const sortAuth = userStore.hasAuth('LSO0');
 const stockFormRef = ref();
+const exportLoading = ref(false);
 
 const queryParams = reactive({
   queryName: '',
@@ -180,7 +181,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该商品吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('商品删除成功');
@@ -208,7 +210,8 @@ const formatter = (row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  confirmMsg('确定要上架该商品吗?', () => {
+  const msg = renderMsg(["确定要", () => "上架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
       successMsg('商品上架成功');
@@ -229,7 +232,8 @@ const handleSort = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  confirmMsg('确定要下架该商品吗?', () => {
+  const msg = renderMsg(["确定要", () => "下架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
       successMsg('商品下架成功');
@@ -239,7 +243,8 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  confirmMsg('确定要强制下架该商品吗?', () => {
+  const msg = renderMsg(["确定要", () => "强制下架", "该商品吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
       successMsg('商品强制下架成功');
@@ -255,9 +260,9 @@ const showStock = (row) => {
 const handleRecommend = (row) => {
   let msg;
   if (row.recommend) {
-    msg = '确定要取消推荐该商品吗?';
+    msg = renderMsg(["确定要", () => "取消推荐", "该商品吗?"]);
   } else {
-    msg = '确定要推荐该商品吗?';
+    msg = renderMsg(["确定要", () => "推荐", "该商品吗?"]);
   }
   confirmMsg(msg, () => {
     const data = { id: row.id, recommend: !row.recommend };
@@ -267,8 +272,6 @@ const handleRecommend = (row) => {
     });
   });
 };
-
-const exportLoading = ref(false);
 
 const handleExcel = () => {
   exportLoading.value = true;

@@ -65,6 +65,7 @@ import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import TypeForm from './TypeForm.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -102,7 +103,8 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该点位类型吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该点位类型吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('点位类型删除成功');

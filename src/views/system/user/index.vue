@@ -68,7 +68,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
-import { parseDataType, parseUserType } from '@/utils/common.js'
+import { parseDataType, parseUserType, renderMsg } from '@/utils/common.js'
 import ResetPwd from '@/components/icon/ResetPwd.vue'
 
 const loading = ref(false);
@@ -126,7 +126,8 @@ const handleEdit = (row) => {
 };
 
 const handleLock = (row) => {
-  confirmMsg('确定要锁定该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "锁定", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
       successMsg('用户锁定成功');
@@ -136,7 +137,8 @@ const handleLock = (row) => {
 };
 
 const handleUnlock = (row) => {
-  confirmMsg('确定要解锁该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "解锁", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
       successMsg('用户解锁成功');
@@ -146,7 +148,8 @@ const handleUnlock = (row) => {
 };
 
 const handleReset = (row) => {
-  confirmMsg('确定要重置该用户的密码?', () => {
+  const msg = renderMsg(["确定要", () => "重置", "该用户的密码吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     resetPwdApi(data).then(() => {
       successMsg('密码重置成功');
@@ -156,7 +159,8 @@ const handleReset = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该用户吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该用户吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('用户删除成功');

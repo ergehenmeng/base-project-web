@@ -59,6 +59,7 @@ import useDictStore from '@/store/dict.js';
 import dayjs from 'dayjs';
 import { useRouter } from 'vue-router';
 import ScenicSelect from '@/components/ScenicSelect.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -111,7 +112,8 @@ const activityList = (data) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该活动吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该活动吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('活动删除成功');

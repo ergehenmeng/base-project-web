@@ -69,6 +69,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import MenuForm from './MenuForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('YhK0');
@@ -120,7 +121,8 @@ const loadTree = async (row, _treeNode, resolve) => {
 };
 
 const handleDelete = (id) => {
-  confirmMsg('确定要删除该菜单吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该菜单吗?"]);
+  confirmMsg(msg, () => {
     const data = { id };
     deleteApi(data).then(() => {
       successMsg('菜单删除成功');

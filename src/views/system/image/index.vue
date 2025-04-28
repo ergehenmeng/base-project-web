@@ -62,6 +62,7 @@ import ImageForm from './ImageForm.vue';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';
 import CreateButton from '@/components/CreateButton.vue';
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const dictStore = useDictStore();
@@ -106,7 +107,8 @@ const handleEdit = (row) => {
 };
 
 const handleDelete = (row) => {
-  confirmMsg('确定要删除该图片吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该图片吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('图片删除成功');

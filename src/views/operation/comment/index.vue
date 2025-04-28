@@ -80,6 +80,7 @@ import { Bottom, Hide, Refresh, Top, View } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter, useRoute } from 'vue-router';
+import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const route = useRoute();
@@ -135,7 +136,8 @@ onMounted(() => {
 });
 
 const handleShield = (row) => {
-  confirmMsg('确定要屏蔽该评论信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "屏蔽", "该评论信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     shieldApi(data).then(() => {
       successMsg('评论屏蔽成功');
@@ -145,7 +147,8 @@ const handleShield = (row) => {
 };
 
 const handleUnShield = (row) => {
-  confirmMsg('确定要解除屏蔽该信息吗?', () => {
+  const msg = renderMsg(["确定要", () => "解除屏蔽", "该信息吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unShieldApi(data).then(() => {
       successMsg('屏蔽接触成功');
@@ -155,7 +158,8 @@ const handleUnShield = (row) => {
 };
 
 const handleTop = (row) => {
-  confirmMsg('确定要置顶该评论吗?', () => {
+  const msg = renderMsg(["确定要", () => "置顶", "该评论吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     topApi(data).then(() => {
       successMsg('评论置顶成功');
@@ -165,7 +169,8 @@ const handleTop = (row) => {
 };
 
 const handleUnTop = (row) => {
-  confirmMsg('确定要取消该评论置顶吗?', () => {
+  const msg = renderMsg(["确定要", () => "取消置顶", "该评论吗?"]);
+  confirmMsg(msg, () => {
     const data = { id: row.id };
     unTopApi(data).then(() => {
       successMsg('评论置顶取消成功');

@@ -39,6 +39,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import DeptForm from '@/views/system/dept/DeptForm.vue'
+import { renderMsg } from '@/utils/common.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('ULK0');
@@ -67,7 +68,8 @@ onMounted(() => {
 });
 
 const handleDelete = (id) => {
-  confirmMsg('确定要删除该部门吗?', () => {
+  const msg = renderMsg(["确定要", () => "删除", "该部门吗?"]);
+  confirmMsg(msg, () => {
     const data = { id };
     deleteApi(data).then(() => {
       successMsg('部门删除成功');
