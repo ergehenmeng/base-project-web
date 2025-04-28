@@ -9,13 +9,14 @@
         <RestaurantSelect v-model="formData.restaurantId" :disabled="disabled" :clearable="false"></RestaurantSelect>
       </el-form-item>
       <el-form-item label="标签" prop="tagId">
-        <VoucherTag v-model="formData.tagId" :restaurant-id="formData.restaurantId"/>
+        <VoucherTag v-model="formData.tagId" :restaurant-id="formData.restaurantId"/><QuestionTip content="标签是左侧导航分类"/>
       </el-form-item>
       <el-form-item label="有效日期" prop="validType">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
           <el-radio :value="0">按购买日计算</el-radio>
           <el-radio :value="1">按时间段计算</el-radio>
         </el-radio-group>
+        <QuestionTip content="注意：过期后未使用的餐饮券会自动退款"/>
       </el-form-item>
       <el-form-item label="有效期" :prop="validTypeProp" :rules="validTypeRules">
         <div v-if="formData.validType === 0">
@@ -79,6 +80,7 @@ import RestaurantSelect from '@/components/RestaurantSelect.vue';
 import { disableBeforeDate, goBack } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import VoucherTag from '@/components/VoucherTag.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -91,6 +93,7 @@ const validTypeRules = ref({});
 const formRules = reactive({
   title: [{ required: true, message: '餐饮券名称不能为空', trigger: 'blur' }],
   restaurantId: [{ required: true, message: '请选择所属店铺', trigger: 'change' }],
+  tagId: [{ required: true, message: '请选择标签', trigger: 'change' }],
   validType: [{ required: true, message: '请选择有效期', trigger: 'change' }],
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '可用时间段不能为空', trigger: 'blur', type: 'array' }],
