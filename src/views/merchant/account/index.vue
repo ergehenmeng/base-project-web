@@ -19,7 +19,7 @@
 import { accountApi } from '@/api/merchant/account';
 import { useTransition } from '@vueuse/core';
 import useUserStore from '@/store/user.js';
-import { successMsg, warningMsg } from '@/utils/message.js'
+import { warningMsg } from '@/utils/message.js'
 
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('Xzu0');

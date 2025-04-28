@@ -45,7 +45,7 @@
 <script setup>
 import { setupApi } from '@/api/product/line';
 import { successMsg } from '@/utils/message';
-import { disableBeforeDate, numberValidator } from '@/utils/common.js';
+import { disableBeforeDate } from '@/utils/common.js';
 
 const loading = ref(false);
 const formDataRef = ref();

@@ -76,7 +76,7 @@ import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
-import { disableBeforeDate, goBack, numberValidator } from '@/utils/common.js';
+import { disableBeforeDate, goBack } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import VoucherTag from '@/components/VoucherTag.vue'
 

@@ -34,7 +34,6 @@
 <script setup>
 import { setDayApi } from '@/api/product/line';
 import { successMsg } from '@/utils/message';
-import { numberValidator } from '@/utils/common.js';
 
 const loading = ref(false);
 const formDataRef = ref();

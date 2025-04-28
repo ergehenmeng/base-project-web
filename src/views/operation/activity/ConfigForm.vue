@@ -53,7 +53,6 @@ import { configApi } from '@/api/operation/activity';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import UploadImage from '@/components/UploadImage.vue';
 import { goBack } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue'
 import UploadImageList from '@/components/UploadImageList.vue'

@@ -1,7 +1,7 @@
 <template>
   <div class="title-bar">
     <span class="bar-state">订单状态：<span v-bind:style="formatStyle()">{{ orderStateFormat(props.state) }}</span></span>
-    <span class="bar-refund-state" v-if="props.state === 7 || ( props === 9 && props.refundState === 4)">退款状态：{{ refundStateFormat(props.refundState) }}</span>
+    <span class="bar-refund-state" v-if="props.state === 7 || ( props.state === 9 && props.refundState === 4)">退款状态：{{ refundStateFormat(props.refundState) }}</span>
   </div>
 </template>
 
