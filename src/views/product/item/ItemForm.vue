@@ -38,9 +38,8 @@
                         <CircleCloseFilled />
                       </el-icon>
                     </span>
-                    <UploadImage v-model:img-url="value.pic" v-if="index === 0" tips="规格图片"></UploadImage>
                   </div>
-                  <span class="spec-value-patch" v-if="!disabled">
+                  <span class="spec-value-patch" v-if="!disabled && formData.specList[index].valueList.length < 50">
                     <CreateButton title="添加规格值" @click="handleAddValue(index)"></CreateButton>
                   </span>
                 </div>
@@ -122,6 +121,16 @@
                 <template #default="scope">
                   <el-form-item>
                     <el-input v-model="scope.row.weight" class="w80" maxlength="6" @keyup="scope.row.weight = numberValidator(scope.row.weight)" />
+                  </el-form-item>
+                </template>
+              </el-table-column>
+              <el-table-column prop="skuPic" >
+                <template #header>
+                  <span><span class="item-required">*</span>图片</span>
+                </template>
+                <template #default="scope">
+                  <el-form-item :prop="`skuList[${scope.$index}].skuPic`" :rules="{ required: true, message: '图片不能为空', trigger: 'blur' }">
+                    <UploadImage v-model:img-url="scope.row.skuPic" tips="不为空时该图片优先级最高"></UploadImage>
                   </el-form-item>
                 </template>
               </el-table-column>
@@ -248,7 +257,8 @@ let formData = ref({
       salePrice: null,
       stock: null,
       virtualNum: null,
-      weight: null
+      weight: null,
+      skuPic: null
     }
   ],
   specList: [
@@ -258,8 +268,7 @@ let formData = ref({
       specName: null,
       valueList: [
         {
-          name: null,
-          pic: null
+          name: null
         }
       ]
     }
@@ -268,8 +277,7 @@ let formData = ref({
 
 const handleAddValue = (index) => {
   formData.value.specList[index].valueList.push({
-    name: null,
-    pic: null
+    name: null
   });
 };
 
@@ -293,8 +301,7 @@ const handleAddSpec = () => {
     specName: null,
     valueList: [
       {
-        name: null,
-        pic: null
+        name: null
       }
     ]
   });
@@ -371,7 +378,8 @@ const createSecondTable = (specPrimary, secondSpec, size) => {
             salePrice: null,
             stock: null,
             virtualNum: null,
-            weight: null
+            weight: null,
+            skuPic: null
           });
         }
       }
@@ -398,7 +406,8 @@ const createPrimarySpec = (spec) => {
         salePrice: null,
         stock: null,
         virtualNum: null,
-        weight: null
+        weight: null,
+        skuPic: null
       });
     }
   }
@@ -491,8 +500,7 @@ const handleChangeSpec = (value) => {
         specName: null,
         valueList: [
           {
-            name: null,
-            pic: null
+            name: null
           }
         ]
       }
@@ -510,7 +518,8 @@ const handleChangeSpec = (value) => {
         salePrice: null,
         stock: null,
         virtualNum: null,
-        weight: null
+        weight: null,
+        skuPic: null
       }
     ];
   }
@@ -562,4 +571,9 @@ const handleChangeSpec = (value) => {
 .el-form-item .el-form-item {
   margin-bottom: 18px;
 }
+
+.el-image-viewer__wrapper {
+  z-index: 9999 !important;
+}
+
 </style>

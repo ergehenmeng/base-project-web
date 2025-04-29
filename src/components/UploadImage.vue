@@ -19,7 +19,7 @@
         <Plus />
       </el-icon>
     </el-upload>
-    <el-image-viewer v-if="showViewer" @close="closeViewer" hide-on-click-modal :url-list="previewList"></el-image-viewer>
+    <el-image-viewer v-if="showViewer" z-index="9999" teleported @close="closeViewer" hide-on-click-modal :url-list="previewList"></el-image-viewer>
   </div>
 </template>
 
