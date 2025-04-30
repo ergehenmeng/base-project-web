@@ -92,7 +92,7 @@
               <el-scrollbar max-height="300">
                 <p v-for="(item, index) in data.adjustList" :key="index">
                   【{{item.productName}}】价格调整，原价：{{ item.sourcePrice }} 修改价：{{ item.targetPrice }}
-                  <QuestionTip :content="'修改人：' + item.userName + ' 修改时间：' + item.createTime" ></QuestionTip>
+                  <QuestionTip :content="'修改人：' + item.userName + '，修改时间：' + item.createTime" ></QuestionTip>
                 </p>
               </el-scrollbar>
             </div>
