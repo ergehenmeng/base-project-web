@@ -204,7 +204,7 @@ const handleSelected = (val) => {
 };
 
 const handleUpdatePrice = (row) => {
-  adjustRef.value.openDialog(row);
+  adjustRef.value.openDialog({orderNo: data.value.orderNo, ...row});
 };
 
 const handleUpdateExpress = (row) => {

@@ -2,7 +2,9 @@
   <el-dialog title="改价" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="商品信息:">
-        <span>{{ formData.title }} <span v-if="formData.skuTitle"> - {{ formData.skuTitle }}</span></span>
+        <span
+          >{{ formData.title }} <span v-if="formData.skuTitle"> - {{ formData.skuTitle }}</span></span
+        >
       </el-form-item>
       <el-form-item label="原价格:">
         <span>{{ formData.salePrice }}</span>
@@ -38,7 +40,7 @@ const formData = ref({
   title: null,
   skuTitle: null,
   orderNo: null,
-  orderId: null,
+  id: null,
   salePrice: null,
   price: null
 });
@@ -54,7 +56,7 @@ const resetForm = () => {
     title: null,
     skuTitle: null,
     orderNo: null,
-    orderId: null,
+    id: null,
     salePrice: null,
     price: null
   };
@@ -65,8 +67,11 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      adjustApi(formData.value)
-        .then(() => {
+      adjustApi({
+        id: formData.value.id,
+        orderNo: formData.value.orderNo,
+        price: formData.value.price
+      }).then(() => {
           successMsg('改价成功');
           showDialog.value = false;
           emit('reload');

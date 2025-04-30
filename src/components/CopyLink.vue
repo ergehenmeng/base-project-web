@@ -10,7 +10,7 @@ const { copy, isSupported } = useClipboard();
 const props = defineProps({
   content: {
     type: String,
-    required: true
+    required: false
   },
 });
 
