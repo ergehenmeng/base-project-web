@@ -83,7 +83,6 @@ import MerchantSelect from '@/components/MerchantSelect.vue';
 import CustomTag from '@/components/CustomTag.vue'
 
 const dictStore = useDictStore();
-const dictList = dictStore.getDict('homestay_tag');
 const keyServiceList = dictStore.getDict('key_service');
 const route = useRoute();
 const router = useRouter();

@@ -81,9 +81,8 @@ areaStore.initArea();
 const dictStore = useDictStore();
 dictStore.initDict('image_type', 'help_type', 'feedback_type',
   'banner_type', 'notice_type', 'scenic_tag',
-  'homestay_tag', 'key_service', 'hot_institution',
-  'bathroom', 'children', 'media', 'appliance',
-  'landscape');
+  'key_service', 'hot_institution', 'landscape',
+  'bathroom', 'children', 'media', 'appliance');
 
 const initWebSocket = () => {
   const client = new Client({
