@@ -32,18 +32,16 @@ export const orderStateFormat = (state) => {
     case 4:
       return '待发货';
     case 5:
-      return '部分发货';
-    case 6:
       return '待收货';
-    case 7:
+    case 6:
       return '退款中';
-    case 8:
+    case 7:
       return '订单完成';
-    case 9:
+    case 8:
       return '已关闭';
-    case 10:
+    case 9:
       return '支付异常';
-    case 11:
+    case 10:
       return '退款异常';
     default:
       return '';

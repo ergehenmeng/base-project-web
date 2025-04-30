@@ -25,17 +25,21 @@ const props = defineProps({
 })
 
 const formatStyle = () => {
-  if (props.state === 8) {
+  if (props.state === 7) {
     return {
-      color: '#67c23a'
+      color: '#2ed573'
     }
-  } else if (props.state === 10 || props.state === 11 || props.state === 7){
+  } else if (props.state === 10 || props.state === 11){
     return {
-      color: '#e6a23c'
+      color: '#ff4757'
     }
   } else if (props.state === 2 || props.state === 3 || props.state === 4 || props.state === 5 || props.state === 6){
     return {
-      color: '#409eff'
+      color: '#1e90ff'
+    }
+  } else if (props.state === 8) {
+    return {
+      color: '#747d8c'
     }
   } else {
     return {}

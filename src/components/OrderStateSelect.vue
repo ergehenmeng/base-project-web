@@ -5,13 +5,12 @@
     <el-option label="待使用" :value="2" />
     <el-option label="待自提" :value="3" />
     <el-option label="待发货" :value="4" />
-    <el-option label="部分发货" :value="5" />
-    <el-option label="待收货" :value="6" />
-    <el-option label="退款中" :value="7" />
-    <el-option label="订单完成" :value="8" />
-    <el-option label="已关闭" :value="9" />
-    <el-option label="支付异常" :value="10" />
-    <el-option label="退款异常" :value="11" />
+    <el-option label="待收货" :value="5" />
+    <el-option label="退款中" :value="6" />
+    <el-option label="订单完成" :value="7" />
+    <el-option label="已关闭" :value="8" />
+    <el-option label="支付异常" :value="9" />
+    <el-option label="退款异常" :value="10" />
   </el-select>
 </template>
 <script setup>
