@@ -21,7 +21,7 @@
       </el-form-item>
       <el-form-item label="标签" prop="tag">
         <el-select v-model="formData.tag" multiple :multiple-limit="3" filterable>
-          <el-option v-for="item in dictList" :label="item.showValue" :value="item.showValue" :key="item.hiddenValue" />
+          <el-option v-for="item in dictList" :label="item.showValue" :value="item.hiddenValue" :key="item.hiddenValue" />
         </el-select>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
