@@ -37,13 +37,13 @@
         <el-input v-model="formData.virtualNum" placeholder="不填写默认为0" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" /><QuestionTip content="注意：该字段为单日库存量"/>
       </el-form-item>
       <el-form-item label="提前购票(天)" prop="advanceDay">
         <el-input v-model="formData.advanceDay" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="单次限购(张)" prop="quota">
-        <el-input v-model="formData.quota" placeholder="默认限购99张" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+      <el-form-item label="单日限购(张)" prop="quota">
+        <el-input v-model="formData.quota" placeholder="默认限购9张" maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="预定时间" prop="dueDate">
         <div style="width: 350px">
@@ -80,6 +80,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg, warningMsg } from '@/utils/message.js'
 import { goBack, numberValidator } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -93,6 +94,7 @@ const formRules = reactive({
   title: [{ required: true, message: '门票名称不能为空', trigger: 'blur' }],
   scenicId: [{ required: true, message: '请选择所属景区', trigger: 'change' }],
   realBuy: [{ required: true, message: '请选择是否实名购票', trigger: 'change' }],
+  quota: [{ required: true, message: '单日限购不能为空', trigger: 'blur' }],
   category: [{ required: true, message: '请选择票种类型', trigger: 'change' }],
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
@@ -113,7 +115,7 @@ const formData = ref({
   verificationType: 1,
   realBuy: true,
   advanceDay: 1,
-  quota: 99,
+  quota: 9,
   ticketIds: [],
   dueDate: [],
   introduceText: null,
