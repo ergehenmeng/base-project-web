@@ -115,7 +115,7 @@ const formData = ref({
   verificationType: 1,
   realBuy: true,
   advanceDay: 1,
-  quota: 9,
+  quota: 99,
   ticketIds: [],
   dueDate: [],
   introduceText: null,
