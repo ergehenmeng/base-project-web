@@ -34,7 +34,7 @@
 import { balanceRechargeApi, rechargeDetailApi, scanRechargeApi } from '@/api/merchant/score';
 import { useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { goBack } from '@/utils/common.js';
+import { goBack, numberValidator } from '@/utils/common.js';
 
 const router = useRouter();
 const loading = ref(false);
