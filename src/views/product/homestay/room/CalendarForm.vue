@@ -9,7 +9,7 @@
           <div style="display: flex; justify-content: right; padding: 5px; height: 35px">
             <div style="display: flex; justify-content: center">
               <span style="line-height: 25px">不可预定：</span>
-              <div style="width: 40px; height: 25px; background-color: #ff5151"></div>
+              <div style="width: 40px; height: 25px; background-color: #ff5151" title="状态为不可用或库存为0均为不可预定"></div>
             </div>
             <div style="display: flex; justify-content: center">
               <span style="line-height: 25px">&nbsp;可预定：</span>
