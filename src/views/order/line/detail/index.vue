@@ -44,7 +44,7 @@
         <div class="content-nav">
           <span>线路名称：</span><span>{{ data.title }}</span>
           <span>旅行社：</span><span>{{ data.travelName }}</span>
-          <span>出发城市：</span><span>{{ data.startProvinceCity }}</span>
+          <span>出发城市：</span><span>{{ data.startCity }}</span>
           <span>游玩天数：</span><span>{{ durationFormat(data.duration) }}</span>
           <span>备注信息：</span ><span ><span class="order-remark">{{ data.remark }}</span></span >
         </div>
@@ -88,7 +88,7 @@ const data = ref({
   travelName: '',
   title: '',
   duration: null,
-  startProvinceCity: '',
+  startCity: '',
   payType: null,
   tradeNo: null,
   num: null,

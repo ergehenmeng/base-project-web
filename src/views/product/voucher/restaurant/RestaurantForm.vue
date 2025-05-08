@@ -139,7 +139,11 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = { ...res.data };
-        formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+        if (res.data.countyId) {
+          formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+        } else {
+          formData.value.areaList = [res.data.provinceId, res.data.cityId];
+        }
         formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {

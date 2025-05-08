@@ -63,7 +63,11 @@ const openDialog = (row) => {
     dialogTitle.value = '编辑收货地址';
     selectApi({ id: row.id }).then((res) => {
       formData.value = res.data;
-      formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+      if (res.data.countyId) {
+        formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
+      } else {
+        formData.value.areaList = [res.data.provinceId, res.data.cityId];
+      }
     });
   } else {
     dialogTitle.value = '新增收货地址';
