@@ -6,10 +6,10 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属景区" prop="scenicId">
-        <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled"></ScenicSelect>
+        <ScenicSelect v-model="formData.scenicId" :clearable="false" :disabled="disabled" @change="loadTicketList"></ScenicSelect>
       </el-form-item>
       <el-form-item label="票种类型" prop="category">
-        <el-select v-model="formData.category" @change="handleChangeCategory">
+        <el-select v-model="formData.category" @change="loadTicketList">
           <el-option label="成人" :value="1" />
           <el-option label="老人" :value="2" />
           <el-option label="儿童" :value="3" />
@@ -37,7 +37,7 @@
         <el-input v-model="formData.virtualNum" placeholder="不填写默认为0" show-word-limit maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" /><QuestionTip content="注意：该字段为单日库存量"/>
+        <el-input v-model="formData.stock" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" /><QuestionTip content="注意：单日库存量"/>
       </el-form-item>
       <el-form-item label="提前购票(天)" prop="advanceDay">
         <el-input v-model="formData.advanceDay" show-word-limit maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')" />
@@ -165,20 +165,13 @@ const formatState = computed(() => {
   }
 });
 
-const handleChangeCategory = (value) => {
-  if (value === 7) {
-    warningMsg('注意：选择组合票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
+const loadTicketList = () => {
+  if (formData.value.scenicId === null) {
+    warningMsg('请先选择所属景区');
+    return;
   }
-  formData.value.ticketIds = [];
-  loadTicketList(value);
-}
-
-const loadTicketList = (value) => {
-  if (value === 7) {
-    if (formData.value.scenicId === null) {
-      warningMsg('请先选择所属景区');
-      return;
-    }
+  if (formData.value.category === 7) {
+    warningMsg('注意：选择组合票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
     formRules.ticketIds = [{ required: true, message: '请输入组合门票', trigger: 'change'}, {
       validator: (rule, value, callback) => {
         let length = formData.value.ticketIds.length
@@ -199,6 +192,7 @@ const loadTicketList = (value) => {
     }
   } else {
     formRules.ticketIds = [];
+    formData.value.ticketIds = [];
   }
 };
 
@@ -213,7 +207,7 @@ onMounted(() => {
         formData.value = res.data;
         formData.value.dueDate = [res.data.startDate, res.data.endDate];
         formData.value.introduceText = res.data.introduce;
-        loadTicketList(res.data.category);
+        loadTicketList();
       })
       .finally(() => {
         loading.value = false;
