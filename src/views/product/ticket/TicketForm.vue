@@ -77,10 +77,11 @@
 import { createApi, selectApi, updateApi, listApi } from '@/api/product/ticket';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { successMsg, warningMsg } from '@/utils/message.js'
+import { errorMsg, successMsg, warningMsg } from '@/utils/message.js'
 import { goBack, numberValidator } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
+import dayjs from 'dayjs'
 
 const route = useRoute();
 const router = useRouter();
@@ -165,13 +166,17 @@ const formatState = computed(() => {
   }
 });
 
-const loadTicketList = () => {
+const loadTicketList = (noTips = false) => {
   if (formData.value.scenicId === null) {
-    warningMsg('请先选择所属景区');
+    if (!noTips) {
+      warningMsg('请先选择所属景区');
+    }
     return;
   }
   if (formData.value.category === 7) {
-    warningMsg('注意：选择组合票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
+    if (!noTips) {
+      warningMsg('注意：选择组合票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
+    }
     formRules.ticketIds = [{ required: true, message: '请输入组合门票', trigger: 'change'}, {
       validator: (rule, value, callback) => {
         let length = formData.value.ticketIds.length
@@ -207,7 +212,11 @@ onMounted(() => {
         formData.value = res.data;
         formData.value.dueDate = [res.data.startDate, res.data.endDate];
         formData.value.introduceText = res.data.introduce;
-        loadTicketList();
+        let endDate = dayjs(res.data.endDate, 'YYYY-MM-DD')
+        if (endDate.isBefore(dayjs())) {
+          warningMsg("可预订时间已过期，请及时调整以免影响用户购买")
+        }
+        loadTicketList(true);
       })
       .finally(() => {
         loading.value = false;
