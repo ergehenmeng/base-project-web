@@ -23,7 +23,7 @@
             <el-option label="演出" :value="4" />
             <el-option label="活动" :value="5" />
             <el-option label="研学" :value="6" />
-            <el-option label="组合" :value="7" />
+            <el-option label="套票" :value="7" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -147,7 +147,7 @@ const formatter = (row, column, cellValue) => {
       case 6:
         return '研学';
       case 7:
-        return '组合'
+        return '套票'
       default:
         return '无';
     }

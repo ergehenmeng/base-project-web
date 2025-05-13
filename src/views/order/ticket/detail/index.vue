@@ -36,8 +36,20 @@
           <span>门票信息</span>
         </div>
         <div class="content-nav">
-          <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}</span> <span>票种类型：</span
-          ><span>{{ ticketType }}</span>
+          <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}
+          <el-popover placement="right" :width="400" trigger="hover" v-if="data.category === 7">
+            <template #reference>
+              <el-button type="primary" link><Question/></el-button>
+            </template>
+            <el-table :data="data.combineList">
+              <el-table-column width="120" property="title" label="门票名称" />
+              <el-table-column width="80" property="category" label="票种" :formatter="formatter"/>
+              <el-table-column width="180" property="useTime" label="核销时间" />
+            </el-table>
+          </el-popover>
+
+          </span><span>票种类型：</span
+          ><span>{{ ticketType(data.category) }}</span>
           <span>是否实名：</span><span>{{ data.realBuy ? '是' : '否' }}</span> <span>备注信息：</span
           ><span
             ><span class="order-remark">{{ data.remark }}</span></span
@@ -75,6 +87,7 @@ import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 import CopyLink from '@/components/CopyLink.vue'
+import Question from '@/components/icon/Question.vue'
 
 const loading = ref(false);
 const route = useRoute();
@@ -102,39 +115,48 @@ const data = ref({
   createTime: null,
   realBuy: null,
   visitorList: [],
+  combineList: [],
   remark: null
 });
 
-const formatter = (_row, _column, cellValue) => {
-  if (cellValue === 0) {
-    return '待支付';
-  } else if (cellValue === 1) {
-    return '待使用';
-  } else if (cellValue === 2) {
-    return '已使用';
-  } else if (cellValue === 3) {
-    return '退款中';
-  } else {
-    return '已退款';
+const formatter = (_row, column, cellValue) => {
+  if (column.property === 'state') {
+    if (cellValue === 0) {
+      return '待支付';
+    } else if (cellValue === 1) {
+      return '待使用';
+    } else if (cellValue === 2) {
+      return '已使用';
+    } else if (cellValue === 3) {
+      return '退款中';
+    } else {
+      return '已退款';
+    }
+  } else if (column.property === 'category') {
+    return formatCategory(cellValue);
   }
 };
 
-const ticketType = computed(() => {
-  if (data.value.category === 1) {
+const formatCategory = (category) => {
+  if (category === 1) {
     return '成人';
-  } else if (data.value.category === 2) {
+  } else if (category === 2) {
     return '老人';
-  } else if (data.value.category === 3) {
+  } else if (category === 3) {
     return '儿童';
-  } else if (data.value.category === 4) {
+  } else if (category === 4) {
     return '演出';
-  } else if (data.value.category === 5) {
+  } else if (category === 5) {
     return '活动';
-  } else if (data.value.category === 6) {
+  } else if (category === 6) {
     return '研学';
-  } else if (data.value.category === 7) {
-    return '组合';
+  } else if (category === 7) {
+    return '套票';
   }
+}
+
+const ticketType = computed(() => {
+  return formatCategory;
 })
 
 onBeforeMount(() => {
