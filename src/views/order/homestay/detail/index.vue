@@ -156,7 +156,7 @@ const handleYesConfirm = () => {
   confirmMsg(msg, () => {
     confirmApi({ orderNo: route.params.orderNo, confirmState: 1 }).then(() => {
       successMsg('确认成功');
-      goBack(router);
+      router.go(0);
     });
   })
 };
@@ -171,10 +171,10 @@ const handleNoConfirm = () => {
     inputValidator: (str) => {
       return str !== '' && str !== null && str !== undefined && str.length <= 50;
     }
-  }).then(() => {
-    confirmApi({ orderNo: route.params.orderNo, confirmState: 2 }).then(() => {
+  }).then(({value}) => {
+    confirmApi({ orderNo: route.params.orderNo, confirmState: 2, remark: value }).then(() => {
       successMsg('确认成功');
-      goBack(router);
+      router.go(0);
     }).catch(() => {
     });
   });
