@@ -27,11 +27,8 @@
           <template v-if="data.payTime">
             <span>支付时间：</span><span>{{ data.payTime }}</span>
           </template>
-          <template v-if="data.state > 1 ">
-            <span>确认状态：</span><span>{{ formatConfirmState(data.confirmState) }}</span>
-          </template>
           <template v-if="data.state > 1 && data.confirmState === 2">
-            <span>拒绝理由：</span><span>{{ data.confirmRemark }}</span>
+            <span>拒绝理由：</span><span>{{ data.confirmRemark }} <QuestionTip :content="formatConfirmState(data.confirmState)"/></span>
           </template>
           <template v-if="data.state === 9">
             <span>关闭时间：</span><span>{{ data.closeTime }}<QuestionTip :content="data.closeType === 1 ? '过期自动关闭' : data.closeType === 2 ? '用户取消' : '退款完成'"></QuestionTip></span>
