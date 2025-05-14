@@ -162,12 +162,10 @@ const handleYesConfirm = () => {
 };
 
 const handleNoConfirm = () => {
-  const msg  = renderMsg(["你的民宿确定没有", () => data.value.title, "了吗？"])
-  ElMessageBox.prompt(msg, '提示', {
+  ElMessageBox.prompt('请输入拒绝入住原因', '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
-    inputPlaceholder: '备注信息',
-    inputErrorMessage: '备注信息不为空且小于50个字符',
+    inputErrorMessage: '原因不为空且小于50个字符',
     inputValidator: (str) => {
       return str !== '' && str !== null && str !== undefined && str.length <= 50;
     }
