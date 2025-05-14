@@ -133,9 +133,9 @@ const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     return orderStateFormat(cellValue);
   } else if (column.property === 'closeType') {
-    closeTypeFormat(cellValue);
+    return closeTypeFormat(cellValue);
   } else if (column.property === 'payType') {
-    payTypeFormat(cellValue);
+    return payTypeFormat(cellValue);
   } else {
     return cellValue;
   }
