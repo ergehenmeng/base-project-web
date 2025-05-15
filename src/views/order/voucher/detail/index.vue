@@ -8,7 +8,7 @@
           <span>订单信息</span>
         </div>
         <div class="content-nav">
-          <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.tradeNo"/></span>
+          <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.orderNo"/></span>
           <span>购买数量：</span><span>{{ data.num }} 张</span>
           <span>已核销：</span><span>{{ data.useNum }} 张</span>
           <span>订单联系人：</span><span> {{ data.nickName }}-{{ data.mobile }}</span>

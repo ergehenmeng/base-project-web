@@ -33,7 +33,7 @@
           <template v-if="data.completeTime">
             <span>完成时间：</span><span>{{ data.completeTime }}</span>
           </template>
-          <template v-if="data.refundAmount && data.state !== 9 && data.state > 1">
+          <template v-if="data.refundAmount && data.refundAmount > 0">
             <span>已退款金额：</span><span style="color: #409eff">{{ data.refundAmount }}</span>
           </template>
         </div>
