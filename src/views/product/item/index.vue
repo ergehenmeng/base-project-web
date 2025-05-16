@@ -53,10 +53,9 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="商品名称" min-width="150" />
-        <el-table-column prop="storeName" label="所属店铺" min-width="150" />
+        <el-table-column prop="title" label="商品名称" min-width="140" />
+        <el-table-column prop="storeName" label="所属店铺" min-width="140" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
-        <el-table-column prop="quota" label="限购数量" width="100" />
         <el-table-column prop="deliveryType" label="交付方式" width="100" :formatter="formatter" />
         <el-table-column prop="minPrice" label="价格" width="130" :formatter="formatter" />
         <el-table-column prop="saleNum"  width="80" >
