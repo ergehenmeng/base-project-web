@@ -63,7 +63,7 @@
           <div class="content-nav">
             <div class="item-list">
               <el-table :data="data.itemList" @selection-change="handleSelected" max-height="300">
-                <el-table-column type="selection" width="50"> </el-table-column>
+                <el-table-column type="selection" width="50" :selectable="selectState"> </el-table-column>
                 <el-table-column label="图片" prop="coverUrl" width="80">
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
@@ -79,7 +79,7 @@
                 <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
                 <el-table-column width="80">
                   <template #header>
-                    <el-button v-if="(data.state === 4 || data.state === 5) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
+                    <el-button v-if="(data.state === 4) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
                     <span v-else>操作</span>
                   </template>
                   <template #default="scope">
@@ -202,6 +202,10 @@ const data = ref({
 const handleSelected = (val) => {
   selected.value = val.map((item) => item.id);
 };
+
+const selectState = (row) => {
+  return row.deliveryState === 1;
+}
 
 const handleUpdatePrice = (row) => {
   adjustRef.value.openDialog({orderNo: data.value.orderNo, ...row});
