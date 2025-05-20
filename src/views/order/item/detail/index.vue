@@ -71,7 +71,11 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="商品名称" prop="title" min-width="150"></el-table-column>
+                <el-table-column label="商品名称" prop="title" min-width="150">
+                  <template #default="scope">
+                    <el-link type="primary" :underline="false" @click="handleDetail(scope.row)">{{scope.row.title}}</el-link>
+                  </template>
+                </el-table-column>
                 <el-table-column label="规格名称" prop="skuTitle" width="120" :formatter="formatter"></el-table-column>
                 <el-table-column label="购买数量" prop="num" width="100"></el-table-column>
                 <el-table-column label="单价" prop="salePrice" width="100"></el-table-column>
@@ -154,7 +158,7 @@
 <script setup>
 import { selectApi } from '@/api/order/item';
 import { formatExpressType, goBack } from '@/utils/common.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { Edit, EditPen } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
@@ -168,6 +172,7 @@ import CopyLink from '@/components/CopyLink.vue'
 const userStore = useUserStore();
 const loading = ref(false);
 const route = useRoute();
+const router = useRouter();
 const selected = ref([]);
 const deliveryAuth = userStore.hasAuth('BRD0');
 const adjustRef = ref();
@@ -240,6 +245,10 @@ const formatter = (_row, column, cellValue) => {
   } else if (column.property === 'refundState') {
     return cellValue === 1 ? "已退款" : "无";
   }
+};
+
+const handleDetail = (row) => {
+  router.push('/product/item/detail/' + row.itemId);
 };
 
 onBeforeMount(() => {
