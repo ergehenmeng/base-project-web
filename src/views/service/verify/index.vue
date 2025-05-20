@@ -20,12 +20,12 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="merchantName" label="商户名称" width="250" />
-        <el-table-column prop="orderNo" label="订单编号" width="200" />
-        <el-table-column prop="title" label="核销人" width="150" />
-        <el-table-column prop="travelName" label="核销数量" width="150" />
-        <el-table-column prop="discountAmount" label="核销备注" min-width="100" />
-        <el-table-column prop="createTime" label="核销时间" width="180" />
+        <el-table-column prop="merchantName" label="商户名称" min-width="200" />
+        <el-table-column prop="orderNo" label="订单编号" min-width="200" />
+        <el-table-column prop="verifyName" label="核销人" min-width="150" />
+        <el-table-column prop="num" label="核销数量" min-width="150" />
+        <el-table-column prop="remark" label="核销备注" min-width="100" />
+        <el-table-column prop="createTime" label="核销时间" min-width="180" />
       </el-table>
       <el-pagination
         v-model:current-page="queryParams.page"

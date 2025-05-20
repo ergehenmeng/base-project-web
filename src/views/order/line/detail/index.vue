@@ -42,8 +42,8 @@
           <span>线路信息</span>
         </div>
         <div class="content-nav">
-          <span>线路名称：</span><span>{{ data.title }}</span>
           <span>旅行社：</span><span>{{ data.travelName }}</span>
+          <span>线路名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.lineId)">{{ data.title }}</el-link></span>
           <span>出发城市：</span><span>{{ data.startCity }}</span>
           <span>游玩天数：</span><span>{{ durationFormat(data.duration) }}</span>
           <span>备注信息：</span ><span ><span class="order-remark">{{ data.remark }}</span></span >
@@ -74,7 +74,7 @@
 <script setup>
 import { selectApi } from '@/api/order/line';
 import { durationFormat, goBack } from '@/utils/common.js'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
@@ -83,10 +83,12 @@ import CopyLink from '@/components/CopyLink.vue'
 
 const loading = ref(false);
 const route = useRoute();
+const router = useRouter();
 const data = ref({
   orderNo: '',
   travelName: '',
   title: '',
+  lineId: null,
   duration: null,
   startCity: '',
   payType: null,
@@ -124,6 +126,10 @@ const formatter = (_row, _column, cellValue) => {
   } else {
     return '已退款';
   }
+};
+
+const handleDetail = (id) => {
+  router.push('/product/line/detail/' + id);
 };
 
 onBeforeMount(() => {

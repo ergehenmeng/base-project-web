@@ -36,7 +36,7 @@
           <span>门票信息</span>
         </div>
         <div class="content-nav">
-          <span>景区名称：</span><span>{{ data.scenicName }}</span> <span>门票名称：</span><span>{{ data.title }}
+          <span>景区名称：</span><span><el-link type="primary" :underline="false" @click="handleScenicDetail(data.scenicId)">{{ data.scenicName }}</el-link></span> <span>门票名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.ticketId)">{{ data.title }}</el-link>
           <el-popover placement="right" :width="400" trigger="hover" v-if="data.category === 7">
             <template #reference>
               <el-button type="primary" link><Question/></el-button>
@@ -81,7 +81,7 @@
 <script setup>
 import { selectApi } from '@/api/order/ticket';
 import { goBack } from '@/utils/common.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
@@ -91,9 +91,11 @@ import Question from '@/components/icon/Question.vue'
 
 const loading = ref(false);
 const route = useRoute();
+const router = useRouter();
 const data = ref({
   orderNo: '',
   scenicName: '',
+  ticketId: null,
   title: '',
   payType: null,
   tradeNo: null,
@@ -154,6 +156,14 @@ const formatCategory = (category) => {
     return '套票';
   }
 }
+
+const handleDetail = (id) => {
+  router.push('/product/ticket/detail/' + id);
+};
+
+const handleScenicDetail = (id) => {
+  router.push('/product/scenic/detail/' + id);
+};
 
 const ticketType = computed(() => {
   return formatCategory;

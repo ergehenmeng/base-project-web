@@ -44,8 +44,8 @@
           <span>餐饮券信息</span>
         </div>
         <div class="content-nav">
-          <span>餐饮券名称：</span><span>{{ data.title }}</span>
           <span>餐饮店铺：</span><span>{{ data.restaurantName }}</span>
+          <span>餐饮券名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.voucherId)">{{ data.title }}</el-link></span>
           <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
         </div>
       </div>
@@ -62,7 +62,7 @@
 <script setup>
 import { selectApi } from '@/api/order/voucher';
 import { goBack } from '@/utils/common.js';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
@@ -71,10 +71,12 @@ import CopyLink from '@/components/CopyLink.vue'
 
 const loading = ref(false);
 const route = useRoute();
+const router = useRouter();
 const data = ref({
   orderNo: '',
   restaurantName: '',
   title: '',
+  voucherId: null,
   venueType: null,
   payType: null,
   num: null,
@@ -102,6 +104,10 @@ const data = ref({
   createTime: null,
   remark: null
 });
+
+const handleDetail = (id) => {
+  router.push('/product/voucher/detail/' + id);
+};
 
 onBeforeMount(() => {
   loading.value = true;
