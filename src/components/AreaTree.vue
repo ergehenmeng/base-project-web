@@ -32,7 +32,7 @@ const defaultProps = {
 };
 
 const openDialog = (shieldList, selectedList) => {
-  areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList);
+  areaList.value = getNoCheckedChildren(areaStore.areaList, shieldList.join(','));
   checkedKeys.value = selectedList;
   showDialog.value = true;
   before.value = selectedList.join(',');
@@ -41,28 +41,23 @@ const openDialog = (shieldList, selectedList) => {
  * 获取所有没有被选中的子节点
  *
  * @param areaList
- * @param shieldList 其他已经选中的区域id [110000,110100]
+ * @param shieldIds 其他已经选中的区域id 110000,110100
  * @returns {*|*[]}
  */
-const getNoCheckedChildren = (areaList, shieldList) => {
-  if (shieldList.length === 0) {
+const getNoCheckedChildren = (areaList, shieldIds) => {
+  if (shieldIds.length === 0) {
     return areaList;
   }
   const nodeList = [];
   areaList.forEach((item) => {
     if (item.children.length > 0) {
-      const children = getNoCheckedChildren(item.children, shieldList);
+      const children = getNoCheckedChildren(item.children, shieldIds);
       if (children.length > 0) {
         item.children = children;
         nodeList.push(item);
       }
-    } else {
-      for (let ids of shieldList) {
-        if (ids.indexOf(item.id) === -1) {
-          nodeList.push(item);
-          break;
-        }
-      }
+    } else if (shieldIds.indexOf(item.id) === -1) {
+      nodeList.push(item);
     }
   });
   return nodeList;
