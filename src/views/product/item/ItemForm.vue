@@ -500,7 +500,10 @@ const handleDelivery = (value) => {
   if (value === 1) {
     formData.value.expressId = null;
     formRules.expressId = [{ required: true, message: '请选择物流模板', trigger: 'change' }];
+    formData.pickupId = [];
   } else {
+    formData.value.pickupId = null;
+    formRules.pickupId = [{ required: true, message: '请选择自提点', trigger: 'change' }];
     formRules.expressId = [];
   }
 };
