@@ -165,12 +165,13 @@
         <el-radio-group v-model="formData.deliveryType" @change="handleDelivery">
           <el-radio :value="1">快递</el-radio>
           <el-radio :value="2">自提</el-radio>
+          <el-radio :value="3">快递/自提</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="物流模板" prop="expressId" v-if="formData.deliveryType === 1">
+      <el-form-item label="物流模板" v-if="formData.deliveryType === 1 || formData.deliveryType === 3">
         <ExpressSelect v-model="formData.expressId" :clearable="false"></ExpressSelect>
       </el-form-item>
-      <el-form-item label="自提点" prop="pickupId" v-if="formData.deliveryType === 2">
+      <el-form-item label="自提点" prop="pickupId" v-if="formData.deliveryType === 2 || formData.deliveryType === 3">
         <el-select v-model="formData.pickupId" >
           <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
             <span style="float: left">{{ item.detailAddress }}</span>
@@ -235,8 +236,7 @@ const formRules = reactive({
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
-  expressId: [{ required: true, message: '请选择物流模板', trigger: 'change' }],
-  deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
+  deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change'}],
   purchaseNotesText: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
@@ -498,13 +498,13 @@ const loadItemDetail = (id) => {
 
 const handleDelivery = (value) => {
   if (value === 1) {
-    formData.value.expressId = null;
-    formRules.expressId = [{ required: true, message: '请选择物流模板', trigger: 'change' }];
-    formData.pickupId = [];
-  } else {
     formData.value.pickupId = null;
+    formRules.pickupId = [];
+  } else {
     formRules.pickupId = [{ required: true, message: '请选择自提点', trigger: 'change' }];
-    formRules.expressId = [];
+    if (value === 2) {
+      formData.value.expressId = null;
+    }
   }
 };
 
