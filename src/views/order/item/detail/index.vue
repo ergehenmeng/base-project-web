@@ -83,7 +83,8 @@
                 <el-table-column label="配送状态" prop="deliveryState" width="100" :formatter="formatter"></el-table-column>
                 <el-table-column width="80">
                   <template #header>
-                    <el-button v-if="(data.state === 4) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
+                    <el-button v-if="(data.state === 3) && confirmAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handlePickup">自提</el-button>
+                    <el-button v-else-if="(data.state === 4) && deliveryAuth " type="primary" size="small" :disabled="selected.length === 0" @click="handleDelivery">发货</el-button>
                     <span v-else>操作</span>
                   </template>
                   <template #default="scope">
@@ -175,6 +176,7 @@ const route = useRoute();
 const router = useRouter();
 const selected = ref([]);
 const deliveryAuth = userStore.hasAuth('BRD0');
+const confirmAuth = userStore.hasAuth('BRD0');
 const adjustRef = ref();
 const expressRef = ref();
 const sippingRef = ref();
@@ -222,6 +224,10 @@ const handleUpdateExpress = (row) => {
 
 const handleDelivery = () => {
   sippingRef.value.openDialog({orderIds: selected.value, orderNo: data.value.orderNo});
+}
+
+const handlePickup = () => {
+  console.log('待补全逻辑')
 }
 
 const formatter = (_row, column, cellValue) => {

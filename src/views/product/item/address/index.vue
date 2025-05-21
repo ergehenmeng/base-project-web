@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="收货人昵称" clearable @keyup.enter="search" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="负责人昵称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
@@ -12,8 +12,9 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
-        <el-table-column prop="nickName" label="收货人昵称" />
-        <el-table-column prop="mobile" label="收货人手机号码" />
+        <el-table-column prop="nickName" label="负责人昵称" />
+        <el-table-column prop="mobile" label="负责人手机号码" />
+        <el-table-column prop="addressType" label="地址类型" :formatter="formatter"/>
         <el-table-column prop="detailAddress" label="详细地址" min-width="200" />
         <el-table-column prop="remark" label="备注信息" min-width="150"/>
         <el-table-column prop="createTime" label="创建时间" />
@@ -64,6 +65,10 @@ const queryParams = reactive({
   page: 1,
   pageSize: 10
 });
+
+const formatter = (_row, _column, cellValue) => {
+  return cellValue === 1 ? '收货' : '自提';
+};
 
 const getPage = async () => {
   loading.value = true;

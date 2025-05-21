@@ -1,11 +1,17 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="收货人昵称" prop="nickName">
+      <el-form-item label="负责人昵称" prop="nickName">
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
-      <el-form-item label="收货人手机号" prop="mobile">
+      <el-form-item label="负责人手机号" prop="mobile">
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
+      </el-form-item>
+      <el-form-item label="地址类型" prop="addressType">
+        <el-radio-group v-model="formData.addressType">
+          <el-radio :value="1">收货</el-radio>
+          <el-radio :value="2">自提</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList" :clearable="false"></AreaSelect>
@@ -38,11 +44,12 @@ const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
-  nickName: [{ required: true, message: '收货人昵称不能为空', trigger: 'blur' }],
+  nickName: [{ required: true, message: '负责人昵称不能为空', trigger: 'blur' }],
   mobile: [
-    { required: true, message: '收货人手机号不能为空', trigger: 'blur' },
+    { required: true, message: '负责人手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
   ],
+  addressType: [{ required: true, message: '请选择地址类型', trigger: 'change' }],
   areaList: [{ required: true, message: '省市县不能为空', trigger: 'change', type: 'array' }],
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }]
 });
@@ -51,6 +58,7 @@ const formData = ref({
   id: null,
   nickName: null,
   mobile: null,
+  addressType: 1,
   areaList: [],
   detailAddress: null,
   remark: null
@@ -79,6 +87,7 @@ const resetForm = () => {
     id: null,
     nickName: null,
     mobile: null,
+    addressType: 1,
     areaList: [],
     detailAddress: null,
     remark: null

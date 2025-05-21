@@ -164,11 +164,19 @@
       <el-form-item label="交付方式" prop="deliveryType">
         <el-radio-group v-model="formData.deliveryType" @change="handleDelivery">
           <el-radio :value="1">快递</el-radio>
-          <el-radio :value="2">门店自提</el-radio>
+          <el-radio :value="2">自提</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="物流模板" prop="expressId">
+      <el-form-item label="物流模板" prop="expressId" v-if="formData.deliveryType === 1">
         <ExpressSelect v-model="formData.expressId" :clearable="false"></ExpressSelect>
+      </el-form-item>
+      <el-form-item label="自提点" prop="pickupId" v-if="formData.deliveryType === 2">
+        <el-select v-model="formData.pickupId" >
+          <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
+            <span style="float: left">{{ item.detailAddress }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}</span>
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
@@ -207,6 +215,7 @@ import StoreSelect from '@/components/StoreSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
+import { addressListApi } from '@/api/product/store/index.js'
 
 const route = useRoute();
 const router = useRouter();
@@ -214,6 +223,7 @@ const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
 const showSecondSpec = ref(false);
+const addressList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
@@ -240,6 +250,7 @@ let formData = ref({
   quota: 99,
   deliveryType: 1,
   expressId: null,
+  pickupId: null,
   coverUrl: [],
   multiSpec: false,
   introduceText: null,
@@ -467,6 +478,9 @@ onMounted(() => {
     disabled.value = route.fullPath.startsWith('/product/item/detail');
     loadItemDetail(params.id);
   }
+  addressListApi({ addressType: 1 }).then((res) => {
+    addressList.value = res.data;
+  });
 });
 
 const loadItemDetail = (id) => {

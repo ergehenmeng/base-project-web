@@ -32,7 +32,7 @@
         <el-select v-model="formData.depotAddressId" filterable>
           <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
             <span style="float: left">{{ item.detailAddress }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}：{{ item.mobile }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}</span>
           </el-option>
         </el-select>
         <QuestionTip content="该地址是用户退换货时商家的收货地址"></QuestionTip>
@@ -42,7 +42,7 @@
       </el-form-item>
       <el-form-item label="商家介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce" class="html-preview"/>
+        <div v-else v-html="formData.introduce" class="html-preview" />
       </el-form-item>
     </el-form>
     <div>
@@ -69,7 +69,7 @@ import AreaSelect from '@/components/AreaSelect.vue';
 import MapContainer from '@/components/MapContainer.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import MerchantSelect from '@/components/MerchantSelect.vue';
-import QuestionTip from '@/components/QuestionTip.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -180,7 +180,7 @@ const setLocation = (lng, lat) => {
  */
 const handleMerchantChange = (val) => {
   if (val) {
-    addressListApi({ merchantId: val }).then((res) => {
+    addressListApi({ merchantId: val, addressType: 1 }).then((res) => {
       addressList.value = res.data;
     });
   } else {
