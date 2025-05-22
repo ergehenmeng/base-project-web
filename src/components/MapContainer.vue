@@ -107,10 +107,10 @@ defineExpose({
 <template>
   <el-dialog title="选取点位" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false">
     <div class="map-header">
-      <el-input id="searchName" v-model="searchName" placeholder="请输入地址" class="w250" size="small" />
-      <div class="map-header-show">
-        <el-input v-model="lng" placeholder="经度" size="small" readonly />&nbsp;
-        <el-input v-model="lat" placeholder="纬度" size="small" readonly />
+      <input id="searchName" v-model="searchName" placeholder="请输入地址" class="map-input map-search"/>
+      <div class="map-header-right">
+        <input v-model="lng" placeholder="经度" class="map-input map-location" readonly/>-
+        <input v-model="lat" placeholder="纬度" class="map-input map-location" readonly/>
       </div>
     </div>
     <div id="mapContainer" class="dialog-map-content"></div>
@@ -133,13 +133,30 @@ defineExpose({
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-
-  .map-header-show {
+  .map-header-right {
     width: 250px;
     display: flex;
   }
-  .el-input--small {
-    --el-input-height: 32px;
+  .map-input {
+    height: 28px;
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid #c0c4cc;
+    align-items: center;
+    cursor: text;
+    display: inline-flex;
+    transition: border-color 0.3s ease
   }
+  .map-search {
+     width: 350px !important;
+  }
+  .map-location {
+    width: 100px;
+  }
+  .map-input:focus {
+    outline: none;
+    border: 1px solid #66afe9;
+  }
+
 }
 </style>
