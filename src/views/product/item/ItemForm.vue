@@ -472,14 +472,16 @@ const handleSave = () => {
 
 onMounted(() => {
   const params = route.params;
-  if (params.id !== undefined) {
-    loading.value = true;
-    // 详情页面进来不可点击
-    disabled.value = route.fullPath.startsWith('/product/item/detail');
-    loadItemDetail(params.id);
-  }
-  addressListApi({ addressType: 1 }).then((res) => {
+  loading.value = true;
+  addressListApi({ addressType: 2 }).then((res) => {
     addressList.value = res.data;
+  }).finally(() => {
+    if (params.id !== undefined) {
+      // 详情页面进来不可点击
+      disabled.value = route.fullPath.startsWith('/product/item/detail');
+      loadItemDetail(params.id);
+    }
+    loading.value = false;
   });
 });
 
@@ -490,10 +492,8 @@ const loadItemDetail = (id) => {
       formData.value = { ...res.data };
       formData.value.introduceText = res.data.introduce;
       formData.value.purchaseNotesText = res.data.purchaseNotes;
+      handleDelivery(formData.value.deliveryType);
     })
-    .finally(() => {
-      loading.value = false;
-    });
 };
 
 const handleDelivery = (value) => {
