@@ -16,9 +16,10 @@
         <el-table-column prop="mobile" label="负责人手机号码" />
         <el-table-column prop="addressType" label="地址类型" :formatter="formatter"/>
         <el-table-column prop="detailAddress" label="详细地址" min-width="200" />
+        <el-table-column prop="latitude" label="经纬度" min-width="120" :formatter="formatter"/>
         <el-table-column prop="remark" label="备注信息" min-width="150"/>
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
+        <el-table-column prop="createTime" label="创建时间" width="170"/>
+        <el-table-column prop="updateTime" label="更新时间" width="170"/>
         <el-table-column label="操作" fixed="right">
           <template #header>
             <span>操作</span>
@@ -66,8 +67,12 @@ const queryParams = reactive({
   pageSize: 10
 });
 
-const formatter = (_row, _column, cellValue) => {
-  return cellValue === 1 ? '收货' : '自提';
+const formatter = (row, column, cellValue) => {
+  if (column.property === 'addressType') {
+    return cellValue === 1 ? '收货' : '自提';
+  } else {
+    return row.longitude + '~' + cellValue;
+  }
 };
 
 const getPage = async () => {
