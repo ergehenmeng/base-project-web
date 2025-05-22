@@ -35,11 +35,7 @@
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit readonly class="w120" />
-        -
-        <el-input v-model="formData.latitude" show-word-limit readonly class="w120" />
-        &nbsp;
-        <el-button type="primary" @click="handleMap">选择</el-button>
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
@@ -59,7 +55,6 @@
       </div>
     </div>
   </div>
-  <MapContainer ref="mapRef" @reload="setLocation"></MapContainer>
 </template>
 
 <script setup>
@@ -70,14 +65,13 @@ import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack, phoneValidator } from '@/utils/common.js';
-import MapContainer from '@/components/MapContainer.vue';
+import LocationMap from '@/components/LocationMap.vue'
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const mapRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '景区名称不能为空', trigger: 'blur' }],
@@ -162,12 +156,5 @@ onMounted(() => {
   }
 });
 
-const handleMap = () => {
-  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
-};
 
-const setLocation = (lng, lat) => {
-  formData.value.longitude = lng;
-  formData.value.latitude = lat;
-};
 </script>

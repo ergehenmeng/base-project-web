@@ -19,6 +19,9 @@
       <el-form-item label="详细地址" prop="detailAddress">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
       </el-form-item>
+      <el-form-item label="经纬度" prop="latitude">
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
+      </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
@@ -36,6 +39,7 @@
 import { createApi, selectApi, updateApi } from '@/api/product/address';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
+import LocationMap from '@/components/LocationMap.vue'
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -50,6 +54,7 @@ const formRules = reactive({
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
   ],
   addressType: [{ required: true, message: '请选择地址类型', trigger: 'change' }],
+  latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   areaList: [{ required: true, message: '省市县不能为空', trigger: 'change', type: 'array' }],
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }]
 });
@@ -86,6 +91,8 @@ const resetForm = () => {
   formData.value = {
     id: null,
     nickName: null,
+    latitude: null,
+    longitude: null,
     mobile: null,
     addressType: 1,
     areaList: [],

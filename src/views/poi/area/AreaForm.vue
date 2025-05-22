@@ -8,11 +8,7 @@
         <el-input v-model="formData.code" show-word-limit maxlength="20" @keyup="formData.code=formData.code.replace(/[^a-zA-Z]/g,'')"/>
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit readonly style="width: 120px !important" />
-        -
-        <el-input v-model="formData.latitude" show-word-limit readonly style="width: 120px !important" />
-        &nbsp;
-        <el-button type="primary" @click="handleMap">选择</el-button>
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -30,21 +26,19 @@
         <el-button type="primary" @click="handleSave">保存</el-button>
       </span>
     </template>
-    <MapContainer ref="mapRef" @reload="setLocation" :append-to-body="true"></MapContainer>
   </el-dialog>
 </template>
 <script setup>
 import { createApi, updateApi } from '@/api/poi/area';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
-import MapContainer from '@/components/MapContainer.vue';
+import LocationMap from '@/components/LocationMap.vue'
 
 const dialogTitle = ref('');
 const formDataRef = ref();
 const showDialog = ref(false);
 const loading = ref(false);
 const disabled = ref(false);
-const mapRef = ref();
 const emit = defineEmits(['reload']);
 
 const formRules = reactive({
@@ -54,15 +48,6 @@ const formRules = reactive({
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }],
   latitude: [{ required: true, message: '经纬度不能为空', trigger: 'change' }]
 });
-
-const handleMap = () => {
-  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
-};
-
-const setLocation = (lng, lat) => {
-  formData.value.longitude = lng;
-  formData.value.latitude = lat;
-};
 
 const formData = ref({
   id: null,
@@ -93,6 +78,8 @@ const resetForm = () => {
     nickName: null,
     mobile: null,
     areaList: [],
+    longitude: null,
+    latitude: null,
     detailAddress: null,
     remark: null
   };

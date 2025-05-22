@@ -138,5 +138,8 @@ defineExpose({
     width: 250px;
     display: flex;
   }
+  .el-input--small {
+    --el-input-height: 32px;
+  }
 }
 </style>

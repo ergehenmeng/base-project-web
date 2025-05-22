@@ -19,11 +19,7 @@
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <el-input v-model="formData.longitude" show-word-limit readonly class="w120" />
-        -
-        <el-input v-model="formData.latitude" show-word-limit readonly class="w120" />
-        &nbsp;
-        <el-button type="primary" @click="handleMap">选择</el-button>
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }"  v-model="formData.depict" show-word-limit maxlength="50" />
@@ -45,7 +41,6 @@
         <el-button @click="goBack($router)">返回</el-button>
       </div>
     </div>
-    <MapContainer ref="mapRef" @reload="setLocation"></MapContainer>
   </div>
 </template>
 
@@ -57,15 +52,14 @@ import { successMsg } from '@/utils/message.js';
 import { goBack, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
-import MapContainer from '@/components/MapContainer.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import MerchantSelect from '@/components/MerchantSelect.vue';
+import LocationMap from '@/components/LocationMap.vue'
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const mapRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
@@ -154,12 +148,5 @@ onMounted(() => {
       });
   }
 });
-const handleMap = () => {
-  mapRef.value.openDialog(formData.value.longitude, formData.value.latitude);
-};
 
-const setLocation = (lng, lat) => {
-  formData.value.longitude = lng;
-  formData.value.latitude = lat;
-};
 </script>
