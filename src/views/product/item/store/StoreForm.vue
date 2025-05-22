@@ -26,12 +26,21 @@
       </el-form-item>
       <el-form-item label="收货地址" prop="depotAddressId">
         <el-select v-model="formData.depotAddressId" filterable>
-          <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
+          <el-option v-for="item in takeList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
             <span style="float: left">{{ item.detailAddress }}</span>
             <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}</span>
           </el-option>
         </el-select>
         <QuestionTip content="该地址是用户退换货时商家的收货地址"></QuestionTip>
+      </el-form-item>
+      <el-form-item label="自提点" prop="pickupId">
+        <el-select v-model="formData.pickupId" filterable clearable>
+          <el-option v-for="item in pickupList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
+            <span style="float: left">{{ item.detailAddress }}</span>
+            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}</span>
+          </el-option>
+        </el-select>
+        <QuestionTip content="注意：自提点为空时，商品不支持自提，已设置自提的商品也将不支持自提"></QuestionTip>
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
@@ -71,7 +80,8 @@ const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
-const addressList = ref([]);
+const takeList = ref([]);
+const pickupList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '店铺名称不能为空', trigger: 'blur' }],
@@ -104,7 +114,8 @@ let formData = ref({
   coverUrl: [],
   introduceText: null,
   introduce: null,
-  depotAddressId: null
+  depotAddressId: null,
+  pickupId: null
 });
 
 const handleSave = () => {
@@ -166,11 +177,13 @@ onMounted(() => {
  */
 const handleMerchantChange = (val) => {
   if (val) {
-    addressListApi({ merchantId: val, addressType: 1 }).then((res) => {
-      addressList.value = res.data;
+    addressListApi({ merchantId: val}).then((res) => {
+      takeList.value = res.data.filter(item => item.addressType === 1);
+      pickupList.value = res.data.filter(item => item.addressType === 2);
     });
   } else {
-    addressList.value = [];
+    takeList.value = [];
+    pickupList.value = [];
   }
 };
 </script>

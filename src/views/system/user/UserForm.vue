@@ -13,7 +13,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="角色" prop="roleIds">
-        <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意:此处只显示系统角色,不显示商户角色">
+        <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意：此处只显示系统角色，不显示商户角色">
           <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"/>
           <template v-if="roleList.length === 0 && roleAuth" #footer>
             <div style="display: flex; justify-content: center;">
@@ -27,7 +27,7 @@
         </el-tree-select>
       </el-form-item>
       <el-form-item label="数据权限" prop="dataType">
-        <el-select v-model="formData.dataType" clearable title="注意:数据权限需要按实际需求进行开发,且自定义数据权限需要手动选择">
+        <el-select v-model="formData.dataType" clearable title="注意：数据权限需要按实际需求进行开发，且自定义数据权限需要手动选择">
           <el-option label="本人数据" :value="1"></el-option>
           <el-option label="本部门数据" :value="2"></el-option>
           <el-option label="本部门及子部门数据" :value="4"></el-option>

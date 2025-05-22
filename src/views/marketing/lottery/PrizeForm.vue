@@ -93,7 +93,7 @@ const handleSave = () => {
 
 const handleChangePrizeType = (val) => {
   if (val === 1) {
-    warningMsg('注意:只显示库存大于0且在发放期内手动发放的优惠券');
+    warningMsg('注意：只显示库存大于0且在发放期内手动发放的优惠券');
   } else {
     formData.value.relationId = null;
   }

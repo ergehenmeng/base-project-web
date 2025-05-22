@@ -124,7 +124,7 @@
                   </el-form-item>
                 </template>
               </el-table-column>
-              <el-table-column prop="skuPic" >
+              <el-table-column prop="skuPic">
                 <template #header>
                   <span><span class="item-required">*</span>图片</span>
                 </template>
@@ -162,33 +162,26 @@
         <el-input v-model="formData.quota" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" style="width: 60px" />
       </el-form-item>
       <el-form-item label="交付方式" prop="deliveryType">
-        <el-radio-group v-model="formData.deliveryType" @change="handleDelivery">
+        <el-radio-group v-model="formData.deliveryType">
           <el-radio :value="1">快递</el-radio>
-          <el-radio :value="2">自提</el-radio>
-          <el-radio :value="3">快递/自提</el-radio>
+          <el-radio :value="2" :disabled="!formData.supportedPickup">自提</el-radio>
+          <el-radio :value="3" :disabled="!formData.supportedPickup">快递/自提</el-radio>
         </el-radio-group>
+        <QuestionTip v-if="!formData.supportedPickup" content="注意：店铺未配置自提点，不支持商品自提"/>
       </el-form-item>
       <el-form-item label="物流模板" v-if="formData.deliveryType === 1 || formData.deliveryType === 3">
-        <ExpressSelect v-model="formData.expressId" :clearable="false"></ExpressSelect>
-      </el-form-item>
-      <el-form-item label="自提点" prop="pickupId" v-if="formData.deliveryType === 2 || formData.deliveryType === 3">
-        <el-select v-model="formData.pickupId" >
-          <el-option v-for="item in addressList" :key="item.id" :label="item.detailAddress" :value="item.id" :disabled="disabled">
-            <span style="float: left">{{ item.detailAddress }}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px">{{ item.nickName }}</span>
-          </el-option>
-        </el-select>
+        <ExpressSelect v-model="formData.expressId" :clearable="true"></ExpressSelect>
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotesText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" v-model:text-value="formData.purchaseNotesText"></WangEditor>
-        <div v-else v-html="formData.purchaseNotes" class="html-preview"/>
+        <div v-else v-html="formData.purchaseNotes" class="html-preview" />
       </el-form-item>
       <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce" class="html-preview"/>
+        <div v-else v-html="formData.introduce" class="html-preview" />
       </el-form-item>
     </el-form>
     <div>
@@ -216,7 +209,7 @@ import StoreSelect from '@/components/StoreSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import { CircleCloseFilled } from '@element-plus/icons-vue';
 import CreateButton from '@/components/CreateButton.vue';
-import { addressListApi } from '@/api/product/store/index.js'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -224,7 +217,6 @@ const loading = ref(false);
 const formDataRef = ref();
 const disabled = ref(false);
 const showSecondSpec = ref(false);
-const addressList = ref([]);
 
 const formRules = reactive({
   title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
@@ -232,11 +224,14 @@ const formRules = reactive({
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
     { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }
   ],
-  quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }, { min: 1, message: '限购数量不能小于1', type: "number", trigger: 'blur' }],
+  quota: [
+    { required: true, message: '限购数量不能为空', trigger: 'blur' },
+    { min: 1, message: '限购数量不能小于1', type: 'number', trigger: 'blur' }
+  ],
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
-  deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change'}],
+  deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
   purchaseNotesText: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
   introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
@@ -249,6 +244,7 @@ let formData = ref({
   tagList: [],
   quota: 99,
   deliveryType: 1,
+  supportedPickup: false,
   expressId: null,
   pickupId: null,
   coverUrl: [],
@@ -473,39 +469,21 @@ const handleSave = () => {
 onMounted(() => {
   const params = route.params;
   loading.value = true;
-  addressListApi({ addressType: 2 }).then((res) => {
-    addressList.value = res.data;
-  }).finally(() => {
-    if (params.id !== undefined) {
-      // 详情页面进来不可点击
-      disabled.value = route.fullPath.startsWith('/product/item/detail');
-      loadItemDetail(params.id);
-    }
-    loading.value = false;
-  });
+  if (params.id !== undefined) {
+    // 详情页面进来不可点击
+    disabled.value = route.fullPath.startsWith('/product/item/detail');
+    loadItemDetail(params.id);
+  }
+  loading.value = false;
 });
 
 const loadItemDetail = (id) => {
-  selectApi({ id: id })
-    .then((res) => {
-      showSecondSpec.value = res.data.specList?.length > 1;
-      formData.value = { ...res.data };
-      formData.value.introduceText = res.data.introduce;
-      formData.value.purchaseNotesText = res.data.purchaseNotes;
-      handleDelivery(formData.value.deliveryType);
-    })
-};
-
-const handleDelivery = (value) => {
-  if (value === 1) {
-    formData.value.pickupId = null;
-    formRules.pickupId = [];
-  } else {
-    formRules.pickupId = [{ required: true, message: '请选择自提点', trigger: 'change' }];
-    if (value === 2) {
-      formData.value.expressId = null;
-    }
-  }
+  selectApi({ id: id }).then((res) => {
+    showSecondSpec.value = res.data.specList?.length > 1;
+    formData.value = { ...res.data };
+    formData.value.introduceText = res.data.introduce;
+    formData.value.purchaseNotesText = res.data.purchaseNotes;
+  });
 };
 
 const handleChangeSpec = (value) => {
@@ -592,5 +570,4 @@ const handleChangeSpec = (value) => {
 .el-image-viewer__wrapper {
   z-index: 9999 !important;
 }
-
 </style>

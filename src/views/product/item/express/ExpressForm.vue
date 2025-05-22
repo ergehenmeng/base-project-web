@@ -8,7 +8,7 @@
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
           <el-radio :value="1">启用</el-radio>
-          <el-radio :value="0">禁用<QuestionTip content="注意:禁用后后续商品无法使用该物流模板，但之前已经选择的不受影响" /></el-radio>
+          <el-radio :value="0">禁用<QuestionTip content="注意：禁用后后续商品无法使用该物流模板，但之前已经选择的不受影响" /></el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="计费方式" prop="chargeMode">
