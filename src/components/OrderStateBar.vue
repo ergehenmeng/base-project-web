@@ -1,12 +1,12 @@
 <template>
   <div class="title-bar">
-    <span class="bar-state">订单状态：<span v-bind:style="formatStyle()">{{ orderStateFormat(props.state) }}</span></span>
+    <span class="bar-state">订单状态：<span v-bind:style="formatStyle()">{{ orderStateFormatNotStyle(props.state) }}</span></span>
     <span class="bar-refund-state" v-if="props.state === 6">退款状态：{{ refundStateFormat(props.refundState) }}</span>
   </div>
 </template>
 
 <script setup>
-import { orderStateFormat, refundStateFormat } from '../utils/common.js'
+import { orderStateFormatNotStyle, refundStateFormat } from '../utils/common.js'
 
 const props = defineProps({
   width: {
@@ -27,15 +27,23 @@ const props = defineProps({
 const formatStyle = () => {
   if (props.state === 7) {
     return {
-      color: '#1abc9c'
+      color: '#00a8ff'
     }
   } else if (props.state === 10 || props.state === 11){
     return {
       color: '#ff4757'
     }
-  } else if (props.state === 2 || props.state === 3 || props.state === 4 || props.state === 5 || props.state === 6){
+  } else if (props.state === 2 || props.state === 3 || props.state === 4 ){
     return {
-      color: '#1e90ff'
+      color: '#ffa502'
+    }
+  } else if (props.state === 5) {
+    return {
+      color: '#00b894'
+    }
+  } else if (props.state === 6) {
+    return {
+      color: '#ff6b81'
     }
   } else if (props.state === 8) {
     return {
