@@ -139,21 +139,23 @@ const handleChangePwd = () => {
 const showNotice = ({ type, data }) => {
   let content;
   if (type === 'DELIVERY') {
-    content = resultMsg('BRD0', renderMsg(['你有', () => data.length, '笔订单待发货, 请及时处理']), () => {
-      router.push('/order/item')
+    content = resultMsg('mRD0', '你有1笔订单待自提/发货, 点击可查看', () => {
+      router.push('/order/item/detail/' + data)
     })
-  } else {
-    content = resultMsg('WRD0', renderMsg(['你有', () => data.length, '笔退款订单待审核, 请及时处理']), () => {
+  } else if (type === 'REFUND') {
+    content = resultMsg('WRD0', '你有1笔退款订单待审核, 点击可查看', () => {
       router.push('/service/refund')
     })
   }
-  ElNotification({
-    title: '提醒',
-    message: content,
-    duration: 3500,
-    type: 'warning',
-    position: 'bottom-right'
-  })
+  if (content) {
+    ElNotification({
+      title: '提醒',
+      message: content,
+      duration: 3500,
+      type: 'warning',
+      position: 'bottom-right'
+    })
+  }
 }
 
 /**
@@ -170,6 +172,7 @@ const resultMsg = (auth, msg, clickFunc) => {
       style: {
         cursor: 'pointer'
       },
+      underline: false,
       onClick: clickFunc
     }, () => msg)
   }

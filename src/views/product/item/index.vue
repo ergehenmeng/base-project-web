@@ -197,7 +197,13 @@ const formatter = (row, column, cellValue) => {
     }
     return cellValue === 1 ? h('span', { style: 'color: green;' }, '已上架') : h('span', { style: 'color: red;', title: '被平台强制下级后无法继续上架' }, '强制下架');
   } else if (column.property === 'deliveryType') {
-    return cellValue === 1 ? '自提' : '快递';
+    if (cellValue === 1) {
+      return '快递';
+    } else if (cellValue === 2) {
+      return '自提';
+    } else if (cellValue === 3) {
+      return '快递/自提';
+    }
   } else if (column.property === 'minPrice') {
     if (cellValue === row.maxPrice) {
       return cellValue;

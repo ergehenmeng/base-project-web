@@ -37,7 +37,7 @@ export const deleteApi = (data) => {
 
 export const selectApi = (params) => {
   return request.get({
-    url: '/manage/item/select',
+    url: '/manage/item/detail',
     params
   });
 };
