@@ -103,7 +103,7 @@
             </div>
           </div>
         </div>
-        <div class="delivery-content">
+        <div class="delivery-content" v-if="data.shippedList.length > 0">
           <div class="header-nav">
             <span>发货信息</span>
           </div>
@@ -157,7 +157,7 @@
 </template>
 
 <script setup>
-import { selectApi } from '@/api/order/item';
+import { selectApi, verifyApi } from '@/api/order/item';
 import { formatExpressType, goBack } from '@/utils/common.js';
 import { useRoute, useRouter } from 'vue-router';
 import { Edit, EditPen } from '@element-plus/icons-vue';
@@ -169,6 +169,8 @@ import AdjustForm from '@/views/order/item/detail/AdjustForm.vue'
 import ExpressForm from '@/views/order/item/detail/ExpressForm.vue'
 import SippingForm from '@/views/order/item/detail/SippingForm.vue'
 import CopyLink from '@/components/CopyLink.vue'
+import { confirmMsg, successMsg } from '@/utils/message.js'
+import { refreshApi } from '@/api/config/memberTag/index.js'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -176,7 +178,7 @@ const route = useRoute();
 const router = useRouter();
 const selected = ref([]);
 const deliveryAuth = userStore.hasAuth('BRD0');
-const confirmAuth = userStore.hasAuth('BRD0');
+const confirmAuth = userStore.hasAuth('JK20');
 const adjustRef = ref();
 const expressRef = ref();
 const sippingRef = ref();
@@ -211,7 +213,7 @@ const handleSelected = (val) => {
 };
 
 const selectState = (row) => {
-  return row.deliveryState === 1;
+  return row.deliveryState === 1 || row.deliveryState === 3;
 }
 
 const handleUpdatePrice = (row) => {
@@ -227,7 +229,12 @@ const handleDelivery = () => {
 }
 
 const handlePickup = () => {
-  console.log('待补全逻辑')
+  confirmMsg('确定要自提这些商品吗?', () => {
+    verifyApi({ ids: selected.value, orderNo: data.value.orderNo }).then(() => {
+      successMsg('商品自提成功');
+      router.go(0);
+    })
+  });
 }
 
 const formatter = (_row, column, cellValue) => {
@@ -236,11 +243,11 @@ const formatter = (_row, column, cellValue) => {
   } else if (column.property === 'deliveryState') {
     switch (cellValue) {
       case 1:
-        return '待发货';
+        return h('span', { style: { color: '#ffa502' } }, '待发货');
       case 2:
-        return '待收货';
+        return h('span', { style: { color: '#00b894' } }, '待收货');
       case 3:
-        return '待自提';
+        return h('span', { style: { color: '#ffa502' } }, '待自提');
       case 4:
         return '已签收';
       case 5:

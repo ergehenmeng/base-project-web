@@ -20,8 +20,9 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+        <el-table-column prop="orderNo" label="订单编号" min-width="180" />
         <el-table-column prop="merchantName" label="商户名称" min-width="200" />
-        <el-table-column prop="orderNo" label="订单编号" min-width="200" />
+        <el-table-column prop="title" label="商品名称" min-width="180" />
         <el-table-column prop="verifyName" label="核销人" min-width="150" />
         <el-table-column prop="num" label="核销数量" min-width="150" />
         <el-table-column prop="remark" label="核销备注" min-width="100" />

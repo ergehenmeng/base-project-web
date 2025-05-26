@@ -14,6 +14,13 @@ export const selectApi = (params) => {
   });
 };
 
+export const verifyApi = (data) => {
+  return request.post({
+    url: '/manage/verify/verify',
+    data
+  });
+};
+
 export const adjustApi = (data) => {
   return request.post({
     url: '/manage/order/adjust/item',
