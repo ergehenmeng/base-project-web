@@ -25,7 +25,7 @@
     <div class="content-main">
       <el-tabs v-model="activeTab" @tab-change="handleChange">
         <el-tab-pane label="同步日志" name="sync">
-          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="payChannel" label="支付渠道" :formatter="formatter" width="100" />
             <el-table-column prop="orderNo" label="订单编号" width="220" />
             <el-table-column prop="stepType" label="请求类型" :formatter="formatter" width="120" />
@@ -45,7 +45,7 @@
           />
         </el-tab-pane>
         <el-tab-pane label="异步日志" name="async">
-          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="payChannel" label="支付方式" :formatter="formatter" width="100" />
             <el-table-column prop="notifyId" label="异步通知ID" width="220" />
             <el-table-column prop="stepType" label="通知类型" :formatter="formatter" width="150"/>

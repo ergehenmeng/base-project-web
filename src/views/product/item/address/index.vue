@@ -11,7 +11,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="nickName" label="负责人昵称" />
         <el-table-column prop="mobile" label="负责人手机号码" />
         <el-table-column prop="addressType" label="地址类型" :formatter="formatter"/>

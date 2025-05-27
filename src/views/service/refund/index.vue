@@ -34,7 +34,7 @@
     <div class="content-main">
       <el-tabs v-model="activeName" @tab-change="handleChange">
         <el-tab-pane v-for="config in typeList" :label="config.name" :key="config.prefix" :name="config.prefix">
-          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+          <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
             <el-table-column prop="title" label="商品名称" width="250" />
             <el-table-column prop="orderNo" label="订单编号" width="200" />
             <el-table-column prop="state" label="退款状态" width="120" :formatter="formatter"/>

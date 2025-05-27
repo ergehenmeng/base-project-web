@@ -11,7 +11,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="分类标题" />
         <el-table-column prop="code" label="资讯编码" />
         <el-table-column prop="includeTitle" label="包含标题">

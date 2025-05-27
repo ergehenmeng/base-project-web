@@ -177,7 +177,7 @@ el-select.w250 {
 .content-main {
   margin-top: 18px;
   background-color: #fff;
-  padding: 15px;
+  padding: 15px 15px 0 15px;
   border-radius: 3px;
   min-height: calc(100vh - 205px);
 }
@@ -191,7 +191,7 @@ el-select.w250 {
 
 /*分页组件样式*/
 .el-pagination {
-  margin: 15px 10px 0 0 !important;
+  margin: 12px 10px 0 0 !important;
 }
 .el-pagination .el-select {
   width: 128px !important;

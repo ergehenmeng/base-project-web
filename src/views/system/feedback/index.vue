@@ -22,7 +22,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="content" label="反馈内容" min-width="150" />
         <el-table-column prop="imageUrl" label="图片" width="100">
           <template #default="scope">

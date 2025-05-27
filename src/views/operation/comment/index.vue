@@ -30,7 +30,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="objectName" label="文章名称" min-width="200" />
         <el-table-column prop="nickName" label="留言昵称" width="120" />
         <el-table-column prop="avatar" label="头像" width="80">

@@ -16,7 +16,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="660" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="title" label="图片名称" width="150" />
         <el-table-column prop="path" label="预览" width="80">
           <template #default="scope">
