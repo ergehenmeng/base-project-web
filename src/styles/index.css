@@ -191,7 +191,7 @@ el-select.w250 {
 
 /*分页组件样式*/
 .el-pagination {
-  margin: 10px 10px 0 0 !important;
+  margin: 15px 10px 0 0 !important;
 }
 .el-pagination .el-select {
   width: 128px !important;
