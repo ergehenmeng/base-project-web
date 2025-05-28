@@ -37,10 +37,16 @@
             <div class="header-nav">
               <span>买家信息</span>
             </div>
-            <div class="content-nav">
-              <span>昵称：</span><span> {{ data.nickName }}</span>
-              <span>手机号：</span><span> {{ data.mobile }}</span>
+            <div class="content-nav" v-if="data.deliveryType === 1">
+              <span>收货人昵称：</span><span> {{ data.nickName }}</span>
+              <span>收货人手机号：</span><span> {{ data.mobile }}</span>
               <span>收货地址：</span><span>{{ data.detailAddress }} <CopyLink :content="data.detailAddress"/></span>
+              <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
+            </div>
+            <div class="content-nav" v-else>
+              <span>买家昵称：</span><span> {{ data.nickName }}</span>
+              <span>买家手机号：</span><span> {{ data.mobile }}</span>
+              <span>自提点地址：</span><span>{{ data.detailAddress }}</span>
               <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
             </div>
           </div>
@@ -67,7 +73,7 @@
                 <el-table-column label="图片" prop="coverUrl" width="80">
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
-                      <el-image fit="cover" :src="scope.row.coverUrl[0]" style="width: 30px; height: 30px" :preview-src-list="scope.row.coverUrl" preview-teleported hide-on-click-modal />
+                      <el-image fit="cover" :src="scope.row.coverUrl" style="width: 30px; height: 30px" :preview-src-list="[scope.row.coverUrl]" preview-teleported hide-on-click-modal />
                     </div>
                   </template>
                 </el-table-column>
@@ -117,7 +123,7 @@
                   <div class="good-content">
                     <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
                       <div class="good-item-img">
-                        <el-image fit="cover" :src="good.coverUrl[0]" style="width: 30px; height: 30px" :preview-src-list="good.coverUrl" preview-teleported hide-on-click-modal />
+                        <el-image fit="cover" :src="good.coverUrl" style="width: 30px; height: 30px" :preview-src-list="[good.coverUrl]" preview-teleported hide-on-click-modal />
                       </div>
                       <div class="good-item-info">
                         <div class="good-item-title">{{ good.title }} <span v-if="good.skuTitle"> （{{ good.skuTitle }}） </span></div>
@@ -170,7 +176,6 @@ import ExpressForm from '@/views/order/item/detail/ExpressForm.vue'
 import SippingForm from '@/views/order/item/detail/SippingForm.vue'
 import CopyLink from '@/components/CopyLink.vue'
 import { confirmMsg, successMsg } from '@/utils/message.js'
-import { refreshApi } from '@/api/config/memberTag/index.js'
 
 const userStore = useUserStore();
 const loading = ref(false);
@@ -190,6 +195,7 @@ const data = ref({
   payType: null,
   tradeNo: null,
   nickName: '',
+  deliveryType: null,
   mobile: null,
   detailAddress: null,
   state: 0,
