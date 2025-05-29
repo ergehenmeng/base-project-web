@@ -116,33 +116,41 @@
           <div class="content-nav">
             <div v-for="item in data.shippedList" :key="item.id">
               <div class="delivery-item">
-                <div class="package-content item">
-                  <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
-                ><span> {{ item.expressNo }} <el-button v-has-perm="'7RD0'" :icon="EditPen" type="primary" link title="修改物流单号" @click="handleUpdateExpress(item)"></el-button></span>
-                  <span>包含商品：</span>
-                  <div class="good-content">
-                    <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
-                      <div class="good-item-img">
-                        <el-image fit="cover" :src="good.coverUrl" style="width: 30px; height: 30px" :preview-src-list="[good.coverUrl]" preview-teleported hide-on-click-modal />
+                <div class="item">
+                  <el-scrollbar max-height="420">
+                    <div class="package-content">
+                      <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
+                    ><span> {{ item.expressNo }} <el-button v-has-perm="'7RD0'" :icon="EditPen" type="primary" link title="修改物流单号" @click="handleUpdateExpress(item)"></el-button></span>
+                      <span>包含商品：</span>
+                      <div class="good-content">
+                        <div v-for="(good, index) in item.itemList" :key="index" class="good-item">
+                          <div class="good-item-img">
+                            <el-image fit="cover" :src="good.coverUrl" style="width: 30px; height: 30px" :preview-src-list="[good.coverUrl]" preview-teleported hide-on-click-modal />
+                          </div>
+                          <div class="good-item-info">
+                            <div class="good-item-title">{{ good.title }} <span v-if="good.skuTitle"> （{{ good.skuTitle }}） </span></div>
+                            <div class="good-item-price">{{ good.salePrice }}元</div>
+                          </div>
+                          <div class="good-item-total"> x{{ good.num }}</div>
+                        </div>
                       </div>
-                      <div class="good-item-info">
-                        <div class="good-item-title">{{ good.title }} <span v-if="good.skuTitle"> （{{ good.skuTitle }}） </span></div>
-                        <div class="good-item-price">{{ good.salePrice }}元</div>
-                      </div>
-                      <div class="good-item-total"> x{{ good.num }}</div>
                     </div>
-                  </div>
+                  </el-scrollbar>
                 </div>
                 <div class="logistics-content item">
-                  <el-timeline style="max-width: 600px">
-                    <el-timeline-item
-                      v-for="(express, index) in item.expressList"
-                      :key="index"
-                      :type="index === 0 ? 'primary' : 'info'"
-                      :timestamp="express.time">
-                      {{ express.content }}
-                    </el-timeline-item>
-                  </el-timeline>
+                  <el-scrollbar max-height="420">
+                    <div style="padding: 10px;">
+                      <el-timeline style="max-width: 600px">
+                        <el-timeline-item
+                          v-for="(express, index) in item.expressList"
+                          :key="index"
+                          :type="index === 0 ? 'primary' : 'info'"
+                          :timestamp="express.time">
+                          {{ express.context }}
+                        </el-timeline-item>
+                      </el-timeline>
+                    </div>
+                  </el-scrollbar>
                 </div>
               </div>
               <el-divider />
