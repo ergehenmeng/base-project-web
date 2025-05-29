@@ -117,7 +117,7 @@
             <div v-for="item in data.shippedList" :key="item.id">
               <div class="delivery-item">
                 <div class="item">
-                  <el-scrollbar max-height="420">
+                  <el-scrollbar max-height="340">
                     <div class="package-content">
                       <span>物流公司：</span><span> {{ formatExpressType(item.expressCode) }}</span> <span>物流单号：</span
                     ><span> {{ item.expressNo }} <el-button v-has-perm="'7RD0'" :icon="EditPen" type="primary" link title="修改物流单号" @click="handleUpdateExpress(item)"></el-button></span>
@@ -138,7 +138,7 @@
                   </el-scrollbar>
                 </div>
                 <div class="logistics-content item">
-                  <el-scrollbar max-height="420">
+                  <el-scrollbar max-height="340">
                     <div style="padding: 10px;">
                       <el-timeline style="max-width: 600px">
                         <el-timeline-item
