@@ -14,8 +14,11 @@
         <el-input v-model="formData.prizeName" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="中奖发放数量" prop="num">
-        <el-input v-model="formData.num" show-word-limit maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
-        <QuestionTip content="单次中奖发放的数量"></QuestionTip>
+        <el-input v-model="formData.num" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" >
+          <template #suffix>
+            <QuestionTip content="奖品数量为奖品发放数量*奖品总数量" />
+          </template>
+        </el-input>
       </el-form-item>
       <el-form-item label="奖品总数量" prop="totalNum">
         <el-input v-model="formData.totalNum" show-word-limit maxlength="5" onkeyup="this.value=this.value.replace(/\D/g,'')" />
@@ -94,8 +97,10 @@ const handleSave = () => {
 const handleChangePrizeType = (val) => {
   if (val === 1) {
     warningMsg('注意：只显示库存大于0且在发放期内手动发放的优惠券');
+    formRules.relationId = [{ required: true, message: '请选择优惠券', trigger: 'change' }];
   } else {
     formData.value.relationId = null;
+    formRules.relationId = [];
   }
 };
 

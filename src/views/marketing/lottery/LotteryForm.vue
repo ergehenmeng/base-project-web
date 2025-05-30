@@ -2,7 +2,7 @@
   <div class="edit-content">
     <el-divider />
     <el-container>
-      <el-aside width="500px">
+      <el-aside width="450px">
         <div class="lottery-show">
           <div class="lottery-page">
             <div class="lottery-top"></div>
@@ -372,11 +372,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .step-tip {
   margin-bottom: 20px;
-  padding-left: 160px;
+  padding-left: 120px;
 }
 
 .lottery-show {
-  width: 500px;
+  width: 400px;
   padding: 10px;
 
   .lottery-page {
