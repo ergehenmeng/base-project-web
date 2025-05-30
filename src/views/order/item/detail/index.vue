@@ -338,6 +338,8 @@ onBeforeMount(() => {
     .order-remark {
       margin-top: 0;
       width: 300px;
+      font-weight: bold;
+      color: #f56c6c;
       display: inline-block;
       text-align: left !important;
       word-break: break-word;
