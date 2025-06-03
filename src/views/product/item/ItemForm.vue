@@ -9,7 +9,7 @@
         <el-input v-model="formData.depict" type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" show-word-limit maxlength="40" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="storeId">
-        <StoreSelect v-model="formData.storeId"></StoreSelect>
+        <StoreSelect v-model="formData.storeId" @change="storeHandle" :clearable="false"></StoreSelect>
       </el-form-item>
       <el-form-item label="商品标签" prop="tagList">
         <ItemTag v-model="formData.tagList"></ItemTag>
@@ -198,6 +198,7 @@
 
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/item';
+import { pickupApi } from '@/api/product/store';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
@@ -399,6 +400,14 @@ const filterSpec = (spec) => {
   return spec.valueList.filter((item) => {
     return !!item.name;
   });
+};
+
+const storeHandle = (storeId) => {
+  if (storeId && route.params.id === undefined) {
+    pickupApi({id: storeId}).then((res) => {
+      formData.value.supportedPickup = res.data
+    });
+  }
 };
 
 const createPrimarySpec = (spec) => {

@@ -35,6 +35,13 @@ export const selectApi = (params) => {
   });
 };
 
+export const pickupApi = (params) => {
+  return request.get({
+    url: '/manage/item/store/pickup',
+    params
+  });
+};
+
 export const shelvesApi = (data) => {
   return request.post({
     url: '/manage/item/store/shelves',
