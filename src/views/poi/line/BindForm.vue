@@ -61,7 +61,7 @@ const initMap = (callback, lng = defaultLng, lat = defaultLat) => {
     key: key,
     version: '2.0',
     // 需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
-    plugins: ['AMap.AutoComplete', 'AMap.PlaceSearch', 'AMap.Marker']
+    plugins: ['AMap.AutoComplete', 'AMap.PlaceSearch', 'AMap.Marker', 'AMap.Walking']
   })
     .then((AMap) => {
       mapRef.value = new AMap.Map('mapContainer', {
@@ -113,6 +113,7 @@ const refreshMarker = (locationList) => {
   clearLineRoute();
   clearMarker();
   for (let i = 0; i < locationList.length; i++) {
+    // 此处增加判断是因为如果点位删除,此处曾经绑定的点位没有经纬度
     if (pointMap.has(locationList[i])) {
       const location = pointMap.get(locationList[i]);
       let type = 2;
@@ -159,7 +160,7 @@ function drawRoute (route) {
     isOutline: true,
     outlineColor: '#ffeeee',
     borderWeight: 2,
-    strokeWeight: 5,
+    strokeWeight: 4,
     strokeOpacity: 1,
     strokeColor: '#1890FF',
     lineJoin: 'round'

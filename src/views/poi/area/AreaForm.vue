@@ -66,7 +66,11 @@ const openDialog = (row) => {
   if (row.id) {
     dialogTitle.value = '编辑区域';
     formData.value = { ...row };
-    formData.value.areaList = [row.provinceId, row.cityId, row.countyId];
+    if (row.countyId) {
+      formData.value.areaList = [row.provinceId, row.cityId, row.countyId];
+    } else {
+      formData.value.areaList = [row.provinceId, row.cityId];
+    }
   } else {
     dialogTitle.value = '新增区域';
   }
@@ -75,12 +79,12 @@ const openDialog = (row) => {
 const resetForm = () => {
   formData.value = {
     id: null,
-    nickName: null,
-    mobile: null,
+    title: null,
+    code: '',
     areaList: [],
+    detailAddress: null,
     longitude: null,
     latitude: null,
-    detailAddress: null,
     remark: null
   };
   formDataRef.value?.resetFields();
