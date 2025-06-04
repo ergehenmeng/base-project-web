@@ -23,16 +23,26 @@ const dataList = ref([]);
 const sortList = ref([]);
 // 点位 <-> 经纬度
 const pointMap = new Map();
-const polylineRef = ref(null);
+// 步行路线
+const polylineRef = ref([]);
 
 /**
  * 添加标记点
  * @param lng 经度
  * @param lat 维度
+ * @param type 点位类型 0  起点 1 终点 2 中转点
  */
-const addMarker = (lng, lat) => {
+const addMarker = (lng, lat, type = 2) => {
+  let icon;
+  if (type === 0) {
+    icon = 'https://webapi.amap.com/theme/v1.3/markers/n/start.png';
+  } else if (type === 1) {
+    icon = 'https://webapi.amap.com/theme/v1.3/markers/n/end.png';
+  } else {
+    icon = 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png';
+  }
   const marker = new AMap.Marker({
-    icon: 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+    icon: icon,
     position: [lng, lat],
     offset: new AMap.Pixel(-9, -21)
   });
@@ -72,6 +82,18 @@ const props = ref({
 
 const destroyMap = () => {
   mapRef.value?.destroy();
+  clearLineRoute();
+  clearMarker();
+};
+
+const clearLineRoute = () => {
+  polylineRef.value.forEach((item) => {
+    item.setMap(null);
+  });
+  polylineRef.value = [];
+};
+
+const clearMarker = () => {
   markerList.value.forEach((item) => {
     item.setMap(null);
   });
@@ -87,26 +109,75 @@ onUnmounted(() => {
  */
 const refreshMarker = (locationList) => {
   const linePath = [];
-  locationList.forEach((item) => {
-    if (pointMap.has(item)) {
-      const location = pointMap.get(item);
-      addMarker(location.longitude, location.latitude);
+  // 清空之前的线路和点位
+  clearLineRoute();
+  clearMarker();
+  for (let i = 0; i < locationList.length; i++) {
+    if (pointMap.has(locationList[i])) {
+      const location = pointMap.get(locationList[i]);
+      let type = 2;
+      if (i === 0) {
+        type = 0;
+      } else if (i === locationList.length - 1) {
+        type = 1;
+      }
+      addMarker(location.longitude, location.latitude, type);
       linePath.push([location.longitude, location.latitude]);
     }
-  });
-  const polyline = new AMap.Polyline({
-    path: linePath,
-    strokeWeight: 3,
-    strokeColor: 'blue',
-    lineJoin: 'round',
-    lineCap: 'round'
-  });
-  if (polylineRef.value) {
-    mapRef.value.remove(polylineRef.value);
   }
-  mapRef.value.add(polyline);
-  polylineRef.value = polyline;
+  walkingLayout(linePath);
 };
+
+/**
+ * 步行路线规划
+ * @param points 经纬度列表
+ */
+const walkingLayout = (points) => {
+  if (points.length < 2) {
+    return;
+  }
+  const walking = new AMap.Walking({})
+  for (let i = 0; i < points.length; i++) {
+    if (i < points.length - 1) {
+      walking.search(points[i], points[i + 1], (status, result) => {
+        if (status === 'complete') {
+          if (result.routes && result.routes.length) {
+            drawRoute(result.routes[0])
+          }
+        } else {
+          console.log('步行路线结果数据异常', result)
+        }
+      })
+    }
+  }
+};
+
+function drawRoute (route) {
+  const path = parseRouteToPath(route)
+  let routeLine = new AMap.Polyline({
+    path: path,
+    isOutline: true,
+    outlineColor: '#ffeeee',
+    borderWeight: 2,
+    strokeWeight: 5,
+    strokeOpacity: 1,
+    strokeColor: '#1890FF',
+    lineJoin: 'round'
+  })
+  mapRef.value.add(routeLine);
+  polylineRef.value.push(routeLine);
+}
+
+function parseRouteToPath(route) {
+  const path = []
+  for (let i = 0, l = route.steps.length; i < l; i++) {
+    const step = route.steps[i]
+    for (let j = 0, n = step.path.length; j < n; j++) {
+      path.push(step.path[j])
+    }
+  }
+  return path
+}
 
 const handleSave = () => {
   if (pointList.value.length < 1) {
