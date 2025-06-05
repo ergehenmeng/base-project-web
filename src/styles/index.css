@@ -327,6 +327,31 @@ el-select.w250 {
   color: #f56c6c;
 }
 
+/*地图点位mark*/
+.custom-content-marker {
+  position: relative;
+  width: 25px;
+  height: 34px;
+}
+
+.custom-content-marker img {
+  width: 100%;
+  height: 100%;
+}
+
+.custom-content-marker .marker-content {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  line-height: 15px;
+  min-width: 15px;
+  padding: 0 2px;
+}
+
 /*wangEditor全屏模式显示不是最顶层问题*/
 .w-e-full-screen-container {
   z-index: 10000;

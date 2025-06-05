@@ -30,24 +30,23 @@ const polylineRef = ref([]);
  * 添加标记点
  * @param lng 经度
  * @param lat 维度
- * @param type 点位类型 0  起点 1 终点 2 中转点
+ * @param content 点位显示内容
  */
-const addMarker = (lng, lat, type = 2) => {
-  let icon;
-  if (type === 0) {
-    icon = 'https://webapi.amap.com/theme/v1.3/markers/n/start.png';
-  } else if (type === 1) {
-    icon = 'https://webapi.amap.com/theme/v1.3/markers/n/end.png';
-  } else {
-    icon = 'https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png';
-  }
+const addMarker = (lng, lat, content) => {
   const marker = new AMap.Marker({
-    icon: icon,
     position: [lng, lat],
-    offset: new AMap.Pixel(-9, -21)
+    offset: new AMap.Pixel(-9, -21),
+    content: markerContent(content),
   });
   marker.setMap(mapRef.value);
   markerList.value.push(marker);
+};
+
+const markerContent = (marker) => {
+  return `<div class="custom-content-marker">
+    <img src="//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png" alt="途径点位">
+    <div class="marker-content">${marker}</div></div>
+  </div>`;
 };
 
 /**
@@ -116,13 +115,7 @@ const refreshMarker = (locationList) => {
     // 此处增加判断是因为如果点位删除,此处曾经绑定的点位没有经纬度
     if (pointMap.has(locationList[i])) {
       const location = pointMap.get(locationList[i]);
-      let type = 2;
-      if (i === 0) {
-        type = 0;
-      } else if (i === locationList.length - 1) {
-        type = 1;
-      }
-      addMarker(location.longitude, location.latitude, type);
+      addMarker(location.longitude, location.latitude, i + 1);
       linePath.push([location.longitude, location.latitude]);
     }
   }
