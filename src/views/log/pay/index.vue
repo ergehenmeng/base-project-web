@@ -35,14 +35,16 @@
             <el-table-column prop="responseBody" label="响应参数" width="250" />
             <el-table-column prop="createTime" label="请求时间" width="180" />
           </el-table>
-          <el-pagination
-            v-model:current-page="queryParams.page"
-            v-model:page-size="queryParams.pageSize"
-            :page-sizes="[10, 20, 50]"
-            layout="->, total, sizes, prev, pager, next"
-            :total="total"
-            @change="getPage"
-          />
+          <div class="pagination-container">
+            <el-pagination
+              v-model:current-page="queryParams.page"
+              v-model:page-size="queryParams.pageSize"
+              :page-sizes="[10, 20, 50]"
+              layout="->, total, sizes, prev, pager, next"
+              :total="total"
+              @change="getPage"
+            />
+          </div>
         </el-tab-pane>
         <el-tab-pane label="异步日志" name="async">
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
@@ -62,14 +64,16 @@
               </template>
             </el-table-column>
           </el-table>
-          <el-pagination
-            v-model:current-page="queryParams.page"
-            v-model:page-size="queryParams.pageSize"
-            :page-sizes="[10, 20, 50]"
-            layout="->, total, sizes, prev, pager, next"
-            :total="total"
-            @change="getPage"
-          />
+          <div class="pagination-container">
+            <el-pagination
+              v-model:current-page="queryParams.page"
+              v-model:page-size="queryParams.pageSize"
+              :page-sizes="[10, 20, 50]"
+              layout="->, total, sizes, prev, pager, next"
+              :total="total"
+              @change="getPage"
+            />
+          </div>
         </el-tab-pane>
       </el-tabs>
     </div>

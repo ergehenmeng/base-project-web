@@ -39,7 +39,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商家名称" width="200" />
-        <el-table-column prop="type" label="商家类型" width="250" :formatter="formatter" />
+        <el-table-column prop="type" label="商家类型" width="100" :formatter="formatter" />
         <el-table-column prop="state" label="商家状态" width="100" :formatter="formatter"/>
         <el-table-column prop="mobile" label="联系人电话" width="150" />
         <el-table-column prop="account" label="账户名" width="100" />
@@ -70,14 +70,16 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        v-model:current-page="queryParams.page"
-        v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]"
-        layout="->, total, sizes, prev, pager, next"
-        :total="total"
-        @change="getPage"
-      />
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.page"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50]"
+          layout="->, total, sizes, prev, pager, next"
+          :total="total"
+          @change="getPage"
+        />
+      </div>
     </div>
   </div>
   <ServiceRateForm ref="rateRef" @reload="getPage"></ServiceRateForm>

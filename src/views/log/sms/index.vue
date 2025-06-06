@@ -5,14 +5,14 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="手机号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
-        <el-form-item label="资金类型">
+        <el-form-item label="短信类型">
           <el-select v-model="queryParams.templateType" clearable style="width: 180px">
             <el-option label="自定义短信" value="default" />
             <el-option label="登陆(后台)" value="user_login" />
-            <el-option label="登陆" value="member_login" />
-            <el-option label="注册" value="register" />
-            <el-option label="忘记密码" value="forget" />
-            <el-option label="更换邮箱" value="change_email" />
+            <el-option label="登陆(C端)" value="member_login" />
+            <el-option label="注册(C端)" value="register" />
+            <el-option label="忘记密码(C端)" value="forget" />
+            <el-option label="更换邮箱(C端)" value="change_email" />
           </el-select>
         </el-form-item>
         <el-form-item label="发送状态">
@@ -39,14 +39,16 @@
         <el-table-column prop="state" label="发送状态" :formatter="formatter" width="150"/>
         <el-table-column prop="createTime" label="发送时间" width="200"/>
       </el-table>
-      <el-pagination
-        v-model:current-page="queryParams.page"
-        v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]"
-        layout="->, total, sizes, prev, pager, next"
-        :total="total"
-        @change="getPage"
-      />
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.page"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50]"
+          layout="->, total, sizes, prev, pager, next"
+          :total="total"
+          @change="getPage"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -97,13 +99,17 @@ const formatter = (_row, column, cellValue) => {
       case 'user_login':
         return '登陆(后台)';
       case 'member_login':
-        return '登陆';
+        return '登陆(C端)';
       case 'forget':
-        return '忘记密码';
+        return '忘记密码(C端)';
       case 'register':
-        return '注册';
+        return '注册(C端)';
       case 'change_email':
-        return '更换邮箱';
+        return '更换邮箱(C端)';
+      case 'confirm_no_room':
+        return '更换邮箱(C端)';
+      case 'merchant_unbind':
+        return '商户解绑微信号';
       default:
         return '未知';
     }

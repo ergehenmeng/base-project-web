@@ -14,14 +14,16 @@
       <el-table-column prop="discountValue" label="折扣比例" width="80" />
       <el-table-column prop="useThreshold" label="使用门槛" width="100" :formatter="formatter" />
     </el-table>
-    <el-pagination
-      v-model:current-page="queryParams.page"
-      v-model:page-size="queryParams.pageSize"
-      :page-sizes="[10, 20, 50]"
-      layout="->, total, sizes, prev, pager, next"
-      :total="total"
-      @change="getPage"
-    />
+    <div class="pagination-container">
+      <el-pagination
+        v-model:current-page="queryParams.page"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20, 50]"
+        layout="->, total, sizes, prev, pager, next"
+        :total="total"
+        @change="getPage"
+      />
+    </div>
     <template #footer>
       <span>
         <el-button @click="showDialog = false">取消</el-button>

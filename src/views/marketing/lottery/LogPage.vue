@@ -36,14 +36,16 @@
         <el-table-column prop="winNum" label="中奖数量" width="150" />
         <el-table-column prop="createTime" label="抽奖时间" width="180" />
       </el-table>
-      <el-pagination
-        v-model:current-page="queryParams.page"
-        v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]"
-        layout="->, total, sizes, prev, pager, next"
-        :total="total"
-        @change="getPage"
-      />
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.page"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50]"
+          layout="->, total, sizes, prev, pager, next"
+          :total="total"
+          @change="getPage"
+        />
+      </div>
     </div>
   </div>
 </template>

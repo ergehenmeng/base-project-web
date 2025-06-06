@@ -190,11 +190,8 @@ el-select.w250 {
 }
 
 /*分页组件样式*/
-.el-pagination {
-  margin: 12px 10px 0 0 !important;
-}
-.el-pagination .el-select {
-  width: 128px !important;
+.pagination-container {
+  margin-top: 10px;
 }
 
 /*图片预览样式(缩小百分50%)*/

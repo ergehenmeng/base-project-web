@@ -72,14 +72,16 @@
         <el-table-column prop="channel" label="注册渠道" min-width="100" />
         <el-table-column prop="createTime" label="注册时间" min-width="180" />
       </el-table>
-      <el-pagination
-        v-model:current-page="queryParams.page"
-        v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]"
-        layout="->, total, sizes, prev, pager, next"
-        :total="total"
-        @change="getPage"
-      />
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.page"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50]"
+          layout="->, total, sizes, prev, pager, next"
+          :total="total"
+          @change="getPage"
+        />
+      </div>
     </div>
   </div>
   <SendSmsForm ref="smsRef"></SendSmsForm>

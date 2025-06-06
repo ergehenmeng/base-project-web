@@ -60,14 +60,16 @@
           </el-table>
         </el-tab-pane>
       </el-tabs>
-      <el-pagination
-        v-model:current-page="queryParams.page"
-        v-model:page-size="queryParams.pageSize"
-        :page-sizes="[10, 20, 50]"
-        layout="->, total, sizes, prev, pager, next"
-        :total="total"
-        @change="getPage"
-      />
+      <div class="pagination-container">
+        <el-pagination
+          v-model:current-page="queryParams.page"
+          v-model:page-size="queryParams.pageSize"
+          :page-sizes="[10, 20, 50]"
+          layout="->, total, sizes, prev, pager, next"
+          :total="total"
+          @change="getPage"
+        />
+      </div>
     </div>
   </div>
   <AuditForm ref="formRef" @reload="getPage"></AuditForm>
