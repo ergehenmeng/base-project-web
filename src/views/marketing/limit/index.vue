@@ -16,7 +16,7 @@
         <el-table-column prop="startTime" label="活动时间" width="320" :formatter="formatter" />
         <el-table-column prop="state" width="80" :formatter="formatter" >
           <template #header>
-            <span>状态</span><QuestionTip content="注意：已开始或已结束的活动不支持编辑"/>
+            <span>状态</span><QuestionTip content="注意：进行中或已结束的活动不支持编辑"/>
           </template>
         </el-table-column>
         <el-table-column prop="advanceHour" label="提前预告(小时)" width="120" :formatter="formatter"/>
@@ -31,7 +31,7 @@
           <template #default="scope">
             <el-button v-has-perm="'ZEi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'5Ei0'" v-if="scope.row.state === 0 " type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'UEi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'UEi0'" v-if="scope.row.state !== 1" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>

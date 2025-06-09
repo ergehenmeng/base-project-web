@@ -5,11 +5,12 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="活动名称、商品名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
-        <el-form-item label="发放状态">
+        <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
             <el-option label="未开始" :value="0" />
             <el-option label="进行中" :value="1" />
             <el-option label="已结束" :value="2" />
+            <el-option label="已下架" :value="3" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -22,9 +23,9 @@
         <el-table-column prop="title" label="活动名称" min-width="200" />
         <el-table-column prop="itemName" label="商品名称" min-width="200" />
         <el-table-column prop="startTime" label="活动时间" width="280" :formatter="formatter" />
-        <el-table-column prop="state" width="80" :formatter="formatter" >
+        <el-table-column prop="state" width="120" :formatter="formatter" >
           <template #header>
-            <span>状态</span><QuestionTip content="注意：已开始或已结束的活动不支持编辑"/>
+            <span>状态</span><QuestionTip content="注意：只有未开始的活动才支持编辑"/>
           </template>
         </el-table-column>
         <el-table-column prop="num" label="拼团人数" width="100" />
@@ -37,9 +38,10 @@
             <CreateButton v-has-perm="'ifi0'" title="新增拼团活动" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
-            <el-button v-has-perm="'qfi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
-            <el-button v-has-perm="'qfi0'" v-if="scope.row.state === 0 " type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'jfi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
+            <el-button v-has-perm="'8fi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
+            <el-button v-has-perm="'qfi0'" v-if="scope.row.state === 0" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'8Tl0'" v-if="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
+            <el-button v-has-perm="'jfi0'" v-if="scope.row.state !== 1" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -58,7 +60,7 @@
 </template>
 <script setup>
 import { deleteApi, listPageApi } from '@/api/marketing/group';
-import { Delete, Document, Edit } from '@element-plus/icons-vue';
+import { Bottom, Delete, Document, Edit } from '@element-plus/icons-vue'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
@@ -114,6 +116,7 @@ const formatter = (row, column, cellValue) => {
     if (cellValue === 2) {
       return h('span', { style: { color: '#ffa502' } }, '已结束');
     }
+    return h('span', { style: { color: '#ff4757' } }, '已下架');
   }
 };
 
