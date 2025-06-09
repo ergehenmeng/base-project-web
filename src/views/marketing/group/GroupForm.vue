@@ -152,7 +152,7 @@ const handleSave = () => {
  * @param id
  */
 const renderList = (id) => {
-  itemListApi({ id: id }).then((res) => {
+  itemListApi({ id: id, activityType: 1, readonly: disabled.value}).then((res) => {
     itemList.value = res.data;
     itemList.value.forEach((item) => {
       skuMap.set(item.id, item.skuList);

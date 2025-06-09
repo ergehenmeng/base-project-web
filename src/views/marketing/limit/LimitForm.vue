@@ -151,7 +151,7 @@ const handleSave = () => {
 };
 
 const renderItem = (id) => {
-  return itemListApi({ id: id }).then((res) => {
+  return itemListApi({ id: id, readonly: disabled.value, activityType: 2 }).then((res) => {
     allItemList.value = res.data;
     allItemList.value.forEach((item) => {
       itemMap.set(item.id, item);

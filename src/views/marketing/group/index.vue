@@ -22,6 +22,11 @@
         <el-table-column prop="title" label="活动名称" min-width="200" />
         <el-table-column prop="itemName" label="商品名称" min-width="200" />
         <el-table-column prop="startTime" label="活动时间" width="280" :formatter="formatter" />
+        <el-table-column prop="state" width="80" :formatter="formatter" >
+          <template #header>
+            <span>状态</span><QuestionTip content="注意：已开始或已结束的活动不支持编辑"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="num" label="拼团人数" width="100" />
         <el-table-column prop="expireTime" label="拼团有效期(分钟)" width="150" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
@@ -33,7 +38,7 @@
           </template>
           <template #default="scope">
             <el-button v-has-perm="'qfi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
-            <el-button v-has-perm="'qfi0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'qfi0'" v-if="scope.row.state === 0 " type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'jfi0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -59,6 +64,7 @@ import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import { renderMsg } from '@/utils/common.js'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -95,8 +101,20 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (row, _column, cellValue) => {
-  return cellValue + '~' + row.endTime;
+const formatter = (row, column, cellValue) => {
+  if (column.property === 'startTime') {
+    return cellValue + '~' + row.endTime;
+  } else if (column.property === 'state') {
+    if (cellValue === 0) {
+      return '未开始';
+    }
+    if (cellValue === 1) {
+      return h('span', { style: { color: '#00a8ff' } }, '进行中');
+    }
+    if (cellValue === 2) {
+      return h('span', { style: { color: '#ffa502' } }, '已结束');
+    }
+  }
 };
 
 const handleDelete = (row) => {
