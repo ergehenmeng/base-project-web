@@ -40,7 +40,7 @@
           <template #default="scope">
             <el-button v-has-perm="'8fi0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'qfi0'" v-if="scope.row.state === 0" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'8Tl0'" v-if="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
+            <el-button v-has-perm="'gfi0'" v-if="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
             <el-button v-has-perm="'jfi0'" v-if="scope.row.state !== 1" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -59,7 +59,7 @@
   </div>
 </template>
 <script setup>
-import { deleteApi, listPageApi } from '@/api/marketing/group';
+import { deleteApi, listPageApi, unShelvesApi } from '@/api/marketing/group';
 import { Bottom, Delete, Document, Edit } from '@element-plus/icons-vue'
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
@@ -126,6 +126,17 @@ const handleDelete = (row) => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
       successMsg('拼团活动删除成功');
+      getPage();
+    });
+  });
+};
+
+const handleUnShelves = (row) => {
+  const msg = renderMsg(["确定要", () => "下架", "该拼团活动吗?"]);
+  confirmMsg(msg, () => {
+    const data = { id: row.id };
+    unShelvesApi(data).then(() => {
+      successMsg('拼团活动下架成功');
       getPage();
     });
   });

@@ -61,7 +61,7 @@
       </el-table>
     </div>
   </div>
-  <MenuForm ref="formRef" @reload="search"></MenuForm>
+  <MenuForm ref="formRef" @reload="reload"></MenuForm>
 </template>
 <script setup>
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
@@ -83,8 +83,6 @@ const tableRef = ref();
 
 const queryParams = reactive({
   queryName: '',
-  state: null,
-  grade: null,
   pid: '0'
 });
 
@@ -162,10 +160,19 @@ const handleSort = (row) => {
     sortBy: row.sort
   };
   sortApi(data).then(() => {
-    listMenuApi(queryParams).then(({ data }) => {
-      tableRef.value.updateKeyChildren(row.pid, data);
-    });
+    reload(row.pid);
   });
+};
+
+const reload = (pid) => {
+  if (pid === '0') {
+    search();
+  } else {
+    queryParams.pid = pid;
+    listMenuApi(queryParams).then(({ data }) => {
+      tableRef.value.updateKeyChildren(queryParams.pid, data);
+    });
+  }
 };
 
 const updateState = (row) => {

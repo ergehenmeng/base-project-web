@@ -41,3 +41,10 @@ export const deleteApi = (data) => {
     data
   });
 };
+
+export const unShelvesApi = (data) => {
+  return request.post({
+    url: '/manage/group/booking/unShelves',
+    data
+  });
+};

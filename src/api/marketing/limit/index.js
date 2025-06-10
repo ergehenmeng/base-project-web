@@ -41,3 +41,10 @@ export const deleteApi = (params) => {
     params
   });
 };
+
+export const unShelvesApi = (data) => {
+  return request.post({
+    url: '/manage/limit/purchase/unShelves',
+    data
+  });
+};

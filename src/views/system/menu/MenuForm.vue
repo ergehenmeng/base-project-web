@@ -123,7 +123,7 @@ const handleSave = () => {
           .then(() => {
             successMsg('修改菜单成功');
             showDialog.value = false;
-            emit('reload');
+            emit('reload', formData.value.pid);
           })
           .finally(() => {
             loading.value = false;
@@ -133,7 +133,7 @@ const handleSave = () => {
           .then(() => {
             successMsg('新增菜单成功');
             showDialog.value = false;
-            emit('reload');
+            emit('reload', formData.value.pid);
           })
           .finally(() => {
             loading.value = false;
