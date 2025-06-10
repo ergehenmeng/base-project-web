@@ -67,10 +67,10 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import '@/styles/index.scss';
+@use '@/styles/index.scss' as vars;
 
 .main-header {
-  background: $main-header-color;
+  background: vars.$main-header-color;
   display: flex;
   justify-content: space-between;
   .logo {

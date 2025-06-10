@@ -188,7 +188,7 @@ onUnmounted(() => {
 
 </script>
 <style lang="scss" scoped>
-@import '@/styles/index.scss';
+@use '@/styles/index.scss';
 
 .layer-main-header {
   height: 60px;

@@ -11,7 +11,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table row-key="id" :data="pageData" style="width: 100%" lazy :load="loadTree" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
+      <el-table row-key="id" ref="tableRef" :data="pageData" style="width: 100%" lazy :load="loadTree" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
         <el-table-column prop="title" label="菜单名称" width="150" />
         <el-table-column prop="icon" label="图标" width="80">
           <template #default="scope">
@@ -79,6 +79,7 @@ const stateAuth = userStore.hasAuth('AhK0');
 const loading = ref(false);
 const pageData = ref([]);
 const formRef = ref();
+const tableRef = ref();
 
 const queryParams = reactive({
   queryName: '',
@@ -161,7 +162,9 @@ const handleSort = (row) => {
     sortBy: row.sort
   };
   sortApi(data).then(() => {
-    search();
+    listMenuApi(queryParams).then(({ data }) => {
+      tableRef.value.updateKeyChildren(row.pid, data);
+    });
   });
 };
 
