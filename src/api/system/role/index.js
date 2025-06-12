@@ -50,9 +50,10 @@ export const roleMenuApi = (params) => {
  * 获取全部系统参数
  * @returns 全部的系统菜单
  */
-export const systemMenuApi = () => {
+export const systemMenuApi = (params) => {
   return request.get({
-    url: '/manage/menu/systemList'
+    url: '/manage/menu/systemList',
+    params
   });
 };
 

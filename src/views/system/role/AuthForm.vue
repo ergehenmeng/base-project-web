@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
     <template #header>
-      <span>角色授权</span><QuestionTip content="注意：勾选按钮菜单时，需要先勾选列表菜单，否则会无法显示列表数据"></QuestionTip>
+      <span>角色授权</span><QuestionTip content="注意：勾选按钮菜单时，需要先勾选列表菜单，否则会无法显示列表数据。另外：商户角色无法授权系统菜单，系统角色无法授权商户菜单"></QuestionTip>
     </template>
     <el-scrollbar height="400px">
       <el-tree ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps" :default-checked-keys="checkedKeys" :default-expanded-keys="expendKeys" v-loading="loading"></el-tree>
@@ -33,7 +33,8 @@ const emit = defineEmits(['reload']);
 
 const defaultProps = {
   label: 'title',
-  children: 'children'
+  children: 'children',
+  disabled: 'disabled'
 };
 
 const openDialog = async (row) => {
@@ -45,7 +46,7 @@ const openDialog = async (row) => {
     // 选中的菜单
     const { data } = await roleMenuApi({ id: row.id });
     checkedKeys.value = data;
-    const menuResp = await systemMenuApi();
+    const menuResp = await systemMenuApi({id: row.id});
     menuList.value = menuResp.data;
     // 默认展开第一个选项
     if (data.length > 0) {
