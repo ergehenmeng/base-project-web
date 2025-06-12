@@ -8,7 +8,8 @@
     </el-menu-item>
     <el-scrollbar height="calc(100vh - 120px)">
       <template v-for="item in menuList" :key="item.id">
-        <el-sub-menu :index="item.path ? item.path : item.code">
+        <!-- 首页不显示导航菜单而是直接上面写死 -->
+        <el-sub-menu :index="item.path ? item.path : item.code" v-if="item.path !== '/home'">
           <template #title>
             <el-icon v-if="item.icon">
               <component :is="item.icon"></component>

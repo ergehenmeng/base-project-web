@@ -231,15 +231,15 @@ import Second from '@/components/icon/Second.vue'
 import Third from '@/components/icon/Third.vue'
 
 const userStore = useUserStore();
-const memberAuth = userStore.hasAuth('UX80');
-const visitAuth = userStore.hasAuth('cX80');
-const collectAuth = userStore.hasAuth('DX80');
-const productAuth = userStore.hasAuth('nX80');
-const itemAuth = userStore.hasAuth('YX80');
-const merchantAuth = userStore.hasAuth('uX80');
-const orderAuth = userStore.hasAuth('GX80');
-const orderDayAuth = userStore.hasAuth('AX80');
-const cartAuth = userStore.hasAuth('rX80');
+const memberAuth = userStore.hasAuth('uGU');
+const visitAuth = userStore.hasAuth('NGU');
+const collectAuth = userStore.hasAuth('GGU');
+const productAuth = userStore.hasAuth('AGU');
+const itemAuth = userStore.hasAuth('rGU');
+const merchantAuth = userStore.hasAuth('RGU');
+const orderAuth = userStore.hasAuth('9GU');
+const orderDayAuth = userStore.hasAuth('aGU');
+const cartAuth = userStore.hasAuth('0GU');
 
 const itemRankingList = ref([
 ])
