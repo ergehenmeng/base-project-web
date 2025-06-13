@@ -46,7 +46,6 @@ const initMap = () => {
         zoom: defaultZoom,
         center: [defaultLng, defaultLat]
       });
-      console.log(defaultLng, defaultLat)
       const autoComplete = new AMap.AutoComplete({ input: 'searchName' });
       const placeSearch = new AMap.PlaceSearch({ map: mapRef.value });
       placeSearch.on('markerClick', (e) => {

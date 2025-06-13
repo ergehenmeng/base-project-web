@@ -22,6 +22,9 @@ const errorCallback = {
   }
 };
 
+/**
+ * 取消所有后续请求
+ */
 const cancelRequest = () => {
   sourceMap.forEach((item) => {
     item.abort();
@@ -70,6 +73,10 @@ service.interceptors.response.use(
   },
   (error) => {
     if (!axios.isCancel(error)) {
+      // 减少服务端服务异常导致错误提示过多的问题
+      if (error.status === 500) {
+        cancelRequest();
+      }
       ElMessage.error('接口请求超时，请重试');
     }
     return Promise.reject(new Error(error));
