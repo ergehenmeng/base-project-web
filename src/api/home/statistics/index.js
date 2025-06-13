@@ -21,6 +21,13 @@ export const orderApi = (params) => {
   });
 };
 
+export const orderDisposeApi = () => {
+  return request.get({
+    url: '/manage/statistics/orderDispose'
+  });
+};
+
+
 export const dayOrderApi = (params) => {
   return request.get({
     url: '/manage/statistics/dayOrder',

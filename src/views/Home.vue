@@ -4,16 +4,27 @@
       <el-divider />
       <el-row v-loading="orderLoading" v-if="orderAuth">
         <StatisticsCard title="累计订单数" :amount="orderValue.orderNum">
-          <PayNum :size="50"></PayNum>
+          <PayNum :size="50"/>
         </StatisticsCard>
         <StatisticsCard title="累计订单金额" :amount="orderValue.payAmount" :precision="2">
-          <PayAmount :size="50"></PayAmount>
+          <PayAmount :size="50"/>
         </StatisticsCard>
         <StatisticsCard title="累计退单数" :amount="orderValue.refundNum">
-          <RefundNum :size="50"></RefundNum>
+          <RefundNum :size="50"/>
         </StatisticsCard>
         <StatisticsCard title="累计退款金额" :amount="orderValue.refundAmount" :precision="2">
-          <RefundAmount :size="50"></RefundAmount>
+          <RefundAmount :size="50"/>
+        </StatisticsCard>
+      </el-row>
+      <el-row v-loading="orderLoading" v-if="orderAuth">
+        <StatisticsCard title="待发货/自提" :amount="orderDisposeValue.readyNum" @load="jumpItem">
+          <Delivery :size="50" />
+        </StatisticsCard>
+        <StatisticsCard title="待核销" :amount="orderDisposeValue.verifyNum" @load="jumpOrder">
+          <Verify :size="50"/>
+        </StatisticsCard>
+        <StatisticsCard title="退款中" :amount="orderDisposeValue.refundNum" @load="jumpRefund">
+          <Refunding :size="50"/>
         </StatisticsCard>
       </el-row>
       <el-row v-if="memberAuth">
@@ -203,6 +214,7 @@ import {
   itemSaleApi,
   merchantSaleApi,
   orderApi,
+  orderDisposeApi,
   sexChannelApi
 } from '@/api/home/statistics'
 import * as echarts from 'echarts/core';
@@ -229,7 +241,12 @@ import Ranking from '@/components/icon/Ranking.vue'
 import First from '@/components/icon/First.vue'
 import Second from '@/components/icon/Second.vue'
 import Third from '@/components/icon/Third.vue'
+import Delivery from '@/components/icon/Delivery.vue'
+import Verify from '@/components/icon/Verify.vue'
+import Refunding from '@/components/icon/Refunding.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter();
 const userStore = useUserStore();
 const memberAuth = userStore.hasAuth('uGU');
 const visitAuth = userStore.hasAuth('NGU');
@@ -240,6 +257,13 @@ const merchantAuth = userStore.hasAuth('RGU');
 const orderAuth = userStore.hasAuth('9GU');
 const orderDayAuth = userStore.hasAuth('aGU');
 const cartAuth = userStore.hasAuth('0GU');
+const itemQueryAuth = userStore.hasAuth('2RD0');
+const refundQueryAuth = userStore.hasAuth('pt20');
+const ticketQueryAuth = userStore.hasAuth('5YD0');
+const voucherQueryAuth = userStore.hasAuth('0pD0');
+const homestayQueryAuth = userStore.hasAuth('laD0');
+const lineQueryAuth = userStore.hasAuth('4dD0');
+const venueQueryAuth = userStore.hasAuth('n8D0');
 
 const itemRankingList = ref([
 ])
@@ -348,6 +372,34 @@ const orderOption = (dataList) => {
     ]
   });
 };
+
+const jumpItem = () => {
+  const merchantType = userStore.user?.merchantType;
+  if (merchantType === 8  && itemQueryAuth) {
+    router.push('/order/item');
+  }
+}
+
+const jumpRefund = () => {
+  if (refundQueryAuth) {
+    router.push('/service/refund');
+  }
+}
+
+const jumpOrder = () => {
+  const merchantType = userStore.user?.merchantType;
+  if (merchantType === 1 && ticketQueryAuth) {
+    router.push('/order/ticket');
+  } else if (merchantType === 2 && homestayQueryAuth) {
+    router.push('/order/homestay');
+  } else if (merchantType === 4 && voucherQueryAuth) {
+    router.push('/order/voucher');
+  } else if (merchantType === 16 && lineQueryAuth) {
+    router.push('/order/line');
+  } else if (merchantType === 32 && venueQueryAuth) {
+    router.push('/order/venue');
+  }
+}
 
 const registerOption = (dataList) => {
   registerChart.setOption({
@@ -803,6 +855,12 @@ const orderValue = ref({
   refundAmount: '0'
 });
 
+const orderDisposeValue = ref({
+  readyNum: 0,
+  refundNum: 0,
+  verifyNum: 0
+});
+
 onMounted(() => {
   orderLoading.value = true;
   if (orderAuth) {
@@ -811,6 +869,9 @@ onMounted(() => {
     }).finally(() => {
       orderLoading.value = false;
     });
+    orderDisposeApi().then((res) => {
+      orderDisposeValue.value = { ...res.data };
+    })
   }
 
   const weekDate = getWeekDate();

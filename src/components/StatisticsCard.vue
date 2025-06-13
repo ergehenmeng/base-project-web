@@ -4,7 +4,7 @@
       <div class="item-icon">
         <slot></slot>
       </div>
-      <div class="item-box">
+      <div class="item-box" @click="emit('load')">
         <el-statistic :value="amountRef" :title="props.title" :precision="props.precision"> </el-statistic>
       </div>
     </div>
@@ -32,6 +32,8 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits(['load']);
+
 const amount = ref(0);
 const amountRef = useTransition(amount, {
   duration: 1000
@@ -57,7 +59,7 @@ watch(
     width: 100%;
     height: 100px;
     display: flex;
-    padding: 20px;
+    padding: 20px 30px;
     justify-content: left;
     align-items: center;
     .item-icon {
@@ -66,6 +68,7 @@ watch(
       margin-right: 15px;
     }
     .item-box {
+      cursor: pointer;
       .item-box-title {
         color: #333333;
         font-size: 12px;
