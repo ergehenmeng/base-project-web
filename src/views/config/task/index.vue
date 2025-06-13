@@ -27,6 +27,11 @@
             <el-switch v-model="scope.row.state" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
+        <el-table-column prop="log" width="80" :formatter="formatter" >
+          <template #header>
+            <span>日志<QuestionTip content="是否记录任务日志"/></span>
+          </template>
+        </el-table-column>
         <el-table-column prop="beanName" label="类名" width="200" />
         <el-table-column prop="methodName" label="方法名" width="150" />
         <el-table-column prop="args" label="方法入参" width="100" />
@@ -100,6 +105,8 @@ const getPage = async () => {
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'lockTime') {
     return h('span', { title: '定时任务持有锁时间(单位:ms)' }, cellValue);
+  } else if (column.property === 'log') {
+    return cellValue ? '开启' : '关闭';
   } else {
     return cellValue;
   }

@@ -10,6 +10,13 @@
           <el-radio label="禁用" :value="false"></el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="日志" prop="log">
+        <el-radio-group v-model="formData.log">
+          <el-radio label="开启" :value="true"></el-radio>
+          <el-radio label="关闭" :value="false"></el-radio>
+        </el-radio-group>
+        <QuestionTip content="注意：针对执行频率高且业务逻辑简单的定时任务建议关闭日志记录"/>
+      </el-form-item>
       <el-form-item label="类名" prop="beanName">
         <el-input v-model="formData.beanName" show-word-limit maxlength="30" disabled />
       </el-form-item>
@@ -44,6 +51,7 @@
 <script setup>
 import { updateApi } from '@/api/config/task';
 import { successMsg } from '@/utils/message';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const formDataRef = ref();
@@ -52,7 +60,8 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   title: [{ required: true, message: '任务名称不能为空', trigger: 'blur' }],
-  state: [{ required: true, message: '状态不能为空', trigger: 'blur' }],
+  state: [{ required: true, message: '状态不能为空', trigger: 'change' }],
+  log: [{ required: true, message: '日志不能为空', trigger: 'change' }],
   beanName: [{ required: true, message: '类名不能为空', trigger: 'blur' }],
   methodName: [{ required: true, message: '方法名不能为空', trigger: 'blur' }],
   alarmEmail: [{ required: true, message: '报警邮箱不能为空', trigger: 'blur' }],
