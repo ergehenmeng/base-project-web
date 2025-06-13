@@ -118,6 +118,7 @@ const formatter = (row, column, cellValue) => {
     if (cellValue === 2) {
       return h('span', { style: { color: '#ffa502' } }, '已结束');
     }
+    return h('span', { style: { color: '#ff4757' } }, '已下架');
   } else {
     return h('span', { title: '提前' + cellValue + "小时进行活动预告" }, cellValue);
   }

@@ -10,7 +10,7 @@
           <el-radio label="禁用" :value="false"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="日志" prop="log">
+      <el-form-item label="日志记录" prop="log">
         <el-radio-group v-model="formData.log">
           <el-radio label="开启" :value="true"></el-radio>
           <el-radio label="关闭" :value="false"></el-radio>
@@ -85,6 +85,7 @@ const formData = ref({
   id: null,
   title: null,
   state: null,
+  log: null,
   beanName: '',
   methodName: '',
   args: '',
@@ -103,7 +104,15 @@ const openDialog = (row) => {
 const resetForm = () => {
   formData.value = {
     id: null,
-    content: '',
+    title: null,
+    state: null,
+    log: null,
+    beanName: '',
+    methodName: '',
+    args: '',
+    cronExpression: '',
+    alarmEmail: '',
+    lockTime: 30000,
     remark: ''
   };
   formDataRef.value?.resetFields();

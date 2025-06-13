@@ -91,6 +91,7 @@ const formDataRef = ref();
 const disabled = ref(false);
 const allItemList = ref([]);
 const itemMap = new Map();
+const skuMap = new Map();
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
@@ -151,10 +152,13 @@ const handleSave = () => {
 };
 
 const renderItem = (id) => {
-  return itemListApi({ id: id, readonly: disabled.value, activityType: 2 }).then((res) => {
+  return itemListApi({ id, readonly: disabled.value, activityType: 2 }).then((res) => {
     allItemList.value = res.data;
     allItemList.value.forEach((item) => {
       itemMap.set(item.id, item);
+      item.skuList.forEach((sku) => {
+        skuMap.set(sku.skuId, sku);
+      })
     });
   });
 };
@@ -202,13 +206,24 @@ onMounted(() => {
         renderItem(params.id).finally(() => {
           formData.value = res.data;
           formData.value.timeList = [res.data.startTime, res.data.endTime];
+          renderSpec();
         });
       })
       .finally(() => {
         loading.value = false;
       });
   } else {
-    renderItem(params.id);
+    renderItem();
   }
 });
+
+const renderSpec = () => {
+  formData.value.skuList.forEach((sku) => {
+    const querySku = skuMap.get(sku.skuId);
+    if (querySku) {
+      sku.specValue = querySku.specValue
+    }
+  })
+}
+
 </script>
