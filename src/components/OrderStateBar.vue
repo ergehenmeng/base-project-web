@@ -29,7 +29,7 @@ const formatStyle = () => {
     return {
       color: '#00a8ff'
     }
-  } else if (props.state === 10 || props.state === 11){
+  } else if (props.state === 9 || props.state === 10){
     return {
       color: '#ff4757'
     }
@@ -48,6 +48,10 @@ const formatStyle = () => {
   } else if (props.state === 8) {
     return {
       color: '#747d8c'
+    }
+  } else if (props.state === 11){
+    return {
+      color: '#6ab04c'
     }
   } else {
     return {}

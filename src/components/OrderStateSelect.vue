@@ -2,6 +2,7 @@
   <el-select v-model="orderState" :clearable="props.clearable">
     <el-option label="待支付" :value="0" />
     <el-option label="支付中" :value="1" />
+    <el-option label="待成团" :value="11" />
     <el-option label="待使用" :value="2" />
     <el-option label="待自提" :value="3" />
     <el-option label="待发货" :value="4" />

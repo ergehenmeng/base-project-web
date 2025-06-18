@@ -43,6 +43,8 @@ export const orderStateFormat = (state) => {
       return h('span', { style: { color: '#ff4757' } }, '支付异常');
     case 10:
       return h('span', { style: { color: '#ff4757' } }, '退款异常');
+    case 11:
+      return h('span', { style: { color: '#6ab04c' } }, '待成团');
     default:
       return '';
   }
@@ -72,6 +74,8 @@ export const orderStateFormatNotStyle = (state) => {
       return '支付异常';
     case 10:
       return '退款异常';
+    case 11:
+      return '待成团';
     default:
       return '';
   }
