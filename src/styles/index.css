@@ -39,7 +39,7 @@ h1 {
   border-radius: 3px;
   min-height: calc(100vh - 120px);
 }
-.edit-content .el-input, .edit-content .el-select, .edit-content .el-textarea, .detail-content .el-input, .detail-content .el-select, .detail-content .el-textarea {
+.edit-content .el-input, .edit-content .el-select, .edit-content .el-textarea, .edit-content .el-input-tag, .detail-content .el-input, .detail-content .el-select, .detail-content .el-textarea, .detail-content .el-input-tag {
   width: 350px;
 }
 .edit-content .el-input.w100, .detail-content .el-input.w100 {

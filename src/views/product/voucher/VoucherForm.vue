@@ -8,7 +8,7 @@
       <el-form-item label="所属店铺" prop="restaurantId">
         <RestaurantSelect v-model="formData.restaurantId" :disabled="disabled" :clearable="false"></RestaurantSelect>
       </el-form-item>
-      <el-form-item label="标签" prop="tagId">
+      <el-form-item label="分类标签" prop="tagId">
         <VoucherTag v-model="formData.tagId" :restaurant-id="formData.restaurantId"/><QuestionTip content="标签是左侧导航分类"/>
       </el-form-item>
       <el-form-item label="有效日期" prop="validType">

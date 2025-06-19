@@ -9,6 +9,9 @@
       <el-form-item label="商家LOGO" prop="logoUrl">
         <UploadImage v-model:img-url="formData.logoUrl" :disabled="disabled"></UploadImage>
       </el-form-item>
+      <el-form-item label="标签" prop="searchTag">
+        <el-input-tag v-model="formData.searchTag" trigger="Space" placeholder="按空格键生成标签" :max="4" maxlength="4"/><QuestionTip content="注意：如实填写店铺主打菜、特色产品可增加曝光度"/>
+      </el-form-item>
       <el-form-item label="营业时间" prop="openTime">
         <el-input v-model="formData.openTime" show-word-limit maxlength="20" />
       </el-form-item>
@@ -55,12 +58,12 @@ import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import LocationMap from '@/components/LocationMap.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
 const loading = ref(false);
 const formDataRef = ref();
-const mapRef = ref();
 const disabled = ref(false);
 
 const formRules = reactive({
@@ -90,6 +93,7 @@ let formData = ref({
   longitude: null,
   latitude: null,
   openTime: null,
+  searchTag: [],
   coverUrl: [],
   introduceText: null,
   introduce: null

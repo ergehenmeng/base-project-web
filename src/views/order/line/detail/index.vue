@@ -43,7 +43,7 @@
         </div>
         <div class="content-nav">
           <span>旅行社：</span><span>{{ data.travelName }}</span>
-          <span>线路名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.lineId)">{{ data.title }}</el-link></span>
+          <span>线路名称：</span><span><el-link type="primary" underline="never" @click="handleDetail(data.lineId)">{{ data.title }}</el-link></span>
           <span>出发城市：</span><span>{{ data.startCity }}</span>
           <span>游玩天数：</span><span>{{ durationFormat(data.duration) }}</span>
           <span>备注信息：</span ><span ><span class="order-remark">{{ data.remark }}</span></span >

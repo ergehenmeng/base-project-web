@@ -17,7 +17,7 @@
           <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"/>
           <template v-if="roleList.length === 0 && roleAuth" #footer>
             <div style="display: flex; justify-content: center;">
-              <el-link type="primary" @click="addRoleHandle" :underline="false">添加角色</el-link>
+              <el-link type="primary" @click="addRoleHandle" underline="never">添加角色</el-link>
             </div>
           </template>
         </el-select>

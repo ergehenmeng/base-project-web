@@ -9,7 +9,7 @@
         <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="标签" prop="tagName" v-if="showField.includeTag">
-        <CustomTag v-model="formData.tagName" :width="350" />
+        <el-input-tag v-model="formData.tagName" trigger="Space" placeholder="按空格键生成标签" :max="3" maxlength="4" />
       </el-form-item>
       <el-form-item label="图集" prop="image" v-if="showField.includeImage">
         <UploadImageList v-model:file-list="formData.image"></UploadImageList>
@@ -43,7 +43,6 @@ import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack } from '@/utils/common.js';
-import CustomTag from '@/components/CustomTag.vue'
 
 const route = useRoute();
 const router = useRouter();

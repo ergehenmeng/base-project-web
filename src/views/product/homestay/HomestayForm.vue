@@ -19,7 +19,7 @@
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
       <el-form-item label="标签" prop="tag">
-        <CustomTag v-model="formData.tag" :width="350" :disabled="disabled"/>
+        <el-input-tag v-model="formData.tag" trigger="Space" placeholder="按空格键生成标签" :max="3" maxlength="4" :disabled="disabled"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
@@ -74,7 +74,6 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import useDictStore from '@/store/dict.js';
 import MerchantSelect from '@/components/MerchantSelect.vue';
-import CustomTag from '@/components/CustomTag.vue'
 import LocationMap from '@/components/LocationMap.vue'
 
 const dictStore = useDictStore();

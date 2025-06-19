@@ -36,7 +36,7 @@
           <span>门票信息</span>
         </div>
         <div class="content-nav">
-          <span>景区名称：</span><span><el-link type="primary" :underline="false" @click="handleScenicDetail(data.scenicId)">{{ data.scenicName }}</el-link></span> <span>门票名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.ticketId)">{{ data.title }}</el-link>
+          <span>景区名称：</span><span><el-link type="primary" underline="never" @click="handleScenicDetail(data.scenicId)">{{ data.scenicName }}</el-link></span> <span>门票名称：</span><span><el-link type="primary" underline="never" @click="handleDetail(data.ticketId)">{{ data.title }}</el-link>
           <el-popover placement="right" :width="400" trigger="hover" v-if="data.category === 7">
             <template #reference>
               <el-button type="primary" link><Question/></el-button>

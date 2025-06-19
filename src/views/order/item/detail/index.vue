@@ -80,7 +80,7 @@
                 </el-table-column>
                 <el-table-column label="商品名称" prop="title" min-width="150">
                   <template #default="scope">
-                    <el-link type="primary" :underline="'never'" @click="handleDetail(scope.row)">{{scope.row.title}}</el-link>
+                    <el-link type="primary" underline="never" @click="handleDetail(scope.row)">{{scope.row.title}}</el-link>
                   </template>
                 </el-table-column>
                 <el-table-column label="规格名称" prop="skuTitle" width="120" :formatter="formatter"></el-table-column>

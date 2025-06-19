@@ -69,7 +69,7 @@
         </el-table-column>
         <el-table-column prop="score" label="积分" width="100" >
           <template #default="scope" v-if="scoreAuth">
-            <el-link type="primary" :underline="false" @click="handleScoreLog(scope.row)">{{ scope.row.score }}</el-link>
+            <el-link type="primary" underline="never" @click="handleScoreLog(scope.row)">{{ scope.row.score }}</el-link>
           </template>
         </el-table-column>
         <el-table-column prop="inviteCode" label="邀请码" width="100" />

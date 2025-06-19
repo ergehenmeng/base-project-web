@@ -46,7 +46,7 @@
           <span>民宿信息</span>
         </div>
         <div class="content-nav">
-          <span>民宿名称：</span><span>{{ data.homestayName }}</span> <span>房型名称：</span><span><el-link type="primary" :underline="false" @click="handleDetail(data.roomId)"> {{data.title}}</el-link></span> <span>备注信息：</span
+          <span>民宿名称：</span><span>{{ data.homestayName }}</span> <span>房型名称：</span><span><el-link type="primary" underline="never" @click="handleDetail(data.roomId)"> {{data.title}}</el-link></span> <span>备注信息：</span
           ><span
             ><span class="order-remark">{{ data.remark }}</span></span
           >
