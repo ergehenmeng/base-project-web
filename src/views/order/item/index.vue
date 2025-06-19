@@ -31,9 +31,9 @@
         </el-form-item>
         <el-form-item label="订单类型">
           <el-select v-model="queryParams.orderType" clearable class="w120">
-            <el-option label="普通订单" :value="0" />
-            <el-option label="限时购订单" :value="1" />
-            <el-option label="拼团订单" :value="2" />
+            <el-option label="普通" :value="0" />
+            <el-option label="限时购" :value="1" />
+            <el-option label="拼团" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>

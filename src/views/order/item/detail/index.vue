@@ -13,6 +13,7 @@
               <span>订单编号：</span><span>{{ data.orderNo }}<CopyLink :content="data.orderNo" /></span>
               <span>店铺名称：</span><span>{{ data.storeName }}</span>
               <span>下单时间：</span><span>{{ data.createTime }}</span>
+              <span>订单类型：</span><span class="order-type">{{ orderType(data.bookingId, data.limitId) }}</span>
               <template v-if="data.tradeNo">
                 <span>支付方式：</span><span><PayType :pay-type="data.payType"></PayType></span>
               </template>
@@ -79,7 +80,7 @@
                 </el-table-column>
                 <el-table-column label="商品名称" prop="title" min-width="150">
                   <template #default="scope">
-                    <el-link type="primary" :underline="false" @click="handleDetail(scope.row)">{{scope.row.title}}</el-link>
+                    <el-link type="primary" :underline="'never'" @click="handleDetail(scope.row)">{{scope.row.title}}</el-link>
                   </template>
                 </el-table-column>
                 <el-table-column label="规格名称" prop="skuTitle" width="120" :formatter="formatter"></el-table-column>
@@ -216,6 +217,8 @@ const data = ref({
   closeTime: null,
   payTime: null,
   createTime: null,
+  bookingId: null,
+  limitId: null,
   itemList: [],
   shippedList: [],
   adjustList: [],
@@ -250,6 +253,18 @@ const handlePickup = () => {
     })
   });
 }
+
+const orderType = computed(() => {
+  return (bookingId, limitId) => {
+    if (bookingId === null && limitId === null) {
+      return '普通订单';
+    } else if (bookingId) {
+      return '拼团';
+    } else if (limitId) {
+      return '限时购';
+    }
+  }
+})
 
 const formatter = (_row, column, cellValue) => {
   if (column.property === 'skuTitle') {
@@ -324,7 +339,9 @@ onBeforeMount(() => {
     span {
       margin-top: 15px;
     }
-
+    .order-type {
+      font-weight: bold;
+    }
     span:nth-child(2n + 1) {
       flex: 20%;
       text-align: right;
