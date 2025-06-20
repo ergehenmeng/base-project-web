@@ -40,7 +40,7 @@
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
         <el-form-item v-has-perm="'LRD0'">
-          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading">导出</el-button>
+          <el-button type="primary" :icon="Download" @click="handleExcel" :loading="exportLoading" title="最多导出10000条数据">导出</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -51,12 +51,13 @@
         <el-table-column prop="storeName" label="所属店铺" min-width="150" />
         <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
-        <el-table-column prop="mobile" label="订单联系人" min-width="120" />
+        <el-table-column prop="mobile" label="订单联系人" min-width="110" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
         <el-table-column prop="discountAmount" label="优惠金额" width="100" />
-        <el-table-column prop="createTime" label="下单时间" width="180" />
-        <el-table-column prop="payTime" label="支付时间" width="180" />
+        <el-table-column prop="createTime" label="下单时间" width="170" />
+        <el-table-column prop="payTime" label="支付时间" width="170" />
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
+        <el-table-column prop="orderType" label="订单类型" width="80" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'mRD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
