@@ -14,8 +14,9 @@
         </el-form-item>
         <el-form-item label="交付方式">
           <el-select v-model="queryParams.deliveryType" clearable class="w110">
-            <el-option label="快递包邮" :value="1" />
+            <el-option label="快递" :value="1" />
             <el-option label="自提" :value="2" />
+            <el-option label="快递/自提" :value="3" />
           </el-select>
         </el-form-item>
         <el-form-item label="价格">
