@@ -103,9 +103,14 @@
                       <span>奖品名称<QuestionTip content="为了防止奖品数量不足导致中奖后发放失败, 因此必须包含一个谢谢参与的奖项, 中奖概率可以设置为0"></QuestionTip></span>
                     </template>
                     <template #default="scope">
-                      <el-select v-model="scope.row.prizeIndex" class="w200" :disabled="scope.$index === 7" @change="handleChangePrize($event, scope.$index)">
-                        <el-option v-for="(item, index) in formData.prizeList" :key="index" :value="index" :label="item.prizeName" />
-                      </el-select>
+                      <el-form-item
+                        :prop="`configList[${scope.$index}].prizeIndex`"
+                        :rules="[ { required: true, message: '请选择抽奖商品', trigger: 'change' }]"
+                      >
+                        <el-select v-model="scope.row.prizeIndex" class="w200" :disabled="scope.$index === 7" @change="handleChangePrize($event, scope.$index)">
+                          <el-option v-for="(item, index) in formData.prizeList" :key="index" :value="index" :label="item.prizeName" />
+                        </el-select>
+                      </el-form-item>
                     </template>
                   </el-table-column>
                   <el-table-column label="奖品图片" width="100" align="center">
@@ -148,7 +153,7 @@
       <div class="edit-button-footer" v-else>
         <el-button @click="goBack($router)">返回</el-button>
         <el-button v-if="step === 1" @click="step = 0">上一步</el-button>
-        <el-button v-if="step === 0" type="primary" @click="step = 1">下一步</el-button>
+        <el-button v-if="step === 0" @click="step = 1">下一步<QuestionTip content="注意：进行中或已结束的抽奖活动不支持编辑" v-if="stateDisabled"/></el-button>
       </div>
     </div>
   </div>
@@ -178,6 +183,7 @@ const loading = ref(false);
 const firstDataRef = ref();
 const nextDataRef = ref();
 const disabled = ref(false);
+const stateDisabled = ref(false);
 const storeList = ref([]);
 const prizeLocation = ref([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
 
@@ -306,6 +312,7 @@ const handleDeletePrize = (index) => {
     if (item.prizeIndex === index) {
       item.prizeIndex = null;
       item.coverUrl = null;
+      item.weight = null;
     }
   });
 };
@@ -325,6 +332,9 @@ const loadStore = () => {
 const formatter = (_row, _column, cellValue) => {
   if (cellValue === 0) {
     return '谢谢参与';
+  }
+  if (cellValue === 3) {
+    return '商品';
   }
   return cellValue === 1 ? '优惠券' : '积分';
 };
@@ -351,6 +361,7 @@ onMounted(() => {
         formData.value.timeList = [res.data.startTime, res.data.endTime];
         if (res.data.state === 1 || res.data.state === 2) {
           disabled.value = true;
+          stateDisabled.value = true;
         }
         formData.value.configList.forEach((item) => {
           handleLocationUrl(item.location - 1, item.coverUrl);

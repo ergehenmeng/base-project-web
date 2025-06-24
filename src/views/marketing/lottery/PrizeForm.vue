@@ -5,6 +5,7 @@
         <el-select v-model="formData.prizeType" @change="handleChangePrizeType">
           <el-option label="优惠券" :value="1" />
           <el-option label="积分" :value="2" />
+          <el-option label="商品" :value="3" />
         </el-select>
       </el-form-item>
       <el-form-item label="优惠券" prop="relationId" v-show="formData.prizeType === 1">
@@ -16,7 +17,7 @@
       <el-form-item label="中奖发放数量" prop="num">
         <el-input v-model="formData.num" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" >
           <template #suffix>
-            <QuestionTip content="奖品数量为奖品发放数量*奖品总数量" />
+            <QuestionTip content="单次中奖时发放的奖品数量" />
           </template>
         </el-input>
       </el-form-item>
@@ -51,11 +52,27 @@ const formRules = reactive({
   prizeName: [{ required: true, message: '奖品名称不能为空', trigger: 'blur' }],
   prizeType: [{ required: true, message: '奖品类型不能为空', trigger: 'change' }],
   num: [{ required: true, message: '单次中奖发放数量不能为空', trigger: 'blur' },{
-    min: 1,
-    message: '单次中奖发放数量不能小于1',
-    trigger: 'blur'
+    trigger: 'blur',
+    validator: (rule, value, callback) => {
+      const v = parseInt(value);
+      if (v <= 0) {
+        callback(new Error('单次中奖发放数量不能小于1'));
+      } else {
+        callback();
+      }
+    },
   }],
-  totalNum: [{ required: true, message: '奖品总数量不能为空', trigger: 'blur' }],
+  totalNum: [{ required: true, message: '奖品总数量不能为空', trigger: 'blur' },{
+    trigger: 'blur',
+    validator: (rule, value, callback) => {
+      const v = parseInt(value);
+      if (v <= 0) {
+        callback(new Error('奖品总数量不能小于1'));
+      } else {
+        callback();
+      }
+    },
+  }],
   coverUrl: [{ required: true, message: '奖品图片不能为空', trigger: 'change' }]
 });
 
@@ -101,6 +118,10 @@ const handleChangePrizeType = (val) => {
   } else {
     formData.value.relationId = null;
     formRules.relationId = [];
+    if (val === 3) {
+      formData.value.num = 1;
+      warningMsg('注意：该商品为自定义商品，请自行填写奖品名称');
+    }
   }
 };
 
