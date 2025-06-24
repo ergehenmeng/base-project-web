@@ -18,7 +18,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="avatar" label="头像" width="80">
+        <el-table-column prop="avatar" label="头像" min-width="80">
           <template #default="scope">
             <div style="display: flex; align-items: center">
               <el-image fit="cover"
@@ -30,11 +30,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="nickName" label="昵称" min-width="200" />
-        <el-table-column prop="winning" label="是否中奖" width="300" :formatter="formatter" />
-        <el-table-column prop="prizeTitle" label="奖品名称" width="150" />
-        <el-table-column prop="winNum" label="中奖数量" width="150" />
-        <el-table-column prop="createTime" label="抽奖时间" width="180" />
+        <el-table-column prop="nickName" label="昵称" min-width="100" />
+        <el-table-column prop="winning" label="是否中奖" min-width="100" :formatter="formatter" />
+        <el-table-column prop="prizeTitle" label="奖品名称" min-width="150" />
+        <el-table-column prop="createTime" label="抽奖时间" min-width="180" />
       </el-table>
       <div class="pagination-container">
         <el-pagination
