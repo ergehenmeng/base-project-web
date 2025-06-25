@@ -256,7 +256,7 @@ const handlePickup = () => {
 
 const orderType = computed(() => {
   return (bookingId, limitId) => {
-    if (bookingId === null && limitId === null) {
+    if (!bookingId && !limitId) {
       return '普通订单';
     } else if (bookingId) {
       return '拼团';
