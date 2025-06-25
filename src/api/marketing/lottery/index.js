@@ -35,9 +35,16 @@ export const selectApi = (params) => {
   });
 };
 
-export const deleteApi = (params) => {
-  return request.get({
+export const deleteApi = (data) => {
+  return request.post({
     url: '/manage/lottery/delete',
-    params
+    data
+  });
+};
+
+export const grantApi = (data) => {
+  return request.post({
+    url: '/manage/lottery/grant',
+    data
   });
 };

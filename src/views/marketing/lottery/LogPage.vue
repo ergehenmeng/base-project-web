@@ -32,8 +32,15 @@
         </el-table-column>
         <el-table-column prop="nickName" label="昵称" min-width="100" />
         <el-table-column prop="winning" label="是否中奖" min-width="100" :formatter="formatter" />
+        <el-table-column prop="issue" label="是否发放" min-width="100" :formatter="formatter" />
         <el-table-column prop="prizeTitle" label="奖品名称" min-width="150" />
         <el-table-column prop="createTime" label="抽奖时间" min-width="180" />
+        <el-table-column prop="remark" label="备注信息" min-width="180" />
+        <el-table-column label="操作" fixed="right" width="210">
+          <template #default="scope">
+            <el-button v-has-perm="'41i0'" v-if="scope.row.winning && !scope.row.issue" type="info" :icon="Position" @click="handleGrant(scope.row)" link title="发放奖励"></el-button>
+          </template>
+        </el-table-column>
       </el-table>
       <div class="pagination-container">
         <el-pagination
@@ -46,13 +53,17 @@
         />
       </div>
     </div>
+    <GrantForm @reload="getPage" ref="grantFormRef"/>
   </div>
 </template>
 <script setup>
 import useUserStore from '@/store/user';
 import { useRoute } from 'vue-router';
 import { logPageApi } from '@/api/marketing/lottery/index.js';
+import { Position } from '@element-plus/icons-vue'
+import GrantForm from '@/views/marketing/lottery/GrantForm.vue'
 
+const grantFormRef = ref();
 const route = useRoute();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -80,6 +91,10 @@ const getPage = async () => {
   }
 };
 
+const handleGrant = (row) => {
+  grantFormRef.value.openDialog(row);
+}
+
 const search = () => {
   queryParams.page = 1;
   getPage();
@@ -90,7 +105,16 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (_row, _column, cellValue) => {
-  return cellValue ? '已中奖' : '未中奖';
+const formatter = (row, column, cellValue) => {
+  if (column.property === 'issue') {
+    if (row.winning) {
+      return cellValue ? h('span', { style: { color: '#0281ff' } }, '已发放') : h('span', { style: { color: '#ffa502' } }, '待发放');
+    } else {
+      return '无需发放';
+    }
+  } else {
+    return cellValue ? '已中奖' : '未中奖';
+
+  }
 };
 </script>
