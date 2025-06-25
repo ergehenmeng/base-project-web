@@ -34,17 +34,11 @@ export const orderStateFormat = (state) => {
     case 5:
       return h('span', { style: { color: '#00b894' } }, '待收货');
     case 6:
-      return h('span', { style: { color: '#ff6b81' } }, '退款中');
+      return h('span', { style: { color: '#6ab04c' } }, '待成团');
     case 7:
       return h('span', { style: { color: '#00a8ff' } }, '订单完成');
     case 8:
       return '已关闭';
-    case 9:
-      return h('span', { style: { color: '#ff4757' } }, '支付异常');
-    case 10:
-      return h('span', { style: { color: '#ff4757' } }, '退款异常');
-    case 11:
-      return h('span', { style: { color: '#6ab04c' } }, '待成团');
     default:
       return '';
   }
@@ -65,17 +59,11 @@ export const orderStateFormatNotStyle = (state) => {
     case 5:
       return '待收货';
     case 6:
-      return '退款中';
+      return '待成团';
     case 7:
       return '订单完成';
     case 8:
       return '已关闭';
-    case 9:
-      return '支付异常';
-    case 10:
-      return '退款异常';
-    case 11:
-      return '待成团';
     default:
       return '';
   }
