@@ -18,12 +18,12 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="nickName" label="用户昵称" width="120" />
-        <el-table-column prop="mobile" label="手机号" width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
-        <el-table-column prop="remark" label="备注" />
-        <el-table-column prop="createTime" label="创建时间" />
-        <el-table-column prop="updateTime" label="更新时间" />
+        <el-table-column prop="nickName" label="用户昵称" min-width="120" />
+        <el-table-column prop="mobile" label="手机号" min-width="150" />
+        <el-table-column prop="state" label="状态" min-width="80" :formatter="formatter" />
+        <el-table-column prop="remark" min-width="150" label="备注" />
+        <el-table-column prop="createTime" width="180" label="创建时间" />
+        <el-table-column prop="updateTime" width="180" label="更新时间" />
         <el-table-column label="操作" width="250">
           <template #header>
             <span>操作</span>
