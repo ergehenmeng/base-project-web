@@ -32,19 +32,19 @@
         <el-table-column prop="orderNo" label="订单编号" width="200" />
         <el-table-column prop="title" label="房型名称" min-width="150" />
         <el-table-column prop="homestayName" label="民宿名称" min-width="130" />
-        <el-table-column prop="state" label="状态" width="70" :formatter="formatter" />
+        <el-table-column prop="state" label="状态" width="85" :formatter="formatter" />
         <el-table-column prop="confirmState" label="确认状态" width="110" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
-        <el-table-column prop="nickName" label="联系人姓名" min-width="100" />
-        <el-table-column prop="mobile" label="联系人手机号" min-width="120" />
+        <el-table-column prop="nickName" label="联系人姓名" min-width="95" />
+        <el-table-column prop="mobile" label="联系人手机号" min-width="115" />
         <el-table-column prop="payAmount" label="付款金额" width="80" />
         <el-table-column prop="discountAmount" width="120" >
           <template #header>
             <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="下单时间" width="170" />
-        <el-table-column prop="payTime" label="支付时间" width="170" />
+        <el-table-column prop="createTime" label="下单时间" width="165" />
+        <el-table-column prop="payTime" label="支付时间" width="165" />
         <el-table-column prop="payType" label="支付方式" width="80" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
