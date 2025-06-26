@@ -29,14 +29,15 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="orderNo" label="订单编号" min-width="200" />
+        <el-table-column prop="orderNo" label="订单编号" width="200" />
         <el-table-column prop="title" label="房型名称" min-width="150" />
-        <el-table-column prop="homestayName" label="民宿名称" min-width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="homestayName" label="民宿名称" min-width="130" />
+        <el-table-column prop="state" label="状态" width="70" :formatter="formatter" />
+        <el-table-column prop="confirmState" label="确认状态" width="110" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="联系人姓名" min-width="100" />
         <el-table-column prop="mobile" label="联系人手机号" min-width="120" />
-        <el-table-column prop="payAmount" label="付款金额" width="100" />
+        <el-table-column prop="payAmount" label="付款金额" width="80" />
         <el-table-column prop="discountAmount" width="120" >
           <template #header>
             <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
@@ -44,7 +45,7 @@
         </el-table-column>
         <el-table-column prop="createTime" label="下单时间" width="170" />
         <el-table-column prop="payTime" label="支付时间" width="170" />
-        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
+        <el-table-column prop="payType" label="支付方式" width="80" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'OaD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
@@ -119,11 +120,21 @@ onMounted(() => {
   getPage();
 });
 
-const formatter = (_row, column, cellValue) => {
+const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
     return orderStateFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
+  } else if (column.property === 'confirmState') {
+    if (cellValue === 1) {
+      return '自动确认有房';
+    } else if (cellValue === 2) {
+      return '确认无房';
+    } else if (cellValue === 3) {
+      return '自动确认有房';
+    } else {
+      return '待确认';
+    }
   } else {
     return cellValue;
   }
