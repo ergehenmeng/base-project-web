@@ -6,7 +6,10 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、餐饮券名称、餐饮店、手机号" clearable @keyup.enter="search" class="w280"  maxlength="30" />
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState" :exclude="[1, 3, 4, 5, 6]" />
+          <OrderStateSelect v-model="queryParams.state" :exclude="[1, 3, 4, 5, 6]" />
+        </el-form-item>
+        <el-form-item label="退款状态">
+          <RefundStateSelect v-model="queryParams.refundState" />
         </el-form-item>
         <el-form-item label="订单日期">
           <div class="w220">
@@ -80,6 +83,7 @@ import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from 
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
+import RefundStateSelect from '@/components/RefundStateSelect.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -92,7 +96,8 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  orderState: null,
+  state: null,
+  refundState: null,
   activityDate: [],
   useVoucher: null,
   closeType: null
@@ -126,7 +131,7 @@ const search = () => {
 onMounted(() => {
   const state = route.params.state;
   if (state) {
-    queryParams.orderState = parseInt(state);
+    queryParams.state = parseInt(state);
   }
   getPage();
 });

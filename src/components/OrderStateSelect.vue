@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="orderState" :clearable="props.clearable">
+  <el-select v-model="state" :clearable="props.clearable" class="w110">
     <el-option label="待支付" :value="0" v-if="!props.exclude.includes(0)"/>
     <el-option label="支付中" :value="1" v-if="!props.exclude.includes(1)"/>
     <el-option label="待使用" :value="2" v-if="!props.exclude.includes(2)"/>
@@ -22,5 +22,5 @@ const props = defineProps({
     default: []
   }
 });
-const orderState = defineModel();
+const state = defineModel();
 </script>

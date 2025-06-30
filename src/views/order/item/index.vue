@@ -6,17 +6,10 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" class="w220" maxlength="30" />
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState" class="w120" :exclude="[1, 2]"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.state" class="w120" :exclude="[1, 2]"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
-          <el-select v-model="queryParams.refundState" clearable class="w120">
-            <el-option label="未退款" :value="0" />
-            <el-option label="退款申请中" :value="1" />
-            <el-option label="退款中" :value="2" />
-            <el-option label="退款拒绝" :value="3" />
-            <el-option label="退款成功" :value="4" />
-            <el-option label="退款失败" :value="5" />
-          </el-select>
+          <RefundStateSelect v-model="queryParams.refundState" />
         </el-form-item>
         <el-form-item label="订单日期">
           <div class="w220">
@@ -85,6 +78,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
+import RefundStateSelect from '@/components/RefundStateSelect.vue'
 
 const router = useRouter();
 const route = useRoute();
@@ -97,7 +91,7 @@ const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  orderState: null,
+  state: null,
   refundState: null,
   activityDate: [],
   useVoucher: null,
@@ -132,7 +126,7 @@ const search = () => {
 onMounted(() => {
   const state = route.params.state;
   if (state) {
-    queryParams.orderState = parseInt(state);
+    queryParams.state = parseInt(state);
   }
   getPage();
 });
