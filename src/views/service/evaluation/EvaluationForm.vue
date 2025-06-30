@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="屏蔽" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>屏蔽<QuestionTip content="注意：评论一经屏蔽，不可恢复"/></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="理由" prop="remark">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
@@ -17,6 +20,7 @@
 <script setup>
 import { shieldApi } from '@/api/service/evaluation';
 import { successMsg } from '@/utils/message';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const formDataRef = ref();
