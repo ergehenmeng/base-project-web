@@ -16,7 +16,7 @@ export const selectApi = (params) => {
 
 export const verifyApi = (data) => {
   return request.post({
-    url: '/manage/verify/verify',
+    url: '/manage/order/verify/verify',
     data
   });
 };
