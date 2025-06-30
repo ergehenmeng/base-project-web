@@ -6,7 +6,7 @@ export default [
     },
     children: [
       {
-        path: 'homestay',
+        path: 'homestay/:state?',
         name: 'homestayOrder',
         meta: {
           title: '民宿订单'
@@ -28,7 +28,7 @@ export default [
         ]
       },
       {
-        path: 'line',
+        path: 'line/:state?',
         name: 'lineOrder',
         meta: {
           title: '线路订单'
@@ -40,7 +40,7 @@ export default [
             component: () => import('@/views/order/line/index.vue')
           },
           {
-            path: 'detail/:orderNo',
+              path: 'detail/:orderNo',
             name: 'lineOrderDetail',
             component: () => import('@/views/order/line/detail/index.vue'),
             meta: {
@@ -50,7 +50,7 @@ export default [
         ]
       },
       {
-        path: 'ticket',
+        path: 'ticket/:state?',
         name: 'ticketOrder',
         meta: {
           title: '门票订单'
@@ -72,7 +72,7 @@ export default [
         ]
       },
       {
-        path: 'voucher',
+        path: 'voucher/:state?',
         name: 'voucherOrder',
         meta: {
           title: '餐饮订单'
@@ -94,7 +94,7 @@ export default [
         ]
       },
       {
-        path: 'venue',
+        path: 'venue/:state?',
         name: 'venueOrder',
         meta: {
           title: '场馆订单'
@@ -116,7 +116,7 @@ export default [
         ]
       },
       {
-        path: 'item',
+        path: 'item/:state?',
         name: 'itemOrder',
         meta: {
           title: '零售订单'

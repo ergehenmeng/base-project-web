@@ -17,10 +17,13 @@
         </StatisticsCard>
       </el-row>
       <el-row v-loading="orderLoading" v-if="orderAuth">
-        <StatisticsCard title="待发货/自提" :amount="orderDisposeValue.readyNum" @load="jumpItem">
+        <StatisticsCard title="待发货" :amount="orderDisposeValue.readyNum" @load="jumpItem(4)">
           <Delivery :size="50" />
         </StatisticsCard>
-        <StatisticsCard title="待核销" :amount="orderDisposeValue.verifyNum" @load="jumpOrder">
+        <StatisticsCard title="待自提" :amount="orderDisposeValue.readyNum" @load="jumpItem(3)">
+          <Pickup :size="50" />
+        </StatisticsCard>
+        <StatisticsCard title="待使用" :amount="orderDisposeValue.verifyNum" @load="jumpOrder(2)">
           <Verify :size="50"/>
         </StatisticsCard>
         <StatisticsCard title="退款中" :amount="orderDisposeValue.refundNum" @load="jumpRefund">
@@ -245,6 +248,7 @@ import Delivery from '@/components/icon/Delivery.vue'
 import Verify from '@/components/icon/Verify.vue'
 import Refunding from '@/components/icon/Refunding.vue'
 import { useRouter } from 'vue-router'
+import Pickup from '@/components/icon/Pickup.vue'
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -373,10 +377,10 @@ const orderOption = (dataList) => {
   });
 };
 
-const jumpItem = () => {
+const jumpItem = (state) => {
   const merchantType = userStore.user?.merchantType;
   if (merchantType === 8  && itemQueryAuth) {
-    router.push('/order/item');
+    router.push('/order/item/' + state);
   }
 }
 
@@ -386,18 +390,18 @@ const jumpRefund = () => {
   }
 }
 
-const jumpOrder = () => {
+const jumpOrder = (state) => {
   const merchantType = userStore.user?.merchantType;
   if (merchantType === 1 && ticketQueryAuth) {
-    router.push('/order/ticket');
+    router.push('/order/ticket/' + state);
   } else if (merchantType === 2 && homestayQueryAuth) {
-    router.push('/order/homestay');
+    router.push('/order/homestay/' + state);
   } else if (merchantType === 4 && voucherQueryAuth) {
-    router.push('/order/voucher');
+    router.push('/order/voucher/' + state);
   } else if (merchantType === 16 && lineQueryAuth) {
-    router.push('/order/line');
+    router.push('/order/line/' + state);
   } else if (merchantType === 32 && venueQueryAuth) {
-    router.push('/order/venue');
+    router.push('/order/venue/' + state);
   }
 }
 

@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、门票名称、景区名称、手机号" clearable @keyup.enter="search" class="w280"  maxlength="30" />
         </el-form-item>
         <el-form-item label="状态">
-          <OrderStateSelect v-model="queryParams.state"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.state" :exclude="[1, 3, 4, 5, 6]"/>
         </el-form-item>
         <el-form-item label="订单日期">
           <div class="w220">
@@ -20,7 +20,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="关闭类型">
-          <el-select v-model="queryParams.closeType" clearable>
+          <el-select v-model="queryParams.closeType" clearable class="w130">
             <el-option label="过期自动关闭" :value="1" />
             <el-option label="用户取消" :value="2" />
             <el-option label="退款完成" :value="3" />
@@ -70,11 +70,12 @@
 import { exportApi, listPageApi } from '@/api/order/ticket';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { useRoute, useRouter } from 'vue-router'
+import { downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 
+const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -117,6 +118,10 @@ const search = () => {
 };
 
 onMounted(() => {
+  const state = route.params.state;
+  if (state) {
+    queryParams.orderState = parseInt(state);
+  }
   getPage();
 });
 

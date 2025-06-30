@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、房型、民宿名称、手机号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="状态">
-          <OrderStateSelect v-model="queryParams.orderState"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.orderState" :exclude="[1, 3, 4, 5, 6]"/>
         </el-form-item>
         <el-form-item label="订单日期">
           <div class="w220">
@@ -69,12 +69,13 @@
 import { exportApi, listPageApi } from '@/api/order/homestay';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import { downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
 
+const route = useRoute();
 const router = useRouter();
 const userStore = useUserStore();
 const loading = ref(false);
@@ -117,6 +118,10 @@ const search = () => {
 };
 
 onMounted(() => {
+  const state = route.params.state;
+  if (state) {
+    queryParams.orderState = parseInt(state);
+  }
   getPage();
 });
 

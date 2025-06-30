@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、手机号" clearable @keyup.enter="search" class="w220" maxlength="30" />
         </el-form-item>
         <el-form-item label="订单状态">
-          <OrderStateSelect v-model="queryParams.orderState" class="w120"></OrderStateSelect>
+          <OrderStateSelect v-model="queryParams.orderState" class="w120" :exclude="[1, 2]"></OrderStateSelect>
         </el-form-item>
         <el-form-item label="退款状态">
           <el-select v-model="queryParams.refundState" clearable class="w120">
@@ -81,12 +81,13 @@
 import { exportApi, listPageApi } from '@/api/order/item';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 const loading = ref(false);
 const total = ref(0);
@@ -129,6 +130,10 @@ const search = () => {
 };
 
 onMounted(() => {
+  const state = route.params.state;
+  if (state) {
+    queryParams.orderState = parseInt(state);
+  }
   getPage();
 });
 
