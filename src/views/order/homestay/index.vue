@@ -35,7 +35,7 @@
         <el-table-column prop="orderNo" label="订单编号" width="200" />
         <el-table-column prop="title" label="房型名称" min-width="150" />
         <el-table-column prop="homestayName" label="民宿名称" min-width="130" />
-        <el-table-column prop="state" label="状态" width="85" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="85" :formatter="formatter" />
         <el-table-column prop="confirmState" label="确认状态" width="110" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="联系人姓名" min-width="95" />

@@ -43,7 +43,7 @@
         <el-table-column prop="siteTitle" label="场地名称" min-width="150" />
         <el-table-column prop="title" label="场馆名称" min-width="150" />
         <el-table-column prop="venueType" label="场馆类型" width="100" :formatter="formatter"/>
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
         <el-table-column prop="nickName" label="联系人昵称" min-width="100" />
         <el-table-column prop="mobile" label="联系人电话" min-width="120" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />

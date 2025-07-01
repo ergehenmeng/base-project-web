@@ -39,10 +39,10 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="orderNo" label="订单编号" min-width="170" />
+        <el-table-column prop="orderNo" label="订单编号" min-width="180" />
         <el-table-column prop="title" label="商品名称" min-width="180" />
         <el-table-column prop="storeName" label="所属店铺" min-width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="85" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="mobile" label="订单联系人" min-width="110" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />

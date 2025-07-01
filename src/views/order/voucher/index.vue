@@ -42,7 +42,7 @@
         <el-table-column prop="orderNo" label="订单编号" min-width="200" />
         <el-table-column prop="title" label="餐饮券名称" min-width="150" />
         <el-table-column prop="restaurantName" label="餐饮店名称" min-width="150" />
-        <el-table-column prop="state" label="状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="购买人昵称" min-width="100" />
         <el-table-column prop="mobile" label="购买人手机号" min-width="120" />
