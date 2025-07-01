@@ -8,15 +8,8 @@
         <el-form-item label="景区">
           <ScenicSelect v-model="queryParams.scenicId" class="w250"></ScenicSelect>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="待上架" :value="0" />
-            <el-option label="已上架" :value="1" />
-            <el-option label="强制下架" :value="2" />
-          </el-select>
-        </el-form-item>
         <el-form-item label="票种票种">
-          <el-select v-model="queryParams.category" clearable>
+          <el-select v-model="queryParams.category" clearable class="w110">
             <el-option label="成人" :value="1" />
             <el-option label="老人" :value="2" />
             <el-option label="儿童" :value="3" />
@@ -24,6 +17,13 @@
             <el-option label="活动" :value="5" />
             <el-option label="研学" :value="6" />
             <el-option label="套票" :value="7" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable class="w110">
+            <el-option label="待上架" :value="0" />
+            <el-option label="已上架" :value="1" />
+            <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>

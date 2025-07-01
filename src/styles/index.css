@@ -107,6 +107,9 @@ h1 {
 .content-top .el-select.w220 {
   width: 220px !important;
 }
+.content-top .el-select.w250 {
+  width: 250px !important;
+}
 
 .el-input.w250 {
   width: 250px !important;
@@ -162,6 +165,10 @@ h1 {
 
 el-select.w250 {
   width: 250px !important;
+}
+
+el-select.w350 {
+  width: 350px !important;
 }
 
 .w220 {

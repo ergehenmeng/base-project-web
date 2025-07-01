@@ -8,18 +8,18 @@
         <el-form-item label="所属民宿">
           <HomestaySelect v-model="queryParams.homestayId" class="w300"></HomestaySelect>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable>
-            <el-option label="待上架" :value="0" />
-            <el-option label="已上架" :value="1" />
-            <el-option label="强制下架" :value="2" />
-          </el-select>
-        </el-form-item>
         <el-form-item label="退款方式">
           <el-select v-model="queryParams.refundType" clearable>
             <el-option label="不支持" :value="0" />
             <el-option label="直接退款" :value="1" />
             <el-option label="审核后退款" :value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable class="w120">
+            <el-option label="待上架" :value="0" />
+            <el-option label="已上架" :value="1" />
+            <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>

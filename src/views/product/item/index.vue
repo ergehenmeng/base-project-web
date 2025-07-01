@@ -5,13 +5,6 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable class="w110">
-            <el-option label="待上架" :value="0" />
-            <el-option label="已上架" :value="1" />
-            <el-option label="强制下架" :value="2" />
-          </el-select>
-        </el-form-item>
         <el-form-item label="交付方式">
           <el-select v-model="queryParams.deliveryType" clearable class="w110">
             <el-option label="快递" :value="1" />
@@ -29,6 +22,13 @@
         </el-form-item>
         <el-form-item label="所属店铺">
           <StoreSelect v-model="queryParams.storeId" class="w220"></StoreSelect>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.state" clearable class="w110">
+            <el-option label="待上架" :value="0" />
+            <el-option label="已上架" :value="1" />
+            <el-option label="强制下架" :value="2" />
+          </el-select>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>

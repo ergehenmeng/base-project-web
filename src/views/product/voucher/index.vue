@@ -5,15 +5,15 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="餐饮券名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
+        <el-form-item label="店铺">
+          <RestaurantSelect v-model="queryParams.restaurantId" class="w250"/>
+        </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable class="w120">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />
           </el-select>
-        </el-form-item>
-        <el-form-item label="店铺">
-          <RestaurantSelect v-model="queryParams.restaurantId" style="width: 200px !important"></RestaurantSelect>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>

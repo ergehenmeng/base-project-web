@@ -5,8 +5,9 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="场馆名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
+        <MerchantSelect v-model="queryParams.merchantId"/>
         <el-form-item label="场馆类型">
-          <el-select v-model="queryParams.venueType" clearable class="w130">
+          <el-select v-model="queryParams.venueType" clearable class="w120">
             <el-option label="篮球馆" :value="1" />
             <el-option label="网球馆" :value="2" />
             <el-option label="羽毛球馆" :value="3" />
@@ -23,13 +24,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.state" clearable style="width: 130px !important">
+          <el-select v-model="queryParams.state" clearable class="w120">
             <el-option label="待上架" :value="0" />
             <el-option label="已上架" :value="1" />
             <el-option label="强制下架" :value="2" />
           </el-select>
         </el-form-item>
-        <MerchantSelect v-model="queryParams.merchantId"></MerchantSelect>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
