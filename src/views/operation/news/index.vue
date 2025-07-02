@@ -20,9 +20,9 @@
       <el-tabs v-model="activeName" @tab-change="handleChange">
         <el-tab-pane v-for="config in configList" :label="config.title" :key="config.code" :name="config.code">
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-            <el-table-column prop="title" label="资讯标题" min-width="60"/>
-            <el-table-column prop="tagName" label="标签" min-width="80"/>
-            <el-table-column prop="depict" label="描述信息" min-width="160"/>
+            <el-table-column prop="title" label="资讯标题" min-width="80"/>
+            <el-table-column prop="tagName" label="标签" min-width="60"/>
+            <el-table-column prop="depict" label="描述信息" min-width="120"/>
             <el-table-column prop="image" label="图集" width="80">
               <template #default="scope">
                 <div style="display: flex; align-items: center">
@@ -40,8 +40,8 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="state" label="状态" :formatter="formatter" width="80"/>
-            <el-table-column prop="praiseNum" label="点赞数" width="90"/>
+            <el-table-column prop="state" label="状态" :formatter="formatter" width="60"/>
+            <el-table-column prop="praiseNum" label="点赞数" width="80"/>
             <el-table-column prop="sort" label="排序" width="80">
               <template #default="scope">
                 <el-input v-model="scope.row.sort" @change="handleSort(scope.row)" maxlength="3" :readonly="!sortAuth" onkeyup="this.value=this.value.replace(/\D/g,'')"></el-input>
