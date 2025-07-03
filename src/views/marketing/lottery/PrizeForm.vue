@@ -4,7 +4,7 @@
       <el-form-item label="奖品类型" prop="prizeType">
         <el-select v-model="formData.prizeType" @change="handleChangePrizeType">
           <el-option label="优惠券" :value="1" />
-          <el-option label="积分" :value="2" />
+          <el-option label="积分" :value="2" v-if="merchantType === 8"/>
           <el-option label="商品" :value="3" />
         </el-select>
       </el-form-item>
@@ -42,12 +42,15 @@ import UploadImage from '@/components/UploadImage.vue';
 import CouponSelect from '@/components/CouponSelect.vue';
 import { warningMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
+import useUserStore from '@/store/user.js'
 
 const couponRef = ref();
 const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
+const userStore = useUserStore();
 
+const merchantType = userStore.user?.merchantType;
 const formRules = reactive({
   prizeName: [{ required: true, message: '奖品名称不能为空', trigger: 'blur' }],
   prizeType: [{ required: true, message: '奖品类型不能为空', trigger: 'change' }],
