@@ -22,7 +22,7 @@
         <UploadImage v-model:img-url="formData.imgUrl"></UploadImage>
       </el-form-item>
       <el-form-item label="展示时间" prop="showTime" class="w450">
-        <div class="w350">
+        <div style="width: 375px;">
           <el-date-picker
             v-model="formData.showTime"
             type="datetimerange"
@@ -31,7 +31,7 @@
             end-placeholder="截止时间"
             format="YYYY-MM-DD HH:mm"
             value-format="YYYY-MM-DD HH:mm" time-format="HH:mm"
-            class="w350"
+            style="width: 375px;"
           />
         </div>
       </el-form-item>

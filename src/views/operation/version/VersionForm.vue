@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="客户端" prop="channel" class="w450">
         <el-select v-model="formData.channel" @change="handleChange" :disabled="formData.id !== null">
           <el-option label="IOS" value="IOS" />
@@ -42,7 +42,10 @@ const emit = defineEmits(['reload']);
 const dialogTitle = ref('');
 
 const formRules = reactive({
-  title: [{ required: true, message: '参数名称不能为空', trigger: 'blur' }],
+  channel: [{ required: true, message: '请选择客户端', trigger: 'change' }],
+  version: [{ required: true, message: '版本号不能为空', trigger: 'blur' }],
+  forceUpdate: [{ required: true, message: '是否强更不能为空', trigger: 'change' }],
+  url: [{ required: true, message: '下载地址不能为空', trigger: 'blur' }],
   content: [{ required: true, message: '配置信息不能为空', trigger: 'blur' }]
 });
 
