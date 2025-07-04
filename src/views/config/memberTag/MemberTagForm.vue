@@ -1,18 +1,18 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="标签名称" prop="title">
+      <el-form-item label="标签名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="10" />
       </el-form-item>
-      <el-form-item label="注册时间段" prop="registerStartDate">
-        <div style="width: 400px !important">
+      <el-form-item label="注册时间段" prop="registerStartDate" class="w450">
+        <div >
           <el-date-picker
             type="date"
             date-format="YYYY-MM-DD"
             value-format="YYYY-MM-DD"
             v-model="formData.registerStartDate"
             placeholder="开始日期"
-            style="width: 190px !important"
+            style="width: 150px !important"
             :disabled-date="disabledStartDate"
           ></el-date-picker>
           ~
@@ -22,21 +22,21 @@
             value-format="YYYY-MM-DD"
             v-model="formData.registerEndDate"
             placeholder="截止日期(可以为空)"
-            style="width: 190px !important"
+            style="width: 150px !important"
             :disabled-date="disabledEndDate"
           ></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="最近几天有消费" prop="consumeDay">
+      <el-form-item label="最近几天有消费" prop="consumeDay" class="w450">
         <el-input v-model="formData.consumeDay" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="最低消费次数" prop="consumeNum">
+      <el-form-item label="最低消费次数" prop="consumeNum" class="w450">
         <el-input v-model="formData.consumeNum" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="最低消费金额" prop="consumeAmount">
+      <el-form-item label="最低消费金额" prop="consumeAmount" class="w450">
         <el-input v-model="formData.consumeAmount" @keyup="formData.consumeAmount = numberValidator(formData.consumeAmount)" />
       </el-form-item>
-      <el-form-item label="注册渠道" prop="channel">
+      <el-form-item label="注册渠道" prop="channel" class="w450">
         <el-select v-model="formData.channel" clearable>
           <el-option label="PC" value="PC" />
           <el-option label="ANDROID" value="ANDROID" />
@@ -45,7 +45,7 @@
           <el-option label="OTHER" value="OTHER" />
         </el-select>
       </el-form-item>
-      <el-form-item label="性别" prop="sex">
+      <el-form-item label="性别" prop="sex" class="w450">
         <el-select v-model="formData.sex" clearable>
           <el-option label="未知" :value="0" />
           <el-option label="男" :value="1" />

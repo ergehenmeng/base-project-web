@@ -1,10 +1,10 @@
 <template>
-  <el-dialog title="发送站内信" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
-      <el-form-item label="消息名称" prop="title">
+  <el-dialog title="发送站内信" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+      <el-form-item label="消息名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="通知类型" prop="noticeType">
+      <el-form-item label="通知类型" prop="noticeType" class="w450">
         <el-select v-model="formData.noticeType">
           <el-option label="通用类通知" value="common" />
           <el-option label="营销通知" value="marketing" />
@@ -12,7 +12,7 @@
           <el-option label="订单评价内容不合规" value="evaluation_refuse" />
         </el-select>
       </el-form-item>
-      <el-form-item label="内容" prop="content">
+      <el-form-item label="内容" prop="content" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 7 }" v-model="formData.content" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

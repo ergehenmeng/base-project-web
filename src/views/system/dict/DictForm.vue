@@ -1,19 +1,19 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="字典名称" prop="title">
+      <el-form-item label="字典名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="字典编码" prop="nid">
+      <el-form-item label="字典编码" prop="nid" class="w450">
         <el-input v-model="formData.nid" show-word-limit maxlength="20" :disabled="formData.id !== null" @keyup="formData.nid=formData.nid.replace(/[^a-zA-Z]/g,'')"/>
       </el-form-item>
-      <el-form-item label="分类">
+      <el-form-item label="分类" class="w450">
         <el-select v-model="formData.dictType">
           <el-option label="系统字典" :value="1" />
           <el-option label="业务字典" :value="2" />
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

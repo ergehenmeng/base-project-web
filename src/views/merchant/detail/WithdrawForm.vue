@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="修改提现方式" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="提现方式" prop="withdrawWay">
+      <el-form-item label="提现方式" prop="withdrawWay" class="w300">
         <el-radio-group v-model="formData.withdrawWay">
           <el-radio :value="1">手动提现</el-radio>
           <el-radio :value="2">自动提现</el-radio>

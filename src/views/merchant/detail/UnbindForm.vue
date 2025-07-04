@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="解绑手机号" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="验证码" prop="smsCode">
+      <el-form-item label="验证码" prop="smsCode" class="w300">
         <el-input v-model="formData.smsCode" maxlength="6">
           <template #append>
             <el-button type="info" @click="handleSendSms" style="width: 120px" :disabled="disabled">{{ buttonName }} </el-button>

@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="锁屏中" v-model="showDialog" width="400px" align-center :close-on-click-modal="false" :show-close="false" :close-on-press-escape="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="密码" prop="pwd">
+      <el-form-item label="密码" prop="pwd" class="w350">
         <el-input v-model="formData.pwd" type="password" show-word-limit maxlength="20" style="width: 280px !important;"/>
       </el-form-item>
     </el-form>

@@ -1,17 +1,17 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="类型名称" prop="title">
+      <el-form-item label="类型名称" prop="title" class="w380">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属区域" prop="areaCode">
-        <PoiAreaSelect v-model="formData.areaCode"></PoiAreaSelect>
+      <el-form-item label="所属区域" prop="areaCode" class="w380">
+        <PoiAreaSelect v-model="formData.areaCode" />
       </el-form-item>
       <el-form-item prop="icon">
         <template #label><span>图标<QuestionTip content="请上传24*24大小的图标"/></span></template>
         <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
-      <el-form-item label="排序" prop="sort">
+      <el-form-item label="排序" prop="sort" class="w380">
         <el-input v-model="formData.sort" placeholder="不填写默认1" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
     </el-form>

@@ -1,18 +1,18 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="昵称" prop="nickName">
+      <el-form-item label="昵称" prop="nickName" class="w450">
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
-      <el-form-item label="账户名" prop="userName">
+      <el-form-item label="账户名" prop="userName" class="w450">
         <el-input v-model="formData.userName" show-word-limit maxlength="15" />
       </el-form-item>
-      <el-form-item label="手机号" prop="mobile">
+      <el-form-item label="手机号" prop="mobile" class="w450">
         <el-input v-model="formData.mobile" maxlength="11" >
           <template #suffix><QuestionTip content="提示：手机号后8位为初始密码"/></template>
         </el-input>
       </el-form-item>
-      <el-form-item label="角色" prop="roleIds">
+      <el-form-item label="角色" prop="roleIds" class="w450">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable title="注意：此处只显示系统角色，不显示商户角色">
           <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"/>
           <template v-if="roleList.length === 0 && roleAuth" #footer>
@@ -22,11 +22,11 @@
           </template>
         </el-select>
       </el-form-item>
-      <el-form-item label="所属部门" prop="deptCode">
+      <el-form-item label="所属部门" prop="deptCode" class="w450">
         <el-tree-select check-strictly :props="defaultProps" :data="deptData" v-model="formData.deptCode" default-expand-all clearable>
         </el-tree-select>
       </el-form-item>
-      <el-form-item label="数据权限" prop="dataType">
+      <el-form-item label="数据权限" prop="dataType" class="w450">
         <el-select v-model="formData.dataType" clearable title="注意：数据权限需要按实际需求进行开发，且自定义数据权限需要手动选择">
           <el-option label="本人数据" :value="1"></el-option>
           <el-option label="本部门数据" :value="2"></el-option>
@@ -35,7 +35,7 @@
           <el-option label="自定义数据" :value="16"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

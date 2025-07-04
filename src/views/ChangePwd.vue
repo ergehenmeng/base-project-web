@@ -1,13 +1,13 @@
 <template>
-  <el-dialog title="修改密码" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="修改密码" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="旧密码" prop="oldPwd">
+      <el-form-item label="旧密码" prop="oldPwd" class="w380">
         <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" show-password/>
       </el-form-item>
-      <el-form-item label="密码" prop="newPwd">
+      <el-form-item label="密码" prop="newPwd" class="w380">
         <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" show-password/>
       </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPwd">
+      <el-form-item label="确认密码" prop="confirmPwd" class="w380">
         <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" show-password/>
       </el-form-item>
     </el-form>

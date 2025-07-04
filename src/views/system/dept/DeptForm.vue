@@ -1,10 +1,10 @@
 <template>
   <el-dialog :title="dialogTitle" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="部门名称" prop="title">
+      <el-form-item label="部门名称" prop="title" class="w380">
         <el-input v-model="formData.title" show-word-limit maxlength="8" style="width: 320px !important;"/>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w380">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit style="width: 320px !important;"/>
       </el-form-item>
     </el-form>

@@ -1,16 +1,16 @@
 <template>
-  <el-dialog title="编辑" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
-    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
-      <el-form-item label="参数名称" prop="title">
+  <el-dialog title="编辑" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
+    <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
+      <el-form-item label="参数名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
       </el-form-item>
-      <el-form-item label="标示符" prop="nid">
+      <el-form-item label="标示符" prop="nid" class="w450">
         <el-input v-model="formData.nid" disabled />
       </el-form-item>
-      <el-form-item label="配置信息" prop="content">
+      <el-form-item label="配置信息" prop="content" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.content" maxlength="400" show-word-limit :disabled="formData.locked" />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

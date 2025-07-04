@@ -1,10 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="负责人昵称" prop="nickName">
+      <el-form-item label="负责人昵称" prop="nickName" class="w450">
         <el-input v-model="formData.nickName" show-word-limit maxlength="10" />
       </el-form-item>
-      <el-form-item label="负责人手机号" prop="mobile">
+      <el-form-item label="负责人手机号" prop="mobile" class="w450">
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
       <el-form-item label="地址类型" prop="addressType">
@@ -13,16 +13,16 @@
           <el-radio :value="2">自提</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="省市县" prop="areaList">
-        <AreaSelect v-model="formData.areaList" :clearable="false"></AreaSelect>
+      <el-form-item label="省市县" prop="areaList" class="w450">
+        <AreaSelect v-model="formData.areaList" :clearable="false" class="w400"/>
       </el-form-item>
-      <el-form-item label="详细地址" prop="detailAddress">
+      <el-form-item label="详细地址" prop="detailAddress" class="w450">
         <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
       </el-form-item>
-      <el-form-item label="经纬度" prop="latitude">
+      <el-form-item label="经纬度" prop="latitude" class="w450">
         <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

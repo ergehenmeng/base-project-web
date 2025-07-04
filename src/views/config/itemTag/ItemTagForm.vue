@@ -1,10 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="标签名称" prop="title">
+      <el-form-item label="标签名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="8" />
       </el-form-item>
-      <el-form-item label="图标" prop="icon">
+      <el-form-item label="图标" prop="icon" >
         <UploadImage v-model:img-url="formData.icon"></UploadImage>
       </el-form-item>
       <el-form-item label="状态" prop="state">
@@ -13,7 +13,7 @@
           <el-radio :value="false">禁用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

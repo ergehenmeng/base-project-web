@@ -1,13 +1,13 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="场地名称" prop="title">
+      <el-form-item label="场地名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="所属场地" prop="venueId">
+      <el-form-item label="所属场地" prop="venueId" class="w450">
         <VenueSelect v-model="formData.venueId" :clearable="false"></VenueSelect>
       </el-form-item>
-      <el-form-item label="封面图" prop="coverUrl">
+      <el-form-item label="封面图" prop="coverUrl" class="w450">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled" :limit="8"></UploadImageList>
       </el-form-item>
     </el-form>

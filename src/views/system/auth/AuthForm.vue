@@ -1,22 +1,22 @@
 <template>
-  <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <template #header>
       <span>{{ dialogTitle }}<QuestionTip content="注意：相关业务代码需要开发人员额外开发"/></span>
     </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="单位名称" prop="title">
+      <el-form-item label="单位名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="签名方式" prop="signType">
+      <el-form-item label="签名方式" prop="signType" class="w450">
         <el-select v-model="formData.signType" :disabled="formData.id !== null">
           <el-option label="MD5" value="MD5" />
           <el-option label="RSA" value="RSA" />
         </el-select>
       </el-form-item>
-      <el-form-item label="过期时间" prop="expireDate">
+      <el-form-item label="过期时间" prop="expireDate" class="w450">
         <el-date-picker v-model="formData.expireDate" type="date" value-format="YYYY-MM-DD" placeholder="默认有效期一年" :disabled-date="disableBeforeDate" />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

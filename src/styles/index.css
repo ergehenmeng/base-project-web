@@ -190,13 +190,26 @@ el-select.w350 {
 }
 
 /*弹框样式*/
-.el-dialog .el-input,
-.el-dialog .el-textarea,
-.el-dialog .el-select {
+.el-dialog .w480 {
+  width: 480px !important;
+}
+.el-dialog .w450 {
+  width: 450px !important;
+}
+.el-dialog .w400 {
   width: 400px !important;
 }
 .el-dialog .w380 {
   width: 380px !important;
+}
+.el-dialog .w350 {
+  width: 350px !important;
+}
+.el-dialog .w300 {
+  width: 300px !important;
+}
+.el-dialog .w250 {
+  width: 250px !important;
 }
 
 /*分页组件样式*/

@@ -1,21 +1,21 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <template #header>
       <span>{{ dialogTitle }} <QuestionTip content="注意：图片编辑时不可修改"></QuestionTip></span>
     </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="图片名称" prop="title">
+      <el-form-item label="图片名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="图片分类" prop="imageType">
+      <el-form-item label="图片分类" prop="imageType" class="w450">
         <el-select v-model="formData.imageType" clearable>
           <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
         </el-select>
       </el-form-item>
-      <el-form-item label="上传图片" prop="path">
+      <el-form-item label="上传图片" prop="path" >
         <UploadImage v-model:img-url="formData.path" v-model:size="formData.size" :disabled="formData.id !== null && formData.path !== ''"></UploadImage>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

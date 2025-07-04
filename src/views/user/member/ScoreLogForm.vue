@@ -3,7 +3,7 @@
     <div class="page-content">
       <div>
         <el-form :inline="true" label-width="70px">
-          <el-form-item label="积分类型" style="width: 250px;">
+          <el-form-item label="积分类型" class="w250">
             <el-select v-model="queryParams.scoreType" clearable>
               <el-option label="签到积分" value="1" />
               <el-option label="抽奖积分" value="2" />

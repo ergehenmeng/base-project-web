@@ -1,7 +1,7 @@
 <template>
-  <el-dialog title="编辑任务" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="编辑任务" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="任务名称" prop="title">
+      <el-form-item label="任务名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="30" />
       </el-form-item>
       <el-form-item label="状态" prop="state">
@@ -17,25 +17,25 @@
         </el-radio-group>
         <QuestionTip content="注意：针对执行频率高且业务逻辑简单的定时任务建议关闭日志记录"/>
       </el-form-item>
-      <el-form-item label="类名" prop="beanName">
+      <el-form-item label="类名" prop="beanName" class="w450">
         <el-input v-model="formData.beanName" show-word-limit maxlength="30" disabled />
       </el-form-item>
-      <el-form-item label="方法名" prop="methodName">
+      <el-form-item label="方法名" prop="methodName" class="w450">
         <el-input v-model="formData.methodName" show-word-limit maxlength="30" disabled />
       </el-form-item>
-      <el-form-item label="方法入参" prop="args">
+      <el-form-item label="方法入参" prop="args" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.args" maxlength="300" show-word-limit />
       </el-form-item>
-      <el-form-item label="cron表达式" prop="cronExpression">
+      <el-form-item label="cron表达式" prop="cronExpression" class="w450">
         <el-input v-model="formData.cronExpression" maxlength="50" show-word-limit />
       </el-form-item>
-      <el-form-item label="报警邮箱" prop="alarmEmail">
+      <el-form-item label="报警邮箱" prop="alarmEmail" class="w450">
         <el-input v-model="formData.alarmEmail" maxlength="30" show-word-limit />
       </el-form-item>
-      <el-form-item label="锁时间(ms)" prop="lockTime">
+      <el-form-item label="锁时间(ms)" prop="lockTime" class="w450">
         <el-input v-model="formData.lockTime" maxlength="10" show-word-limit placeholder="30000~3600000ms之间" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="备注信息" prop="remark">
+      <el-form-item label="备注信息" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

@@ -1,13 +1,13 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="left" label-width="auto" v-loading="loading">
-      <el-form-item label="客户端" prop="channel">
+      <el-form-item label="客户端" prop="channel" class="w450">
         <el-select v-model="formData.channel" @change="handleChange" :disabled="formData.id !== null">
           <el-option label="IOS" value="IOS" />
           <el-option label="ANDROID" value="ANDROID" />
         </el-select>
       </el-form-item>
-      <el-form-item label="版本号" prop="version">
+      <el-form-item label="版本号" prop="version" class="w450">
         <el-input v-model="formData.version" placeholder="例如:1.2.8, 最大支持xx.xx.xx" :disabled="formData.id !== null" />
       </el-form-item>
       <el-form-item label="是否强更" prop="forceUpdate">
@@ -16,10 +16,10 @@
           <el-radio :value="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="下载链接" prop="url">
+      <el-form-item label="下载链接" prop="url" class="w450">
         <el-input v-model="formData.url" :disabled="formData.id !== null" />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.remark" maxlength="400" show-word-limit />
       </el-form-item>
     </el-form>

@@ -210,13 +210,26 @@ el-select.w350 {
 
 /*弹框样式*/
 .el-dialog {
-  .el-input,
-  .el-textarea,
-  .el-select {
+  .w480 {
+    width: 480px !important;
+  }
+  .w450 {
+    width: 450px !important;
+  }
+  .w400 {
     width: 400px !important;
   }
   .w380 {
     width: 380px !important;
+  }
+  .w350 {
+    width: 350px !important;
+  }
+  .w300 {
+    width: 300px !important;
+  }
+  .w250 {
+    width: 250px !important;
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="500px" draggable align-center :close-on-click-modal="false">
     <template #header>
       <span>角色授权</span><QuestionTip content="注意：勾选按钮菜单时，需要先勾选列表菜单，否则会无法显示列表数据。另外：商户角色无法授权系统菜单，系统角色无法授权商户菜单"></QuestionTip>
     </template>

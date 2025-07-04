@@ -1,13 +1,13 @@
 <template>
-  <el-dialog title="新增黑名单" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="新增黑名单" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="开始IP" prop="startIp">
+      <el-form-item label="开始IP" prop="startIp" class="w450">
         <el-input v-model="formData.startIp" show-word-limit maxlength="15" />
       </el-form-item>
-      <el-form-item label="截止IP" prop="endIp">
+      <el-form-item label="截止IP" prop="endIp" class="w450">
         <el-input v-model="formData.endIp" show-word-limit maxlength="15" />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

@@ -1,15 +1,15 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" >
-      <el-form-item label="标题" prop="title">
+      <el-form-item label="标题" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="轮播类型" prop="bannerType">
+      <el-form-item label="轮播类型" prop="bannerType" class="w450">
         <el-select v-model="formData.bannerType">
           <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
         </el-select>
       </el-form-item>
-      <el-form-item label="客户端" prop="clientType">
+      <el-form-item label="客户端" prop="clientType" class="w450">
         <el-select v-model="formData.clientType">
           <el-option label="PC" value="PC" />
           <el-option label="ANDROID" value="ANDROID" />
@@ -18,11 +18,11 @@
           <el-option label="WECHAT" value="WECHAT" />
         </el-select>
       </el-form-item>
-      <el-form-item label="上传图片" prop="imgUrl">
+      <el-form-item label="上传图片" prop="imgUrl" class="w450">
         <UploadImage v-model:img-url="formData.imgUrl"></UploadImage>
       </el-form-item>
-      <el-form-item label="展示时间" prop="showTime">
-        <div style="width: 400px">
+      <el-form-item label="展示时间" prop="showTime" class="w450">
+        <div class="w350">
           <el-date-picker
             v-model="formData.showTime"
             type="datetimerange"
@@ -31,7 +31,7 @@
             end-placeholder="截止时间"
             format="YYYY-MM-DD HH:mm"
             value-format="YYYY-MM-DD HH:mm" time-format="HH:mm"
-            style="width: 400px"
+            class="w350"
           />
         </div>
       </el-form-item>
@@ -41,10 +41,10 @@
           <el-radio :value="false">不可点击</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="跳转地址" prop="jumpUrl">
+      <el-form-item label="跳转地址" prop="jumpUrl" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.jumpUrl" show-word-limit maxlength="100" :disabled="formData.click === false" />
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

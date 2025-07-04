@@ -1,11 +1,11 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled">
-      <el-form-item label="兑换码名称" prop="title">
+      <el-form-item label="兑换码名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="有效时间" prop="timeList">
-        <div style="width: 400px">
+      <el-form-item label="有效时间" prop="timeList"  class="w450">
+        <div class="w350">
           <el-date-picker
             type="datetimerange"
             format="YYYY-MM-DD HH:mm"
@@ -13,20 +13,20 @@
             time-format="HH:mm"
             :disabled="editDisabled"
             v-model="formData.timeList"
-            style="width: 400px"
+            class="w350"
           ></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="金额" prop="amount">
+      <el-form-item label="金额" prop="amount" class="w450">
         <el-input v-model="formData.amount" show-word-limit maxlength="5" :disabled="editDisabled" @keyup="formData.amount = numberValidator(formData.amount)" />
       </el-form-item>
-      <el-form-item label="发放数量" prop="num">
+      <el-form-item label="发放数量" prop="num" class="w450">
         <el-input v-model="formData.num" show-word-limit maxlength="3" :disabled="editDisabled" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
-      <el-form-item label="可使用店铺" prop="storeIds">
+      <el-form-item label="可使用店铺" prop="storeIds" class="w450">
         <StoreAllSelect v-model:store-ids="formData.storeIds" v-model:store-list="storeList" :multiple="true"></StoreAllSelect>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

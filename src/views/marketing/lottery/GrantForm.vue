@@ -1,10 +1,10 @@
 <template>
-  <el-dialog v-model="showDialog" width="550" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="520" draggable align-center :close-on-click-modal="false">
     <template #header>
       <span>发放奖品<QuestionTip content="注意：备注信息可以填写快递单号等可以记录奖品发放的证据"/></span>
     </template>
     <el-form :model="formData" label-position="right" label-width="auto" :validate-on-rule-change="false">
-      <el-form-item label="备注信息" >
+      <el-form-item label="备注信息" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 7 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>

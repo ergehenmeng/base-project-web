@@ -1,25 +1,25 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :validate-on-rule-change="false">
-      <el-form-item label="用户昵称" prop="nickName">
+      <el-form-item label="用户昵称" prop="nickName" class="w450">
         <el-input v-model="formData.nickName" show-word-limit maxlength="20" />
       </el-form-item>
-      <el-form-item label="手机号" prop="mobile">
+      <el-form-item label="手机号" prop="mobile" class="w450">
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="password" class="w450">
         <el-input v-model="formData.password" placeholder="密码必须包含英文字符、数字、@#&_" type="password" show-word-limit maxlength="20">
           <template #suffix>
             <QuestionTip content="注意：编辑时，该字段填写后会覆盖旧密码"></QuestionTip>
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item label="角色" prop="roleIds">
+      <el-form-item label="角色" prop="roleIds" class="w450">
         <el-select v-model="formData.roleIds" filterable multiple collapse-tags collapse-tags-tooltip :max-collapse-tags="3" clearable>
           <el-option v-for="role in roleList" :label="role.desc" :value="role.value" :key="role.value"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
+      <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
