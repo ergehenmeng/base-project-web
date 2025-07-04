@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="退款审核" v-model="showDialog" width="550px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="退款审核" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :validate-on-rule-change="false">
       <el-form-item label="订单编号" prop="title">
         {{ formData.orderNo }}
@@ -10,10 +10,10 @@
           <el-radio label="拒绝" :value="2"></el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="退款金额" prop="refundAmount">
+      <el-form-item label="退款金额" prop="refundAmount" class="w380">
         <el-input v-model="formData.refundAmount" maxlength="6" @keyup="formData.refundAmount = numberValidator(formData.refundAmount, 2)"/>
       </el-form-item>
-      <el-form-item label="审批意见" prop="auditRemark">
+      <el-form-item label="审批意见" prop="auditRemark" class="w380">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.auditRemark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>

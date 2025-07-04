@@ -195,6 +195,9 @@ el-select.w350 {
 .el-dialog .el-select {
   width: 400px !important;
 }
+.el-dialog .w380 {
+  width: 380px !important;
+}
 
 /*分页组件样式*/
 .pagination-container {
