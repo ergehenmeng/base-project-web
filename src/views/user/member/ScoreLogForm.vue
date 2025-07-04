@@ -4,14 +4,14 @@
       <div>
         <el-form :inline="true" label-width="70px">
           <el-form-item label="积分类型" class="w250">
-            <el-select v-model="queryParams.scoreType" clearable>
-              <el-option label="签到积分" value="1" />
-              <el-option label="抽奖积分" value="2" />
-              <el-option label="支付积分" value="3" />
-              <el-option label="支付取消" value="4" />
-              <el-option label="退款" value="5" />
-              <el-option label="系统扣除" value="6" />
-              <el-option label="系统奖励" value="7" />
+            <el-select v-model="queryParams.type" clearable>
+              <el-option label="签到积分(+)" value="1" />
+              <el-option label="抽奖积分(+)" value="2" />
+              <el-option label="支付积分(-)" value="3" />
+              <el-option label="支付取消(+)" value="4" />
+              <el-option label="退款(+)" value="5" />
+              <el-option label="系统扣除(-)" value="6" />
+              <el-option label="系统奖励(+)" value="7" />
             </el-select>
           </el-form-item>
           <el-form-item>
@@ -76,7 +76,7 @@ const formatter = (row, column, cellValue) => {
     if (row.type === 1 || row.type === 2 || row.type === 4 || row.type === 5 || row.type === 7) {
       return h('span', { style: 'color: green;' }, '+' + cellValue);
     } else {
-      return h('span', { style: 'color: red;' }, '-' + cellValue);
+      return h('span', { style: 'color: red;' }, cellValue);
     }
   } else if (column.property === 'type') {
     switch (cellValue) {

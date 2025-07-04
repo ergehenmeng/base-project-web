@@ -3,17 +3,17 @@
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="积分类型" prop="scoreType" class="w350">
         <el-select v-model="formData.scoreType" >
-          <el-option label="签到积分" value="1" />
-          <el-option label="抽奖积分" value="2" />
-          <el-option label="支付积分" value="3" />
-          <el-option label="支付取消" value="4" />
-          <el-option label="退款" value="5" />
-          <el-option label="系统扣除" value="6" />
-          <el-option label="系统奖励" value="7" />
+          <el-option label="签到积分(+)" value="1" />
+          <el-option label="抽奖积分(+)" value="2" />
+          <el-option label="支付积分(-)" value="3" />
+          <el-option label="支付取消(+)" value="4" />
+          <el-option label="退款(+)" value="5" />
+          <el-option label="系统扣除(-)" value="6" />
+          <el-option label="系统奖励(+)" value="7" />
         </el-select>
       </el-form-item>
       <el-form-item label="积分" prop="score" class="w350">
-        <el-input v-model="formData.score" maxlength="3" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+        <el-input v-model="formData.score" maxlength="4" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="备注" prop="remark" class="w350">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="50" show-word-limit />
