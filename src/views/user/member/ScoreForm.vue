@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="更新积分" v-model="showDialog" width="420px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="420px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>修改积分<QuestionTip content="注意：积分类型会决定当前操作是扣除或增加会员积分，扣除积分后会员积分不能为负数"/></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="积分类型" prop="scoreType" class="w350">
         <el-select v-model="formData.scoreType" >
@@ -31,6 +34,7 @@
 <script setup>
 import { updateScoreApi } from '@/api/user/member';
 import { successMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const loading = ref(false);
 const formDataRef = ref();

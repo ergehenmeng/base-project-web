@@ -80,7 +80,9 @@
         <el-table-column prop="createTime" label="注册时间" width="180" />
         <el-table-column label="操作" width="220">
           <template #default="scope">
-            <el-button v-has-perm="'YNp0'" :icon="Tickets" @click="handleLoginLog(scope.row)" link title="登录日志"></el-button>
+            <el-button v-has-perm="'YNp0'" @click="handleLoginLog(scope.row)" link title="登录日志">
+              <LoginLog/>
+            </el-button>
             <el-button v-has-perm="'ONp0'" v-show="scope.row.state" type="warning" :icon="Lock" @click="handleFreeze(scope.row)" link title="冻结"></el-button>
             <el-button v-has-perm="'cNp0'" v-show="!scope.row.state" type="success" :icon="Unlock" @click="handleUnFreeze(scope.row)" link title="解冻"></el-button>
             <el-button v-has-perm="'DNp0'" @click="handleLogout(scope.row)" link title="强制下线">
@@ -124,6 +126,7 @@ import { downloadExcel, renderMsg } from '@/utils/common.js'
 import Score from '@/components/icon/Score.vue'
 import ScoreForm from '@/views/user/member/ScoreForm.vue'
 import ScoreLogForm from '@/views/user/member/ScoreLogForm.vue'
+import LoginLog from '@/components/icon/LoginLog.vue'
 
 const router = useRouter();
 const loading = ref(false);
