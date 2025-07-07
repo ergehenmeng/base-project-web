@@ -40,7 +40,7 @@
             </div>
             <div class="content-nav" v-if="data.deliveryType === 1">
               <span>收货人昵称：</span><span> {{ data.nickName }}</span>
-              <span>收货人手机号：</span><span> {{ data.mobile }}</span>
+              <span>收货手机号：</span><span> {{ data.mobile }}</span>
               <span>收货地址：</span><span>{{ data.detailAddress }} <CopyLink :content="data.detailAddress"/></span>
               <span>买家留言：</span><span><span class="order-remark">{{ data.remark }}</span></span>
             </div>
@@ -59,6 +59,7 @@
               <span>订单金额：</span><span>{{ data.amount }} 元</span>
               <span>快递费：</span><span>{{ data.fee }} 元</span>
               <span>优惠金额：</span><span>{{ data.discountAmount }} 元</span>
+              <span>使用积分：</span><span>{{ data.scoreAmount }}</span>
               <span>实付金额：</span><span><span class="pay-amount"> {{ data.payAmount }}</span> 元</span>
             </div>
           </div>
@@ -212,6 +213,7 @@ const data = ref({
   closeType: null,
   payAmount: '0',
   discountAmount: '0',
+  scoreAmount: '0',
   refundAmount: null,
   completeTime: null,
   closeTime: null,
@@ -230,7 +232,7 @@ const handleSelected = (val) => {
 };
 
 const selectState = (row) => {
-  return row.deliveryState === 1 || row.deliveryState === 3;
+  return (row.deliveryState === 1 || row.deliveryState === 3) && row.refundState === 0;
 }
 
 const handleUpdatePrice = (row) => {
@@ -365,7 +367,7 @@ onBeforeMount(() => {
   }
 
   .visit-item {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 19px;
     border-right: none;
     .pay-amount {

@@ -11,7 +11,10 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="退款金额" prop="refundAmount" class="w380">
-        <el-input v-model="formData.refundAmount" maxlength="6" @keyup="formData.refundAmount = numberValidator(formData.refundAmount, 2)"/>
+        <el-input v-model="formData.refundAmount" maxlength="6" :disabled="formData.state === 2" @keyup="formData.refundAmount = numberValidator(formData.refundAmount, 2)"/>
+      </el-form-item>
+      <el-form-item label="退款积分" class="w380">
+        <span>{{formData.scoreAmount}}</span>
       </el-form-item>
       <el-form-item label="审批意见" prop="auditRemark" class="w380">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.auditRemark" maxlength="100" show-word-limit />
@@ -47,6 +50,7 @@ const formData = ref({
   state: 1,
   refundId: null,
   refundAmount: null,
+  scoreAmount: null,
   auditRemark: null
 });
 
@@ -56,14 +60,14 @@ const openDialog = (row) => {
   formData.value.orderNo = row.orderNo;
   formData.value.refundId = row.id;
   formData.value.refundAmount = row.refundAmount;
-
+  formData.value.scoreAmount = row.scoreAmount;
 };
 
 const changeState = (value) => {
   if (value === 2) {
-    formRules.auditRemark = [];
+    formRules.refundAmount = [];
   } else {
-    formRules.auditRemark = [{ required: true, message: '审批意见不能为空', trigger: 'blur' }];
+    formRules.refundAmount = [{ required: true, message: '退款金额不能为空', trigger: 'blur' }];
   }
 }
 

@@ -35,17 +35,18 @@
       <el-tabs v-model="activeName" @tab-change="handleChange">
         <el-tab-pane v-for="config in typeList" :label="config.name" :key="config.prefix" :name="config.prefix">
           <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-            <el-table-column prop="title" label="商品名称" width="250" />
+            <el-table-column prop="title" label="商品名称" min-width="150" />
             <el-table-column prop="orderNo" label="订单编号" width="200" />
-            <el-table-column prop="state" label="退款状态" width="120" :formatter="formatter"/>
-            <el-table-column prop="auditState" label="审核状态" width="120" :formatter="formatter"/>
-            <el-table-column prop="num" label="退款数量" width="100" />
+            <el-table-column prop="state" label="退款状态" width="90" :formatter="formatter"/>
+            <el-table-column prop="auditState" label="审核状态" width="90" :formatter="formatter"/>
+            <el-table-column prop="num" label="退款数量" width="80" />
             <el-table-column prop="refundAmount" width="150" >
               <template #header>
                 <span>申请退款金额<QuestionTip v-if="activeName === 'LS'" content="注意：含快递费"></QuestionTip></span>
               </template>
             </el-table-column>
-            <el-table-column prop="expressFee" label="退款快递费" width="120" v-if="activeName === 'LS'"/>
+            <el-table-column prop="expressFee" label="退款快递费" width="100" v-if="activeName === 'LS'"/>
+            <el-table-column prop="scoreAmount" label="退款积分" width="80" v-if="activeName === 'LS'"/>
             <el-table-column prop="reason" label="退款原因" min-width="100" />
             <el-table-column prop="applyTime" label="申请时间" width="180" />
             <el-table-column prop="auditTime" label="审核时间" width="180" />
