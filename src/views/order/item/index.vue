@@ -39,16 +39,17 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="orderNo" label="订单编号" min-width="180" />
+        <el-table-column prop="orderNo" label="订单编号" min-width="200" />
         <el-table-column prop="title" label="商品名称" min-width="180" />
         <el-table-column prop="storeName" label="所属店铺" min-width="150" />
         <el-table-column prop="state" label="订单状态" width="85" :formatter="formatter" />
+        <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
-        <el-table-column prop="mobile" label="订单联系人" min-width="110" />
+        <el-table-column prop="mobile" label="订单联系人" width="115" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
         <el-table-column prop="discountAmount" label="优惠金额" width="100" />
-        <el-table-column prop="createTime" label="下单时间" width="170" />
-        <el-table-column prop="payTime" label="支付时间" width="170" />
+        <el-table-column prop="createTime" label="下单时间" width="160" />
+        <el-table-column prop="payTime" label="支付时间" width="160" />
         <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
         <el-table-column prop="orderType" label="订单类型" width="80" />
         <el-table-column label="操作" fixed="right" width="60">
@@ -75,7 +76,7 @@ import { exportApi, listPageApi } from '@/api/order/item';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRoute, useRouter } from 'vue-router'
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat, refundStateFormat } from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import RefundStateSelect from '@/components/RefundStateSelect.vue'
@@ -136,6 +137,8 @@ const formatter = (_row, column, cellValue) => {
     return orderStateFormat(cellValue);
   } else if (column.property === 'closeType') {
     return closeTypeFormat(cellValue);
+  } else if (column.property === 'refundState') {
+    return refundStateFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
   } else {

@@ -43,6 +43,7 @@
         <el-table-column prop="title" label="门票名称" min-width="150" />
         <el-table-column prop="scenicName" label="景区名称" min-width="150" />
         <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
+        <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="mobile" label="订单联系人" min-width="120" />
         <el-table-column prop="payAmount" label="付款金额" width="100" />
@@ -74,7 +75,7 @@ import { exportApi, listPageApi } from '@/api/order/ticket';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRoute, useRouter } from 'vue-router'
-import { downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { downloadExcel, orderStateFormat, payTypeFormat, refundStateFormat } from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import RefundStateSelect from '@/components/RefundStateSelect.vue'
@@ -135,7 +136,9 @@ const formatter = (_row, column, cellValue) => {
     return orderStateFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
-  } else {
+  } else if (column.property === 'refundState') {
+    return refundStateFormat(cellValue);
+  }  else {
     return cellValue;
   }
 };

@@ -43,18 +43,19 @@
         <el-table-column prop="siteTitle" label="场地名称" min-width="150" />
         <el-table-column prop="title" label="场馆名称" min-width="150" />
         <el-table-column prop="venueType" label="场馆类型" width="100" :formatter="formatter"/>
-        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="80" :formatter="formatter" />
+        <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="nickName" label="联系人昵称" min-width="100" />
-        <el-table-column prop="mobile" label="联系人电话" min-width="120" />
-        <el-table-column prop="payAmount" label="付款金额" width="100" />
-        <el-table-column prop="discountAmount" width="120" >
+        <el-table-column prop="mobile" label="联系人电话" min-width="110" />
+        <el-table-column prop="payAmount" label="付款金额" width="80" />
+        <el-table-column prop="discountAmount" width="105" >
           <template #header>
-            <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
+            <span>优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="下单时间" width="170" />
-        <el-table-column prop="payTime" label="支付时间" width="170" />
-        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
+        <el-table-column prop="createTime" label="下单时间" width="160" />
+        <el-table-column prop="payTime" label="支付时间" width="160" />
+        <el-table-column prop="payType" label="支付方式" width="80" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'Y8D0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
@@ -79,7 +80,14 @@ import { exportApi, listPageApi } from '@/api/order/venue';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRoute, useRouter } from 'vue-router'
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat, venueTypeFormat } from '@/utils/common.js'
+import {
+  closeTypeFormat,
+  downloadExcel,
+  orderStateFormat,
+  payTypeFormat,
+  refundStateFormat,
+  venueTypeFormat
+} from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
@@ -143,6 +151,8 @@ const formatter = (_row, column, cellValue) => {
     return closeTypeFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
+  } else if (column.property === 'refundState') {
+    return refundStateFormat(cellValue);
   } else if (column.property === 'venueType') {
     return venueTypeFormat(cellValue);
   } else {

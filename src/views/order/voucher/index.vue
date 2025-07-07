@@ -39,22 +39,23 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="orderNo" label="订单编号" min-width="200" />
+        <el-table-column prop="orderNo" label="订单编号" width="200" />
         <el-table-column prop="title" label="餐饮券名称" min-width="150" />
         <el-table-column prop="restaurantName" label="餐饮店名称" min-width="150" />
-        <el-table-column prop="state" label="订单状态" width="100" :formatter="formatter" />
+        <el-table-column prop="state" label="订单状态" width="90" :formatter="formatter" />
+        <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="购买人昵称" min-width="100" />
-        <el-table-column prop="mobile" label="购买人手机号" min-width="120" />
-        <el-table-column prop="payAmount" label="付款金额" width="100" />
-        <el-table-column prop="discountAmount" width="120" >
+        <el-table-column prop="mobile" label="购买人手机号" min-width="115" />
+        <el-table-column prop="payAmount" label="付款金额" width="80" />
+        <el-table-column prop="discountAmount" width="105" >
           <template #header>
-            <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
+            <span>优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="下单时间" width="170" />
-        <el-table-column prop="payTime" label="支付时间" width="170" />
-        <el-table-column prop="payType" label="支付方式" width="100" :formatter="formatter" />
+        <el-table-column prop="createTime" label="下单时间" width="160" />
+        <el-table-column prop="payTime" label="支付时间" width="160" />
+        <el-table-column prop="payType" label="支付方式" width="80" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
             <el-button v-has-perm="'dpD0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
@@ -79,7 +80,7 @@ import { exportApi, listPageApi } from '@/api/order/voucher';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRoute, useRouter } from 'vue-router'
-import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { closeTypeFormat, downloadExcel, orderStateFormat, payTypeFormat, refundStateFormat } from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
@@ -143,6 +144,8 @@ const formatter = (_row, column, cellValue) => {
     return closeTypeFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
+  } else if (column.property === 'refundState') {
+    return refundStateFormat(cellValue);
   } else {
     return cellValue;
   }

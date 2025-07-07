@@ -36,18 +36,19 @@
         <el-table-column prop="title" label="房型名称" min-width="150" />
         <el-table-column prop="homestayName" label="民宿名称" min-width="130" />
         <el-table-column prop="state" label="订单状态" width="85" :formatter="formatter" />
+        <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="confirmState" label="确认状态" width="110" :formatter="formatter" />
         <el-table-column prop="num" label="购买数量" min-width="80" />
         <el-table-column prop="nickName" label="联系人姓名" min-width="95" />
         <el-table-column prop="mobile" label="联系人手机号" min-width="115" />
         <el-table-column prop="payAmount" label="付款金额" width="80" />
-        <el-table-column prop="discountAmount" width="120" >
+        <el-table-column prop="discountAmount" width="110" >
           <template #header>
-            <span>总优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
+            <span>优惠金额<QuestionTip content="优惠券优惠+兑换码优惠"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="下单时间" width="165" />
-        <el-table-column prop="payTime" label="支付时间" width="165" />
+        <el-table-column prop="createTime" label="下单时间" width="160" />
+        <el-table-column prop="payTime" label="支付时间" width="160" />
         <el-table-column prop="payType" label="支付方式" width="80" :formatter="formatter" />
         <el-table-column label="操作" fixed="right" width="60">
           <template #default="scope">
@@ -73,7 +74,7 @@ import { exportApi, listPageApi } from '@/api/order/homestay';
 import { Document, Download } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user';
 import { useRoute, useRouter } from 'vue-router'
-import { downloadExcel, orderStateFormat, payTypeFormat } from '@/utils/common.js';
+import { downloadExcel, orderStateFormat, payTypeFormat, refundStateFormat } from '@/utils/common.js'
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
@@ -135,6 +136,8 @@ const formatter = (row, column, cellValue) => {
     return orderStateFormat(cellValue);
   } else if (column.property === 'payType') {
     return payTypeFormat(cellValue);
+  } else if (column.property === 'refundState') {
+    return refundStateFormat(cellValue);
   } else if (column.property === 'confirmState') {
     if (cellValue === 1) {
       return '自动确认有房';
