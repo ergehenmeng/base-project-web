@@ -38,9 +38,9 @@
         <el-table-column prop="state" label="订单状态" width="85" :formatter="formatter" />
         <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
         <el-table-column prop="confirmState" label="确认状态" width="110" :formatter="formatter" />
-        <el-table-column prop="num" label="购买数量" min-width="80" />
-        <el-table-column prop="nickName" label="联系人姓名" min-width="95" />
-        <el-table-column prop="mobile" label="联系人手机号" min-width="115" />
+        <el-table-column prop="num" label="购买数量" width="80" />
+        <el-table-column prop="nickName" label="联系人姓名" width="95" />
+        <el-table-column prop="mobile" label="联系人手机" width="115" />
         <el-table-column prop="payAmount" label="付款金额" width="80" />
         <el-table-column prop="discountAmount" width="110" >
           <template #header>
