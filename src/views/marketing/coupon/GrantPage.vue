@@ -144,7 +144,6 @@ const handleGrant = (row) => {
   confirmMsg('确定要给该用户发放优惠券吗?', () => {
     grantApi({couponId: route.params.id, memberIds: [row.id] }).then(() => {
       successMsg('优惠券发放成功');
-      getPage();
     });
   });
 };
