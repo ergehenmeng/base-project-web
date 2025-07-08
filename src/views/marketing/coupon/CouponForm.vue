@@ -18,6 +18,7 @@
         <el-input v-model="formData.discountValue" maxlength="2" onkeyup="this.value=this.value.replace(/\D/g,'')"  :disabled="disabled || readonly">
           <template #append>%</template>
         </el-input>
+        <QuestionTip content="例如：80%，表示商品打8折"/>
       </el-form-item>
       <el-form-item label="使用门槛" :prop="thresholdProp">
         <el-radio-group v-model="formData.threshold" @change="handleThreshold" :disabled="disabled || readonly">

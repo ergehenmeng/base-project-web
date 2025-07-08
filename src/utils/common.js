@@ -72,7 +72,7 @@ export const orderStateFormatNotStyle = (state) => {
 export const refundStateFormat = (state) => {
   switch (state) {
     case 0:
-      return '未退款';
+      return '无退款';
     case 1:
       return '退款申请中';
     case 2:
