@@ -1,7 +1,7 @@
 <template>
   <el-dialog :title="title" v-model="showDialog" width="800px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false" >
     <div class="product-list">
-      <el-transfer v-model="productIds" filterable :data="pageData" :props="props" :titles="['未选择', '已选择']" target-order="push" v-loading="loading" >
+      <el-transfer v-model="productIds" @change="checkHandle" filterable :data="pageData" :props="props" :titles="['未选择', '已选择']" target-order="push" v-loading="loading" >
         <template #default="{ option }">
           <span style="float: left" :title="option.title">{{ option.title }}</span>
           <span style="float: right; color: #8492a6; font-size: 13px; margin-right: 20px">{{ option.state === 0 ? '未上架' : option.state === 2 ? '强制下架' : '已上架' }}</span>
@@ -26,12 +26,15 @@ import { sitePageApi } from '@/api/product/site';
 import { homestayPageApi } from '@/api/product/room';
 
 import { parseProductType } from '@/utils/common.js';
+import { warningMsg } from '@/utils/message.js'
 
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 const productIds = ref([]);
 const title = ref('');
 const loading = ref(false);
+// 只读时,不需要编辑,且不需要保存
+const readonly = ref(false);
 
 const props = ref({
   key: 'id',
@@ -46,12 +49,19 @@ const queryParams = reactive({
   limit: false
 });
 
+const checkHandle = () => {
+  if (readonly.value) {
+    warningMsg("注意：当前模式为只读,所有操作均无效")
+  }
+}
+
 /**
  * 打开弹窗
  * @param productType 产品类型
  * @param ids 已选中的产品id集合
+ * @param read 是否只读
  */
-const openDialog = (productType, ids) => {
+const openDialog = (productType, ids, read = false) => {
   try {
     loading.value = true
     getPageApi(productType);
@@ -61,6 +71,7 @@ const openDialog = (productType, ids) => {
   title.value = parseProductType(productType) + '列表';
   productIds.value = ids;
   showDialog.value = true;
+  readonly.value = read;
 };
 
 const getPageApi = async (productType) => {
@@ -92,7 +103,9 @@ const getPageApi = async (productType) => {
 };
 
 const handleSave = () => {
-  emit('reload', productIds.value);
+  if (!readonly.value) {
+    emit('reload', productIds.value);
+  }
   showDialog.value = false;
 };
 

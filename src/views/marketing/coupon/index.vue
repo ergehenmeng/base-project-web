@@ -31,7 +31,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="优惠券名称" min-width="140" />
+        <el-table-column prop="title" label="优惠券名称" min-width="220" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" >
           <template #default="scope">
             <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" inline-prompt active-text="启用" inactive-text="禁用" disabled style="--el-switch-off-color: #ff4949" />
