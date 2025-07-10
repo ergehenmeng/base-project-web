@@ -36,7 +36,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="备注" prop="remark" class="w450">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" v-model="formData.remark" maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

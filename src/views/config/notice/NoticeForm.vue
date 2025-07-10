@@ -11,7 +11,7 @@
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.content" maxlength="200" show-word-limit />
       </el-form-item>
       <el-form-item label="备注信息" prop="remark" class="w450">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>

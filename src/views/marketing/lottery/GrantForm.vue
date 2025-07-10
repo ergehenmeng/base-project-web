@@ -3,9 +3,9 @@
     <template #header>
       <span>发放奖品<QuestionTip content="注意：备注信息可以填写快递单号等可以记录奖品发放的证据"/></span>
     </template>
-    <el-form :model="formData" label-position="right" label-width="auto" :validate-on-rule-change="false">
-      <el-form-item label="备注信息" class="w450">
-        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 7 }" v-model="formData.remark" maxlength="200" show-word-limit />
+    <el-form :model="formData" :rules="formRules" label-position="right" label-width="auto" :validate-on-rule-change="false">
+      <el-form-item label="备注信息" class="w450" prop="remark">
+        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -23,6 +23,9 @@ import { successMsg } from '@/utils/message.js'
 import QuestionTip from '@/components/QuestionTip.vue'
 
 const showDialog = ref(false);
+const formRules = reactive({
+  remark: [{ required: true, message: '备注信息不能为空', trigger: 'blur' }]
+});
 const emit = defineEmits(['reload']);
 const formData = ref({
   id: null,

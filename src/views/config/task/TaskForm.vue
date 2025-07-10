@@ -36,7 +36,7 @@
         <el-input v-model="formData.lockTime" maxlength="10" show-word-limit placeholder="30000~3600000ms之间" onkeyup="this.value=this.value.replace(/\D/g,'')" />
       </el-form-item>
       <el-form-item label="备注信息" prop="remark" class="w450">
-        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="200" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
