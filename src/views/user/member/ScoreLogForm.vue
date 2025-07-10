@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="积分日志" v-model="showDialog" width="650px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="积分日志" v-model="showDialog" width="750px" draggable align-center :close-on-click-modal="false">
     <div class="page-content">
       <div>
         <el-form :inline="true" label-width="70px">
