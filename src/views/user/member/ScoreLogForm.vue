@@ -23,6 +23,7 @@
         <el-table :data="pageData" style="width: 100%" v-loading="loading" height="360" show-overflow-tooltip>
           <el-table-column prop="score" label="积分数" width="100" :formatter="formatter"/>
           <el-table-column prop="type" label="积分类型" width="100" :formatter="formatter"/>
+          <el-table-column prop="surplusScore" label="变动后的积分" width="120" />
           <el-table-column prop="createTime" label="收支时间" width="180" />
           <el-table-column prop="remark" label="备注" min-width="100" />
         </el-table>

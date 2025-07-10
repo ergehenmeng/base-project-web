@@ -39,9 +39,9 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" />
         <el-table-column prop="chargeType" label="变动类型" :formatter="formatter" />
-        <el-table-column prop="amount" label="变动积分" />
+        <el-table-column prop="score" label="变动积分" />
         <el-table-column prop="direction" label="收支类型" :formatter="formatter" />
-        <el-table-column prop="surplusAmount" label="变动后积分" />
+        <el-table-column prop="surplusScore" label="变动后积分" />
         <el-table-column prop="tradeNo" label="关联单号" />
         <el-table-column prop="createTime" label="变动时间" />
         <el-table-column prop="remark" label="备注信息" />
