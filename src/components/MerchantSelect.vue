@@ -2,8 +2,8 @@
   <el-form-item :label="props.label" :prop="props.prop" v-show="show">
     <el-select v-model="merchantId" :clearable="props.clearable" filterable :style="`width: ${props.width}px;`" @change="handleChange">
       <el-option v-for="item in merchantList" :key="item.id" :label="item.merchantName" :value="item.id" :disabled="props.disabled" :title="item.merchantName">
-        <span style="float: left">{{ item.merchantName }}</span>
-        <span style="float: right; color: #8492a6; font-size: 13px">法人：{{ item.legalName }}</span>
+        <span style="float: left; width: 200px;">{{ item.merchantName }}</span>
+        <span style="float: right; color: #8492a6; font-size: 13px" title="法人姓名">{{ item.legalName }}</span>
       </el-option>
     </el-select>
   </el-form-item>

@@ -45,12 +45,12 @@
             <span>平台推荐<QuestionTip content="被平台推荐的店铺会在首页展示"></QuestionTip></span>
           </template>
         </el-table-column>
-        <el-table-column prop="telephone" label="商家电话" width="130" />
+        <el-table-column prop="telephone" label="商家电话" width="120" />
         <el-table-column prop="openTime" label="营业时间" min-width="120" />
-        <el-table-column prop="score" label="评分" width="70" :formatter="(row, column, cellValue) => cellValue === null ? '无': cellValue "/>
+        <el-table-column prop="score" label="评分" width="60" :formatter="(row, column, cellValue) => cellValue === null ? '无': cellValue "/>
         <el-table-column prop="detailAddress" label="详细地址" width="200" />
-        <el-table-column prop="createTime" label="创建时间" width="170" />
-        <el-table-column prop="updateTime" label="更新时间" width="170" />
+        <el-table-column prop="createTime" label="创建时间" width="160" />
+        <el-table-column prop="updateTime" label="更新时间" width="160" />
         <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span>操作</span>
