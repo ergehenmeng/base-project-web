@@ -231,9 +231,11 @@ export const numberValidator = (value, decimalPlaces = 2) => {
       value = value.replace(/^0([1-9])/, '$1');
     }
     const [integerPart, decimalPart] = value.split('.');
-    if (decimalPart !== undefined) {
+    if (decimalPart) {
       // 动态截断超长小数位（但保留未完成的输入）
       value = `${integerPart}.${decimalPart.slice(0, decimalPlaces)}`;
+    } else if (!integerPart) {
+      value = '';
     }
     // 第四步：应用最终校验
     const regPattern = decimalPlaces === 0 ? /^\d*$/ : new RegExp(`^\\d*\\.?\\d{0,${decimalPlaces}}$`);

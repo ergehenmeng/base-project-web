@@ -47,7 +47,6 @@
         <el-table-column prop="enterpriseType" label="企业类型" width="100" :formatter="formatter" />
         <el-table-column prop="legalName" label="法人姓名" width="120" />
         <el-table-column prop="legalIdCard" label="法人身份证" width="180" />
-        <el-table-column prop="creditCode" label="社会统一信用代码" width="180" />
         <el-table-column prop="platformServiceRate" label="平台服务费(%)" width="150" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
         <el-table-column prop="updateTime" label="更新时间" width="170" />
