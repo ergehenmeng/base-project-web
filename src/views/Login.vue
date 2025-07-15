@@ -48,7 +48,8 @@
 </template>
 <script setup>
 import useUserStore from '@/store/user';
-import md5 from 'md5';
+import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
@@ -103,7 +104,7 @@ const handleLogin = async () => {
       loading.value = true;
       userStore.login({
           userName: formData.value.userName,
-          pwd: md5(formData.value.pwd),
+          pwd: sha256(formData.value.pwd).toString(),
           verifyCode: formData.value.verifyCode
         }).then(() => {
           const fullPath = route.fullPath;

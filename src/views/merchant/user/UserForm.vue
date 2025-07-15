@@ -37,7 +37,7 @@ import { createApi, roleIdsApi, updateApi } from '@/api/merchant/user';
 import { roleListApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
-import md5 from 'md5'
+import sha256 from 'crypto-js/sha256';
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -113,7 +113,7 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi({ ...formData.value, password: formData.value.password ? md5(formData.value.password) : null })
+        updateApi({ ...formData.value, password: formData.value.password ? sha256(formData.value.password).toString() : null })
           .then(() => {
             successMsg('修改用户成功');
             showDialog.value = false;
@@ -123,7 +123,7 @@ const handleSave = () => {
             loading.value = false;
           });
       } else {
-        createApi({ ...formData.value, password: md5(formData.value.password) })
+        createApi({ ...formData.value, password: sha256(formData.value.password).toString() })
           .then(() => {
             successMsg('新增用户成功');
             showDialog.value = false;

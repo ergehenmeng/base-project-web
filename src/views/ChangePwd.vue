@@ -23,8 +23,7 @@
 <script setup>
 import { changePwdApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
-import md5 from 'md5'
-
+import sha256 from 'crypto-js/sha256';
 const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
@@ -98,7 +97,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      changePwdApi({oldPwd: md5(formData.value.oldPwd), newPwd: md5(formData.value.newPwd)})
+      changePwdApi({oldPwd: formData.value.oldPwd, newPwd: formData.value.newPwd})
         .then(() => {
           successMsg('修改密码成功');
           showDialog.value = false;
