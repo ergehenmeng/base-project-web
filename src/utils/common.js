@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import JSEncrypt from 'jsencrypt'
 
 export const phoneValidator = (rule, value, callback) => {
   if (!value) {
@@ -9,6 +10,18 @@ export const phoneValidator = (rule, value, callback) => {
   } else {
     callback();
   }
+};
+
+/**
+ * rsa加密
+ * @param value 待加密的字符串
+ * @returns string | false
+ */
+export const rsaEncode = (value) => {
+  const encrypt = new JSEncrypt()
+  const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+  encrypt.setPublicKey(publicKey)
+  return encrypt.encrypt(value);
 };
 
 export const checkMobile = (value) => {

@@ -18,7 +18,7 @@
 import { unlockScreenApi, lockScreenApi } from '@/api/system/user';
 import { confirmMsg, successMsg } from '@/utils/message.js'
 import useUserStore from '@/store/user.js'
-import sha256 from 'crypto-js/sha256';
+import { rsaEncode } from '@/utils/common.js'
 import { renderMsg } from '@/utils/common.js'
 
 const loading = ref(false);
@@ -65,7 +65,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      unlockScreenApi({pwd: sha256(formData.value.pwd).toString()})
+      unlockScreenApi({pwd: rsaEncode(formData.value.pwd)})
         .then(() => {
           userStore.setLock(false);
           successMsg('解锁成功');

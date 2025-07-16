@@ -23,7 +23,7 @@
 <script setup>
 import { changePwdApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
-import sha256 from 'crypto-js/sha256';
+import { rsaEncode } from '@/utils/common.js'
 const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);
@@ -97,7 +97,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      changePwdApi({oldPwd: formData.value.oldPwd, newPwd: formData.value.newPwd})
+      changePwdApi({oldPwd: rsaEncode(formData.value.oldPwd), newPwd: rsaEncode(formData.value.newPwd)})
         .then(() => {
           successMsg('修改密码成功');
           showDialog.value = false;
