@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="cdKey名称" clearable @keyup.enter="search" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="用户昵称、手机号" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="queryParams.state" clearable>
@@ -22,7 +22,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="cdKey" label="cdKey" min-width="200" />
+        <el-table-column prop="cdKey" label="兑换码" min-width="200" />
         <el-table-column prop="state" label="状态" min-width="80" :formatter="formatter" />
         <el-table-column prop="createTime" label="生成时间" min-width="180" />
         <el-table-column prop="nickName" label="用户昵称" min-width="200" />
