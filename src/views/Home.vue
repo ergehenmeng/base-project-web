@@ -85,7 +85,7 @@
                 <el-table-column label="图片" min-width="50" >
                   <template #default="scope">
                     <div style="display: flex; align-items: center">
-                      <el-image fit="cover" :src="scope.row.productImg" style="width: 20px; height: 20px" :preview-src-list="scope.row.productImg?.split(',')" preview-teleported hide-on-click-modal />
+                      <el-image fit="cover" :src="scope.row.productImg[0]" style="width: 20px; height: 20px" :preview-src-list="scope.row.productImg" preview-teleported hide-on-click-modal />
                     </div>
                   </template>
                 </el-table-column>
