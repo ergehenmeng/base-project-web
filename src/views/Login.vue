@@ -44,6 +44,7 @@
         </el-form>
       </div>
     </div>
+    <QRCodeForm ref="qrcodeRef" @reload="handleConfirm" :download="false" button-name="绑定" tips="请下载IOS或Android版Google Authenticator扫码绑定"/>
   </div>
 </template>
 <script setup>
@@ -52,15 +53,22 @@ import { rsaEncode } from '@/utils/common.js'
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
+import { loginApi, checkTotpApi, bindTotpApi } from '@/api/login/index.js'
+import QRCodeForm from '@/views/common/QRCodeForm.vue'
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
+const qrcodeRef = ref();
 const formData = ref({
   userName: null,
   pwd: null,
   verifyCode: null
+});
+const confirmData = ref({
+  uuid: null,
+  secretKey: null
 });
 const formDataRef = ref();
 const loading = ref(false);
@@ -101,25 +109,67 @@ const handleLogin = async () => {
   await formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      userStore.login({
-          userName: formData.value.userName,
-          pwd: rsaEncode(formData.value.pwd),
-          verifyCode: formData.value.verifyCode
-        }).then(() => {
-          const fullPath = route.fullPath;
-          if (fullPath.startsWith('/login?redirect=')) {
-            const path = getPath(fullPath.replace('/login?redirect=', ''))
-            router.replace(path);
-          } else {
-            router.replace('/');
-          }
-        }).catch(() => {
-          getCode();
-        }).finally(() => {
-          loading.value = false;
-        });
+      loginApi({
+        userName: formData.value.userName,
+        pwd: rsaEncode(formData.value.pwd),
+        verifyCode: formData.value.verifyCode
+      }).then(({data: { data, state, uuid}}) => {
+        if (state === 1) {
+          loginSuccessHandle(data)
+        } else {
+          checkTotpHandle(uuid)
+        }
+      }).catch(() => {
+        getCode();
+      }).finally(() => {
+        loading.value = false;
+      });
     }
   });
+};
+
+const handleConfirm = () => {
+  bindTotpApi({
+    uid: confirmData.value.uuid,
+    secretKey: confirmData.value.secretKey
+  })
+}
+
+const checkTotpHandle = (uid) => {
+  ElMessageBox.prompt('请输入动态口令', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    inputPattern: /\D/,
+    inputErrorMessage: '动态口令为6位数字',
+    inputPlaceholder: '无动态口令请直接点击确认',
+    inputValidator: (str) => {
+      return str && str.length !== 6;
+    }
+  }).then(({ value }) => {
+    checkTotpApi({
+      uuid: uid,
+      verifyCode: value
+    }).then(({data: { data, state, uuid, secretKey, qrcode}}) => {
+      if (state === 1) {
+        loginSuccessHandle(data)
+      } else {
+        confirmData.value.uuid = uuid;
+        confirmData.value.secretKey = secretKey;
+        qrcodeRef.value.openDialog({ base64: qrcode, remark: '扫码完成后请按【绑定】按钮进行绑定'});
+      }
+    })
+  })
+};
+
+const loginSuccessHandle = (data) => {
+  userStore.user = {...data};
+  const fullPath = route.fullPath;
+  if (fullPath.startsWith('/login?redirect=')) {
+    const path = getPath(fullPath.replace('/login?redirect=', ''))
+    router.replace(path);
+  } else {
+    router.replace('/');
+  }
 };
 
 /**

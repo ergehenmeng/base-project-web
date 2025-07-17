@@ -9,8 +9,9 @@
     </div>
     <template #footer>
       <span>
-        <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleDownload" :loading="downloadLoading">下载图片</el-button>
+        <el-button @click="showDialog = false" v-if="props.cancel">取消</el-button>
+        <el-button type="primary" @click="confirmHandle">{{ props.buttonName }}</el-button>
+        <el-button type="primary" @click="handleDownload" :loading="downloadLoading" v-if="props.download">下载图片</el-button>
       </span>
     </template>
   </el-dialog>
@@ -18,11 +19,12 @@
 
 <script setup>
 import QRCode from 'qrcode';
-import {downloadImage} from "@/utils/common.js";
-import QuestionTip from "@/components/QuestionTip.vue";
+import { downloadImage } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const showDialog = ref(false);
 const downloadLoading = ref(false);
+const emit = defineEmits(['reload']);
 
 const props = defineProps({
   tips: {
@@ -32,12 +34,28 @@ const props = defineProps({
   fileName: {
     type: String,
     default: null
+  },
+  cancel: {
+    type: Boolean,
+    default: true
+  },
+  download: {
+    type: Boolean,
+    default: true
+  },
+  confirm: {
+    type: Boolean,
+    default: false
+  },
+  buttonName: {
+    type: String,
+    default: '确定'
   }
- })
+});
 
 const imageData = ref({
   data: null,
-  remark: null,
+  remark: null
 });
 
 /**
@@ -56,6 +74,11 @@ const openDialog = ({ text, base64, remark }) => {
   } else {
     imageData.value.data = base64;
   }
+};
+
+const confirmHandle = () => {
+  emit('reload');
+  showDialog.value = false;
 };
 
 const handleDownload = () => {

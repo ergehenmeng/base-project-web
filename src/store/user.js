@@ -72,9 +72,13 @@ const useUserStore = defineStore(
       if (isLogin.value) {
         return;
       }
-      const result = await loginApi(loginData);
-      isLogin.value = true;
-      user.value = { ...result.data };
+      const { data } = await loginApi(loginData);
+      if (data.state === 1) {
+        isLogin.value = true;
+        user.value = { ...data };
+      } else {
+        Promise.reject(new Error(data));
+      }
     };
 
     const setInit = (init) => {
