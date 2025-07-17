@@ -44,7 +44,7 @@
         </el-form>
       </div>
     </div>
-    <QRCodeForm ref="qrcodeRef" @reload="handleConfirm" :download="false" button-name="绑定" tips="请下载IOS或Android版Google Authenticator扫码绑定"/>
+    <TotpPrompt ref="totpRef" @reload="loginSuccessHandle"/>
   </div>
 </template>
 <script setup>
@@ -53,24 +53,20 @@ import { rsaEncode } from '@/utils/common.js'
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
-import { loginApi, checkTotpApi, bindTotpApi } from '@/api/login/index.js'
-import QRCodeForm from '@/views/common/QRCodeForm.vue'
-import {successMsg} from "@/utils/message.js";
+import { loginApi} from '@/api/login/index.js'
+import TotpPrompt from "@/components/TotpPrompt.vue";
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
-const qrcodeRef = ref();
+const totpRef = ref();
 const formData = ref({
   userName: null,
   pwd: null,
   verifyCode: null
 });
-const confirmData = ref({
-  uuid: null,
-  secretKey: null
-});
+
 const formDataRef = ref();
 const loading = ref(false);
 const api = import.meta.env.VITE_API_PREFIX;
@@ -118,7 +114,7 @@ const handleLogin = async () => {
         if (state === 1) {
           loginSuccessHandle(data)
         } else {
-          checkTotpHandle(uuid)
+          totpRef.value.openDialog(uuid);
         }
       }).catch(() => {
         getCode();
@@ -127,46 +123,6 @@ const handleLogin = async () => {
       });
     }
   });
-};
-
-const handleConfirm = () => {
-  bindTotpApi(confirmData.value).then(()=> {
-    successMsg('双因子绑定成功')
-  })
-}
-
-const checkTotpHandle = (uid) => {
-  ElMessageBox.prompt('请输入动态口令', '提示', {
-    confirmButtonText: '确认',
-    cancelButtonText: '取消',
-    inputErrorMessage: '动态口令为6位数字',
-    inputPlaceholder: '无动态口令请直接点击确认',
-    inputValidator: (str) => {
-      if (!str) {
-        return true;
-      }
-      return str.length === 6 && /^\d+$/.test(str);
-    },
-    beforeClose: (action, instance, done) => {
-      if (action === 'confirm') {
-        checkTotpApi({
-          uuid: uid,
-          verifyCode: instance.inputValue
-        }).then(({data: { data, state, uuid, secretKey, qrcode}}) => {
-          if (state === 1) {
-            done();
-            loginSuccessHandle(data)
-          } else {
-            confirmData.value.uuid = uuid;
-            confirmData.value.secretKey = secretKey;
-            qrcodeRef.value.openDialog({ base64: qrcode, remark: '扫码完成后请按【绑定】按钮进行绑定'});
-          }
-        })
-      } else {
-        done()
-      }
-    }
-  }).catch(()=>{})
 };
 
 const loginSuccessHandle = (data) => {
