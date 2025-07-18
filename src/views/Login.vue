@@ -110,11 +110,11 @@ const handleLogin = async () => {
         userName: formData.value.userName,
         pwd: rsaEncode(formData.value.pwd),
         verifyCode: formData.value.verifyCode
-      }).then(({data: { data, state, uuid}}) => {
+      }).then(({data: { data, state, uuid, qrcode, secretKey}}) => {
         if (state === 1) {
           loginSuccessHandle(data)
         } else {
-          totpRef.value.openDialog(uuid);
+          totpRef.value.openDialog({uuid, showBind: state === 3, qrcode, secretKey});
         }
       }).catch(() => {
         getCode();
