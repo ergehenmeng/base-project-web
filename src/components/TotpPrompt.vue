@@ -2,7 +2,7 @@
   <el-dialog title="动态口令" v-model="showDialog" width="300px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item prop="verifyCode">
-        <el-input v-model="formData.verifyCode" placeholder="动态口令为6位数" maxlength="6" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+        <el-input v-model="formData.verifyCode" maxlength="6" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
       </el-form-item>
     </el-form>
     <template #footer>
