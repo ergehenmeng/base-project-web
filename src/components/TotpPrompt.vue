@@ -24,7 +24,7 @@ const loading = ref(false);
 const emit = defineEmits(['reload']);
 const formRules = reactive({
   verifyCode: [{ required: true, message: '动态口令为6位数', trigger: 'blur' }, {
-    validator: (rule, value, callback) => {
+    validator: (_rule, value, callback) => {
       if (!value) {
         callback(new Error('请输入动态口令'));
       } else if (value.length !== 6) {
@@ -61,18 +61,16 @@ const openDialog = ({uuid, showBind, qrcode, secretKey}) => {
 };
 
 const checkTotpHandle = () => {
-  checkTotpApi(formData.value).then(({data }) => {
-    emit('reload', data);
-  }).catch(() => {
-    formData.value.verifyCode = null;
-  }).finally(() => {
-    loading.value = false;
-  });
-
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-
+      checkTotpApi(formData.value).then(({data }) => {
+        emit('reload', data);
+      }).catch(() => {
+        formData.value.verifyCode = null;
+      }).finally(() => {
+        loading.value = false;
+      });
     }
   });
 };
