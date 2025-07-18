@@ -53,6 +53,7 @@ const openDialog = ({uuid, showBind, qrcode, secretKey}) => {
   showDialog.value = true;
   formData.value.uuid = uuid;
   formData.value.verifyCode = null;
+  formDataRef.value?.resetFields();
   if (showBind) {
     confirmData.value.uuid = uuid;
     confirmData.value.secretKey = secretKey;
@@ -67,7 +68,6 @@ const checkTotpHandle = () => {
       checkTotpApi(formData.value).then(({data }) => {
         emit('reload', data);
       }).catch(() => {
-        formData.value.verifyCode = null;
       }).finally(() => {
         loading.value = false;
       });
