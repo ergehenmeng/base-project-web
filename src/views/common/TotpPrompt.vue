@@ -49,16 +49,11 @@ const confirmData = ref({
 
 const showDialog = ref(false);
 
-const openDialog = ({uuid, showBind, qrcode, secretKey}) => {
+const openDialog = ({uuid}) => {
   showDialog.value = true;
   formData.value.uuid = uuid;
   formData.value.verifyCode = null;
   formDataRef.value?.resetFields();
-  if (showBind) {
-    confirmData.value.uuid = uuid;
-    confirmData.value.secretKey = secretKey;
-    qrcodeRef.value.openDialog({ base64: qrcode, remark: '扫码完成后请按【绑定】按钮进行绑定'});
-  }
 };
 
 const checkTotpHandle = () => {

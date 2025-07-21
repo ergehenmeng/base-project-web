@@ -45,6 +45,7 @@
       </div>
     </div>
     <TotpPrompt ref="totpRef" @reload="loginSuccessHandle"/>
+    <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle"/>
   </div>
 </template>
 <script setup>
@@ -54,13 +55,15 @@ import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
 import { loginApi} from '@/api/login/index.js'
-import TotpPrompt from "@/components/TotpPrompt.vue";
+import TotpPrompt from "@/views/common/TotpPrompt.vue";
+import TotpScanForm from '@/views/common/TotpScanForm.vue'
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const totpRef = ref();
+const totpScanRef = ref()
 const formData = ref({
   userName: null,
   pwd: null,
@@ -113,8 +116,10 @@ const handleLogin = async () => {
       }).then(({data: { data, state, uuid, qrcode, secretKey}}) => {
         if (state === 1) {
           loginSuccessHandle(data)
+        } else if (state === 2) {
+          totpRef.value.openDialog({uuid});
         } else {
-          totpRef.value.openDialog({uuid, showBind: state === 3, qrcode, secretKey});
+          totpScanRef.value.openDialog({qrcode, secretKey, uuid});
         }
       }).catch(() => {
         getCode();
