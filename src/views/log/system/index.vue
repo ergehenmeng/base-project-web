@@ -7,7 +7,7 @@
         </el-form-item>
         <el-form-item label="日期">
           <div class="w220">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>
@@ -60,18 +60,26 @@ const contentRef = ref();
 const handleResponse = (content) => {
   contentRef.value.openDialog(content);
 };
-
+const activityDate = ref([])
 const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  activityDate: []
+  startDate: null,
+  endDate: null
 });
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
+      if (activityDate.value.length === 2) {
+        queryParams.startDate = activityDate.value[0];
+        queryParams.endDate = activityDate.value[1];
+      } else {
+        queryParams.startDate = null;
+        queryParams.endDate = null;
+      }
       const { data } = await listPageApi(queryParams);
       pageData.value = data.rows;
       total.value = data.total;

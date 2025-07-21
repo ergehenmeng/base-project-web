@@ -23,7 +23,7 @@
         <MerchantSelect v-model="queryParams.merchantId" label="商户名称"></MerchantSelect>
         <el-form-item label="订单日期">
           <div class="w220">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>
@@ -71,7 +71,7 @@ const selectAuth = userStore.hasAuth('sCu0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-
+const activityDate = ref([])
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -79,16 +79,17 @@ const queryParams = reactive({
   accountType: null,
   merchantId: null,
   direction: null,
-  activityDate: []
+  startDate: null,
+  endDate: null
 });
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.activityDate?.length === 2) {
-        queryParams.startDate = queryParams.activityDate[0];
-        queryParams.endDate = queryParams.activityDate[1];
+      if (activityDate.value.length === 2) {
+        queryParams.startDate = activityDate.value[0];
+        queryParams.endDate = activityDate.value[1];
       } else {
         queryParams.startDate = null;
         queryParams.endDate = null;

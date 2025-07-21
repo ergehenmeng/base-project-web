@@ -6,7 +6,7 @@
           <el-input v-model="queryParams.queryName" placeholder="关联单号" clearable @keyup.enter="search" class="w250" maxlength="30" />
         </el-form-item>
         <el-form-item label="变动类型">
-          <el-select v-model="queryParams.accountType" clearable class="w130">
+          <el-select v-model="queryParams.chargeType" clearable class="w130">
             <el-option label="充值" value="1" />
             <el-option label="支付收入" value="2" />
             <el-option label="支付退款" value="3" />
@@ -24,7 +24,7 @@
         </el-form-item>
         <el-form-item label="订单日期">
           <div class="w220">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>
@@ -71,24 +71,25 @@ const selectAuth = userStore.hasAuth('sCu0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-
+const activityDate = ref([])
 const queryParams = reactive({
   queryName: '',
   page: 1,
   pageSize: 10,
-  accountType: null,
+  chargeType: null,
   merchantId: null,
   direction: null,
-  activityDate: []
+  startDate: null,
+  endDate: null
 });
 
 const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.activityDate?.length === 2) {
-        queryParams.startDate = queryParams.activityDate[0];
-        queryParams.endDate = queryParams.activityDate[1];
+      if (activityDate.value.length === 2) {
+        queryParams.startDate = activityDate.value[0];
+        queryParams.endDate = activityDate.value[1];
       } else {
         queryParams.startDate = null;
         queryParams.endDate = null;

@@ -29,7 +29,7 @@
         </el-form-item>
         <el-form-item label="注册日期">
           <div class="w220">
-            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="queryParams.activityDate" class="w220"></el-date-picker>
+            <el-date-picker type="daterange" value-format="YYYY-MM-DD" v-model="activityDate" class="w220"></el-date-picker>
           </div>
         </el-form-item>
         <el-form-item>
@@ -104,6 +104,7 @@ const selectAuth = userStore.hasAuth('9nR0');
 const smsRef = ref();
 const noticeRef = ref();
 const couponRef = ref();
+const activityDate = ref([])
 const queryParams = reactive({
   queryName: '',
   page: 1,
@@ -112,7 +113,8 @@ const queryParams = reactive({
   sex: null,
   channel: null,
   tagId: '',
-  activityDate: []
+  startDate: null,
+  endDate: null
 });
 
 const pageData = ref([]);
@@ -121,9 +123,9 @@ const getPage = async () => {
   loading.value = true;
   try {
     if (selectAuth) {
-      if (queryParams.activityDate?.length === 2) {
-        queryParams.startDate = queryParams.activityDate[0];
-        queryParams.endDate = queryParams.activityDate[1];
+      if (activityDate.value.length === 2) {
+        queryParams.startDate = activityDate.value[0];
+        queryParams.endDate = activityDate.value[1];
       } else {
         queryParams.startDate = null;
         queryParams.endDate = null;
