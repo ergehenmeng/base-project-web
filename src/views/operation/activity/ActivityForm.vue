@@ -21,13 +21,13 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="封面图" prop="coverUrl">
-          <UploadImageList v-model:file-list="formData.coverUrl"  :limit="4"></UploadImageList>
+          <UploadImageList v-model:file-list="formData.coverUrl" :limit="4"></UploadImageList>
         </el-form-item>
         <el-form-item label="活动地址" prop="address">
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
         </el-form-item>
         <el-form-item label="关联景区" prop="scenicId">
-          <ScenicSelect v-model="formData.scenicId"/>
+          <ScenicSelect v-model="formData.scenicId"/><QuestionTip content="注意：关联景区后活动只会在该景区下显示"/>
         </el-form-item>
         <el-form-item label="公告内容" prop="introduceText">
           <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -50,6 +50,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
 import ScenicSelect from '@/components/ScenicSelect.vue'
 import UploadImageList from '@/components/UploadImageList.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();
 const router = useRouter();
@@ -58,6 +59,7 @@ const formDataRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '活动名称不能为空', trigger: 'blur' }],
+  activityDate: [{ required: true, message: '请选择活动日期', trigger: 'blur' }],
   activityTime: [{ required: true, message: '请选择活动时间', trigger: 'blur' }],
   address: [{ required: true, message: '活动地点不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '请上传封面', trigger: 'change', type: 'array'}],

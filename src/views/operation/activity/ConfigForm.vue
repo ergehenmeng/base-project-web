@@ -32,7 +32,7 @@
           <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.address" maxlength="50" show-word-limit />
         </el-form-item>
         <el-form-item label="关联景区" prop="scenicId">
-          <ScenicSelect v-model="formData.scenicId"/>
+          <ScenicSelect v-model="formData.scenicId"/><QuestionTip content="注意：关联景区后活动只会在该景区下显示"/>
         </el-form-item>
         <el-form-item label="公告内容" prop="introduceText">
           <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
@@ -56,6 +56,7 @@ import { successMsg } from '@/utils/message.js';
 import { goBack } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue'
 import UploadImageList from '@/components/UploadImageList.vue'
+import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
 const loading = ref(false);
