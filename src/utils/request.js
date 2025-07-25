@@ -83,7 +83,19 @@ service.interceptors.response.use(
   }
 );
 
-const get = ({ url, params, ...config }) => {
+/**
+ * get
+ * @param url url
+ * @param params 请求参数
+ * @param code 特殊业务码
+ * @param callback 业务码回调函数
+ * @param config 其他配置参数 axios
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
+const get = ({ url, params, code, callback, ...config }) => {
+  if (code && callback) {
+    errorCallback[code] = callback;
+  }
   return service({
     url: url,
     method: 'get',
@@ -95,7 +107,19 @@ const get = ({ url, params, ...config }) => {
   });
 };
 
-const post = ({ url, data, ...config }) => {
+/**
+ * post请求
+ * @param url url
+ * @param data json
+ * @param code 特殊业务码
+ * @param callback 业务码回调函数
+ * @param config 其他配置参数 axios
+ * @returns {Promise<axios.AxiosResponse<any>>}
+ */
+const post = ({ url, data, code, callback, ...config }) => {
+  if (code && callback) {
+    errorCallback[code] = callback;
+  }
   return service({
     url: url,
     method: 'post',

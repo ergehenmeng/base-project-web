@@ -44,8 +44,8 @@
         </el-form>
       </div>
     </div>
-    <TotpPrompt ref="totpRef" @reload="loginSuccessHandle"/>
-    <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle"/>
+    <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail"/>
+    <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail"/>
   </div>
 </template>
 <script setup>
@@ -122,13 +122,19 @@ const handleLogin = async () => {
           totpScanRef.value.openDialog({qrcode, secretKey, uuid});
         }
       }).catch(() => {
-        getCode();
+        loginFail();
       }).finally(() => {
         loading.value = false;
       });
     }
   });
 };
+
+const loginFail = () => {
+  formData.value.pwd = null;
+  formData.value.verifyCode = null
+  getCode()
+}
 
 const loginSuccessHandle = (data) => {
   userStore.user = {...data};

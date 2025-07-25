@@ -4,21 +4,25 @@ import request from '@/utils/request';
 export const loginApi = (data) => {
   return request.post({
     url: '/manage/login',
-    data: data
+    data
   });
 };
 
-export const bindTotpApi = (data) => {
+export const bindTotpApi = (data, code, callback) => {
   return request.post({
     url: '/manage/bindTotp',
-    data: data
+    data,
+    code,
+    callback
   });
 };
 
-export const checkTotpApi = (data) => {
+export const checkTotpApi = (data, code, callback) => {
   return request.post({
     url: '/manage/checkTotp',
-    data: data
+    data,
+    code,
+    callback
   });
 };
 

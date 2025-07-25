@@ -25,9 +25,10 @@
 
 <script setup>
 import { bindTotpApi } from '@/api/login/index.js'
+import { errorMsg } from '@/utils/message.js'
 const loading = ref(false);
 const showDialog = ref(false);
-const emit = defineEmits(['reload']);
+const emit = defineEmits(['reload', 'close']);
 const formDataRef = ref();
 const qrCode = ref('');
 const formData = ref({
@@ -68,7 +69,11 @@ const confirmHandle = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      bindTotpApi(formData.value).then(( { data }) => {
+      bindTotpApi(formData.value, 2045, () => {
+        errorMsg('登录信息已过期,请重新登陆')
+        emit('close')
+        showDialog.value = false
+      }).then(( { data }) => {
         showDialog.value = false;
         emit('reload', data);
       }).catch(() => {
