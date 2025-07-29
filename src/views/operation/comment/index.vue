@@ -183,9 +183,9 @@ const handleUnTop = (row) => {
 
 const formatter = (row, column, cellValue) => {
   if (column.property === 'state') {
-    return cellValue ? '正常' : '已屏蔽';
+    return cellValue ? '正常' : h('span', { style: 'color: red;' }, '已屏蔽');
   } else if (column.property === 'topState') {
-    return cellValue === 0 ? '未置顶' : h('span', { style: 'color: red;' }, '置顶');
+    return cellValue === 0 ? '未置顶' : h('span', { style: 'color: green;' }, '置顶');
   } else if (column.property === 'reportNum') {
     // 点击小于0或没有权限不支持点击跳转
     if (cellValue <= 0 || !reportAuth) {
