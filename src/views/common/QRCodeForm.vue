@@ -10,7 +10,6 @@
     <template #footer>
       <span>
         <el-button @click="showDialog = false" v-if="props.cancel">取消</el-button>
-        <el-button type="primary" @click="confirmHandle">{{ props.buttonName }}</el-button>
         <el-button type="primary" @click="handleDownload" :loading="downloadLoading" v-if="props.download">下载图片</el-button>
       </span>
     </template>
@@ -42,14 +41,6 @@ const props = defineProps({
   download: {
     type: Boolean,
     default: true
-  },
-  confirm: {
-    type: Boolean,
-    default: false
-  },
-  buttonName: {
-    type: String,
-    default: '确定'
   }
 });
 
@@ -74,11 +65,6 @@ const openDialog = ({ text, base64, remark }) => {
   } else {
     imageData.value.data = base64;
   }
-};
-
-const confirmHandle = () => {
-  emit('reload');
-  showDialog.value = false;
 };
 
 const handleDownload = () => {
