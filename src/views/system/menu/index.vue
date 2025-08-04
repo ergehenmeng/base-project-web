@@ -176,7 +176,8 @@ const reload = (pid) => {
 };
 
 const updateState = (row) => {
-  stateApi({ id: row.id, state: row.state });
+  loading.value = true;
+  stateApi({ id: row.id, state: row.state }).finally(() => { loading.value = false;});
 };
 </script>
 
