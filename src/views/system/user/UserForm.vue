@@ -35,6 +35,9 @@
           <el-option label="自定义数据" :value="16"></el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="选择部门" prop="deptIds" class="w450" v-if="formData.dataType === 16">
+        <el-tree-select check-strictly multiple node-key="value" :props="defaultProps" :data="deptData" v-model="formData.deptIds" default-expand-all clearable/>
+      </el-form-item>
       <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
@@ -77,7 +80,8 @@ const formRules = reactive({
     { required: true, message: '账户名不能为空', trigger: 'blur' },
     { min: 6, max: 15, message: '账户名长度6~15字符', trigger: 'blur'}
   ],
-  roleIds: [{ required: true, message: '请选择角色', trigger: 'change', type: 'array' }]
+  roleIds: [{ required: true, message: '请选择角色', trigger: 'change', type: 'array' }],
+  deptIds: [{ required: true, message: '请选择部门', trigger: 'change', type: 'array' }],
 });
 
 const deptData = ref([]);
@@ -96,6 +100,7 @@ const formData = ref({
   deptCode: '',
   roleIds: [],
   dataType: null,
+  deptIds: [],
   remark: ''
 });
 
@@ -130,6 +135,7 @@ const resetForm = () => {
     mobile: '',
     deptCode: '',
     roleIds: [],
+    deptIds: [],
     dataType: null,
     remark: ''
   };
