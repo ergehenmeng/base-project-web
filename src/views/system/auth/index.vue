@@ -32,6 +32,7 @@
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">
+            <CopyLink :content='"appKey：" + scope.row.appKey + "\r\n签名秘钥：" + scope.row.privateKey'/>
             <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"></el-button>
             <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
@@ -61,6 +62,7 @@ import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
+import CopyLink from '@/components/CopyLink.vue'
 
 const loading = ref(false);
 const total = ref(0);
