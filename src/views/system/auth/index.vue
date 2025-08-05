@@ -21,7 +21,7 @@
         <el-table-column prop="title" label="单位名称" width="200" />
         <el-table-column prop="signType" label="签名方式" width="80" />
         <el-table-column prop="appKey" label="appKey" width="300" />
-        <el-table-column prop="privateKey" label="签名秘钥" />
+        <el-table-column prop="privateKey" label="secret" />
         <el-table-column prop="expireDate" label="过期时间" width="100" />
         <el-table-column prop="remark" label="备注" width="180" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
@@ -32,9 +32,9 @@
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">
-            <CopyLink :content='"appKey：" + scope.row.appKey + "\r\n签名秘钥：" + scope.row.privateKey'/>
+            <CopyLink :content=' "signType：" + scope.row.signType + "\r\nappKey：" + scope.row.appKey + "\r\nsecret：" + scope.row.privateKey'/>
             <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
-            <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置秘钥"></el-button>
+            <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置secret"></el-button>
             <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -117,11 +117,11 @@ const handleDelete = (row) => {
 };
 
 const handleReset = (row) => {
-  const msg = renderMsg(["确定要", () => "重置", "签名信息吗?"]);
+  const msg = renderMsg(["确定要", () => "重置", "secret信息吗?"]);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     resetApi(data).then(() => {
-      successMsg('签名信息重置成功');
+      successMsg('secret信息重置成功');
       getPage();
     });
   });
