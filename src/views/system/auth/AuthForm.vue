@@ -16,6 +16,9 @@
       <el-form-item label="过期时间" prop="expireDate" class="w450">
         <el-date-picker v-model="formData.expireDate" type="date" value-format="YYYY-MM-DD" placeholder="默认有效期一年" :disabled-date="disableBeforeDate" />
       </el-form-item>
+      <el-form-item label="邮箱" prop="email" class="w450">
+        <el-input v-model="formData.email" show-word-limit maxlength="30" />
+      </el-form-item>
       <el-form-item label="备注" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
@@ -43,7 +46,8 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   title: [{ required: true, message: '单位名称不能为空', trigger: 'blur' }, { min: 2, max: 20, message: '单位名称长度2~20位', trigger: 'blur' }],
-  signType: [{ required: true, message: '签名方式不能为空', trigger: 'change' }]
+  signType: [{ required: true, message: '签名方式不能为空', trigger: 'change' }],
+  email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }, { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
 });
 
 const formData = ref({
@@ -51,6 +55,7 @@ const formData = ref({
   title: '',
   signType: 'MD5',
   expireDate: null,
+  email: null,
   remark: ''
 });
 
@@ -71,6 +76,7 @@ const resetForm = () => {
     title: '',
     signType: 'MD5',
     expireDate: null,
+    email: null,
     remark: ''
   };
   formDataRef.value?.resetFields();

@@ -18,10 +18,10 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="单位名称" width="200" />
+        <el-table-column prop="title" label="单位名称" min-width="200" />
         <el-table-column prop="signType" label="签名方式" width="80" />
         <el-table-column prop="appKey" label="appKey" width="300" />
-        <el-table-column prop="privateKey" label="secret" />
+        <el-table-column prop="email" label="邮箱" width="180"/>
         <el-table-column prop="expireDate" label="过期时间" width="100" />
         <el-table-column prop="remark" label="备注" width="180" />
         <el-table-column prop="createTime" label="创建时间" width="170" />
@@ -32,9 +32,9 @@
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">
-            <CopyLink :content=' "signType：" + scope.row.signType + "\r\nappKey：" + scope.row.appKey + "\r\nsecret：" + scope.row.privateKey'/>
-            <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
+            <el-button v-has-perm="'0vK0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑" style="text-align: center"></el-button>
             <el-button v-has-perm="'pvK0'" type="primary" :icon="Refresh" @click="handleReset(scope.row)" link title="重置secret"></el-button>
+            <el-button v-has-perm="'hvK0'" type="warning" :icon="Promotion" @click="sendEmail(scope.row)" link title="发送邮件"></el-button>
             <el-button v-has-perm="'dvK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -54,15 +54,14 @@
   <AuthForm ref="formRef" @reload="getPage"></AuthForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi, resetApi } from '@/api/system/auth'
-import { Delete, Edit, Refresh } from '@element-plus/icons-vue';
+import { deleteApi, listPageApi, resetApi, sendEmailApi } from '@/api/system/auth'
+import { Delete, Edit, Promotion, Refresh } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
-import CopyLink from '@/components/CopyLink.vue'
 
 const loading = ref(false);
 const total = ref(0);
@@ -126,6 +125,16 @@ const handleReset = (row) => {
     });
   });
 };
+
+const sendEmail = (row) => {
+  const msg = renderMsg(["确定要给", () => row.email, "发送授权信息吗?"]);
+  confirmMsg(msg, () => {
+    const data = { id: row.id };
+    sendEmailApi(data).then(() => {
+      successMsg('邮件发送成功');
+    })
+  })
+}
 
 const handleCreate = () => {
   formRef.value.openDialog({});

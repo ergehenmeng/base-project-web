@@ -34,3 +34,10 @@ export const resetApi = (data) => {
     data
   });
 };
+
+export const sendEmailApi = (data) => {
+  return request.post({
+    url: '/manage/auth/sendEmail',
+    data
+  });
+};
