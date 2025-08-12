@@ -3,172 +3,24 @@
     <div class="login-layout">
       <div class="login-layout-left"></div>
       <div class="login-layout-right">
-        <h3>后台管理系统</h3>
-        <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData">
-          <el-form-item prop="userName">
-            <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large" >
-              <template #prefix>
-                <el-icon :size="20">
-                  <User />
-                </el-icon>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="pwd">
-            <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="20" size="large" type="password" show-password autocomplete="off">
-              <template #prefix>
-                <el-icon :size="20">
-                  <Lock />
-                </el-icon>
-              </template>
-            </el-input>
-          </el-form-item>
-          <el-form-item prop="verifyCode">
-            <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
-              <template #prefix>
-                <el-icon :size="20">
-                  <CircleCheck />
-                </el-icon>
-              </template>
-            </el-input>
-            <div class="login-form-verify">
-              <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle"/>
-            </div>
-          </el-form-item>
-          <el-form-item>
-            <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading">
-              <span v-if="!loading">登录</span>
-              <span v-else>登录中</span>
-            </el-button>
-          </el-form-item>
-        </el-form>
+        <div class="login-switch-tab">
+          <a href="javascript:void(0);" :class="{'active': tabIndex === 0}" @click="tabIndex = 0">密码登录</a>
+          <a href="javascript:void(0);" :class="{'active': tabIndex === 1}" @click="tabIndex = 1">短信登录</a>
+        </div>
+        <div class="login-form-container">
+          <AccountLoginForm v-if="tabIndex === 0" />
+          <SmsLoginForm v-if="tabIndex === 1" />
+        </div>
       </div>
     </div>
-    <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail"/>
-    <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail"/>
   </div>
 </template>
 <script setup>
-import useUserStore from '@/store/user';
-import { rsaEncode } from '@/utils/common.js'
-import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
-import { useRoute, useRouter } from 'vue-router';
-import defaultPng from '@/assets/images/refresh.svg';
-import { loginApi} from '@/api/login/index.js'
-import TotpPrompt from "@/views/common/TotpPrompt.vue";
-import TotpScanForm from '@/views/common/TotpScanForm.vue'
+import AccountLoginForm from '@/views/common/AccountLoginForm.vue'
+import SmsLoginForm from '@/views/common/SmsLoginForm.vue'
 
-const defaultImg = ref(defaultPng);
-const userStore = useUserStore();
-const router = useRouter();
-const route = useRoute();
-const totpRef = ref();
-const totpScanRef = ref()
-const formData = ref({
-  userName: null,
-  pwd: null,
-  verifyCode: null
-});
-
-const formDataRef = ref();
-const loading = ref(false);
-const api = import.meta.env.VITE_API_PREFIX;
-const verifyUrl = ref('');
-const getCode = () => {
-  verifyUrl.value = api + '/manage/captcha?t=' + new Date().getTime();
-};
-
-const errorHandle = () => {
-  verifyUrl.value = defaultImg.value;
-};
-
-getCode();
-
-const formRules = reactive({
-  userName: [
-    { required: true, message: '账号不能为空', trigger: 'blur' },
-    { min: 6, max: 15, message: '账号长度6~15字符', trigger: 'blur' }
-  ],
-  pwd: [
-    { required: true, message: '密码不能为空', trigger: 'blur' },
-    {
-      min: 8,
-      max: 20,
-      message: '密码长度8~20字符',
-      trigger: 'blur'
-    }
-  ],
-  verifyCode: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
-});
-
-// 登录
-const handleLogin = async () => {
-  if (loading.value) {
-    return;
-  }
-  await formDataRef.value.validate((valid) => {
-    if (valid) {
-      loading.value = true;
-      loginApi({
-        userName: formData.value.userName,
-        pwd: rsaEncode(formData.value.pwd),
-        verifyCode: formData.value.verifyCode
-      }).then(({data: { data, state, uuid, qrcode, secretKey}}) => {
-        if (state === 1) {
-          loginSuccessHandle(data)
-        } else if (state === 2) {
-          totpRef.value.openDialog({uuid});
-        } else {
-          totpScanRef.value.openDialog({qrcode, secretKey, uuid});
-        }
-      }).catch(() => {
-        loginFail();
-      }).finally(() => {
-        loading.value = false;
-      });
-    }
-  });
-};
-
-const loginFail = () => {
-  formData.value.pwd = null;
-  formData.value.verifyCode = null
-  getCode()
-}
-
-const loginSuccessHandle = (data) => {
-  userStore.user = {...data};
-  userStore.isLogin = true;
-  const fullPath = route.fullPath;
-  if (fullPath.startsWith('/login?redirect=')) {
-    const path = getPath(fullPath.replace('/login?redirect=', ''))
-    router.replace(path);
-  } else {
-    router.replace('/');
-  }
-};
-
-/**
- * 因为浏览器原因或权限变更的原因, 可能会出现redirect的路径不在用户权限列表中, 则跳转到首页
- * @param path
- * @returns {string}
- */
-const getPath = (path) => {
-  const menuList = userStore.user?.menuList
-  for (let menu of menuList) {
-    if (menu.children) {
-      for (let item of menu.children) {
-        if (item.path === path) {
-          return path;
-        }
-      }
-    }
-  }
-  return "/"
-}
-
+const tabIndex = ref(0);
 </script>
-
 <style lang="scss" scoped>
 .login-container {
   display: flex;
@@ -204,20 +56,27 @@ const getPath = (path) => {
       display: grid;
       place-items: center;
       background-color: #fff;
-
-      .login-form {
-        width: 280px;
-      }
-
-      .login-form-verify {
-        float: right;
-        padding-left: 10px;
-
-        img {
-          height: 38px;
-          vertical-align: middle;
-          cursor: pointer;
+      .login-switch-tab {
+        margin-top: 10px;
+        text-align: center;
+        :first-child {
+          border-right: 2px solid #e5e8ec;
         }
+        a {
+          color: #535c68;
+          font-weight: 600;
+          text-decoration: none;
+          display: inline-block;
+          padding: 0 20px;
+          line-height: 16px;
+        }
+        a.active {
+          color: #409eff;
+        }
+      }
+      .login-form-container {
+        height: 300px;
+        padding-top: 30px;
       }
     }
   }

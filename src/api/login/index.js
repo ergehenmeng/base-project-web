@@ -31,3 +31,17 @@ export const logoutApi = () => {
     url: '/manage/logout'
   });
 };
+
+export const sendSmsApi = (data) => {
+  return request.post({
+    url: '/manage/sendSms',
+    data
+  });
+};
+
+export const smsLoginApi = (data) => {
+  return request.post({
+    url: '/manage/smsLogin',
+    data
+  });
+};
