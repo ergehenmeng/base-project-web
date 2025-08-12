@@ -156,9 +156,11 @@ const loginSuccessHandle = (data) => {
 const getPath = (path) => {
   const menuList = userStore.user?.menuList
   for (let menu of menuList) {
-    for (let item of menu.children) {
-      if (item.path === path) {
-        return path;
+    if (menu.children) {
+      for (let item of menu.children) {
+        if (item.path === path) {
+          return path;
+        }
       }
     }
   }
