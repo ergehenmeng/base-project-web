@@ -408,3 +408,15 @@ export const downloadImage = (base64, fileName) => {
   link.click();
   URL.revokeObjectURL(url);
 };
+
+export const startCountDown = (time, callback) => {
+  let count = time;
+  callback(--count);
+  const timer = setInterval(() => {
+    if (count > 0) {
+      callback(--count);
+    } else {
+      clearInterval(timer);
+    }
+  }, 1000);
+};

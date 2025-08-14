@@ -1,7 +1,7 @@
 <template>
   <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" >
-    <el-form-item prop="userName">
-      <el-input placeholder="请输入手机号" maxlength="11" v-model="formData.mobile" size="large" >
+    <el-form-item prop="mobile">
+      <el-input placeholder="请输入手机号" maxlength="11" v-model="formData.mobile" size="large">
         <template #prefix>
           <el-icon :size="20">
             <Iphone />
@@ -18,10 +18,10 @@
         </template>
       </el-input>
       <div class="login-form-verify">
-        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle"/>
+        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
       </div>
     </el-form-item>
-    <el-form-item prop="pwd">
+    <el-form-item prop="smsCode">
       <el-input placeholder="请输入验证码" v-model="formData.smsCode" maxlength="6" size="large" autocomplete="off">
         <template #prefix>
           <el-icon :size="20">
@@ -29,12 +29,12 @@
           </el-icon>
         </template>
         <template #suffix>
-          <span :class="{'send-btn': sendCode, 'send-btn-disabled': !sendCode}" @click="sendSmsHandle">获取验证码</span>
+          <span :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle" v-loading="sendLoading">{{buttonName}}</span>
         </template>
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading">
+      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading" >
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
       </el-button>
@@ -42,12 +42,13 @@
   </el-form>
 </template>
 <script setup>
-import { CircleCheck, Iphone } from '@element-plus/icons-vue'
-import useUserStore from '@/store/user.js'
-import { useRoute, useRouter } from 'vue-router'
-import { sendSmsApi, smsLoginApi } from '@/api/login/index.js'
-import defaultPng from '@/assets/images/refresh.svg'
-import Shield from '@/components/Shield.vue'
+import { CircleCheck, Iphone } from '@element-plus/icons-vue';
+import useUserStore from '@/store/user.js';
+import { useRoute, useRouter } from 'vue-router';
+import { sendSmsApi, smsLoginApi } from '@/api/login/index.js';
+import defaultPng from '@/assets/images/refresh.svg';
+import Shield from '@/components/Shield.vue';
+import { startCountDown } from '@/utils/common.js'
 const userStore = useUserStore();
 const defaultImg = ref(defaultPng);
 const router = useRouter();
@@ -60,13 +61,11 @@ const formData = ref({
   verifyCode: null,
   smsCode: null
 });
+const buttonName = ref('获取验证码');
 const formRules = reactive({
   mobile: [
     { required: true, message: '手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
-  ],
-  smsCode: [
-    { required: true, message: '验证码不能为空', trigger: 'blur' }
   ],
   verifyCode: [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
 });
@@ -82,35 +81,62 @@ const errorHandle = () => {
 };
 
 getCode();
-
+const sendLoading = ref(false);
 const sendSmsHandle = () => {
-  sendSmsApi()
+  if (!sendCode.value) {
+    return;
+  }
+  formRules.smsCode = [];
+  formDataRef.value.validate((valid) => {
+    if (valid) {
+      sendLoading.value = true;
+      sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode }).then(() => {
+        countDown()
+      }).finally(() => sendLoading.value = false);
+    }
+  });
 };
 
 const handleLogin = async () => {
   if (loading.value) {
     return;
   }
+  formRules.smsCode = [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
   await formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      smsLoginApi(formData.value).then(({ data }) => {
-        loginSuccessHandle(data);
-      }).catch(() => {
-        formData.value.smsCode = null
-      }).finally(() => {
-        loading.value = false;
-      });
+      smsLoginApi(formData.value)
+        .then(({ data }) => {
+          loginSuccessHandle(data);
+        })
+        .catch(() => {
+          formData.value.smsCode = null;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     }
   });
 };
 
+const countDown = () => {
+  startCountDown(60, (time) => {
+    if (time > 0) {
+      buttonName.value = `${time}s后重新发送`;
+      sendCode.value = false;
+    } else {
+      buttonName.value = '发送验证码';
+      sendCode.value = true;
+    }
+  })
+};
+
 const loginSuccessHandle = (data) => {
-  userStore.user = {...data};
+  userStore.user = { ...data };
   userStore.isLogin = true;
   const fullPath = route.fullPath;
   if (fullPath.startsWith('/login?redirect=')) {
-    const path = getPath(fullPath.replace('/login?redirect=', ''))
+    const path = getPath(fullPath.replace('/login?redirect=', ''));
     router.replace(path);
   } else {
     router.replace('/');
@@ -123,7 +149,7 @@ const loginSuccessHandle = (data) => {
  * @returns {string}
  */
 const getPath = (path) => {
-  const menuList = userStore.user?.menuList
+  const menuList = userStore.user?.menuList;
   for (let menu of menuList) {
     if (menu.children) {
       for (let item of menu.children) {
@@ -133,9 +159,8 @@ const getPath = (path) => {
       }
     }
   }
-  return "/"
-}
-
+  return '/';
+};
 </script>
 <style lang="scss" scoped>
 .login-form {
@@ -160,5 +185,8 @@ const getPath = (path) => {
 }
 .send-btn-disabled {
   color: #c0c4cc;
+}
+.send-btn-disabled:hover {
+  cursor: pointer;
 }
 </style>
