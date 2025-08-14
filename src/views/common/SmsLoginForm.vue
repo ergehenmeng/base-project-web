@@ -29,7 +29,7 @@
           </el-icon>
         </template>
         <template #suffix>
-          <span :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle" v-loading="sendLoading">{{buttonName}}</span>
+          <span :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle" >{{buttonName}}</span>
         </template>
       </el-input>
     </el-form-item>
@@ -80,8 +80,6 @@ const errorHandle = () => {
   verifyUrl.value = defaultImg.value;
 };
 
-
-const sendLoading = ref(false);
 const sendSmsHandle = () => {
   if (!sendCode.value) {
     return;
@@ -89,10 +87,9 @@ const sendSmsHandle = () => {
   formRules.smsCode = [];
   formDataRef.value.validate((valid) => {
     if (valid) {
-      sendLoading.value = true;
       sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode }).then(() => {
         countDown()
-      }).finally(() => sendLoading.value = false);
+      });
     }
   });
 };
