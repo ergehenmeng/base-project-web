@@ -8,12 +8,12 @@
           <a href="javascript:void(0);" :class="{'active': tabIndex === 1}" @click="tabIndex = 1">短信登录</a>
         </div>
         <div class="login-form-container">
-          <div>
-            <AccountLoginForm v-if="tabIndex === 0" />
-          </div>
-          <div>
-            <SmsLoginForm v-show="tabIndex === 1" />
-          </div>
+          <keep-alive>
+            <AccountLoginForm  v-if="tabIndex === 0"/>
+          </keep-alive>
+          <keep-alive>
+            <SmsLoginForm v-if="tabIndex === 1"/>
+          </keep-alive>
         </div>
       </div>
     </div>

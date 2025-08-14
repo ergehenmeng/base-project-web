@@ -140,6 +140,10 @@ const loginSuccessHandle = (data) => {
   }
 };
 
+onActivated(() => {
+  getCode();
+});
+
 /**
  * 因为浏览器原因或权限变更的原因, 可能会出现redirect的路径不在用户权限列表中, 则跳转到首页
  * @param path
