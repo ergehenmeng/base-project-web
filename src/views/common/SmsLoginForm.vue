@@ -80,6 +80,12 @@ const errorHandle = () => {
   verifyUrl.value = defaultImg.value;
 };
 
+const loginFail = () => {
+  formData.value.smsCode = null;
+  formData.value.verifyCode = null
+  getCode()
+}
+
 const sendSmsHandle = () => {
   if (!sendCode.value) {
     return;
@@ -107,7 +113,7 @@ const handleLogin = async () => {
           loginSuccessHandle(data);
         })
         .catch(() => {
-          formData.value.smsCode = null;
+          loginFail()
         })
         .finally(() => {
           loading.value = false;

@@ -17,7 +17,7 @@ const pinia = createPinia();
 pinia.use(
   createPersistedState({
     key: (id) => `__persisted__${id}`,
-    storage: window.sessionStorage
+    storage: window.localStorage
   })
 );
 // 绑定状态管理

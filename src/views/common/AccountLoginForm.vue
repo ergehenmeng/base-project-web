@@ -74,8 +74,6 @@ const errorHandle = () => {
   verifyUrl.value = defaultImg.value;
 };
 
-getCode();
-
 const formRules = reactive({
   userName: [
     { required: true, message: '账号不能为空', trigger: 'blur' },

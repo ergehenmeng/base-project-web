@@ -34,7 +34,7 @@
         <el-form-item label="关联景区" prop="scenicId">
           <ScenicSelect v-model="formData.scenicId"/><QuestionTip content="注意：关联景区后活动只会在该景区下显示"/>
         </el-form-item>
-        <el-form-item label="公告内容" prop="introduceText">
+        <el-form-item label="活动详细介绍" prop="introduceText">
           <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         </el-form-item>
       </el-form>
