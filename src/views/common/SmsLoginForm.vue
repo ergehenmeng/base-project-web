@@ -93,8 +93,12 @@ const sendSmsHandle = () => {
   formRules.smsCode = [];
   formDataRef.value.validate((valid) => {
     if (valid) {
+      sendCode.value = false;
       sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode }).then(() => {
         countDown()
+      }).catch(() => {
+        sendCode.value = true;
+        loginFail()
       });
     }
   });
@@ -126,7 +130,6 @@ const countDown = () => {
   startCountDown(60, (time) => {
     if (time > 0) {
       buttonName.value = `${time}s后重新发送`;
-      sendCode.value = false;
     } else {
       buttonName.value = '发送验证码';
       sendCode.value = true;
