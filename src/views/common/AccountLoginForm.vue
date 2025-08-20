@@ -31,7 +31,7 @@
       </div>
     </el-form-item>
     <el-form-item>
-      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading">
+      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
       </el-button>

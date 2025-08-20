@@ -10,7 +10,7 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="verifyCode">
-      <el-input placeholder="图形验证码" v-model="formData.verifyCode" maxlength="4" size="large" style="width: 60%">
+      <el-input placeholder="图形验证码" v-model="formData.verifyCode" maxlength="4" size="large" style="width: 60%" @keyup.enter="sendSmsHandle">
         <template #prefix>
           <el-icon :size="20">
             <CircleCheck />
@@ -22,7 +22,7 @@
       </div>
     </el-form-item>
     <el-form-item prop="smsCode">
-      <el-input placeholder="请输入验证码" v-model="formData.smsCode" maxlength="6" size="large" autocomplete="off">
+      <el-input placeholder="请输入验证码" v-model="formData.smsCode" maxlength="6" size="large" autocomplete="off" @keyup.enter="handleLogin">
         <template #prefix>
           <el-icon :size="20">
             <Shield />
@@ -34,7 +34,7 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin()" :loading="loading" >
+      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading" >
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
       </el-button>
@@ -49,6 +49,7 @@ import { sendSmsApi, smsLoginApi } from '@/api/login/index.js';
 import defaultPng from '@/assets/images/refresh.svg';
 import Shield from '@/components/Shield.vue';
 import { startCountDown } from '@/utils/common.js'
+import { successMsg } from '@/utils/message.js'
 const userStore = useUserStore();
 const defaultImg = ref(defaultPng);
 const router = useRouter();
@@ -96,6 +97,7 @@ const sendSmsHandle = () => {
       sendCode.value = false;
       sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode }).then(() => {
         countDown()
+        successMsg('验证码发送成功')
       }).catch(() => {
         sendCode.value = true;
         loginFail()
