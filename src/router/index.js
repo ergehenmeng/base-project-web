@@ -48,10 +48,16 @@ router.beforeEach((to, from, next) => {
   breadcrumbStore.switchPage(to);
   const userStore = useUserStore();
   // 用户已登录, 即使访问登录页, 也跳转到首页
-  if (userStore.isLogin || whiteList.indexOf(to.path) !== -1) {
+  if (userStore.isLogin) {
+    if (to.path.startsWith('/login')) {
+      next('/home');
+    } else {
+      next();
+    }
+  } else if (whiteList.indexOf(to.path) !== -1) {
+    // 登录页面直接放过
     next();
   } else {
-    // 未登录, 且不在白名单中, 需要跳转到登录页
     next('/login?redirect=' + to.path);
   }
 });
