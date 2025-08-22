@@ -1,4 +1,4 @@
-import { loginApi, logoutApi } from '@/api/login';
+import { logoutApi } from '@/api/login';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import router from '@/router';
@@ -46,10 +46,9 @@ const useUserStore = defineStore(
     };
     /**
      * 退出登录
-     * @param { * } redirectUrl 是否包含重定向地址
      * @returns
      */
-    const logout = (redirectUrl = null) => {
+    const logout = () => {
       if (!isLogin.value) {
         return;
       }
@@ -57,28 +56,10 @@ const useUserStore = defineStore(
       isLogin.value = false;
       window.localStorage.clear();
       window.sessionStorage.clear();
-      // 此处表示被动退出
-      if (redirectUrl) {
-        router.replace('/login?redirect=' + redirectUrl);
-      } else {
-        // 表示主动退出
-        logoutApi().then((res) => {
-          router.replace('/login');
-        });
-      }
-    };
-    // 登录并设置用户信息
-    const login = async (loginData) => {
-      if (isLogin.value) {
-        return;
-      }
-      const { data } = await loginApi(loginData);
-      if (data.state === 1) {
-        isLogin.value = true;
-        user.value = { ...data };
-      } else {
-        Promise.reject(new Error(data));
-      }
+      // 表示主动退出
+      logoutApi().then((res) => {
+        router.replace('/login');
+      });
     };
 
     const setInit = (init) => {
@@ -93,7 +74,7 @@ const useUserStore = defineStore(
     const setBindWechat = (bindWechat) => {
       user.value.bindWechat = bindWechat;
     }
-    return { user, isLogin, login, hasAuth, logout, setInit, setLock, setExpire, setBindWechat };
+    return { user, isLogin, hasAuth, logout, setInit, setLock, setExpire, setBindWechat };
   },
   // 开启持久化
   { persist: true }

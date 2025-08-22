@@ -1,7 +1,7 @@
 <template>
   <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" v-if="tabIndex === 0">
     <el-form-item prop="userName">
-      <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large" >
+      <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large">
         <template #prefix>
           <el-icon :size="20">
             <User />
@@ -27,7 +27,7 @@
         </template>
       </el-input>
       <div class="login-form-verify">
-        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle"/>
+        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
       </div>
     </el-form-item>
     <el-form-item>
@@ -37,25 +37,25 @@
       </el-button>
     </el-form-item>
   </el-form>
-  <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail"/>
-  <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail"/>
+  <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail" />
+  <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail" />
 </template>
 <script setup>
 import useUserStore from '@/store/user';
-import { rsaEncode } from '@/utils/common.js'
-import { CircleCheck, Lock, User } from '@element-plus/icons-vue'
+import { rsaEncode } from '@/utils/common.js';
+import { CircleCheck, Lock, User } from '@element-plus/icons-vue';
 import { useRoute, useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
-import { loginApi } from '@/api/login/index.js'
-import TotpPrompt from "@/views/common/TotpPrompt.vue";
-import TotpScanForm from '@/views/common/TotpScanForm.vue'
+import { loginApi } from '@/api/login/index.js';
+import TotpPrompt from '@/views/common/TotpPrompt.vue';
+import TotpScanForm from '@/views/common/TotpScanForm.vue';
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
 const route = useRoute();
 const totpRef = ref();
-const totpScanRef = ref()
+const totpScanRef = ref();
 const formData = ref({
   userName: null,
   pwd: null,
@@ -103,64 +103,41 @@ const handleLogin = async () => {
         userName: formData.value.userName,
         pwd: rsaEncode(formData.value.pwd),
         verifyCode: formData.value.verifyCode
-      }).then(({data: { data, state, uuid, qrcode, secretKey}}) => {
-        if (state === 1) {
-          loginSuccessHandle(data)
-        } else if (state === 2) {
-          totpRef.value.openDialog({uuid});
-        } else {
-          totpScanRef.value.openDialog({qrcode, secretKey, uuid});
-        }
-      }).catch(() => {
-        loginFail();
-      }).finally(() => {
-        loading.value = false;
-      });
+      })
+        .then(({ data: { data, state, uuid, qrcode, secretKey } }) => {
+          if (state === 1) {
+            loginSuccessHandle(data);
+          } else if (state === 2) {
+            totpRef.value.openDialog({ uuid });
+          } else {
+            totpScanRef.value.openDialog({ qrcode, secretKey, uuid });
+          }
+        })
+        .catch(() => {
+          loginFail();
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     }
   });
 };
 
 const loginFail = () => {
   formData.value.pwd = null;
-  formData.value.verifyCode = null
-  getCode()
-}
+  formData.value.verifyCode = null;
+  getCode();
+};
 
 const loginSuccessHandle = (data) => {
-  userStore.user = {...data};
+  userStore.user = { ...data };
   userStore.isLogin = true;
-  const fullPath = route.fullPath;
-  if (fullPath.startsWith('/login?redirect=')) {
-    const path = getPath(fullPath.replace('/login?redirect=', ''))
-    router.replace(path);
-  } else {
-    router.replace('/');
-  }
+  router.replace('/home');
 };
 
 onActivated(() => {
   getCode();
 });
-
-/**
- * 因为浏览器原因或权限变更的原因, 可能会出现redirect的路径不在用户权限列表中, 则跳转到首页
- * @param path
- * @returns {string}
- */
-const getPath = (path) => {
-  const menuList = userStore.user?.menuList
-  for (let menu of menuList) {
-    if (menu.children) {
-      for (let item of menu.children) {
-        if (item.path === path) {
-          return path;
-        }
-      }
-    }
-  }
-  return "/"
-}
-
 </script>
 
 <style lang="scss" scoped>

@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
     // 登录页面直接放过
     next();
   } else {
-    next('/login?redirect=' + to.path);
+    next('/login');
   }
 });
 

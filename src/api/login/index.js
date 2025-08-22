@@ -45,3 +45,10 @@ export const smsLoginApi = (data) => {
     data
   });
 };
+
+export const permApi = (data) => {
+  return request.get({
+    url: '/manage/permission',
+    data
+  });
+};

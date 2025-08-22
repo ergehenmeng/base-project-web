@@ -21,8 +21,6 @@
         <el-table-column prop="nickName" label="昵称" width="120" />
         <el-table-column prop="userName" label="账户名" width="150" />
         <el-table-column prop="mobile" label="手机号" width="150" />
-        <el-table-column prop="userType" label="用户类型" width="100" :formatter="formatter" />
-        <el-table-column prop="dataType" label="数据权限" width="150" :formatter="formatter" />
         <el-table-column prop="state" label="状态" width="100" >
           <template #default="scope">
             <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" inline-prompt active-text="正常" inactive-text="锁定" disabled style="--el-switch-off-color: #ff4949" />
@@ -70,7 +68,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
-import { parseDataType, parseUserType, renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js'
 import ResetPwd from '@/components/icon/ResetPwd.vue'
 
 const loading = ref(false);
@@ -97,16 +95,6 @@ const getPage = async () => {
     }
   } finally {
     loading.value = false;
-  }
-};
-
-const formatter = (_row, column, cellValue) => {
-  if (column.property === 'userType') {
-    return parseUserType(cellValue);
-  } else if (column.property === 'dataType') {
-    return parseDataType(cellValue);
-  } else {
-    return cellValue;
   }
 };
 

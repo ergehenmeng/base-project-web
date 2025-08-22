@@ -45,7 +45,7 @@
 import { CircleCheck, Iphone } from '@element-plus/icons-vue';
 import useUserStore from '@/store/user.js';
 import { useRoute, useRouter } from 'vue-router';
-import { sendSmsApi, smsLoginApi } from '@/api/login/index.js';
+import { sendSmsApi, smsLoginApi } from '@/api/login/index.js'
 import defaultPng from '@/assets/images/refresh.svg';
 import Shield from '@/components/Shield.vue';
 import { startCountDown } from '@/utils/common.js'
@@ -142,36 +142,13 @@ const countDown = () => {
 const loginSuccessHandle = (data) => {
   userStore.user = { ...data };
   userStore.isLogin = true;
-  const fullPath = route.fullPath;
-  if (fullPath.startsWith('/login?redirect=')) {
-    const path = getPath(fullPath.replace('/login?redirect=', ''));
-    router.replace(path);
-  } else {
-    router.replace('/');
-  }
+  router.replace('/home');
 };
 
 onActivated(() => {
   getCode();
 });
-/**
- * 因为浏览器原因或权限变更的原因, 可能会出现redirect的路径不在用户权限列表中, 则跳转到首页
- * @param path
- * @returns {string}
- */
-const getPath = (path) => {
-  const menuList = userStore.user?.menuList;
-  for (let menu of menuList) {
-    if (menu.children) {
-      for (let item of menu.children) {
-        if (item.path === path) {
-          return path;
-        }
-      }
-    }
-  }
-  return '/';
-};
+
 </script>
 <style lang="scss" scoped>
 .login-form {
