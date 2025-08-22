@@ -1,5 +1,5 @@
 <template>
-  <el-container class="main-container">
+  <el-container class="main-container" v-loading.fullscreen.lock="!ready">
     <el-header class="main-header">
       <div class="logo">
         <span class="logo-text">{{ userStore.user?.systemName }}</span>
