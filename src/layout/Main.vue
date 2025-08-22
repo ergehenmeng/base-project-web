@@ -4,7 +4,7 @@
       <div class="logo">
         <span class="logo-text">{{ userStore.user?.systemName }}</span>
       </div>
-      <Header></Header>
+      <Header v-if="ready"></Header>
     </el-header>
     <el-container>
       <el-aside width="200px">
