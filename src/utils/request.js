@@ -1,6 +1,5 @@
 import axios from 'axios';
 import useUserStore from '@/store/user';
-import useHistoryStore from '@/store/history.js';
 import qs from 'qs';
 import { errorMsg } from '@/utils/message';
 
@@ -14,8 +13,7 @@ const errorCallback = {
     cancelRequest();
     errorMsg(msg);
     const userStore = useUserStore();
-    const historyStore = useHistoryStore();
-    userStore.logout(historyStore.getNowPage());
+    userStore.logout();
   },
   1024: () => {
     // 锁屏中

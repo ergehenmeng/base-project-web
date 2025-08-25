@@ -27,10 +27,8 @@
 import useUserStore from '@/store/user.js';
 import { errorMsg } from '@/utils/message.js';
 import { imageCheck } from '@/utils/image.js';
-import { useRoute } from 'vue-router';
 import { Plus } from '@element-plus/icons-vue'
 
-const route = useRoute();
 // 上传后显示的文件列表
 const showFile = ref([]);
 const showViewer = ref(false);
@@ -58,7 +56,7 @@ const handleImageSuccess = (res, file) => {
   if (res.code !== 200) {
     errorMsg(res.msg);
     if (res.code === 8848) {
-      userStore.logout(route.fullPath);
+      userStore.logout();
     }
     return;
   }

@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import useUserStore from '@/store/user';
 import useBreadcrumbStore from '@/store/breadcrumb';
-import useHistoryStore from '@/store/history.js';
 
 export const routes = [
   {
@@ -42,8 +41,6 @@ const router = createRouter({
 const whiteList = ['/login'];
 
 router.beforeEach((to, from, next) => {
-  const historyStore = useHistoryStore();
-  historyStore.setPage(from.fullPath, to.fullPath);
   const breadcrumbStore = useBreadcrumbStore();
   breadcrumbStore.switchPage(to);
   const userStore = useUserStore();

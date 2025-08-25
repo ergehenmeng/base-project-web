@@ -26,8 +26,8 @@
 </template>
 
 <script setup>
-import { sendSmsApi } from '@/api/user/member';
 import { errorMsg, successMsg } from '@/utils/message.js';
+import { sendNoticeApi } from '@/api/user/member/index.js'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
@@ -82,7 +82,7 @@ const handleSave = () => {
         return;
       }
       loading.value = true;
-      sendSmsApi(formData.value)
+      sendNoticeApi(formData.value)
         .then(() => {
           successMsg('站内信发送成功');
           showDialog.value = false;

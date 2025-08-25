@@ -57,12 +57,3 @@ export const systemMenuApi = (params) => {
   });
 };
 
-/**
- * 获取商户菜单列表
- * @returns 全部的商家菜单
- */
-export const merchantMenuApi = () => {
-  return request.get({
-    url: '/manage/menu/merchantList'
-  });
-};

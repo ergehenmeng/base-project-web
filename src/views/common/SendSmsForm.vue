@@ -11,16 +11,16 @@
     <template #footer>
       <span>
         <el-button @click="showDialog = false">取消</el-button>
-        <el-button type="primary" @click="handleSave">发送短信</el-button>
+        <el-button type="primary" @click="sendSmsHandle">发送短信</el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script setup>
-import { sendSmsApi } from '@/api/user/member';
 import { errorMsg, successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
+import { sendSmsApi } from '@/api/user/member/index.js'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
@@ -61,7 +61,7 @@ const resetForm = () => {
   formDataRef.value?.resetFields();
 };
 
-const handleSave = () => {
+const sendSmsHandle = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       if (formData.value.memberIds?.length === 0 && !formData.value.tagId) {

@@ -35,27 +35,6 @@ export const refreshApi = (data) => {
     });
 };
 
-export const selectApi = (params) => {
-    return request.get({
-        url: '/manage/member/tag/select',
-        params
-    });
-};
-
-export const sendNoticeApi = (data) => {
-    return request.post({
-        url: '/manage/member/tag/sendNotice',
-        data
-    });
-};
-
-export const sendSmsApi = (data) => {
-    return request.post({
-        url: '/manage/member/tag/sendSms',
-        data
-    });
-};
-
 export const memberListApi = (params) => {
     return request.get({
         url: '/manage/member/tag/memberPage',

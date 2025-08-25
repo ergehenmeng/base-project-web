@@ -115,7 +115,7 @@
 </template>
 <script setup>
 import { exportApi, freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
-import { ChatDotSquare, Download, Lock, Message, Tickets, Unlock } from '@element-plus/icons-vue';
+import { ChatDotSquare, Download, Lock, Message, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import Offline from '@/components/icon/Offline.vue';

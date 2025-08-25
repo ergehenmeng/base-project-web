@@ -58,7 +58,7 @@
       <div class="item" data="22:30" @click="selectHandle('22:30', $event)"></div>
       <div class="item" data="23:00" @click="selectHandle('23:00', $event)"></div>
       <div class="item" data="23:30" @click="selectHandle('23:30', $event)"></div>
-      <div style="display: flex; justify-content: center; margin-left: 10px" v-show="!props.disabled" id="reset">
+      <div style="display: flex; justify-content: center; margin-left: 10px" v-show="!props.disabled" v-if="resetAuth" id="reset">
         <el-button type="primary" link :icon="Refresh" title="重置价格配置" @click="resetConfig"></el-button>
       </div>
     </div>
@@ -81,11 +81,14 @@
 </template>
 <script setup>
 import dayjs from 'dayjs';
-import { confirmMsg, errorMsg } from '@/utils/message.js';
+import { confirmMsg, errorMsg, successMsg } from '@/utils/message.js'
 import TimePhaseDialog from '@/components/TimePhaseDialog.vue';
 import { Refresh } from '@element-plus/icons-vue';
 import { renderMsg } from '@/utils/common.js'
+import { deletePriceApi, resetPriceApi } from '@/api/product/site/index.js'
+import useUserStore from '@/store/user.js'
 
+const userStore = useUserStore();
 const popoverRef = ref();
 const dialogRef = ref();
 const startRef = ref('');
@@ -100,6 +103,7 @@ const checkedItems = ref([]);
 const visible = ref(false);
 const moveInMap = new Map();
 const moveOutMap = new Map();
+const resetAuth = userStore.hasAuth('9CO0');
 
 const selectHandle = (value, event) => {
   if (props.disabled || !event.target.classList.contains('item') || event.target.classList.contains('checked')) {
@@ -115,7 +119,7 @@ const selectHandle = (value, event) => {
     end.value = endTime;
     const range = activeRange(startTime, endTime, event);
     if (range) {
-      dialogRef.value.openDialog(startTime, endTime);
+      dialogRef.value.openDialog(startTime, endTime, props.nowDate, props.venueSiteId);
     }
   } else {
     clear(event);
@@ -241,21 +245,29 @@ const bindDeleteEvent = (parent, item, startTime, endTime, mouseenterEvent, mous
     item.addEventListener('click', () => {
       const msg = renderMsg(["确定要删除", () => `${startTime}~${endTime}`, "时间段的价格配置吗?"]);
       confirmMsg(msg, () => {
-        parent.removeChild(item);
-        const data = parent.getAttribute('data');
-        phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
-        const length = parseInt(parent.style.width.split('px')[0]) / 30;
-        if (data === startTime) {
-          resetAfter(parent, length);
-        } else {
-          resetBefore(parent, length);
-        }
-        if (mouseenterEvent) {
-          parent.removeEventListener('mouseenter', mouseenterEvent);
-        }
-        if (mouseleaveEvent) {
-          parent.removeEventListener('mouseleave', mouseleaveEvent);
-        }
+        deletePriceApi({
+          startTime: startTime,
+          endTime: endTime,
+          venueSiteId: props.venueSiteId,
+          nowDate: props.nowDate
+        }).then(() => {
+          successMsg('删除价格成功')
+          parent.removeChild(item);
+          const data = parent.getAttribute('data');
+          phaseList.value = phaseList.value.filter((item) => !(item.startTime === startTime && item.endTime === endTime));
+          const length = parseInt(parent.style.width.split('px')[0]) / 30;
+          if (data === startTime) {
+            resetAfter(parent, length);
+          } else {
+            resetBefore(parent, length);
+          }
+          if (mouseenterEvent) {
+            parent.removeEventListener('mouseenter', mouseenterEvent);
+          }
+          if (mouseleaveEvent) {
+            parent.removeEventListener('mouseleave', mouseleaveEvent);
+          }
+        })
       });
     });
   }
@@ -284,7 +296,10 @@ const resetBefore = (item, length) => {
 const resetConfig = () => {
   const msg = renderMsg(["确定要", () => "重置", "价格配置吗?"]);
   confirmMsg(msg, () => {
-    doReset(true);
+    resetPriceApi({ venueSiteId: props.venueSiteId, nowDate: props.nowDate}).then(()=> {
+      successMsg('价格重置成功');
+      doReset(true);
+    })
   });
 };
 
@@ -365,6 +380,14 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  nowDate: {
+    type: String,
+    default: null
+  },
+  venueSiteId: {
+    type: String,
+    default: null
   },
   clearable: {
     type: Boolean,

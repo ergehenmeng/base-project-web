@@ -39,7 +39,7 @@ const openDialog = (row) => {
 }
 
 const handleSave = () => {
-  grantApi(formData.value).then((res) => {
+  grantApi(formData.value).then(() => {
     successMsg('奖品发放成功');
     showDialog.value = false;
     emit('reload');

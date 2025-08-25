@@ -18,7 +18,7 @@
         <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item"></el-tab-pane>
       </el-tabs>
       <div style="padding-top: 20px; display: flex; justify-content: center">
-        <TimePhase v-model:phase-list="phaseList" :disabled="!setupAuth"></TimePhase>
+        <TimePhase v-model:phase-list="phaseList" :disabled="!setupAuth" :now-date="activeDay" :venue-site-id="venueSiteId"></TimePhase>
       </div>
     </div>
   </div>
@@ -39,8 +39,10 @@ const dayList = ref([]);
 const activeDay = ref(dayjs().format('YYYY-MM-DD'));
 const phaseList = ref([]);
 const loading = ref(false);
+const venueSiteId = ref();
 
 onMounted(() => {
+  venueSiteId.value = route.params.id;
   generateDayList(dayjs());
   handleTabChange(dayjs().format('YYYY-MM-DD'));
 });

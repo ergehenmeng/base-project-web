@@ -57,7 +57,7 @@ const useUserStore = defineStore(
       window.localStorage.clear();
       window.sessionStorage.clear();
       // 表示主动退出
-      logoutApi().then((res) => {
+      logoutApi().then(() => {
         router.replace('/login');
       });
     };

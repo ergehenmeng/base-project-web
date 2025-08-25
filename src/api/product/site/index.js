@@ -84,9 +84,16 @@ export const setupApi = (data) => {
   });
 };
 
-export const updatePriceApi = (data) => {
+export const createPriceApi = (data) => {
   return request.post({
-    url: '/manage/venue/site/price/update',
+    url: '/manage/venue/site/price/create',
+    data
+  });
+};
+
+export const resetPriceApi = (data) => {
+  return request.post({
+    url: '/manage/venue/site/price/reset',
     data
   });
 };

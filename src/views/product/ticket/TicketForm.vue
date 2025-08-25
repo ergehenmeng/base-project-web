@@ -77,7 +77,7 @@
 import { createApi, selectApi, updateApi, listApi } from '@/api/product/ticket';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { errorMsg, successMsg, warningMsg } from '@/utils/message.js'
+import { successMsg, warningMsg } from '@/utils/message.js'
 import { goBack, numberValidator } from '@/utils/common.js';
 import ScenicSelect from '@/components/ScenicSelect.vue';
 import QuestionTip from '@/components/QuestionTip.vue'

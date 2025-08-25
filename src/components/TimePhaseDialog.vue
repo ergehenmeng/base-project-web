@@ -17,6 +17,8 @@
 
 <script setup>
 import { numberValidator } from '@/utils/common.js';
+import { createPriceApi } from '@/api/product/site/index.js'
+import { successMsg } from '@/utils/message.js'
 
 const formDataRef = ref();
 const showDialog = ref(false);
@@ -29,21 +31,27 @@ const formRules = reactive({
 const formData = ref({
   startTime: null,
   endTime: null,
-  price: null
+  price: null,
+  nowDate: null,
+  venueSiteId: null
 });
 
-const openDialog = (startTime, endTime) => {
+const openDialog = (startTime, endTime, nowDate, venueSiteId) => {
   showDialog.value = true;
   resetForm();
   formData.value.startTime = startTime;
   formData.value.endTime = endTime;
+  formData.value.nowDate = nowDate;
+  formData.value.venueSiteId = venueSiteId;
 };
 
 const resetForm = () => {
   formData.value = {
     startTime: null,
     endTime: null,
-    price: null
+    price: null,
+    nowDate: null,
+    venueSiteId: null
   };
   formDataRef.value?.resetFields();
 };
@@ -51,8 +59,11 @@ const resetForm = () => {
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
-      showDialog.value = false;
-      emit('reload', formData.value.price);
+      createPriceApi(formData.value).then(()=> {
+        successMsg('价格添加成功');
+        showDialog.value = false;
+        emit('reload', formData.value.price);
+      })
     }
   });
 };

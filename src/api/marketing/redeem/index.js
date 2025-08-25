@@ -7,13 +7,6 @@ export const listPageApi = (params) => {
   });
 };
 
-export const scopeApi = (params) => {
-  return request.get({
-    url: '/manage/redeem/code/scope',
-    params
-  });
-};
-
 export const generateApi = (data) => {
   return request.post({
     url: '/manage/redeem/code/generate',

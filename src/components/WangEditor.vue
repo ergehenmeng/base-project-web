@@ -14,10 +14,8 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
 import useUserStore from '@/store/user';
 import { defaultImgType } from '@/utils/image';
 import { errorMsg } from '@/utils/message.js';
-import { useRoute } from 'vue-router';
 
 const editorRef = shallowRef();
-const route = useRoute();
 const userStore = useUserStore();
 const uploadUrl = import.meta.env.VITE_API_PREFIX + '/manage/file/upload';
 
@@ -83,7 +81,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
     } else {
       errorMsg(res.msg);
       if (res.code === 8848) {
-        userStore.logout(route.fullPath);
+        userStore.logout();
       }
     }
   },
