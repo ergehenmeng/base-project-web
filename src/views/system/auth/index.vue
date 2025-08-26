@@ -121,7 +121,6 @@ const handleReset = (row) => {
     const data = { id: row.id };
     resetApi(data).then(() => {
       successMsg('secret信息重置成功');
-      getPage();
     });
   });
 };
