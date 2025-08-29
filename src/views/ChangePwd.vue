@@ -43,7 +43,9 @@ const formRules = reactive({
     },
     {
       validator: (rule, value, callback) => {
-        if (formData.value.confirmPwd && value !== formData.value.confirmPwd) {
+        if (value === formData.value.oldPwd) {
+          callback(new Error('新密码不能与旧密码一样'));
+        } else if (formData.value.confirmPwd && value !== formData.value.confirmPwd) {
           callback(new Error('两次输入密码不一致'));
         } else {
           callback();
