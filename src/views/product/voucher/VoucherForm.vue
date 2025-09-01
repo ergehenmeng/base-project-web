@@ -17,10 +17,10 @@
       <el-form-item label="使用范围" prop="useScope">
         <el-radio-group v-model="formData.useScope">
           <el-radio :value="0">全部</el-radio>
-          <el-radio :value="1">到店自提</el-radio>
+          <el-radio :value="1">线上点餐</el-radio>
           <el-radio :value="2">扫码点餐</el-radio>
         </el-radio-group>
-        <QuestionTip content="到店自提：线上下单后到店进行核销。扫码点餐：线下店铺直接点餐"/>
+        <QuestionTip content="线上点餐：线上下单后到店进行核销。扫码点餐：线下店铺直接扫码点餐"/>
       </el-form-item>
       <el-form-item label="有效日期" prop="validType">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
@@ -46,13 +46,13 @@
         <el-input v-model="formData.salePrice" show-word-limit maxlength="8" @keyup="formData.salePrice = numberValidator(formData.salePrice)" />
       </el-form-item>
       <el-form-item label="库存" prop="stock">
-        <el-input v-model="formData.stock" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="5" />
+        <el-input v-model="formData.stock" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="4" />
       </el-form-item>
       <el-form-item label="虚拟销量" prop="virtualNum">
-        <el-input v-model="formData.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="5" />
+        <el-input v-model="formData.virtualNum" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="3" />
       </el-form-item>
       <el-form-item label="限购数量" prop="quota">
-        <el-input v-model="formData.quota" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="2" />
+        <el-input v-model="formData.quota" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="3" />
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
