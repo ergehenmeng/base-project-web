@@ -104,7 +104,7 @@ const loadPrefix = () => {
     typeList.value.push({ prefix: 'MS', name: '民宿'});
   }
   if (merchantType === 0 || (merchantType & 4) === 4) {
-    typeList.value.push({ prefix: 'CY', name: '餐饮券'});
+    typeList.value.push({ prefix: 'CY', name: '餐饮'});
   }
   if (merchantType === 0 || (merchantType & 8) === 8) {
     typeList.value.push({ prefix: 'LS', name: '零售'});

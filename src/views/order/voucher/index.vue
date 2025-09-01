@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="订单编号、餐饮券名称、餐饮店、手机号" clearable @keyup.enter="search" class="w280"  maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="订单编号、商品名称、店铺名称、手机号" clearable @keyup.enter="search" class="w280"  maxlength="30" />
         </el-form-item>
         <el-form-item label="订单状态">
           <OrderStateSelect v-model="queryParams.state" :exclude="[1, 3, 4, 5, 6]" />
@@ -40,7 +40,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="orderNo" label="订单编号" width="200" />
-        <el-table-column prop="title" label="餐饮券名称" min-width="150" />
+        <el-table-column prop="title" label="商品名称" min-width="150" />
         <el-table-column prop="restaurantName" label="餐饮店名称" min-width="150" />
         <el-table-column prop="state" label="订单状态" width="90" :formatter="formatter" />
         <el-table-column prop="refundState" label="退款状态" width="100" :formatter="formatter" />
@@ -159,7 +159,7 @@ const handleExcel = () => {
   exportLoading.value = true;
   exportApi(queryParams)
     .then((res) => {
-      downloadExcel(res, '餐饮券订单列表');
+      downloadExcel(res, '餐饮订单列表');
     })
     .catch((error) => {
       successMsg('导出失败', error);

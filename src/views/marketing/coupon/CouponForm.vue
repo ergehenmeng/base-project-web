@@ -54,7 +54,7 @@
         <el-radio-group v-model="formData.productType" :disabled="disabled || readonly" @change="handleProductChange">
           <el-radio label="门票" value="ticket" v-if="merchantType === 0 || (merchantType&1) === 1"></el-radio>
           <el-radio label="民宿" value="homestay" v-if="merchantType === 0 || (merchantType&2) === 2"></el-radio>
-          <el-radio label="餐饮券" value="voucher" v-if="merchantType === 0 || (merchantType&4) === 4"></el-radio>
+          <el-radio label="餐饮" value="voucher" v-if="merchantType === 0 || (merchantType&4) === 4"></el-radio>
           <el-radio label="零售" value="item" v-if="merchantType === 0 || (merchantType&8) === 8"></el-radio>
           <el-radio label="线路" value="line" v-if="merchantType === 0 || (merchantType&16) === 16"></el-radio>
           <el-radio label="场馆" value="venue" v-if="merchantType === 0 || (merchantType&32) === 32"></el-radio>

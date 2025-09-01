@@ -289,7 +289,7 @@ export const parseProductType = (value) => {
     case 'item':
       return '零售';
     case 'voucher':
-      return '餐饮券';
+      return '餐饮';
     case 'venue':
       return '场地';
     case 'line':

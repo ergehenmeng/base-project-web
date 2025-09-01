@@ -41,11 +41,11 @@
       </div>
       <div class="middle item">
         <div class="header-nav">
-          <span>餐饮券信息</span>
+          <span>商品信息</span>
         </div>
         <div class="content-nav">
           <span>餐饮店铺：</span><span>{{ data.restaurantName }}</span>
-          <span>餐饮券名称：</span><span><el-link type="primary" underline="never" @click="handleDetail(data.voucherId)">{{ data.title }}</el-link></span>
+          <span>商品名称：</span><span><el-link type="primary" underline="never" @click="handleDetail(data.voucherId)">{{ data.title }}</el-link></span>
           <span>备注信息：</span><span><span class="order-remark">{{ data.remark }}</span></span>
         </div>
       </div>

@@ -413,7 +413,7 @@ export default [
         path: 'voucher',
         name: 'voucher',
         meta: {
-          title: '餐饮券'
+          title: '餐饮商品'
         },
         children: [
           {
@@ -451,7 +451,7 @@ export default [
         path: 'voucherTag',
         name: 'voucherTag',
         meta: {
-          title: '餐饮券标签'
+          title: '餐饮标签'
         },
         children: [
           {

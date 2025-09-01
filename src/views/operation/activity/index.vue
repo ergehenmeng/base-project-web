@@ -12,7 +12,7 @@
           <el-button type="primary" :icon="Plus" @click="handleCreate">新增</el-button>
         </el-form-item>
         <el-form-item class="right-button" v-has-perm="'ZdU0'">
-          <el-button type="primary" :icon="Plus" @click="handleConfig">批量</el-button>
+          <el-button type="primary" :icon="CirclePlus" @click="handleConfig">批量</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -52,7 +52,7 @@
 </template>
 <script setup>
 import { deleteApi, listApi } from '@/api/operation/activity';
-import { Delete, Edit, Plus } from '@element-plus/icons-vue';
+import { CirclePlus, Delete, Edit, Plus } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import useDictStore from '@/store/dict.js';

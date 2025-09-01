@@ -2,7 +2,7 @@
   <div class="edit-content">
     <el-divider />
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading" :disabled="disabled" :validate-on-rule-change="false">
-      <el-form-item label="餐饮券名称" prop="title">
+      <el-form-item label="商品名称" prop="title">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="restaurantId">
@@ -11,12 +11,23 @@
       <el-form-item label="分类标签" prop="tagId">
         <VoucherTag v-model="formData.tagId" :restaurant-id="formData.restaurantId"/><QuestionTip content="标签是左侧导航分类"/>
       </el-form-item>
+      <el-form-item label="子标签" prop="subTag">
+        <el-input-tag v-model="formData.subTag" trigger="Space" placeholder="按空格键生成标签" :max="3" maxlength="8"/><QuestionTip content="该标签可以标注辣度、味道、重量、成分等"/>
+      </el-form-item>
+      <el-form-item label="使用范围" prop="useScope">
+        <el-radio-group v-model="formData.useScope">
+          <el-radio :value="0">全部</el-radio>
+          <el-radio :value="1">到店自提</el-radio>
+          <el-radio :value="2">扫码点餐</el-radio>
+        </el-radio-group>
+        <QuestionTip content="到店自提：线上下单后到店进行核销。扫码点餐：线下店铺直接点餐"/>
+      </el-form-item>
       <el-form-item label="有效日期" prop="validType">
         <el-radio-group v-model="formData.validType" @change="validTypeChange">
           <el-radio :value="0">按购买日计算</el-radio>
           <el-radio :value="1">按时间段计算</el-radio>
         </el-radio-group>
-        <QuestionTip content="注意：过期后未使用的餐饮券会自动退款"/>
+        <QuestionTip content="注意：过期后未使用的餐饮商品会自动退款"/>
       </el-form-item>
       <el-form-item label="有效期" :prop="validTypeProp" :rules="validTypeRules">
         <div v-if="formData.validType === 0">
@@ -26,11 +37,6 @@
         </div>
         <div v-else>
           <el-date-picker type="daterange" :disabled-date="disableBeforeDate" value-format="YYYY-MM-DD" v-model="formData.activityDate" style="width: 350px"></el-date-picker>
-        </div>
-      </el-form-item>
-      <el-form-item label="可用时间段" prop="timeList">
-        <div style="width: 350px">
-          <el-time-picker is-range v-model="formData.timeList" style="width: 350px" format="HH:mm" value-format="HH:mm"></el-time-picker>
         </div>
       </el-form-item>
       <el-form-item label="划线价" prop="linePrice">
@@ -48,13 +54,10 @@
       <el-form-item label="限购数量" prop="quota">
         <el-input v-model="formData.quota" onkeyup="this.value=this.value.replace(/\D/g,'')" show-word-limit maxlength="2" />
       </el-form-item>
-      <el-form-item label="购买说明" prop="depict">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6 }" v-model="formData.depict" maxlength="400" show-word-limit />
-      </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="餐饮券介绍" prop="introduceText">
+      <el-form-item label="商品介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
@@ -70,7 +73,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { createApi, selectApi, updateApi } from '@/api/product/voucher';
 import WangEditor from '@/components/WangEditor.vue';
@@ -91,17 +93,17 @@ const validTypeProp = ref('validDays');
 const validTypeRules = ref({});
 
 const formRules = reactive({
-  title: [{ required: true, message: '餐饮券名称不能为空', trigger: 'blur' }],
+  title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
   restaurantId: [{ required: true, message: '请选择所属店铺', trigger: 'change' }],
   tagId: [{ required: true, message: '请选择标签', trigger: 'change' }],
   validType: [{ required: true, message: '请选择有效期', trigger: 'change' }],
+  useScope: [{ required: true, message: '请选择使用范围', trigger: 'change' }],
   salePrice: [{ required: true, message: '销售价不能为空', trigger: 'blur' }],
   timeList: [{ required: true, message: '可用时间段不能为空', trigger: 'blur', type: 'array' }],
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '封面图不能为空', trigger: 'change', type: 'array' }],
   quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }],
-  depict: [{ required: true, message: '购买说明不能为空', trigger: 'blur' }],
-  introduceText: [{ required: true, message: '餐饮券介绍不能为空', trigger: 'change' }]
+  introduceText: [{ required: true, message: '商品介绍不能为空', trigger: 'change' }]
 });
 
 let formData = ref({
@@ -114,7 +116,6 @@ let formData = ref({
   stock: null,
   validType: 0,
   virtualNum: null,
-  depict: null,
   quota: 99,
   validDays: null,
   effectDate: null,
@@ -122,6 +123,8 @@ let formData = ref({
   timeList: [],
   effectTime: null,
   expireTime: null,
+  useScope: 0,
+  subTag: [],
   coverUrl: [],
   activityDate: [],
   introduceText: null,
@@ -144,7 +147,7 @@ const handleSave = () => {
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
-            successMsg('餐饮券信息更新成功');
+            successMsg('商品信息更新成功');
             goBack(router);
           })
           .finally(() => {
@@ -153,7 +156,7 @@ const handleSave = () => {
       } else {
         createApi(formData.value)
           .then(() => {
-            successMsg('餐饮券添加成功');
+            successMsg('商品信息添加成功');
             goBack(router);
           })
           .finally(() => {

@@ -3,7 +3,7 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="餐饮券名称" clearable @keyup.enter="search" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="商品名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item label="店铺">
           <RestaurantSelect v-model="queryParams.restaurantId" class="w250"/>
@@ -25,7 +25,7 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="title" label="餐饮券名称" min-width="180" />
+        <el-table-column prop="title" label="商品名称" min-width="180" />
         <el-table-column prop="restaurantName" label="所属店铺" min-width="180" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="salePrice" label="销售价" width="150" />
@@ -36,7 +36,7 @@
         <el-table-column label="操作" fixed="right" width="180">
           <template #header>
             <span>操作</span>
-            <CreateButton v-has-perm="'FPO0'" title="新增餐饮券" @click="handleCreate"></CreateButton>
+            <CreateButton v-has-perm="'FPO0'" title="新增商品" @click="handleCreate"></CreateButton>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'MPO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
@@ -108,11 +108,11 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  const msg = renderMsg(["确定要", () => "删除", "该餐饮券吗?"]);
+  const msg = renderMsg(["确定要", () => "删除", "该餐饮商品吗?"]);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
-      successMsg('餐饮券删除成功');
+      successMsg('餐饮商品删除成功');
       getPage();
     });
   });
@@ -139,33 +139,33 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "上架", "该餐饮券吗?"]);
+  const msg = renderMsg(["确定要", () => "上架", "该餐饮商品吗?"]);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
-      successMsg('餐饮券上架成功');
+      successMsg('餐饮商品上架成功');
       getPage();
     });
   });
 };
 
 const handleUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "下架", "该餐饮券吗?"]);
+  const msg = renderMsg(["确定要", () => "下架", "该餐饮商品吗?"]);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
-      successMsg('餐饮券下架成功');
+      successMsg('餐饮商品下架成功');
       getPage();
     });
   });
 };
 
 const handlePlatformUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "强制下架", "该餐饮券吗?"]);
+  const msg = renderMsg(["确定要", () => "强制下架", "该餐饮商品吗?"]);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
-      successMsg('餐饮券强制下架成功');
+      successMsg('餐饮商品强制下架成功');
       getPage();
     });
   });
