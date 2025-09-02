@@ -68,3 +68,17 @@ export const exportApi = (params) => {
     params
   });
 };
+
+export const getConfigApi = (params) => {
+  return request.get({
+    url: '/manage/restaurant/getConfig',
+    params
+  });
+};
+
+export const saveConfigApi = (data) => {
+  return request.post({
+    url: '/manage/restaurant/saveConfig',
+    data
+  });
+};
