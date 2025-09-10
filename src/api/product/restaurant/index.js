@@ -82,3 +82,10 @@ export const saveConfigApi = (data) => {
     data
   });
 };
+
+export const generateApi = (data) => {
+  return request.post({
+    url: '/manage/restaurant/generate',
+    data
+  });
+};

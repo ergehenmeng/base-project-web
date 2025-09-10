@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="showDialog" width="770px" draggable align-center :close-on-click-modal="false">
     <template #header>
-      <span>添加配置<QuestionTip content="当顾客在店内扫码点餐时，可以在此配置必点的餐品。例如：餐具、纸巾、赠送的菜品等"/></span>
+      <span>添加配置<QuestionTip content="当顾客在店内扫码点餐时，可以在此配置必点的餐品，例如：餐具、纸巾、赠送的菜品等。注意：用户下单时不会校验必点的餐品"/></span>
     </template>
     <el-form :model="formData" ref="formDataRef" label-position="right" label-width="0px" v-loading="loading">
       <el-table :data="formData.configList">

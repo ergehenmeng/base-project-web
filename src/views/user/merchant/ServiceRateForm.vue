@@ -28,7 +28,7 @@ const formRules = reactive({
   platformServiceRate: [
     { required: true, message: '平台服务费不能为空', trigger: 'blur' },
     {
-      validator: (rule, value, callback) => {
+      validator: (_rule, value, callback) => {
         const number = parseFloat(value);
         if (number < 0 || number > 10) {
           callback(new Error('费率应在0%~10%之间'));

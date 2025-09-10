@@ -388,3 +388,16 @@ export const startCountDown = (time, callback) => {
     }
   }, 1000);
 };
+
+export function format(template, ...args) {
+  // 处理命名参数
+  if (args.length === 1 && typeof args[0] === 'object' && args[0] !== null) {
+    return template.replace(/{(\w+)}/g, (match, key) => {
+      return args[0][key] !== undefined ? args[0][key] : match;
+    });
+  }
+  // 处理位置参数
+  return template.replace(/{(\d+)}/g, (match, index) => {
+    return args[index] !== undefined ? args[index] : match;
+  });
+}

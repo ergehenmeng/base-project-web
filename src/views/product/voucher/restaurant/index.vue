@@ -54,6 +54,7 @@
             <el-button v-has-perm="'DMO0'" type="info" :icon="Document" @click="handleDetail(scope.row)" link title="详情"></el-button>
             <el-button v-has-perm="'UMO0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'uMO0'" type="primary" :icon="Setting" @click="handleConfig(scope.row)" link title="配置"></el-button>
+            <el-button v-has-perm="'NMO0'" type="primary" :icon="Sunny" @click="generateHandle(scope.row)" link title="生成太阳码"></el-button>
             <el-button v-has-perm="'kMO0'" v-show="scope.row.state === 0" type="success" :icon="Top" @click="handleShelves(scope.row)" link title="上架"></el-button>
             <el-button v-has-perm="'lMO0'" v-show="scope.row.state === 1" type="warning" :icon="Bottom" @click="handleUnShelves(scope.row)" link title="下架"></el-button>
             <el-button v-has-perm="'cMO0'" v-show="scope.row.state !== 2" type="danger" :icon="Download" @click="handlePlatformUnShelves(scope.row)" link title="强制下架"></el-button>
@@ -73,19 +74,22 @@
       </div>
     </div>
   </div>
-  <ConfigForm ref="formRef"/>
+  <ConfigForm ref="formRef" />
+  <QRCodeForm ref="qrRef" title="桌码" :file-name="fileName"/>
 </template>
 <script setup>
-import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/restaurant';
-import { Bottom, Delete, Document, Download, Edit, Setting, Top } from '@element-plus/icons-vue'
+import { deleteApi, exportApi, generateApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/restaurant';
+import { Bottom, Delete, Document, Download, Edit, Setting, Sunny, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import useUserStore from '@/store/user';
 import { useRouter } from 'vue-router';
-import { downloadExcel, renderMsg } from '@/utils/common.js'
+import { downloadExcel, format, renderMsg } from '@/utils/common.js';
 import MerchantSelect from '@/components/MerchantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
-import ConfigForm from '@/views/product/voucher/restaurant/ConfigForm.vue'
+import ConfigForm from '@/views/product/voucher/restaurant/ConfigForm.vue';
+import QRCodeForm from '@/views/common/QRCodeForm.vue';
 
+const qrRef = ref();
 const router = useRouter();
 const userStore = useUserStore();
 const formRef = ref();
@@ -93,7 +97,7 @@ const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const selectAuth = userStore.hasAuth('5MO0');
-
+const fileName = ref('');
 const queryParams = reactive({
   queryName: null,
   page: 1,
@@ -125,7 +129,7 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  const msg = renderMsg(["确定要", () => "删除", "该商家吗?"]);
+  const msg = renderMsg(['确定要', () => '删除', '该商家吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
@@ -156,7 +160,7 @@ const formatter = (_row, column, cellValue) => {
 };
 
 const handleShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "上架", "该商家吗?"]);
+  const msg = renderMsg(['确定要', () => '上架', '该商家吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
@@ -167,7 +171,7 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "下架", "该商家吗?"]);
+  const msg = renderMsg(['确定要', () => '下架', '该商家吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
@@ -178,7 +182,7 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "强制下架", "该商家吗?"]);
+  const msg = renderMsg(['确定要', () => '强制下架', '该商家吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
@@ -214,6 +218,38 @@ const handleEdit = (row) => {
 
 const handleConfig = (row) => {
   formRef.value.openDialog(row);
+};
+
+const generateHandle = (row) => {
+  ElMessageBox.prompt('请输入桌号信息', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    inputPlaceholder: '例如：2号桌',
+    inputErrorMessage: '桌号信息不能为空',
+    customStyle: {
+      'max-width': '300px',
+    },
+    inputValidator: (str) => {
+      return str !== '' && str !== null && str !== undefined && str.length <= 5;
+    },
+    beforeClose: function (action, instance, done) {
+      if (action === 'confirm') {
+        const page = import.meta.env.VITE_RESTAURANT_TABLE_URL;
+        const param = import.meta.env.VITE_RESTAURANT_TABLE_PARAM;
+        generateApi({
+          tableNum: instance.inputValue,
+          page,
+          param: format(param, row.id, instance.inputValue)
+        }).then(({ data }) => {
+          fileName.value = instance.inputValue
+          qrRef.value.openDialog({ base64: data });
+          done()
+        });
+      } else {
+        done()
+      }
+    }
+  })
 };
 
 const handleDetail = (row) => {

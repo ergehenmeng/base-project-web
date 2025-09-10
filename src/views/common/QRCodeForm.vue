@@ -1,7 +1,7 @@
 <template>
-  <el-dialog title="二维码" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
     <template #header>
-      <span>二维码<QuestionTip v-if="props.tips" :content="props.tips"></QuestionTip></span>
+      <span>{{props.title}}<QuestionTip v-if="props.tips" :content="props.tips"></QuestionTip></span>
     </template>
     <div style="text-align: center">
       <el-image fit="cover" :src="imageData.data" style="width: 70%"></el-image>
@@ -29,6 +29,11 @@ const props = defineProps({
   tips: {
     type: String,
     default: null
+  },
+  title: {
+    type: String,
+    required: false,
+    default: '二维码'
   },
   fileName: {
     type: String,
