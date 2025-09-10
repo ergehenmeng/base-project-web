@@ -100,7 +100,6 @@ const openDialog = (row) => {
   if (row.id) {
     dialogTitle.value = '编辑资讯配置';
     formData.value = { ...row };
-    formData.value.showTime = [row.startTime, row.endTime];
   } else {
     dialogTitle.value = '新增资讯配置';
   }
