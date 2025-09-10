@@ -31,6 +31,12 @@
           <el-radio label="否" :value="false"></el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="包含位置" prop="includeLocation">
+        <el-radio-group v-model="formData.includeLocation">
+          <el-radio label="是" :value="true"></el-radio>
+          <el-radio label="否" :value="false"></el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="包含详细信息" prop="includeContent">
         <el-radio-group v-model="formData.includeContent" disabled>
           <el-radio label="是" :value="true"></el-radio>
@@ -69,6 +75,7 @@ const formRules = reactive({
   includeTitle: [{ required: true, message: '包含标题不能为空', trigger: 'change' }],
   includeDepict: [{ required: true, message: '包含描述信息不能为空', trigger: 'change' }],
   includeTag: [{ required: true, message: '包含标签不能为空', trigger: 'change' }],
+  includeLocation: [{ required: true, message: '包含位置不能为空', trigger: 'change' }],
   includeImage: [{ required: true, message: '包含图集不能为空', trigger: 'change' }],
   includeContent: [{ required: true, message: '包含详细信息不能为空', trigger: 'change' }],
   includeVideo: [{ required: true, message: '包含视频不能为空',trigger: 'change' }]
@@ -81,6 +88,7 @@ const formData = ref({
   includeTitle: true,
   includeDepict: false,
   includeImage: false,
+  includeLocation: false,
   includeTag: false,
   includeContent: true,
   includeVideo: false
@@ -107,6 +115,7 @@ const resetForm = () => {
     includeDepict: false,
     includeTag: false,
     includeImage: false,
+    includeLocation: false,
     includeContent: true,
     includeVideo: false
   };

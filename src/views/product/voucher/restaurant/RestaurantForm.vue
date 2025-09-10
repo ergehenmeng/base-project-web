@@ -22,7 +22,7 @@
         <AreaSelect v-model="formData.areaList"></AreaSelect>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress">
-        <el-input v-model="formData.detailAddress" show-word-limit maxlength="100" />
+        <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
         <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>

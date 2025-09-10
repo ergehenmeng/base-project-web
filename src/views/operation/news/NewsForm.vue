@@ -17,6 +17,15 @@
       <el-form-item label="视频" prop="video" v-if="showField.includeVideo">
         <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 4 }" show-word-limit maxlength="200" />
       </el-form-item>
+      <el-form-item label="省市县" prop="areaList" class="w450" v-if="showField.includeLocation">
+        <AreaSelect v-model="formData.areaList" cls="w400"/>
+      </el-form-item>
+      <el-form-item label="详细地址" prop="detailAddress" class="w450" v-if="showField.includeLocation">
+        <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
+      </el-form-item>
+      <el-form-item label="经纬度" prop="latitude" v-if="showField.includeLocation">
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
+      </el-form-item>
       <el-form-item label="留言" prop="commentSupport" >
         <el-radio-group v-model="formData.commentSupport">
           <el-radio :value="true">开启</el-radio>
@@ -43,6 +52,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { errorMsg, successMsg } from '@/utils/message.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack } from '@/utils/common.js';
+import LocationMap from '@/components/LocationMap.vue';
+import AreaSelect from '@/components/AreaSelect.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -59,6 +70,7 @@ const showField = ref({
   includeDepict: false,
   includeImage: false,
   includeVideo: false,
+  includeLocation: false,
   includeTag: false
 });
 
@@ -72,6 +84,10 @@ const formData = ref({
   image: [],
   tagName: [],
   video: '',
+  areaList:[],
+  detailAddress: '',
+  longitude: null,
+  latitude: null,
   code: ''
 });
 
@@ -111,11 +127,17 @@ onMounted(() => {
   }
   formData.value.code = query.code;
   configApi({ code: query.code }).then((res) => {
-    const { includeDepict, includeImage, includeVideo, includeTag } = res.data;
+    const { includeDepict, includeImage, includeVideo, includeTag, includeLocation } = res.data;
     showField.value.includeTag = includeTag;
     if (includeDepict === true) {
       showField.value.includeDepict = true;
       formRules.depict = [{ required: true, message: '资讯描述不能为空', trigger: 'blur' }];
+    }
+    if (includeLocation === true) {
+      showField.value.includeLocation = true;
+      formRules.areaList = [{ required: true, message: '省市县不能为空', trigger: 'change', type: 'array' }];
+      formRules.detailAddress = [{ required: true, message: '详细地址不能为空', trigger: 'blur' }];
+      formRules.latitude = [{ required: true, message: '经纬度不能为空', trigger: 'change' }];
     }
     if (includeImage === true) {
       showField.value.includeImage = true;

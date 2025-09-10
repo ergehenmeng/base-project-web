@@ -34,6 +34,11 @@
             <el-switch v-model="scope.row.includeImage" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
           </template>
         </el-table-column>
+        <el-table-column prop="includeLocation" label="包含位置">
+          <template #default="scope">
+            <el-switch v-model="scope.row.includeLocation" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />
+          </template>
+        </el-table-column>
         <el-table-column prop="includeContent" label="包含详细信息">
           <template #default="scope">
             <el-switch v-model="scope.row.includeContent" inline-prompt active-text="是" inactive-text="否" disabled style="--el-switch-off-color: #ff4949" />

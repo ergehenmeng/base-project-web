@@ -14,7 +14,7 @@
         <AreaSelect v-model="formData.areaList" cls="w400"/>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress" class="w450">
-        <el-input v-model="formData.detailAddress" show-word-limit maxlength="30" />
+        <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="备注信息" prop="remark" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.remark" maxlength="100" show-word-limit />
