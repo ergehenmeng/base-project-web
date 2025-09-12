@@ -44,15 +44,18 @@ const keyupListener = (e) => {
   }
 };
 
-onMounted(async () => {
+onMounted(() => {
   if (userStore.user?.isLock) {
     handleLockScreen();
   }
   window.addEventListener('keyup', keyupListener);
-  const {data: { permList, menuList }} = await permApi();
-  userStore.user.permList = permList;
-  userStore.user.menuList = menuList;
-  ready.value = true;
+  permApi().then(({data: { permList, menuList }}) => {
+    userStore.user.permList = permList;
+    userStore.user.menuList = menuList;
+    ready.value = true;
+  }).catch(() => {
+    userStore.logout();
+  });
 });
 
 onUnmounted(() => {

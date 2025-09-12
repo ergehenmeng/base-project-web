@@ -12,7 +12,13 @@ export default defineConfig(({ mode }) => {
   return {
     // 插件注册
     plugins: [
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: (tag) => tag.startsWith('cropper-')
+          }
+        }
+      }),
       vueJsx(),
       AutoImport({
         imports: ['vue', 'vue-router'],

@@ -2,7 +2,12 @@
   <div class="layer-main-header">
     <ul class="">
       <li>
-        <span class="main-header-title" title="按ALT+L可以锁屏哟~">欢迎您: {{ nickName }}</span>
+        <div style="padding-top: 5px;">
+          <el-avatar :icon="UserFilled" size="small" @click="handleAvatar" style="cursor: pointer"></el-avatar>
+        </div>
+      </li>
+      <li>
+        <span class="main-header-title" title="按ALT+L可以锁屏哟~"> {{ nickName }}</span>
       </li>
       <li>
         <el-icon title="个人中心" @click="handleUser">
@@ -29,6 +34,7 @@
       </li>
     </ul>
     <ChangePwd ref="changePwdRef"/>
+    <UploadAvatar ref="avatarRef" @confirm="confirm"/>
   </div>
 </template>
 <script setup>
@@ -47,7 +53,10 @@ import { ElLink } from 'element-plus'
 import { useRouter } from 'vue-router'
 import Unbind from '@/components/icon/Unbind.vue'
 import Bind from '@/components/icon/Bind.vue'
+import { UserFilled } from '@element-plus/icons-vue';
+import UploadAvatar from '@/components/UploadAvatar.vue';
 
+const avatarRef = ref();
 const router = useRouter();
 const userStore = useUserStore();
 const changePwdRef = ref();
@@ -59,6 +68,15 @@ const handleLogout = () => {
     userStore.logout();
   });
 };
+const dialogVisibleCorpper = ref(false)
+
+const handleAvatar = () => {
+  avatarRef.value.openDialog();
+}
+
+const confirm = () => {
+  dialogVisibleCorpper.value = false
+}
 
 const handleUnbind = () => {
   const msg = renderMsg(["确定要", () => "解绑", "微信吗?"]);
