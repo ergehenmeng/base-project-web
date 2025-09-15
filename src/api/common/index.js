@@ -44,3 +44,10 @@ export const WxLogin = ({ id, appId, redirectUri, state, style, href, lang, fast
   container.innerHTML = '';
   container.appendChild(iframe);
 }
+
+export const uploadApi = (formData) => {
+  return request.upload({
+    url: '/manage/file/upload',
+    formData
+  })
+}

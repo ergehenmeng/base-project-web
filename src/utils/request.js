@@ -129,11 +129,11 @@ const post = ({ url, data, code, callback, ...config }) => {
   });
 };
 
-const upload = ({ url, data, ..._config }) => {
+const upload = ({ url, formData, ..._config }) => {
   return service({
     url: url,
     method: 'post',
-    data: data,
+    data: formData,
     headers: {
       'Content-Type': 'multipart/form-data'
     }

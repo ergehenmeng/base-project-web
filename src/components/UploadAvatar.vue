@@ -1,12 +1,12 @@
 <template>
   <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false">
     <el-row>
-      <el-col :span="12" >
+      <el-col :span="12">
         <div class="cropper-upload-box">
           <cropper-canvas background ref="cropperRef" key="image">
-            <cropper-image ref="cropperImgRef" :src="imgSrcData" rotatable scalable skewable translatable></cropper-image>
-            <cropper-shade class="cropper-shade" ></cropper-shade>
-            <cropper-selection movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6" @change="cropperSelectedChangeHandle">
+            <cropper-image ref="cropperImgRef" :src="updateUrl" rotatable scalable skewable translatable></cropper-image>
+            <cropper-shade class="cropper-shade"></cropper-shade>
+            <cropper-selection ref="selectRef" movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6">
               <cropper-crosshair centered />
               <cropper-handle class="select-handle-move" action="move" />
               <cropper-handle action="n-resize" />
@@ -23,7 +23,9 @@
       </el-col>
       <el-col :span="12">
         <div class="cropper-preview-box">
-          <cropper-viewer selection="#cropperSelected" ></cropper-viewer>
+          <cropper-viewer selection="#cropperSelected"></cropper-viewer>
+          <img :src="realShow" style="width: 200px" />
+          <canvas ref="canvasRef" style="display: none"></canvas>
         </div>
       </el-col>
     </el-row>
@@ -46,46 +48,20 @@
   </el-dialog>
 </template>
 <script setup>
-import "cropperjs";
-import { CropperCanvas, CropperImage, CropperShade, CropperHandle, CropperSelection, CropperCrosshair, CropperViewer } from 'cropperjs';
-import { getCurrentInstance } from 'vue';
+import 'cropperjs';
+import { CropperCanvas, CropperCrosshair, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs';
 import { RefreshLeft, RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message.js';
-const { proxy } = getCurrentInstance();
+import { uploadApi } from '@/api/common/index.js';
+
 const cropperRef = ref();
+const selectRef = ref();
+const canvasRef = ref();
 const cropperImgRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['confirm']);
-const imgSrcData = ref();
-
-const cropperSelectedChangeHandle = (event) => {
-  if (cropperImgRef.value.offsetWidth === 0) {
-    return;
-  }
-  const cropperImageRect = cropperImgRef.value.getBoundingClientRect();
-  const cropperCanvasRect = cropperRef.value.getBoundingClientRect();
-  const selection = event.detail;
-  const maxSelection = {
-    x: cropperImageRect.left - cropperCanvasRect.left,
-    y: cropperImageRect.top - cropperCanvasRect.top,
-    width: cropperImageRect.width,
-    height: cropperImageRect.height
-  };
-
-  if (!inSelection(selection, maxSelection)) {
-    event.preventDefault();
-  }
-};
-
-const inSelection = (selection, maxSelection) => {
-  return (
-    selection.x >= maxSelection.x &&
-    selection.y >= maxSelection.y &&
-    selection.x + selection.width <= maxSelection.x + maxSelection.width &&
-    selection.y + selection.height <= maxSelection.y + maxSelection.height
-  );
-};
-
+const updateUrl = ref();
+const realShow = ref();
 const beforeUpload = (rawFile) => {
   if (rawFile.type.indexOf('image/') === -1) {
     errorMsg('请上传图片类型文件!');
@@ -98,7 +74,7 @@ const beforeUpload = (rawFile) => {
   const reader = new FileReader();
   reader.readAsDataURL(rawFile);
   reader.onload = () => {
-    imgSrcData.value = reader.result;
+    updateUrl.value = reader.result;
   };
 };
 
@@ -114,9 +90,33 @@ const openDialog = (data) => {
   showDialog.value = true;
 };
 
-const handleUpload = () => {
-  showDialog.value = false;
-  emit('confirm', showDialog.value);
+const handleUpload = async () => {
+  if (!updateUrl.value) {
+    return;
+  }
+  const canvas = await selectRef.value.$toCanvas();
+  const circleCanvas = canvasRef.value;
+  const context = circleCanvas.getContext('2d');
+  const size = Math.min(canvas.width, canvas.height);
+  circleCanvas.width = size;
+  circleCanvas.height = size;
+  context.beginPath();
+  context.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+  context.closePath();
+  context.clip();
+  context.drawImage(canvas, 0, 0, size, size);
+  realShow.value = circleCanvas.toDataURL('image/png');
+  circleCanvas.toBlob(
+    (blob) => {
+      const formData = new FormData();
+      formData.append('file', blob, 'cropped-image.jpg');
+      uploadApi(formData).then((res) => {
+        console.log(res);
+      });
+    },
+    'image/jpeg',
+    0.95
+  );
 };
 
 defineExpose({
