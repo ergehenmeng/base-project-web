@@ -6,7 +6,7 @@
           <cropper-canvas background ref="cropperRef" key="image">
             <cropper-image ref="cropperImgRef" :src="imgSrcData" rotatable scalable skewable translatable></cropper-image>
             <cropper-shade class="cropper-shade" ></cropper-shade>
-            <cropper-selection movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.5" @change="cropperSelectedChangeHandle">
+            <cropper-selection movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6" @change="cropperSelectedChangeHandle">
               <cropper-crosshair centered />
               <cropper-handle class="select-handle-move" action="move" />
               <cropper-handle action="n-resize" />
@@ -59,8 +59,9 @@ const emit = defineEmits(['confirm']);
 const imgSrcData = ref();
 
 const cropperSelectedChangeHandle = (event) => {
-  console.log(cropperRef.value);
-  console.log(cropperImgRef.value);
+  if (cropperImgRef.value.offsetWidth === 0) {
+    return;
+  }
   const cropperImageRect = cropperImgRef.value.getBoundingClientRect();
   const cropperCanvasRect = cropperRef.value.getBoundingClientRect();
   const selection = event.detail;
@@ -136,7 +137,7 @@ defineExpose({
 }
 
 .cropper-preview-box {
-  padding: 30px;
+  padding: 50px;
   cropper-viewer {
     border-radius: 50%;
     border: 1px solid #ccc;
