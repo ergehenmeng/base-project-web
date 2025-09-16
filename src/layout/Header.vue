@@ -68,14 +68,13 @@ const handleLogout = () => {
     userStore.logout();
   });
 };
-const dialogVisibleCorpper = ref(false)
 
 const handleAvatar = () => {
   avatarRef.value.openDialog();
 }
 
-const confirm = () => {
-  dialogVisibleCorpper.value = false
+const confirm = (json) => {
+  console.log(json);
 }
 
 const handleUnbind = () => {

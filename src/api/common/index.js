@@ -47,7 +47,7 @@ export const WxLogin = ({ id, appId, redirectUri, state, style, href, lang, fast
 
 export const uploadApi = (formData) => {
   return request.upload({
-    url: '/manage/file/upload',
+    url: '/manage/file/avatar/upload',
     formData
   })
 }

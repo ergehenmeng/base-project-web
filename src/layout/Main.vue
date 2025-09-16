@@ -17,7 +17,7 @@
   </el-container>
   <LockScreen ref="lockRef"></LockScreen>
 </template>
-<script setup lang="ts">
+<script setup>
 import { permApi } from '@/api/login/index.js';
 import Header from '@/layout/Header.vue';
 import Aside from '@/layout/Aside.vue';

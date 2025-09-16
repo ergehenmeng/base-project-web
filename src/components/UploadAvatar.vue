@@ -1,9 +1,9 @@
 <template>
-  <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false">
+  <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false" v-loading="loading">
     <el-row>
       <el-col :span="12">
         <div class="cropper-upload-box">
-          <cropper-canvas background ref="cropperRef" key="image">
+          <cropper-canvas background key="image">
             <cropper-image ref="cropperImgRef" :src="updateUrl" rotatable scalable skewable translatable></cropper-image>
             <cropper-shade class="cropper-shade"></cropper-shade>
             <cropper-selection ref="selectRef" movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6">
@@ -24,7 +24,6 @@
       <el-col :span="12">
         <div class="cropper-preview-box">
           <cropper-viewer selection="#cropperSelected"></cropper-viewer>
-          <img :src="realShow" style="width: 200px" />
           <canvas ref="canvasRef" style="display: none"></canvas>
         </div>
       </el-col>
@@ -54,14 +53,13 @@ import { RefreshLeft, RefreshRight, UploadFilled } from '@element-plus/icons-vue
 import { errorMsg } from '@/utils/message.js';
 import { uploadApi } from '@/api/common/index.js';
 
-const cropperRef = ref();
+const loading = ref(false);
 const selectRef = ref();
 const canvasRef = ref();
 const cropperImgRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['confirm']);
 const updateUrl = ref();
-const realShow = ref();
 const beforeUpload = (rawFile) => {
   if (rawFile.type.indexOf('image/') === -1) {
     errorMsg('请上传图片类型文件!');
@@ -86,7 +84,7 @@ const rotateRight = () => {
   cropperImgRef.value.$rotate('90deg');
 };
 
-const openDialog = (data) => {
+const openDialog = () => {
   showDialog.value = true;
 };
 
@@ -105,16 +103,20 @@ const handleUpload = async () => {
   context.closePath();
   context.clip();
   context.drawImage(canvas, 0, 0, size, size);
-  realShow.value = circleCanvas.toDataURL('image/png');
   circleCanvas.toBlob(
     (blob) => {
+      loading.value = true;
       const formData = new FormData();
-      formData.append('file', blob, 'cropped-image.jpg');
-      uploadApi(formData).then((res) => {
-        console.log(res);
-      });
+      formData.append('file', blob, 'cropped-image.png');
+      uploadApi(formData)
+        .then(({ data: { address, path} }) => {
+          emit("confirm", address + path);
+        })
+        .finally(() => {
+          loading.value = false;
+        });
     },
-    'image/jpeg',
+    'image/png',
     0.95
   );
 };
