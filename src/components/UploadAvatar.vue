@@ -1,49 +1,52 @@
 <template>
-  <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-click-modal="false" :close-on-press-escape="false" v-loading="loading">
-    <el-row>
-      <el-col :span="12">
-        <div class="cropper-upload-box">
-          <cropper-canvas background key="image">
-            <cropper-image ref="cropperImgRef" :src="updateUrl" rotatable scalable skewable translatable></cropper-image>
-            <cropper-shade class="cropper-shade"></cropper-shade>
-            <cropper-selection ref="selectRef" movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6">
-              <cropper-crosshair centered />
-              <cropper-handle class="select-handle-move" action="move" />
-              <cropper-handle action="n-resize" />
-              <cropper-handle action="e-resize" />
-              <cropper-handle action="s-resize" />
-              <cropper-handle action="w-resize" />
-              <cropper-handle action="ne-resize" />
-              <cropper-handle action="nw-resize" />
-              <cropper-handle action="se-resize" />
-              <cropper-handle action="sw-resize" />
-            </cropper-selection>
-          </cropper-canvas>
-        </div>
-      </el-col>
-      <el-col :span="12">
-        <div class="cropper-preview-box">
-          <cropper-viewer selection="#cropperSelected"></cropper-viewer>
-          <canvas ref="canvasRef" style="display: none"></canvas>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row style="margin-top: 15px">
-      <el-col :span="2">
-        <el-upload action="#" :http-request="() => {}" :before-upload="beforeUpload" :show-file-list="false">
-          <el-button plain type="primary" :icon="UploadFilled"></el-button>
-        </el-upload>
-      </el-col>
-      <el-col :span="2" :offset="7">
-        <el-button :icon="RefreshLeft" circle @click="rotateLeft()"></el-button>
-      </el-col>
-      <el-col :span="2">
-        <el-button :icon="RefreshRight" circle @click="rotateRight()"></el-button>
-      </el-col>
-      <el-col :span="2" :offset="8">
-        <el-button type="primary" @click="handleUpload">上传</el-button>
-      </el-col>
-    </el-row>
+  <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-press-escape="false" >
+    <div v-loading="loading">
+      <el-row>
+        <el-col :span="12">
+          <div class="cropper-upload-box">
+            <cropper-canvas background key="image" v-if="updateUrl">
+              <cropper-image ref="cropperImgRef" :src="updateUrl" rotatable scalable skewable translatable></cropper-image>
+              <cropper-shade class="cropper-shade"></cropper-shade>
+              <cropper-selection ref="selectRef" movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6">
+                <cropper-crosshair centered />
+                <cropper-handle class="select-handle-move" action="move" />
+                <cropper-handle action="n-resize" />
+                <cropper-handle action="e-resize" />
+                <cropper-handle action="s-resize" />
+                <cropper-handle action="w-resize" />
+                <cropper-handle action="ne-resize" />
+                <cropper-handle action="nw-resize" />
+                <cropper-handle action="se-resize" />
+                <cropper-handle action="sw-resize" />
+              </cropper-selection>
+            </cropper-canvas>
+          </div>
+        </el-col>
+        <el-col :span="12">
+          <div class="cropper-preview-box">
+            <cropper-viewer selection="#cropperSelected" v-if="updateUrl"></cropper-viewer>
+            <div class="cropper-viewer" v-else></div>
+            <canvas ref="canvasRef" style="display: none"></canvas>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row style="margin-top: 15px">
+        <el-col :span="2">
+          <el-upload action="#" :http-request="() => {}" :before-upload="beforeUpload" :show-file-list="false" accept=".jpg,.jpeg,.png">
+            <el-button plain type="primary" :icon="UploadFilled" title="请选择要上传的图片"></el-button>
+          </el-upload>
+        </el-col>
+        <el-col :span="2" :offset="7">
+          <el-button :icon="RefreshLeft" circle @click="rotateLeft()" title="向左旋转90度"></el-button>
+        </el-col>
+        <el-col :span="2">
+          <el-button :icon="RefreshRight" circle @click="rotateRight()" title="向右旋转90度"></el-button>
+        </el-col>
+        <el-col :span="2" :offset="8">
+          <el-button type="primary" @click="handleUpload">上传</el-button>
+        </el-col>
+      </el-row>
+    </div>
   </el-dialog>
 </template>
 <script setup>
@@ -95,6 +98,7 @@ const handleUpload = async () => {
   const canvas = await selectRef.value.$toCanvas();
   const circleCanvas = canvasRef.value;
   const context = circleCanvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
   const size = Math.min(canvas.width, canvas.height);
   circleCanvas.width = size;
   circleCanvas.height = size;
@@ -130,8 +134,10 @@ defineExpose({
   border-radius: 50%;
 }
 .cropper-upload-box {
-  width: 100%;
-  height: 100%;
+  border: 1px dashed #d9d9d9;
+  height: 250px;
+  width: 250px;
+
   cropper-canvas {
     width: 100%;
     height: 100%;
@@ -139,7 +145,15 @@ defineExpose({
 }
 
 .cropper-preview-box {
+  height: 250px;
+  width: 250px;
   padding: 50px;
+  .cropper-viewer {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
   cropper-viewer {
     border-radius: 50%;
     border: 1px solid #ccc;
