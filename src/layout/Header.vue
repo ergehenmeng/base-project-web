@@ -3,7 +3,7 @@
     <ul class="">
       <li>
         <div style="padding-top: 5px;">
-          <el-avatar :icon="UserFilled" size="small" @click="handleAvatar" style="cursor: pointer"></el-avatar>
+          <el-avatar :icon="UserFilled" :src="avatarImg" size="small" @click="handleAvatar" style="cursor: pointer" title="点击修改头像"></el-avatar>
         </div>
       </li>
       <li>
@@ -61,7 +61,8 @@ const router = useRouter();
 const userStore = useUserStore();
 const changePwdRef = ref();
 const nickName = userStore.user?.nickName;
-
+const avatarImg = ref();
+avatarImg.value = userStore.user.avatar;
 const handleLogout = () => {
   const msg = renderMsg(["确定要", () => "退出", "系统吗?"]);
   confirmMsg(msg, () => {
@@ -73,8 +74,9 @@ const handleAvatar = () => {
   avatarRef.value.openDialog();
 }
 
-const confirm = (json) => {
-  console.log(json);
+const confirm = (avatar) => {
+  userStore.setAvatar(avatar);
+  avatarImg.value = avatar;
 }
 
 const handleUnbind = () => {

@@ -77,7 +77,7 @@ editorConfig.MENU_CONF['uploadImage'] = {
   timeout: 10000,
   customInsert: (res, insertFn) => {
     if (res.code === 200) {
-      insertFn(res.data.address + res.data.path, '', '');
+      insertFn(res.data.host + res.data.path, '', '');
     } else {
       errorMsg(res.msg);
       if (res.code === 8848) {

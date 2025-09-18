@@ -61,7 +61,7 @@ const handleImageSuccess = (res, file) => {
     return;
   }
   const { data } = res;
-  file.url = data.address + data.path;
+  file.url = data.host + data.path;
   imgUrl.value = file.url;
 };
 

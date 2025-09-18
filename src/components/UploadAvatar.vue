@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="12">
           <div class="cropper-upload-box">
-            <cropper-canvas background key="image" v-if="updateUrl">
+              <cropper-canvas background key="image" v-if="updateUrl">
               <cropper-image ref="cropperImgRef" :src="updateUrl" rotatable scalable skewable translatable></cropper-image>
               <cropper-shade class="cropper-shade"></cropper-shade>
               <cropper-selection ref="selectRef" movable resizable outlined :aspectRatio="1" id="cropperSelected" initial-coverage="0.6">
@@ -88,6 +88,7 @@ const rotateRight = () => {
 };
 
 const openDialog = () => {
+  updateUrl.value = null
   showDialog.value = true;
 };
 
@@ -113,8 +114,9 @@ const handleUpload = async () => {
       const formData = new FormData();
       formData.append('file', blob, 'cropped-image.png');
       uploadApi(formData)
-        .then(({ data: { address, path} }) => {
-          emit("confirm", address + path);
+        .then(({ data: { host, path} }) => {
+          emit("confirm", host + path);
+          showDialog.value = false;
         })
         .finally(() => {
           loading.value = false;

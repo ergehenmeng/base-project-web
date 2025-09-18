@@ -16,6 +16,8 @@ const useUserStore = defineStore(
       userType: null,
       // 商户类型 1 2 4 8 16 32
       merchantType: 0,
+      // 头像
+      avatar: null,
       // 昵称
       nickName: '',
       // 系统名称
@@ -74,7 +76,10 @@ const useUserStore = defineStore(
     const setBindWechat = (bindWechat) => {
       user.value.bindWechat = bindWechat;
     }
-    return { user, isLogin, hasAuth, logout, setInit, setLock, setExpire, setBindWechat };
+    const setAvatar = (avatar) => {
+      user.value.avatar = avatar;
+    }
+    return { user, isLogin, hasAuth, logout, setInit, setLock, setExpire, setBindWechat, setAvatar };
   },
   // 开启持久化
   { persist: true }
