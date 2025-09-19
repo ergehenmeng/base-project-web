@@ -54,7 +54,7 @@ import 'cropperjs';
 import { CropperCanvas, CropperCrosshair, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs';
 import { RefreshLeft, RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message.js';
-import { uploadApi } from '@/api/common/index.js';
+import { updateAvatarApi } from '@/api/system/user/index.js';
 
 const loading = ref(false);
 const selectRef = ref();
@@ -113,7 +113,7 @@ const handleUpload = async () => {
       loading.value = true;
       const formData = new FormData();
       formData.append('file', blob, 'cropped-image.png');
-      uploadApi(formData)
+      updateAvatarApi(formData)
         .then(({ data: { host, path} }) => {
           emit("confirm", host + path);
           showDialog.value = false;
