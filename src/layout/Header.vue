@@ -34,7 +34,7 @@
       </li>
     </ul>
     <ChangePwd ref="changePwdRef"/>
-    <UploadAvatar ref="avatarRef" @confirm="confirm"/>
+    <UploadAvatar title="修改头像" ref="avatarRef" @confirm="confirm"/>
   </div>
 </template>
 <script setup>
@@ -71,7 +71,7 @@ const handleLogout = () => {
 };
 
 const handleAvatar = () => {
-  avatarRef.value.openDialog();
+  avatarRef.value.openDialog(avatarImg.value);
 }
 
 const confirm = (avatar) => {
