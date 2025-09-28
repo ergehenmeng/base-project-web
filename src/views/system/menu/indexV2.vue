@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="menu-content-main">
+    <div class="main-content-menu">
       <el-container>
         <el-aside width="200px" class="left-menu">
           <el-scrollbar max-height="calc(100vh - 160px)">
@@ -225,21 +225,21 @@ const handleSort = (row) => {
   height: calc(100vh - 155px);
 }
 
-.menu-content-main {
+.main-content-menu {
   background-color: #fff;
   padding: 20px 0;
   border-radius: 3px;
-  min-height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
 }
 
 .right-content-top {
   .right-button {
     float: right;
   }
-
   .el-input {
     width: 200px;
   }
+  margin-bottom: 10px;
 }
 
 .custom-tree-node {
