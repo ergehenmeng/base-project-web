@@ -5,7 +5,7 @@
         <el-aside width="200px" class="left-menu">
           <el-scrollbar max-height="calc(100vh - 160px)">
             <div style="padding: 20px 20px 0 20px">
-              <el-tree :data="menuList" node-key="id" :props="props" @node-click="clickTree" :expand-on-click-node="false" :default-expanded-keys="['0']">
+              <el-tree :data="menuList" node-key="id" :props="props" @node-click="clickTree" :highlight-current="true" :expand-on-click-node="false" current-node-key="0" :default-expanded-keys="['0']">
                 <template #default="{ node }">
                   <span class="custom-tree-node">
                     <span>{{ node.label }}</span>
@@ -35,7 +35,7 @@
               <el-table-column prop="icon" label="图标" :formatter="formatter" width="80">
                 <template #default="scope">
                   <el-icon :size="18">
-                    <component :is="scope.row.icon"></component>
+                    <component :is="scope.row.icon" v-if="scope.row.icon"></component>
                   </el-icon>
                 </template>
               </el-table-column>
@@ -186,6 +186,11 @@ const formatter = (_row, column, cellValue) => {
     return cellValue === 1 ? '导航菜单' : '按钮菜单';
   } else if (column.property === 'state') {
     return cellValue === true ? '启用' : '禁用';
+  } else if (column.property === 'displayState') {
+    if (cellValue === 1) {
+      return '商户菜单';
+    }
+    return cellValue === 2 ? '系统菜单' : '通用菜单';
   }
   return cellValue;
 };
@@ -232,8 +237,7 @@ const handleSort = (row) => {
     float: right;
   }
 
-  .el-input,
-  .el-select {
+  .el-input {
     width: 200px;
   }
 }
