@@ -31,7 +31,7 @@
         </StatisticsCard>
       </el-row>
       <el-row v-if="memberAuth">
-        <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
+        <StatisticsChart title="会员统计(一)" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
           <template #icon>
             <Member></Member>
           </template>
@@ -39,7 +39,7 @@
             <div id="registerApp" style="width: 100%; height: 100%" v-loading="registerLoading" ></div>
           </template>
         </StatisticsChart>
-        <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
+        <StatisticsChart title="会员统计(二)" :height="300" :span="8" :hidden-query="true">
           <template #icon>
             <Channel></Channel>
           </template>
@@ -158,7 +158,7 @@
         </StatisticsChart>
       </el-row>
       <el-row v-if="visitAuth">
-        <StatisticsChart title="浏览量" :height="300" :span="24" @reload="getDayVisitData" v-model:select-type="visitParams.selectType" v-model:active-date="visitParams.activeDate">
+        <StatisticsChart title="浏览统计" :height="300" :span="24" @reload="getDayVisitData" v-model:select-type="visitParams.selectType" v-model:active-date="visitParams.activeDate">
           <template #icon>
             <Visit></Visit>
           </template>
@@ -181,7 +181,7 @@
         </StatisticsChart>
       </el-row>
       <el-row v-if="collectAuth">
-        <StatisticsChart title="收藏量" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
+        <StatisticsChart title="收藏统计" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
           <template #icon>
             <Collect></Collect>
           </template>
