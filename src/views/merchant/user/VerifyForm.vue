@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="核销授权" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>核销授权<QuestionTip content="授权后该用户只能核销指定的商品(注意：用户需要授权核销员相关权限)"/></span>
+    </template>
     <el-scrollbar height="350px">
       <el-tree ref="treeRef" show-checkbox :data="menuList" node-key="id" :props="defaultProps" :default-expand-all="true" :default-checked-keys="checkedKeys" v-loading="loading"></el-tree>
     </el-scrollbar>
@@ -15,6 +18,7 @@
 <script setup>
 import { authApi, getAuthApi } from '@/api/merchant/user/index.js';
 import { successMsg } from '@/utils/message.js';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const defaultProps = {
   label: 'title',
