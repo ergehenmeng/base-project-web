@@ -33,6 +33,7 @@
             <el-button v-has-perm="'psu0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
             <el-button v-has-perm="'hsu0'" v-show="scope.row.state === 1" type="warning" :icon="Lock" @click="handleLock(scope.row)" link title="锁定"></el-button>
             <el-button v-has-perm="'Xsu0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
+            <el-button v-has-perm="'qsu0'" type="info" :icon="Coordinate" @click="handleAuth(scope.row)" link title="核销授权"></el-button>
             <el-button v-has-perm="'isu0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
         </el-table-column>
@@ -50,19 +51,22 @@
     </div>
   </div>
   <UserForm ref="formRef" @reload="getPage"></UserForm>
+  <VerifyForm ref="verifyFormRef" ></VerifyForm>
 </template>
 <script setup>
 import { deleteApi, listPageApi, lockApi, unlockApi } from '@/api/merchant/user';
-import { Delete, Edit, Lock, Unlock } from '@element-plus/icons-vue';
+import { Coordinate, Delete, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
 import useUserStore from '@/store/user';
 import CreateButton from '@/components/CreateButton.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
+import VerifyForm from '@/views/merchant/user/VerifyForm.vue';
 
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
+const verifyFormRef = ref();
 const userStore = useUserStore();
 const selectAuth = userStore.hasAuth('0su0');
 const queryParams = reactive({
@@ -109,7 +113,7 @@ const handleEdit = (row) => {
 };
 
 const handleLock = (row) => {
-  const msg = renderMsg(["确定要", () => "锁定", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '锁定', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
@@ -120,7 +124,7 @@ const handleLock = (row) => {
 };
 
 const handleUnlock = (row) => {
-  const msg = renderMsg(["确定要", () => "解锁", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '解锁', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
@@ -130,8 +134,12 @@ const handleUnlock = (row) => {
   });
 };
 
+const handleAuth = (row) => {
+  verifyFormRef.value.openDialog(row);
+}
+
 const handleDelete = (row) => {
-  const msg = renderMsg(["确定要", () => "删除", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '删除', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
