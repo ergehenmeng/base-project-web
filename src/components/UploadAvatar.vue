@@ -29,7 +29,7 @@
           <div class="cropper-preview-box">
             <cropper-viewer selection="#cropperSelected" v-if="updateUrl"></cropper-viewer>
             <div class="cropper-viewer" v-else>
-              <el-image :src="previewUrl" v-show="previewUrl !== null"></el-image>
+              <el-image :src="previewUrl" v-show="previewUrl !== null && previewUrl !== undefined"></el-image>
             </div>
             <canvas ref="canvasRef" style="display: none"></canvas>
           </div>
