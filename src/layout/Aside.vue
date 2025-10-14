@@ -32,13 +32,13 @@
   </el-menu>
 </template>
 <script setup>
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 import { HomeFilled } from '@element-plus/icons-vue'
 
 const route = useRoute();
-const userStore = useUserStore();
-const menuList = userStore.user?.menuList;
+const permStore = usePermStore();
+const menuList = permStore.perm?.menuList;
 
 // 获取当前要激活的菜单, 注意:如果url有3级,例如 /sys/help/create, 则激活的是 /sys/help,
 // 因为create页面是独立的,此处不做特殊处理,默认是不会选中的

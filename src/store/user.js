@@ -45,13 +45,14 @@ const useUserStore = defineStore(
       if (!isLogin.value) {
         return;
       }
-      user.value = null;
-      isLogin.value = false;
-      window.localStorage.clear();
-      window.sessionStorage.clear();
       // 表示主动退出
       logoutApi().then(() => {
         router.replace('/login');
+      }).finally(()=> {
+        user.value = null;
+        isLogin.value = false;
+        window.localStorage.clear();
+        window.sessionStorage.clear();
       });
     };
 
