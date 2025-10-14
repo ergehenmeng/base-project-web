@@ -106,7 +106,7 @@ export const unbindTotpApi = (data) => {
 
 export const updateUserApi = (data) => {
   return request.post({
-    url: '/manage/user/unbindTotp',
+    url: '/manage/user/updateBasic',
     data
   })
 }
