@@ -127,7 +127,7 @@ import { goBack, numberValidator } from '@/utils/common.js';
 import StoreTypeSelect from '@/components/StoreTypeSelect.vue';
 import { ArrowRight } from '@element-plus/icons-vue';
 import ProductDialog from '@/components/ProductDialog.vue';
-import useUserStore from '@/store/user.js'
+import useUserStore from '@/store/user';
 import QuestionTip from '@/components/QuestionTip.vue'
 
 const route = useRoute();

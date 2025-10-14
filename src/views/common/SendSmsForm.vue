@@ -19,8 +19,8 @@
 
 <script setup>
 import { errorMsg, successMsg } from '@/utils/message.js';
-import QuestionTip from '@/components/QuestionTip.vue'
-import { sendSmsApi } from '@/api/user/member/index.js'
+import QuestionTip from '@/components/QuestionTip.vue';
+import { sendSmsApi } from '@/api/user/member';
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);

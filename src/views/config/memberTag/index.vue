@@ -59,17 +59,17 @@
 import { deleteApi, listPageApi, refreshApi } from '@/api/config/memberTag';
 import { ChatDotSquare, Refresh, Delete, Edit, Message, Memo } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import MemberTagForm from './MemberTagForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import { useRouter } from 'vue-router';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
 const router = useRouter();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('JjK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('JjK0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

@@ -32,7 +32,7 @@
 import { createApi, updateApi } from '@/api/poi/area';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const dialogTitle = ref('');
 const formDataRef = ref();

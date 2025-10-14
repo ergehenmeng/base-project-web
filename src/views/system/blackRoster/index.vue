@@ -43,7 +43,7 @@
 import { deleteApi, listPageApi } from '@/api/system/black';
 import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import BlackForm from './BlackForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
@@ -52,8 +52,8 @@ import { renderMsg } from '@/utils/common.js'
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('boK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('boK0');
 const queryParams = reactive({
   queryName: '',
   page: 1,

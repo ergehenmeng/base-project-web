@@ -63,13 +63,13 @@ import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import DictForm from './DictForm.vue';
 import ItemForm from './ItemForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('GmK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('GmK0');
 const loading = ref(false);
 const dictRef = ref();
 const itemRef = ref();

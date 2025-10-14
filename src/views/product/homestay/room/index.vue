@@ -99,7 +99,7 @@
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, unShelvesApi } from '@/api/product/room';
 import { Bottom, Calendar, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import { downloadExcel, renderMsg } from '@/utils/common.js'
 import HomestaySelect from '@/components/HomestaySelect.vue';
@@ -109,11 +109,11 @@ import Recommended from '@/components/icon/Recommended.vue'
 import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('ubO0');
+const selectAuth = permStore.hasAuth('ubO0');
 
 const queryParams = reactive({
   queryName: null,

@@ -89,7 +89,7 @@
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi, recommendApi } from '@/api/product/store';
 import { Bottom, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import { downloadExcel, renderMsg } from '@/utils/common.js'
 import MerchantSelect from '@/components/MerchantSelect.vue';
@@ -99,11 +99,11 @@ import Recommended from '@/components/icon/Recommended.vue'
 import QuestionTip from '@/components/QuestionTip.vue'
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('f4O0');
+const selectAuth = permStore.hasAuth('f4O0');
 const queryParams = reactive({
   queryName: '',
   page: 1,

@@ -82,15 +82,15 @@
 </template>
 <script setup>
 import { asyncPageApi, syncPageApi, playbackApi } from '@/api/log/pay';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import ContentDialog from '@/components/ContentDialog.vue';
-import Playback from '@/components/icon/Playback.vue'
-import { confirmMsg, successMsg } from '@/utils/message.js'
-import { renderMsg } from '@/utils/common.js'
+import Playback from '@/components/icon/Playback.vue';
+import { confirmMsg, successMsg } from '@/utils/message.js';
+import { renderMsg } from '@/utils/common.js';
 
-const userStore = useUserStore();
-const syncAuth = userStore.hasAuth('5F00');
-const asyncAuth = userStore.hasAuth('ZF00');
+const permStore = usePermStore();
+const syncAuth = permStore.hasAuth('5F00');
+const asyncAuth = permStore.hasAuth('ZF00');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

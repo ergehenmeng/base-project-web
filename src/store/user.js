@@ -24,10 +24,6 @@ const useUserStore = defineStore(
       systemName: '',
       // 用户名
       userName: '',
-      // 菜单权限
-      menuList: [],
-      // 按钮权限
-      permList: [],
       // 是否为初始密码
       init: false,
       // 密码是否长时间未修改
@@ -41,11 +37,6 @@ const useUserStore = defineStore(
     });
     // 用户是否登陆
     const isLogin = ref(false);
-    // 判断是否有指定的按钮权限
-    const hasAuth = (authCode) => {
-      const permList = user.value.permList;
-      return permList !== null && Array.isArray(permList) && permList.includes(authCode);
-    };
     /**
      * 退出登录
      * @returns
@@ -79,7 +70,7 @@ const useUserStore = defineStore(
     const setAvatar = (avatar) => {
       user.value.avatar = avatar;
     }
-    return { user, isLogin, hasAuth, logout, setInit, setLock, setExpire, setBindWechat, setAvatar };
+    return { user, isLogin, logout, setInit, setLock, setExpire, setBindWechat, setAvatar };
   },
   // 开启持久化
   { persist: true }

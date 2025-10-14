@@ -23,7 +23,7 @@
 <script setup>
 import { changePwdApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
-import { rsaEncode } from '@/utils/common.js'
+import { rsaEncode } from '@/utils/common.js';
 const loading = ref(false);
 const formDataRef = ref();
 const showDialog = ref(false);

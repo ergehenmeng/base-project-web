@@ -57,8 +57,8 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
 import MerchantSelect from '@/components/MerchantSelect.vue';
-import LocationMap from '@/components/LocationMap.vue'
-import QuestionTip from '@/components/QuestionTip.vue'
+import LocationMap from '@/components/LocationMap.vue';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const route = useRoute();
 const router = useRouter();

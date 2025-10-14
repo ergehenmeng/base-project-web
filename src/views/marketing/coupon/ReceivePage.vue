@@ -41,14 +41,14 @@
 </template>
 <script setup>
 import { receivePageApi } from '@/api/marketing/coupon';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('CPi0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('CPi0');
 const queryParams = reactive({
   queryName: '',
   page: 1,

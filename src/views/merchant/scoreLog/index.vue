@@ -62,12 +62,12 @@
 <script setup>
 import { exportApi, listPageApi } from '@/api/merchant/scoreLog';
 import { Download } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('sCu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('sCu0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

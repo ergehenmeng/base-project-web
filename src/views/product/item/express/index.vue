@@ -43,14 +43,14 @@
 <script setup>
 import { deleteApi, listApi } from '@/api/product/express';
 import { Delete, Edit, Plus } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('rfO0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('rfO0');
 const expressList = ref([]);
 
 const handleCreate = () => {

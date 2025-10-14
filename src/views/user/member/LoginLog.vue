@@ -46,14 +46,14 @@
 </template>
 <script setup>
 import { loginPageApi } from '@/api/user/member';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('YNp0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('YNp0');
 const pageData = ref([]);
 const activityDate = ref([])
 const queryParams = reactive({

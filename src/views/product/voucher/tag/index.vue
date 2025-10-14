@@ -65,21 +65,19 @@
 import { deleteApi, listPageApi, sortApi } from '@/api/product/voucher/tag';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import RestaurantSelect from '@/components/RestaurantSelect.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import TagForm from '@/views/product/voucher/tag/TagForm.vue'
 import { renderMsg } from '@/utils/common.js'
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('0VO0');
-const sortAuth = userStore.hasAuth('hVO0');
+const selectAuth = permStore.hasAuth('0VO0');
+const sortAuth = permStore.hasAuth('hVO0');
 const tagFormRef = ref()
 
 const queryParams = reactive({

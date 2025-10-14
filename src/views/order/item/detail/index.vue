@@ -180,20 +180,20 @@ import { Edit, EditPen } from '@element-plus/icons-vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
-import useUserStore from '@/store/user.js'
-import AdjustForm from '@/views/order/item/detail/AdjustForm.vue'
-import ExpressForm from '@/views/order/item/detail/ExpressForm.vue'
-import SippingForm from '@/views/order/item/detail/SippingForm.vue'
-import CopyLink from '@/components/CopyLink.vue'
-import { confirmMsg, successMsg } from '@/utils/message.js'
+import usePermStore from '@/store/perm';
+import AdjustForm from '@/views/order/item/detail/AdjustForm.vue';
+import ExpressForm from '@/views/order/item/detail/ExpressForm.vue';
+import SippingForm from '@/views/order/item/detail/SippingForm.vue';
+import CopyLink from '@/components/CopyLink.vue';
+import { confirmMsg, successMsg } from '@/utils/message.js';
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const route = useRoute();
 const router = useRouter();
 const selected = ref([]);
-const deliveryAuth = userStore.hasAuth('BRD0');
-const confirmAuth = userStore.hasAuth('JK20');
+const deliveryAuth = permStore.hasAuth('BRD0');
+const confirmAuth = permStore.hasAuth('JK20');
 const adjustRef = ref();
 const expressRef = ref();
 const sippingRef = ref();

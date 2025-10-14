@@ -69,7 +69,7 @@ import { deleteApi, listPageApi, lockApi, resetPwdApi, unbindTotpApi, unlockApi 
 import { Delete, Document, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js';
 import ResetPwd from '@/components/icon/ResetPwd.vue';
@@ -78,8 +78,8 @@ import Unbind from '@/components/icon/Unbind.vue';
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('XqK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('XqK0');
 const pageData = ref([]);
 
 const queryParams = reactive({

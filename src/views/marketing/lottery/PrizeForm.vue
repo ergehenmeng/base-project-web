@@ -41,8 +41,8 @@
 import UploadImage from '@/components/UploadImage.vue';
 import CouponSelect from '@/components/CouponSelect.vue';
 import { warningMsg } from '@/utils/message.js';
-import QuestionTip from '@/components/QuestionTip.vue'
-import useUserStore from '@/store/user.js'
+import QuestionTip from '@/components/QuestionTip.vue';
+import useUserStore from '@/store/user';
 
 const couponRef = ref();
 const formDataRef = ref();

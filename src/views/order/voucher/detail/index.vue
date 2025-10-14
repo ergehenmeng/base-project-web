@@ -67,7 +67,7 @@ import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
-import CopyLink from '@/components/CopyLink.vue'
+import CopyLink from '@/components/CopyLink.vue';
 
 const loading = ref(false);
 const route = useRoute();

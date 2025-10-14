@@ -82,7 +82,7 @@
 import { configListApi, deleteApi, listPageApi, sortApi, stateApi } from '@/api/operation/news';
 import { Bottom, ChatLineRound, Delete, Edit, Top } from '@element-plus/icons-vue'
 import { confirmMsg, errorMsg, successMsg, warningMsg } from '@/utils/message'
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
@@ -90,12 +90,12 @@ import { renderMsg } from '@/utils/common.js'
 const activeName = ref('');
 const configList = ref([]);
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('4mU0');
-const sortAuth = userStore.hasAuth('smU0');
+const selectAuth = permStore.hasAuth('4mU0');
+const sortAuth = permStore.hasAuth('smU0');
 
 const queryParams = reactive({
   queryName: '',

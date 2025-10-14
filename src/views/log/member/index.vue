@@ -55,12 +55,12 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/log/member';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { Document } from '@element-plus/icons-vue';
 import ContentDialog from '@/components/ContentDialog.vue';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('qva0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('qva0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

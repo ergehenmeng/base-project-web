@@ -90,7 +90,7 @@
 </template>
 <script setup>
 import { memberListApi } from '@/api/config/memberTag';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 import SendSmsForm from "@/views/common/SendSmsForm.vue";
 import SendNoticeForm from "@/views/common/SendNoticeForm.vue";
@@ -99,8 +99,8 @@ import GrantCouponForm from "./GrantCouponForm.vue";
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('9nR0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('9nR0');
 const smsRef = ref();
 const noticeRef = ref();
 const couponRef = ref();

@@ -54,22 +54,19 @@
 import { deleteApi, listApi } from '@/api/operation/activity';
 import { CirclePlus, Delete, Edit, Plus } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
-import useDictStore from '@/store/dict.js';
+import usePermStore from '@/store/perm';
 import dayjs from 'dayjs';
 import { useRouter } from 'vue-router';
 import ScenicSelect from '@/components/ScenicSelect.vue';
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
-const userStore = useUserStore();
-const dictStore = useDictStore();
-const dictList = dictStore.getDict('banner_type');
+const permStore = usePermStore();
 const loading = ref(false);
 const calendar = ref();
 const nowDate = ref(new Date());
 const dataMap = ref({});
-const selectAuth = userStore.hasAuth('5dU0');
+const selectAuth = permStore.hasAuth('5dU0');
 
 const queryParams = reactive({
   scenicId: null,

@@ -59,7 +59,7 @@ import 'cropperjs';
 import { CropperCanvas, CropperCrosshair, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs';
 import { RefreshLeft, RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message.js';
-import { updateAvatarApi } from '@/api/system/user/index.js';
+import { updateAvatarApi } from '@/api/system/user';
 
 const loading = ref(false);
 const selectRef = ref();

@@ -38,15 +38,13 @@
 <script setup>
 import { listPageApi } from '@/api/config/pay';
 import { Edit } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import PayForm from '@/views/operation/pay/PayForm.vue'
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('fuR0');
+const selectAuth = permStore.hasAuth('fuR0');
 const queryParams = reactive({ queryName: ''});
 const payFormRef = ref();
 

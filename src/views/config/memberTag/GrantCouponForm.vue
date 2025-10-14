@@ -34,18 +34,18 @@
 </template>
 
 <script setup>
-import { successMsg, warningMsg } from '@/utils/message.js'
+import { successMsg, warningMsg } from '@/utils/message.js';
 import { grantApi, listPageApi } from '@/api/marketing/coupon/index.js';
-import useUserStore from '@/store/user.js';
-import QuestionTip from '@/components/QuestionTip.vue'
+import usePermStore from '@/store/perm';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
 const total = ref(0);
 const pageData = ref([]);
 const showDialog = ref(false);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('dnR0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('dnR0');
 
 const queryParams = reactive({
   queryName: null,

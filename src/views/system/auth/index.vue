@@ -58,7 +58,7 @@ import { deleteApi, listPageApi, resetApi, sendEmailApi } from '@/api/system/aut
 import { Delete, Edit, Promotion, Refresh } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
@@ -66,8 +66,8 @@ import { renderMsg } from '@/utils/common.js'
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('9vK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('9vK0');
 
 const queryParams = reactive({
   queryName: '',

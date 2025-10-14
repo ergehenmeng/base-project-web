@@ -44,16 +44,16 @@
 </template>
 <script setup>
 import { reportPageApi } from '@/api/operation/comment';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('pBU0');
-const otherAuth = userStore.hasAuth('VWU0');
+const selectAuth = permStore.hasAuth('pBU0');
+const otherAuth = permStore.hasAuth('VWU0');
 
 const queryParams = reactive({
   queryName: '',

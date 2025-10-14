@@ -65,7 +65,7 @@ import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack, phoneValidator } from '@/utils/common.js';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const route = useRoute();
 const router = useRouter();

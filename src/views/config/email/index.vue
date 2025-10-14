@@ -43,16 +43,16 @@
 <script setup>
 import { listPageApi } from '@/api/config/email';
 import { Edit } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import EmailForm from './EmailForm.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const formRef = ref();
-const selectAuth = userStore.hasAuth('yUR0');
+const selectAuth = permStore.hasAuth('yUR0');
 
 const queryParams = reactive({
   queryName: null,

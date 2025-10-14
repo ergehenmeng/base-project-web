@@ -70,13 +70,13 @@ import { detailApi, generateApi } from '@/api/merchant/detail';
 import { Connection, Edit, Unlock } from '@element-plus/icons-vue';
 import UnbindForm from './UnbindForm.vue';
 import { useRouter } from 'vue-router';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
 import QRCodeForm from '@/views/common/QRCodeForm.vue';
 import WithdrawForm from '@/views/merchant/detail/WithdrawForm.vue';
 import QuestionTip from '@/components/QuestionTip.vue';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('nwu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('nwu0');
 const router = useRouter();
 const formRef = ref();
 const withdrawFormRef = ref();

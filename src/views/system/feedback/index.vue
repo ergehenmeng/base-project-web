@@ -76,13 +76,13 @@
 import { listPageApi } from '@/api/system/feedback';
 import { ChatLineSquare } from '@element-plus/icons-vue';
 import FeedbackForm from './FeedbackForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import useDictStore from '@/store/dict.js';
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('feedback_type');
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('nTU0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('nTU0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

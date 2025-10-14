@@ -43,16 +43,16 @@
 <script setup>
 import { listPageApi } from '@/api/config/notice';
 import { Edit } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import NoticeForm from './NoticeForm.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const formRef = ref();
-const selectAuth = userStore.hasAuth('c5R0');
+const selectAuth = permStore.hasAuth('c5R0');
 
 const queryParams = reactive({
   queryName: null,

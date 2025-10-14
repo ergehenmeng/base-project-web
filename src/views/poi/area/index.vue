@@ -55,18 +55,16 @@
 import { deleteApi, listPageApi, stateApi } from '@/api/poi/area';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import AreaForm from '@/views/poi/area/AreaForm.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('ohG0');
+const selectAuth = permStore.hasAuth('ohG0');
 const areaFormRef = ref();
 const queryParams = reactive({
   queryName: null,

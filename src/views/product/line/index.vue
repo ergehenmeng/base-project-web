@@ -102,7 +102,7 @@
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/line';
 import { Bottom, Calendar, Delete, Document, Download, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
 import TravelSelect from '@/components/TravelSelect.vue';
@@ -110,11 +110,11 @@ import { downloadExcel, renderMsg } from '@/utils/common.js'
 import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('xvl0');
+const selectAuth = permStore.hasAuth('xvl0');
 
 const queryParams = reactive({
   queryName: null,

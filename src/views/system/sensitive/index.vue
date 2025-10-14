@@ -41,12 +41,12 @@
 import { createApi, deleteApi, listPageApi } from '@/api/system/sensitive';
 import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('svU0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('svU0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

@@ -77,18 +77,18 @@
 import { deleteApi, listPageApi, shelvesApi, unShelvesApi } from '@/api/poi/line';
 import { Bottom, Delete, Document, Edit, MapLocation, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('jjG0');
+const selectAuth = permStore.hasAuth('jjG0');
 
 const queryParams = reactive({
   queryName: null,

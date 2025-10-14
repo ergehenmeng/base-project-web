@@ -51,13 +51,13 @@ import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import RoleForm from './RoleForm.vue';
 import AuthForm from './AuthForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import Auth from '@/components/icon/Auth.vue'
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('Weu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('Weu0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

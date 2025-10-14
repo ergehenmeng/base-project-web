@@ -63,17 +63,17 @@
 import { deleteApi, listPageApi } from '@/api/poi/type';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import TypeForm from './TypeForm.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('GiG0');
+const selectAuth = permStore.hasAuth('GiG0');
 const formRef = ref();
 const queryParams = reactive({
   queryName: null,

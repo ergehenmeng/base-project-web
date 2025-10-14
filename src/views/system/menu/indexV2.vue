@@ -94,7 +94,7 @@ import { listPageApi, deleteApi, sortApi, treeApi, stateApi } from '@/api/system
 import { onMounted, reactive, ref } from 'vue';
 import { Edit, Delete } from '@element-plus/icons-vue';
 import { confirmMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import MenuForm from './MenuForm.vue';
 
 const props = {
@@ -102,10 +102,10 @@ const props = {
   children: 'children'
 };
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('YhK0');
-const sortAuth = userStore.hasAuth('GhK0');
-const stateAuth = userStore.hasAuth('AhK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('YhK0');
+const sortAuth = permStore.hasAuth('GhK0');
+const stateAuth = permStore.hasAuth('AhK0');
 const buttonName = ref('新增菜单');
 
 const loading = ref(false);

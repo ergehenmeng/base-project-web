@@ -20,12 +20,12 @@
 <script setup>
 import { clearApi, listPageApi } from '@/api/system/cache';
 import { Refresh } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import dayjs from 'dayjs';
 import { successMsg } from '@/utils/message.js';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('E7K0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('E7K0');
 const selected = ref([]);
 const loading = ref(false);
 const pageData = ref([]);

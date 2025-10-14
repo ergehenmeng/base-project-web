@@ -86,9 +86,9 @@ import TimePhaseDialog from '@/components/TimePhaseDialog.vue';
 import { Refresh } from '@element-plus/icons-vue';
 import { renderMsg } from '@/utils/common.js'
 import { deletePriceApi, resetPriceApi } from '@/api/product/site/index.js'
-import useUserStore from '@/store/user.js'
+import usePermStore from '@/store/perm'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const popoverRef = ref();
 const dialogRef = ref();
 const startRef = ref('');
@@ -103,7 +103,7 @@ const checkedItems = ref([]);
 const visible = ref(false);
 const moveInMap = new Map();
 const moveOutMap = new Map();
-const resetAuth = userStore.hasAuth('9CO0');
+const resetAuth = permStore.hasAuth('9CO0');
 
 const selectHandle = (value, event) => {
   if (props.disabled || !event.target.classList.contains('item') || event.target.classList.contains('checked')) {

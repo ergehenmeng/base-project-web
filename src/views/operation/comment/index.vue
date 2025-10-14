@@ -80,18 +80,18 @@
 import { listPageApi, shieldApi, topApi, unTopApi, unShieldApi } from '@/api/operation/comment';
 import { Bottom, Hide, Refresh, Top, View } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter, useRoute } from 'vue-router';
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('0BU0');
-const reportAuth = userStore.hasAuth('pBU0');
+const selectAuth = permStore.hasAuth('0BU0');
+const reportAuth = permStore.hasAuth('pBU0');
 
 const queryParams = reactive({
   queryName: '',

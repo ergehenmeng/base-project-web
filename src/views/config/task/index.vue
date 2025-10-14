@@ -65,19 +65,19 @@
 <script setup>
 import { executeApi, listPageApi, refreshApi } from '@/api/config/task';
 import { Edit, Refresh } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import SmsForm from './TaskForm.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import Execute from '@/components/icon/Execute.vue';
-import QuestionTip from '@/components/QuestionTip.vue'
-import { renderMsg } from '@/utils/common.js'
+import QuestionTip from '@/components/QuestionTip.vue';
+import { renderMsg } from '@/utils/common.js';
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const formRef = ref();
-const selectAuth = userStore.hasAuth('xOR0');
+const selectAuth = permStore.hasAuth('xOR0');
 
 const queryParams = reactive({
   queryName: null,

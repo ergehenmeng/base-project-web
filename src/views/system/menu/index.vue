@@ -67,15 +67,15 @@
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import MenuForm from './MenuForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('YhK0');
-const sortAuth = userStore.hasAuth('GhK0');
-const stateAuth = userStore.hasAuth('AhK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('YhK0');
+const sortAuth = permStore.hasAuth('GhK0');
+const stateAuth = permStore.hasAuth('AhK0');
 const loading = ref(false);
 const pageData = ref([]);
 const formRef = ref();

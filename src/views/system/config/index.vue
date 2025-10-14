@@ -51,11 +51,11 @@
 import { listPageApi } from '@/api/system/config';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from './EditForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('siK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('siK0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

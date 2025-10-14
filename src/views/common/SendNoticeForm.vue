@@ -27,7 +27,7 @@
 
 <script setup>
 import { errorMsg, successMsg } from '@/utils/message.js';
-import { sendNoticeApi } from '@/api/user/member/index.js'
+import { sendNoticeApi } from '@/api/user/member';
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);

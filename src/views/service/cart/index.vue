@@ -66,16 +66,14 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/service/cart';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import { numberValidator } from '@/utils/common.js'
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('uU20');
+const selectAuth = permStore.hasAuth('uU20');
 const queryParams = reactive({
   queryName: '',
   page: 1,

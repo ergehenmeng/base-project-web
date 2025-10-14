@@ -99,18 +99,16 @@
 <script setup>
 import { listPageApi } from '@/api/service/evaluation';
 import { Coordinate } from '@element-plus/icons-vue'
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/user';
 import { parseProductType } from '@/utils/common.js'
 import EvaluationForm from '@/views/service/evaluation/EvaluationForm.vue'
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('L520');
+const selectAuth = permStore.hasAuth('L520');
 const queryParams = reactive({
   queryName: '',
   page: 1,

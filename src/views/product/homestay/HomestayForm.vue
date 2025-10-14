@@ -74,7 +74,7 @@ import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import useDictStore from '@/store/dict.js';
 import MerchantSelect from '@/components/MerchantSelect.vue';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const dictStore = useDictStore();
 const keyServiceList = dictStore.getDict('key_service');

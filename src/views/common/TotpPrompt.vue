@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { bindTotpApi, checkTotpApi } from '@/api/login/index.js';
+import { bindTotpApi, checkTotpApi } from '@/api/login';
 import QRCodeForm from '@/views/common/QRCodeForm.vue';
 import { errorMsg, successMsg } from '@/utils/message.js'
 

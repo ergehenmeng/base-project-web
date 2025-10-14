@@ -117,23 +117,23 @@
 import { exportApi, freezeApi, listPageApi, offlineApi, unfreezeApi } from '@/api/user/member';
 import { ChatDotSquare, Download, Lock, Message, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import Offline from '@/components/icon/Offline.vue';
 import { useRouter } from 'vue-router';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
-import { downloadExcel, renderMsg } from '@/utils/common.js'
-import Score from '@/components/icon/Score.vue'
-import ScoreForm from '@/views/user/member/ScoreForm.vue'
-import ScoreLogForm from '@/views/user/member/ScoreLogForm.vue'
-import LoginLog from '@/components/icon/LoginLog.vue'
+import { downloadExcel, renderMsg } from '@/utils/common.js';
+import Score from '@/components/icon/Score.vue';
+import ScoreForm from '@/views/user/member/ScoreForm.vue';
+import ScoreLogForm from '@/views/user/member/ScoreLogForm.vue';
+import LoginLog from '@/components/icon/LoginLog.vue';
 
 const router = useRouter();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('XqK0');
-const scoreAuth = userStore.hasAuth('ANp0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('XqK0');
+const scoreAuth = permStore.hasAuth('ANp0');
 const smsRef = ref();
 const noticeRef = ref();
 const scoreRef = ref();

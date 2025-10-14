@@ -36,13 +36,13 @@
 import { deleteApi, listApi } from '@/api/system/dept';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import DeptForm from '@/views/system/dept/DeptForm.vue'
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('ULK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('ULK0');
 const loading = ref(false);
 const pageData = ref([]);
 const formRef = ref();

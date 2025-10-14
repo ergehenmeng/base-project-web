@@ -58,7 +58,7 @@ import { deleteApi, listPageApi, lockApi, unlockApi } from '@/api/merchant/user'
 import { Coordinate, Delete, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js';
 import VerifyForm from '@/views/merchant/user/VerifyForm.vue';
@@ -67,8 +67,8 @@ const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
 const verifyFormRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('0su0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('0su0');
 const queryParams = reactive({
   queryName: '',
   page: 1,

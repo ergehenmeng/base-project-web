@@ -44,16 +44,15 @@
 import useUserStore from '@/store/user';
 import { rsaEncode } from '@/utils/common.js';
 import { CircleCheck, Lock, User } from '@element-plus/icons-vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import defaultPng from '@/assets/images/refresh.svg';
-import { loginApi } from '@/api/login/index.js';
+import { loginApi } from '@/api/login';
 import TotpPrompt from '@/views/common/TotpPrompt.vue';
 import TotpScanForm from '@/views/common/TotpScanForm.vue';
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
 const router = useRouter();
-const route = useRoute();
 const totpRef = ref();
 const totpScanRef = ref();
 const formData = ref({

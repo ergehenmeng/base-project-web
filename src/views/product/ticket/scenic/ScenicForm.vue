@@ -65,7 +65,7 @@ import { goBack, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import useDictStore from '@/store/dict.js';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('scenic_tag');
