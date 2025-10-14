@@ -35,6 +35,7 @@
     </ul>
     <ChangePwd ref="changePwdRef"/>
     <UploadAvatar title="修改头像" ref="avatarRef" @confirm="confirm"/>
+    <UserProfile ref="userRef"/>
   </div>
 </template>
 <script setup>
@@ -56,7 +57,9 @@ import Bind from '@/components/icon/Bind.vue';
 import { UserFilled } from '@element-plus/icons-vue';
 import UploadAvatar from '@/components/UploadAvatar.vue';
 import usePermStore from '@/store/perm';
+import UserProfile from '@/views/UserProfile.vue';
 
+const userRef = ref();
 const avatarRef = ref();
 const router = useRouter();
 const userStore = useUserStore();
@@ -150,7 +153,7 @@ const subscribe = () => {
 }
 
 const handleUser = () => {
-  console.log("待补全逻辑")
+  userRef.value.openDialog();
 };
 
 const handleChangePwd = () => {

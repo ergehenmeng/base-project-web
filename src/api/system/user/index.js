@@ -103,3 +103,10 @@ export const unbindTotpApi = (data) => {
     data
   })
 }
+
+export const updateUserApi = (data) => {
+  return request.post({
+    url: '/manage/user/unbindTotp',
+    data
+  })
+}

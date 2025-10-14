@@ -24,6 +24,8 @@ const useUserStore = defineStore(
       systemName: '',
       // 用户名
       userName: '',
+      // 手机号
+      mobile: null,
       // 是否为初始密码
       init: false,
       // 密码是否长时间未修改
