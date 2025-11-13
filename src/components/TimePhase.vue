@@ -346,25 +346,27 @@ const doReset = (resetPhaseList = false) => {
     if (item.id === 'reset') {
       return;
     }
-    item.classList.remove('checked');
-    item.classList.remove('right');
-    item.style.width = '30px';
-    start.value = null;
-    end.value = null;
-    item.innerHTML = '';
-    startItem.value = null;
-    endItem.value = null;
-    checkedItems.value = [];
-    const mouseenterEvent = moveInMap.get(item);
-    const mouseleaveEvent = moveOutMap.get(item);
-    if (mouseenterEvent) {
-      item.removeEventListener('mouseenter', mouseenterEvent);
-    }
-    if (mouseleaveEvent) {
-      item.removeEventListener('mouseleave', mouseleaveEvent);
-    }
-    if (resetPhaseList) {
-      phaseList.value = [];
+    if (item.classList) {
+      item.classList.remove('checked');
+      item.classList.remove('right');
+      item.style.width = '30px';
+      start.value = null;
+      end.value = null;
+      item.innerHTML = '';
+      startItem.value = null;
+      endItem.value = null;
+      checkedItems.value = [];
+      const mouseenterEvent = moveInMap.get(item);
+      const mouseleaveEvent = moveOutMap.get(item);
+      if (mouseenterEvent) {
+        item.removeEventListener('mouseenter', mouseenterEvent);
+      }
+      if (mouseleaveEvent) {
+        item.removeEventListener('mouseleave', mouseleaveEvent);
+      }
+      if (resetPhaseList) {
+        phaseList.value = [];
+      }
     }
   });
 };
