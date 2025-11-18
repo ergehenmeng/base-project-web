@@ -28,7 +28,7 @@
         <el-table-column prop="deviceBrand" label="设备厂商" min-width="120" />
         <el-table-column prop="deviceModel" label="设备型号" min-width="150" />
         <el-table-column prop="softwareVersion" label="软件版本" min-width="150" />
-        <el-table-column prop="serialNumber" label="设备唯一编号" min-width="180" />
+        <el-table-column prop="serialNumber" label="设备序列号" min-width="180" />
         <el-table-column prop="createTime" label="登录时间" min-width="180" />
       </el-table>
       <div class="pagination-container">

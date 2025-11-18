@@ -32,7 +32,7 @@
         <el-table-column prop="osVersion" label="平台版本号" width="120" />
         <el-table-column prop="deviceBrand" label="设备厂商" width="100"/>
         <el-table-column prop="deviceModel" label="设备型号" width="100"/>
-        <el-table-column prop="serialNumber" label="设备唯一编号" width="120" />
+        <el-table-column prop="serialNumber" label="设备序列号" width="120" />
         <el-table-column label="操作" fixed="right" width="100">
           <template #default="scope">
             <el-button v-has-perm="'eoa0'" v-show="scope.row.errorMsg" :icon="Document" @click="handleDetail(scope.row.errorMsg)" link title="详情"></el-button>
