@@ -50,14 +50,7 @@
         <el-table-column prop="coverUrl" label="封面图片" min-width="100">
           <template #default="scope">
             <div style="display: flex; align-items: center">
-              <el-image
-                fit="cover"
-                :src="scope.row.coverUrl[0]"
-                :preview-src-list="scope.row.coverUrl"
-                style="width: 30px; height: 30px"
-                preview-teleported
-                hide-on-click-modal
-              />
+              <el-image fit="cover" :src="scope.row.coverUrl[0]" :preview-src-list="scope.row.coverUrl" style="width: 30px; height: 30px" preview-teleported hide-on-click-modal />
             </div>
           </template>
         </el-table-column>
@@ -66,7 +59,7 @@
         <el-table-column prop="startCity" label="出发城市" min-width="120" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="saleNum" label="真实销量" width="80" />
-        <el-table-column prop="duration" label="游玩天数" width="120" />
+        <el-table-column prop="duration" label="游玩天数" width="120" :formatter="formatter" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
         <el-table-column label="操作" fixed="right" width="180">
@@ -106,7 +99,7 @@ import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import ProvinceCitySelect from '@/components/ProvinceCitySelect.vue';
 import TravelSelect from '@/components/TravelSelect.vue';
-import { downloadExcel, renderMsg } from '@/utils/common.js'
+import { downloadExcel, durationFormat, renderMsg } from '@/utils/common.js';
 import CreateButton from '@/components/CreateButton.vue';
 
 const router = useRouter();
@@ -153,7 +146,7 @@ onMounted(() => {
 });
 
 const handleDelete = (row) => {
-  const msg = renderMsg(["确定要", () => "删除", "该线路吗?"]);
+  const msg = renderMsg(['确定要', () => '删除', '该线路吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {
@@ -163,7 +156,7 @@ const handleDelete = (row) => {
   });
 };
 
-const formatter = (row, column, cellValue) => {
+const formatter = (_row, column, cellValue) => {
   if (column.property === 'state') {
     if (cellValue === 0) {
       return '待上架';
@@ -178,13 +171,15 @@ const formatter = (row, column, cellValue) => {
           },
           '强制下架'
         );
+  } else if (column.property === 'duration') {
+    return durationFormat(cellValue);
   } else {
     return cellValue;
   }
 };
 
 const handleShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "上架", "该线路吗?"]);
+  const msg = renderMsg(['确定要', () => '上架', '该线路吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     shelvesApi(data).then(() => {
@@ -195,7 +190,7 @@ const handleShelves = (row) => {
 };
 
 const handleUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "下架", "该线路吗?"]);
+  const msg = renderMsg(['确定要', () => '下架', '该线路吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     unShelvesApi(data).then(() => {
@@ -206,7 +201,7 @@ const handleUnShelves = (row) => {
 };
 
 const handlePlatformUnShelves = (row) => {
-  const msg = renderMsg(["确定要", () => "强制下架", "该线路吗?"]);
+  const msg = renderMsg(['确定要', () => '强制下架', '该线路吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     platformUnShelvesApi(data).then(() => {
