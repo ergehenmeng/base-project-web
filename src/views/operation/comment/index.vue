@@ -25,7 +25,6 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
-          <el-button type="primary" @click="reset" :icon="Refresh">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -78,7 +77,7 @@
 </template>
 <script setup>
 import { listPageApi, shieldApi, topApi, unTopApi, unShieldApi } from '@/api/operation/comment';
-import { Bottom, Hide, Refresh, Top, View } from '@element-plus/icons-vue'
+import { Bottom, Hide, Top, View } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import usePermStore from '@/store/perm';
 import { useRouter, useRoute } from 'vue-router';
@@ -120,16 +119,6 @@ const search = () => {
   queryParams.page = 1;
   getPage();
 };
-
-const reset = () => {
-  queryParams.queryName = '';
-  queryParams.state = null;
-  queryParams.topState = null;
-  queryParams.objectType = null;
-  queryParams.objectIds = [];
-  queryParams.page = 1;
-  getPage();
-}
 
 onMounted(() => {
   const objectId = route.params.id
