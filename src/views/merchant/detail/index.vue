@@ -50,10 +50,14 @@
       <el-form-item label="微信授权手机号：">
         <div v-if="detail.authMobile" style="display: flex; align-items: center"
           ><span>{{ detail.authMobile }}</span
-          >&nbsp;<el-button v-has-perm="'Ywu0'" type="primary" :icon="Unlock" @click="handleUnBind" link style="font-size: 18px" title="解绑微信手机号"></el-button>
+          >&nbsp;<el-button v-has-perm="'Ywu0'" type="primary" @click="handleUnBind" link title="解绑微信手机号">
+          <Unbind></Unbind>
+        </el-button>
         </div>
         <div v-else>
-          <el-button type="primary" :icon="Connection" @click="handleBind" style="font-size: 18px" link title="绑定微信手机号"></el-button>
+          <el-button type="primary" @click="handleBind" link title="绑定微信手机号">
+            <Bind/>
+          </el-button>
         </div>
       </el-form-item>
       <el-form-item label="详细地址：">
@@ -74,6 +78,8 @@ import usePermStore from '@/store/perm';
 import QRCodeForm from '@/views/common/QRCodeForm.vue';
 import WithdrawForm from '@/views/merchant/detail/WithdrawForm.vue';
 import QuestionTip from '@/components/QuestionTip.vue';
+import Unbind from '@/components/icon/Unbind.vue';
+import Bind from '@/components/icon/Bind.vue';
 
 const permStore = usePermStore();
 const selectAuth = permStore.hasAuth('nwu0');
