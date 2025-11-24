@@ -36,11 +36,11 @@ const formRules = reactive({
   title: [{ required: true, message: '消息名称不能为空', trigger: 'blur' }],
   noticeType: [{ required: true, message: '通知类型不能为空', trigger: 'blur' }],
   content: [
-    { required: true, message: '短信内容不能为空', trigger: 'blur' },
+    { required: true, message: '内容不能为空', trigger: 'blur' },
     {
       min: 10,
       max: 70,
-      message: '短信内容长度10~70字符',
+      message: '内容长度10~70字符',
       trigger: 'blur'
     }
   ]
