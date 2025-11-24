@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="调整费率" v-model="showDialog" width="320px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="320px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>调整费率<QuestionTip content="提示：商户所售商品交易成功后平台收取的服务费(退款不收费)"/></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="平台服务费(%)" prop="platformServiceRate" class="w250">
         <el-input v-model="formData.platformServiceRate" @keyup="formData.platformServiceRate = numberValidator(formData.platformServiceRate)" maxlength="4" />
@@ -18,6 +21,7 @@
 import { adjustRateApi } from '@/api/user/merchant';
 import { successMsg } from '@/utils/message';
 import { numberValidator } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const loading = ref(false);
 const formDataRef = ref();
