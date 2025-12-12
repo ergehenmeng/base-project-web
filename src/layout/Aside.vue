@@ -1,5 +1,5 @@
 <template>
-  <el-menu router unique-opened :default-active="activeIndex">
+  <el-menu unique-opened :default-active="activeIndex" @select="routerHandle">
     <el-menu-item index="/home">
       <el-icon>
         <HomeFilled />
@@ -33,10 +33,11 @@
 </template>
 <script setup>
 import usePermStore from '@/store/perm';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { HomeFilled } from '@element-plus/icons-vue'
 
 const route = useRoute();
+const router = useRouter();
 const permStore = usePermStore();
 const menuList = permStore.perm?.menuList;
 
@@ -50,6 +51,15 @@ const activeIndex = computed(() => {
   }
   return route.path;
 });
+
+const routerHandle = (key) => {
+  // 判断是否为外部链接
+  if (key.startsWith('http') || key.startsWith('https')) {
+    window.open(key, '_blank');
+  } else {
+    router.push(key);
+  }
+}
 
 </script>
 <style lang="scss" scoped>
