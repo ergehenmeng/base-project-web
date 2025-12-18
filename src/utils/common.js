@@ -401,3 +401,13 @@ export function format(template, ...args) {
     return args[index] !== undefined ? args[index] : match;
   });
 }
+
+export const upsert = (array, obj, key = 'id') => {
+  const index = array.findIndex(item => item[key] === obj[key]);
+  if (index !== -1) {
+    array[index] = { ...array[index], ...obj };
+  } else {
+    array.push(obj);
+  }
+  return array;
+}

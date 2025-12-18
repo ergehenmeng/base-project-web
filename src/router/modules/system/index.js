@@ -6,6 +6,14 @@ export default [
     },
     children: [
       {
+        path: 'family',
+        name: 'sysFamily',
+        component: () => import('@/views/system/family/index.vue'),
+        meta: {
+          title: '族谱管理'
+        }
+      },
+      {
         path: 'config',
         name: 'sysConfig',
         component: () => import('@/views/system/config/index.vue'),

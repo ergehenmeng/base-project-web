@@ -39,6 +39,7 @@
                   </el-icon>
                 </template>
               </el-table-column>
+              <el-table-column prop="code" label="编码" width="60" />
               <el-table-column prop="state" label="状态" width="80">
                 <template #default="scope">
                   <el-switch
