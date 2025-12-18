@@ -3,16 +3,16 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input placeholder="参数名称、标示符、备注" clearable maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="姓名" clearable maxlength="30" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary" @click="queryHandle">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
       <div class="family-main" v-loading="loading">
-        <vue3-tree-org :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
+        <vue3-tree-org ref="treeRef" :filter-node-method="filterNodeMethod" :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
         </vue3-tree-org>
       </div>
     </div>
@@ -38,6 +38,13 @@ const style = ref({
   color: '#fff',
   background: '#409eef'
 });
+
+const treeRef = ref();
+
+const queryParams = ref({
+  queryName: ''
+})
+
 const props = ref({
   label: 'name',
   children: 'children',
@@ -59,6 +66,17 @@ const defineMenus = () => {
   }
   return menus;
 };
+
+const queryHandle = () => {
+  treeRef.value.filter(queryParams.value.queryName);
+}
+
+const filterNodeMethod = (value, data) => {
+  if (!value) {
+    return true;
+  }
+  return data.label.indexOf(value) !== -1;
+}
 
 const getList = async () => {
   loading.value = true;
