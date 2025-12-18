@@ -12,7 +12,8 @@
     </div>
     <div class="content-main">
       <div class="family-main" v-loading="loading">
-        <vue3-tree-org :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" />
+        <vue3-tree-org :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
+        </vue3-tree-org>
       </div>
     </div>
   </div>

@@ -13,6 +13,11 @@
           <el-radio :value="true">绝户</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="出生日期" prop="birthday" class="w300">
+        <div class="w220">
+          <el-date-picker type="date" value-format="YYYY-MM-DD" v-model="formData.birthday" style="width: 150px !important"></el-date-picker>
+        </div>
+      </el-form-item>
       <el-form-item label="备注" prop="remark" class="w300">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
       </el-form-item>
@@ -35,8 +40,8 @@ const formDataRef = ref();
 const showDialog = ref(false);
 
 const formRules = reactive({
-  title: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
-  grade: [{ required: true, message: '请选择状态', trigger: 'change' }]
+  name: [{ required: true, message: '姓名不能为空', trigger: 'blur' }],
+  state: [{ required: true, message: '请选择状态', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -44,6 +49,7 @@ const formData = ref({
   parentName: null,
   name: '',
   pid: '',
+  birthday: null,
   state: false,
   remark: null
 });
@@ -68,6 +74,7 @@ const resetForm = () => {
     parentName: null,
     name: '',
     pid: '',
+    birthday: null,
     state: false,
     remark: null
   };
