@@ -1,10 +1,10 @@
 <template>
-  <el-dialog :title="dialogTitle" v-model="showDialog" width="350px" draggable align-center :close-on-click-modal="false" >
+  <el-dialog :title="dialogTitle" v-model="showDialog" width="400px" draggable align-center :close-on-click-modal="false" >
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
-      <el-form-item label="父亲" class="w300" v-if="formData.pid !== '10' && formData.parentName">
+      <el-form-item label="父亲" class="w350" v-if="formData.pid !== '10' && formData.parentName">
         <el-input v-model="formData.parentName" disabled/>
       </el-form-item>
-      <el-form-item label="姓名" prop="name" class="w300">
+      <el-form-item label="姓名" prop="name" class="w350">
         <el-input v-model="formData.name" show-word-limit maxlength="10" />
       </el-form-item>
       <el-form-item label="状态" prop="state">
@@ -13,13 +13,13 @@
           <el-radio :value="true">绝户</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="出生日期" prop="birthday" class="w300">
+      <el-form-item label="出生日期" prop="birthday" class="w350">
         <div class="w220">
           <el-date-picker type="date" value-format="YYYY-MM-DD" v-model="formData.birthday" style="width: 150px !important"></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="备注" prop="remark" class="w300">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 4 }" v-model="formData.remark" maxlength="100" show-word-limit />
+      <el-form-item label="备注" prop="remark" class="w350">
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 12 }" v-model="formData.remark" maxlength="500" show-word-limit />
       </el-form-item>
     </el-form>
     <template #footer>
