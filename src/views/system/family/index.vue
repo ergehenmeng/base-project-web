@@ -13,6 +13,23 @@
     <div class="content-main">
       <div class="family-main" v-loading="loading">
         <vue3-tree-org ref="treeRef" :filter-node-method="filterNodeMethod" :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
+          <template v-slot="{node}">
+            <el-tooltip placement="top" effect="light" :disabled="node.pid === '0' || (!node.$$data?.birthday && !node.$$data?.remark)">
+              <template #content>
+                <div class="tips-container">
+                  <div v-if="node.$$data?.birthday">
+                    <span class="tips-label">出生：</span>
+                    <span class="tips-break">{{node.$$data?.birthday}}</span>
+                  </div>
+                  <div v-if="node.$$data?.remark">
+                    <span class="tips-label">简介：</span>
+                    <span class="tips-break">{{node.$$data?.remark}}</span>
+                  </div>
+                </div>
+              </template>
+              <span class="node-label">{{ node.label }}</span>
+            </el-tooltip>
+          </template>
         </vue3-tree-org>
       </div>
     </div>
@@ -50,7 +67,8 @@ const props = ref({
   children: 'children',
   pid: 'pid',
   id: 'id',
-  isLeaf: 'state'
+  isLeaf: 'state',
+  remark: 'remark'
 });
 
 const defineMenus = () => {
@@ -171,5 +189,28 @@ onMounted(() => {
 <style lang="scss" scoped>
 .family-main {
   height: 670px;
+}
+.node-label {
+  display: inline-block;
+  margin: 5px 10px;
+}
+.tips-container {
+  width: 300px;
+  line-height: 1.5;
+}
+.tips-label {
+  display: inline-block;
+  width: 40px;
+  text-align: right;
+  font-weight: bold;
+  vertical-align: top;
+}
+.tips-break {
+  display: inline-block;
+  width: calc(100% - 40px);
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  vertical-align: top;
 }
 </style>
