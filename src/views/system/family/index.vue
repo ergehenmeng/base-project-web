@@ -142,7 +142,7 @@ const getList = async () => {
 
 const createHandle = (node) => {
   if (node.state) {
-    errorMsg('已绝户不支持新增');
+    errorMsg('绝户/早亡不支持新增');
     return;
   }
   formRef.value.openDialog(node, true);
