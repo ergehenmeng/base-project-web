@@ -9,7 +9,7 @@
           <el-button type="primary" @click="queryHandle">搜索</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="exportHandle" :loading="exportLoading">导出</el-button>
+          <el-button type="primary" :icon="Download" @click="downloadHandle" :loading="downloadLoading">下载</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -52,6 +52,7 @@ import usePermStore from '@/store/perm.js';
 import { renderMsg, upsert } from '@/utils/common.js';
 import { confirmMsg, errorMsg, successMsg } from '@/utils/message.js';
 import html2canvas from 'html2canvas';
+import { Download } from '@element-plus/icons-vue';
 const loading = ref(false);
 const formRef = ref(null);
 const treeData = ref({});
@@ -63,7 +64,7 @@ const deleteAuth = permStore.hasAuth('6F50');
 const treeRef = ref();
 const containerRef = ref();
 const toolBar = ref({scale: false, restore: true, expand: false, zoom: false, fullscreen: true});
-const exportLoading = ref(false);
+const downloadLoading = ref(false);
 
 const style = ref({
   color: '#fff',
@@ -101,12 +102,12 @@ const queryHandle = () => {
   treeRef.value.filter(queryParams.value.queryName);
 }
 
-const exportHandle = async () => {
+const downloadHandle = async () => {
   if (!containerRef.value) {
     return;
   }
   try {
-    exportLoading.value = true
+    downloadLoading.value = true
     const canvas = await html2canvas(containerRef.value, { scale: 3 });
     const imgData = canvas.toDataURL('image/png');
     const link = document.createElement('a');
@@ -116,7 +117,7 @@ const exportHandle = async () => {
   } catch (e) {
     console.error('导出异常', e);
   } finally {
-    exportLoading.value = false;
+    downloadLoading.value = false;
   }
 }
 
