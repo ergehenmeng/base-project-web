@@ -195,7 +195,7 @@ onMounted(() => {
   margin: 5px 10px;
 }
 .tips-container {
-  width: 300px;
+  max-width: 300px;
   line-height: 1.5;
 }
 .tips-label {
