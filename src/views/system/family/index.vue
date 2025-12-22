@@ -8,11 +8,14 @@
         <el-form-item>
           <el-button type="primary" @click="queryHandle">搜索</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="exportHandle" :loading="exportLoading">导出</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
-      <div class="family-main" v-loading="loading">
-        <vue3-tree-org ref="treeRef" :filter-node-method="filterNodeMethod" :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
+      <div class="family-main" ref="containerRef" v-loading="loading">
+        <vue3-tree-org ref="treeRef" :tool-bar="toolBar" :filter-node-method="filterNodeMethod" :data="treeData" :label-style="style" :props="props" center :define-menus="defineMenus" :node-add="createHandle" :node-edit="updateHandle" :node-delete="deleteHandle" >
           <template v-slot="{node}">
             <el-tooltip placement="top" effect="light" :disabled="node.pid === '0' || (!node.$$data?.birthday && !node.$$data?.remark)">
               <template #content>
@@ -27,7 +30,12 @@
                   </div>
                 </div>
               </template>
-              <span class="node-label">{{ node.label }}</span>
+              <span v-if="node.$$data?.state" class="label-wrapper-end">
+                <span class="node-label-end">{{ node.label }}</span>
+              </span>
+              <span v-else class="label-wrapper">
+                <span class="node-label">{{ node.label }}</span>
+              </span>
             </el-tooltip>
           </template>
         </vue3-tree-org>
@@ -43,6 +51,7 @@ import { listApi, deleteApi } from '@/api/system/family';
 import usePermStore from '@/store/perm.js';
 import { renderMsg, upsert } from '@/utils/common.js';
 import { confirmMsg, errorMsg, successMsg } from '@/utils/message.js';
+import html2canvas from 'html2canvas';
 const loading = ref(false);
 const formRef = ref(null);
 const treeData = ref({});
@@ -51,12 +60,15 @@ const selectAuth = permStore.hasAuth('zF50');
 const createAuth = permStore.hasAuth('QF50');
 const editAuth = permStore.hasAuth('VF50');
 const deleteAuth = permStore.hasAuth('6F50');
+const treeRef = ref();
+const containerRef = ref();
+const toolBar = ref({scale: false, restore: true, expand: false, zoom: false, fullscreen: true});
+const exportLoading = ref(false);
+
 const style = ref({
   color: '#fff',
   background: '#409eef'
 });
-
-const treeRef = ref();
 
 const queryParams = ref({
   queryName: ''
@@ -87,6 +99,25 @@ const defineMenus = () => {
 
 const queryHandle = () => {
   treeRef.value.filter(queryParams.value.queryName);
+}
+
+const exportHandle = async () => {
+  if (!containerRef.value) {
+    return;
+  }
+  try {
+    exportLoading.value = true
+    const canvas = await html2canvas(containerRef.value, { scale: 3 });
+    const imgData = canvas.toDataURL('image/png');
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = treeData.value.name + '.png';
+    link.click();
+  } catch (e) {
+    console.error('导出异常', e);
+  } finally {
+    exportLoading.value = false;
+  }
 }
 
 const filterNodeMethod = (value, data) => {
@@ -190,10 +221,19 @@ onMounted(() => {
 .family-main {
   height: 670px;
 }
-.node-label {
+.node-label,.node-label-end {
   display: inline-block;
-  margin: 5px 10px;
 }
+
+.label-wrapper,.label-wrapper-end {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+.label-wrapper-end {
+  background-color: #ff5151;
+}
+
 .tips-container {
   max-width: 300px;
   line-height: 1.5;
