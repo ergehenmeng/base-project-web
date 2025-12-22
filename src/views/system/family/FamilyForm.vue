@@ -10,7 +10,7 @@
       <el-form-item label="状态" prop="state">
         <el-radio-group v-model="formData.state">
           <el-radio :value="false">正常</el-radio>
-          <el-radio :value="true">绝户/早亡</el-radio>
+          <el-radio :value="true" title="没有子嗣">绝户/早亡</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="出生日期" prop="birthday" class="w350">
