@@ -161,7 +161,7 @@ const deleteHandle = (node) => {
     errorMsg('根节点禁止删除');
     return;
   }
-  const msg = renderMsg(['确定要', () => '删除' + node.name, '吗?']);
+  const msg = renderMsg(['确定要删除', () => node.name, '吗?']);
   confirmMsg(msg, () => {
     const data = { id: node.id };
     deleteApi(data).then(() => {
