@@ -29,7 +29,7 @@ export const queryApi = (params) => {
 
 export const deleteApi = (data) => {
   return request.post({
-    url: '/manage/cache/list',
+    url: '/manage/cache/delete',
     data
   });
 };
