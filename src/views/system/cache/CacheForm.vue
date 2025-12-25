@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="搜索" v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
+  <el-dialog v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
+    <template #header>
+      <span>查询/删除 <QuestionTip content="注意：目前只支持String类型的缓存删除" /></span>
+    </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="key" prop="key" class="w450">
         <el-select @change="queryHandle" v-model="formData.key" placeholder="请输入要查询的key" filterable remote reserve-keyword :loading="keyLoading" :remote-method="loadKeyHandle">
@@ -23,6 +26,7 @@
 import { queryApi, deleteApi, scanApi } from '@/api/system/cache';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import { renderMsg } from '@/utils/common.js';
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const loading = ref(false);
 const keyLoading = ref(false);
