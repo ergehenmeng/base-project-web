@@ -10,7 +10,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="value" prop="value" class="w450">
-        <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 10 }" v-model="formData.value" readonly />
+        <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 5 }" v-model="formData.value" readonly />
       </el-form-item>
     </el-form>
     <template #footer>
