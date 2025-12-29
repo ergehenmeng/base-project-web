@@ -28,7 +28,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span>操作<QuestionTip content="注意：授权信息增删改不会立即生效，需刷新缓存才能生效" /></span>
+            <span>操作<QuestionTip content="注意：授权信息增删改不会立即生效，需刷新缓存(auth_config)才能生效" /></span>
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">

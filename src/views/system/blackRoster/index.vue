@@ -17,7 +17,7 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span>操作<QuestionTip content="注意：黑名单变更不会立即生效，需刷新缓存才能生效,且只针对移动端" /></span>
+            <span>操作<QuestionTip content="注意：黑名单变更不会立即生效，需刷新缓存(black_roster)才能生效,且只针对移动端" /></span>
             <CreateButton v-has-perm="'HoK0'" title="新增IP黑名单" @click="handleCreate"/>
           </template>
           <template #default="scope">
