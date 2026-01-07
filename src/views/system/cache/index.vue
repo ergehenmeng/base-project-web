@@ -6,7 +6,7 @@
           <el-button type="primary" :icon="Refresh" @click="handeClear" :disabled="selected.length === 0">清除缓存</el-button>
         </el-form-item>
         <el-form-item v-has-perm="'w7K0'" style="float: right; padding-right: 15px">
-          <el-button type="primary" :icon="Aim" @click="deleteHandle">删除</el-button>
+          <el-button type="primary" :icon="Search" @click="deleteHandle">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -19,11 +19,11 @@
       </el-table>
     </div>
   </div>
-  <CacheForm ref="formRef"/>
+  <CacheForm ref="formRef" />
 </template>
 <script setup>
 import { clearApi, listPageApi } from '@/api/system/cache';
-import { Aim, Refresh } from '@element-plus/icons-vue';
+import { Refresh, Search } from '@element-plus/icons-vue';
 import usePermStore from '@/store/perm';
 import dayjs from 'dayjs';
 import { successMsg } from '@/utils/message.js';
@@ -81,5 +81,4 @@ const tableRowClass = (row) => {
 const deleteHandle = () => {
   formRef.value.openDialog();
 };
-
 </script>
