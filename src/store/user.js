@@ -48,13 +48,12 @@ const useUserStore = defineStore(
         return;
       }
       // 表示主动退出
-      logoutApi().then(() => {
-        router.replace('/login');
-      }).finally(()=> {
+      logoutApi().finally(()=> {
         user.value = null;
         isLogin.value = false;
         window.localStorage.clear();
         window.sessionStorage.clear();
+        router.replace('/login');
       });
     };
 
