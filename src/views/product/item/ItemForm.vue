@@ -11,7 +11,7 @@
       <el-form-item label="所属店铺" prop="storeId">
         <StoreSelect v-model="formData.storeId" @change="storeHandle" :clearable="false"></StoreSelect>
       </el-form-item>
-      <el-form-item label="商品标签" prop="tagList">
+      <el-form-item label="商品标签" prop="tagList" >
         <ItemTag v-model="formData.tagList"></ItemTag>
       </el-form-item>
       <el-form-item label="规格类型" prop="multiSpec">
@@ -230,6 +230,7 @@ const formRules = reactive({
     { min: 1, message: '限购数量不能小于1', type: 'number', trigger: 'blur' }
   ],
   storeId: [{ required: true, message: '请选择店铺', trigger: 'change' }],
+  tagList: [{ required: true, message: '请选择商品标签', trigger: 'change', type: 'array' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
   deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],

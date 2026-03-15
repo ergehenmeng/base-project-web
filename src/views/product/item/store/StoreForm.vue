@@ -66,7 +66,7 @@
 import { addressListApi, createApi, selectApi, updateApi } from '@/api/product/store';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
-import { successMsg } from '@/utils/message.js';
+import { errorMsg, successMsg } from '@/utils/message.js';
 import { goBack, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
@@ -179,6 +179,9 @@ const handleMerchantChange = (val) => {
   if (val) {
     addressListApi({ merchantId: val}).then((res) => {
       takeList.value = res.data.filter(item => item.addressType === 1);
+      if (takeList.value.length === 0) {
+        errorMsg('请先补充完用户退换货时的收货地址');
+      }
       pickupList.value = res.data.filter(item => item.addressType === 2);
     });
   } else {
