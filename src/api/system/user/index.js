@@ -89,3 +89,24 @@ export const unbindApi = () => {
     data: {}
   });
 };
+
+export const updateAvatarApi = (formData) => {
+  return request.upload({
+    url: '/manage/user/updateAvatar',
+    formData
+  })
+}
+
+export const unbindTotpApi = (data) => {
+  return request.post({
+    url: '/manage/user/unbindTotp',
+    data
+  })
+}
+
+export const updateUserApi = (data) => {
+  return request.post({
+    url: '/manage/user/updateBasic',
+    data
+  })
+}

@@ -39,7 +39,7 @@
 import { createApi, selectApi, updateApi } from '@/api/product/address';
 import { successMsg } from '@/utils/message.js';
 import AreaSelect from '@/components/AreaSelect.vue';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const loading = ref(false);
 const dialogTitle = ref('');

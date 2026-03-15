@@ -34,7 +34,7 @@
 <script setup>
 import { updateScoreApi } from '@/api/user/member';
 import { successMsg } from '@/utils/message.js';
-import QuestionTip from '@/components/QuestionTip.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const loading = ref(false);
 const formDataRef = ref();

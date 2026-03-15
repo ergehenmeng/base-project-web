@@ -59,14 +59,14 @@
 import { deleteApi, listApi, sortApi } from '@/api/config/itemTag';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import ItemTagForm from './ItemTagForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('BJR0');
-const sortAuth = userStore.hasAuth('LJR0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('BJR0');
+const sortAuth = permStore.hasAuth('LJR0');
 const loading = ref(false);
 const pageData = ref([]);
 const formRef = ref();

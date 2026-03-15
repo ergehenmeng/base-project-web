@@ -79,7 +79,7 @@
 import { deleteApi, listPageApi, platformUnShelvesApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/site';
 import { Bottom, Delete, Download, Edit, ScaleToOriginal, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import VenueSelect from '@/components/VenueSelect.vue';
 import SiteForm from '@/views/product/venue/site/SiteForm.vue';
@@ -87,12 +87,12 @@ import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg, venueTypeFormat } from '@/utils/common.js'
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('lCO0');
-const sortAuth = userStore.hasAuth('uCO0');
+const selectAuth = permStore.hasAuth('lCO0');
+const sortAuth = permStore.hasAuth('uCO0');
 const formRef = ref();
 
 const queryParams = reactive({

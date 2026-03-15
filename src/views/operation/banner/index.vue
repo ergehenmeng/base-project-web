@@ -105,12 +105,12 @@ import { deleteApi, listPageApi, sortApi, stateApi } from '@/api/operation/banne
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import BannerForm from './BannerForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import useDictStore from '@/store/dict.js';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('banner_type');
 
@@ -118,9 +118,9 @@ const loading = ref(false);
 const total = ref(0);
 const bannerRef = ref();
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('jxU0');
-const sortAuth = userStore.hasAuth('BxU0');
-const stateAuth = userStore.hasAuth('7xU0');
+const selectAuth = permStore.hasAuth('jxU0');
+const sortAuth = permStore.hasAuth('BxU0');
+const stateAuth = permStore.hasAuth('7xU0');
 
 const queryParams = reactive({
   queryName: '',

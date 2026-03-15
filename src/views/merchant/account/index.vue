@@ -18,12 +18,11 @@
 <script setup>
 import { accountApi } from '@/api/merchant/account';
 import { useTransition } from '@vueuse/core';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
 import { warningMsg } from '@/utils/message.js'
-import { applyApi } from '@/api/merchant/withdraw/index.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('Xzu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('Xzu0');
 const amount = ref(0.0);
 const payFreeze = ref(0);
 const withdrawFreeze = ref(0);

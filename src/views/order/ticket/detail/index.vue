@@ -41,7 +41,7 @@
             <template #reference>
               <el-button type="primary" link><Question/></el-button>
             </template>
-            <el-table :data="data.combineList">
+            <el-table :data="data.groupList">
               <el-table-column width="120" property="title" label="门票名称" />
               <el-table-column width="80" property="category" label="票种" :formatter="formatter"/>
               <el-table-column width="180" property="useTime" label="核销时间" />
@@ -117,7 +117,7 @@ const data = ref({
   createTime: null,
   realBuy: null,
   visitorList: [],
-  combineList: [],
+  groupList: [],
   remark: null
 });
 

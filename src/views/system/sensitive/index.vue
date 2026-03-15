@@ -3,10 +3,10 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item label="搜索">
-          <el-input v-model="queryParams.queryName" placeholder="待校验的字符串" clearable @keyup.enter="search" maxlength="30" />
+          <el-input v-model="queryParams.queryName" placeholder="请输入匹配的字符串" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="search">校验</el-button>
+          <el-button type="primary" @click="search">匹配</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -41,12 +41,12 @@
 import { createApi, deleteApi, listPageApi } from '@/api/system/sensitive';
 import { Delete } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('svU0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('svU0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

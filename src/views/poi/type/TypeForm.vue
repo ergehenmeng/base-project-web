@@ -28,7 +28,7 @@ import { createApi, updateApi } from '@/api/poi/type';
 import { successMsg } from '@/utils/message.js';
 import UploadImage from '@/components/UploadImage.vue';
 import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
-import QuestionTip from '@/components/QuestionTip.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
 
 const dialogTitle = ref('');
 const formDataRef = ref();

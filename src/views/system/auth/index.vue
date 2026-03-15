@@ -28,7 +28,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span>操作<QuestionTip content="注意：授权信息增删改不会立即生效，需刷新缓存才能生效" /></span>
+            <span>操作<QuestionTip content="注意：授权信息增删改不会立即生效，需刷新缓存(auth_config)才能生效" /></span>
             <CreateButton v-has-perm="'avK0'" title="新增授权信息" @click="handleCreate"/>
           </template>
           <template #default="scope">
@@ -58,7 +58,7 @@ import { deleteApi, listPageApi, resetApi, sendEmailApi } from '@/api/system/aut
 import { Delete, Edit, Promotion, Refresh } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
 import AuthForm from './AuthForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
@@ -66,8 +66,8 @@ import { renderMsg } from '@/utils/common.js'
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('9vK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('9vK0');
 
 const queryParams = reactive({
   queryName: '',

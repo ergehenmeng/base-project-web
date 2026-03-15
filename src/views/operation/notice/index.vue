@@ -76,20 +76,20 @@
 import { cancelApi, deleteApi, listPageApi, publishApi } from '@/api/operation/notice';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('notice_type');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('UJU0');
+const selectAuth = permStore.hasAuth('UJU0');
 
 const queryParams = reactive({
   queryName: '',

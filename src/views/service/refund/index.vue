@@ -78,7 +78,7 @@
 <script setup>
 import { listPageApi } from '@/api/service/refund';
 import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { Document } from '@element-plus/icons-vue'
 import Audit from '@/components/icon/Audit.vue'
@@ -87,12 +87,12 @@ import AuditForm from '@/views/service/refund/AuditForm.vue'
 
 const formRef = ref();
 const activeName = ref('');
-const router = useRouter();
 const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('pt20');
+const selectAuth = permStore.hasAuth('pt20');
 const typeList = ref([]);
 
 const loadPrefix = () => {

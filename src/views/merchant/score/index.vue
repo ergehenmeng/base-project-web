@@ -21,13 +21,13 @@
 <script setup>
 import { accountApi } from '@/api/merchant/score';
 import { useTransition } from '@vueuse/core';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import WithdrawForm from '@/views/merchant/score/WithdrawForm.vue';
 
 const router = useRouter();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('JVu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('JVu0');
 const amountRef = ref(0.0);
 const payFreezeRef = ref(0);
 const withdrawFreezeRef = ref(0);

@@ -25,7 +25,6 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
-          <el-button type="primary" @click="reset" :icon="Refresh">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -78,20 +77,20 @@
 </template>
 <script setup>
 import { listPageApi, shieldApi, topApi, unTopApi, unShieldApi } from '@/api/operation/comment';
-import { Bottom, Hide, Refresh, Top, View } from '@element-plus/icons-vue'
+import { Bottom, Hide, Top, View } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter, useRoute } from 'vue-router';
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('0BU0');
-const reportAuth = userStore.hasAuth('pBU0');
+const selectAuth = permStore.hasAuth('0BU0');
+const reportAuth = permStore.hasAuth('pBU0');
 
 const queryParams = reactive({
   queryName: '',
@@ -120,16 +119,6 @@ const search = () => {
   queryParams.page = 1;
   getPage();
 };
-
-const reset = () => {
-  queryParams.queryName = '';
-  queryParams.state = null;
-  queryParams.topState = null;
-  queryParams.objectType = null;
-  queryParams.objectIds = [];
-  queryParams.page = 1;
-  getPage();
-}
 
 onMounted(() => {
   const objectId = route.params.id

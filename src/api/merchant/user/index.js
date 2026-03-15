@@ -56,3 +56,17 @@ export const roleIdsApi = (params) => {
     params
   });
 };
+
+export const authApi = (data) => {
+  return request.post({
+    url: '/manage/merchant/user/verify/auth',
+    data
+  });
+};
+
+export const getAuthApi = (params) => {
+  return request.get({
+    url: '/manage/merchant/user/get/verify',
+    params
+  });
+};

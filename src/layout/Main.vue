@@ -18,16 +18,19 @@
   <LockScreen ref="lockRef"></LockScreen>
 </template>
 <script setup>
-import { permApi } from '@/api/login/index.js';
+import { permApi } from '@/api/login';
 import Header from '@/layout/Header.vue';
 import Aside from '@/layout/Aside.vue';
 import Content from '@/layout/Content.vue';
 import LockScreen from '@/views/LockScreen.vue';
 import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
+
 
 const lockRef = ref();
 const ready = ref(false);
 const userStore = useUserStore();
+const permStore = usePermStore();
 const refreshToast = (e) => {
   e.preventDefault();
   e.returnValue = '';
@@ -50,8 +53,8 @@ onMounted(() => {
   }
   window.addEventListener('keyup', keyupListener);
   permApi().then(({data: { permList, menuList }}) => {
-    userStore.user.permList = permList;
-    userStore.user.menuList = menuList;
+    permStore.perm.permList = permList;
+    permStore.perm.menuList = menuList;
     ready.value = true;
   }).catch(() => {
     userStore.logout();

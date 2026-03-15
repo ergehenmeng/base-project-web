@@ -49,18 +49,16 @@
 import { deleteApi, listPageApi } from '@/api/product/address';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import AddressForm from '@/views/product/item/address/AddressForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('4QO0');
+const selectAuth = permStore.hasAuth('4QO0');
 const addressRef = ref();
 
 const queryParams = reactive({

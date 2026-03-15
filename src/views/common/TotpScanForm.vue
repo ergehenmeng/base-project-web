@@ -24,8 +24,8 @@
 </template>
 
 <script setup>
-import { bindTotpApi } from '@/api/login/index.js'
-import { errorMsg } from '@/utils/message.js'
+import { bindTotpApi } from '@/api/login';
+import { errorMsg } from '@/utils/message.js';
 const loading = ref(false);
 const showDialog = ref(false);
 const emit = defineEmits(['reload', 'close']);

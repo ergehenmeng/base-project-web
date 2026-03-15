@@ -6,7 +6,15 @@ export default [
     },
     children: [
       {
-        path: '/sys/config',
+        path: 'family',
+        name: 'sysFamily',
+        component: () => import('@/views/system/family/index.vue'),
+        meta: {
+          title: '族谱管理'
+        }
+      },
+      {
+        path: 'config',
         name: 'sysConfig',
         component: () => import('@/views/system/config/index.vue'),
         meta: {
@@ -17,6 +25,14 @@ export default [
         path: 'menu',
         name: 'sysMenu',
         component: () => import('@/views/system/menu/index.vue'),
+        meta: {
+          title: '菜单管理'
+        }
+      },
+      {
+        path: 'menu-tree',
+        name: 'sysMenuV2',
+        component: () => import('@/views/system/menu/indexV2.vue'),
         meta: {
           title: '菜单管理'
         }

@@ -87,7 +87,7 @@
 import { exportApi, listPageApi, lockApi, logoutApi, resetPwdApi, unbindApi, unlockApi } from '@/api/user/merchant';
 import { Document, Download, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import Rate from '@/components/icon/Rate.vue';
 import Unbind from '@/components/icon/Unbind.vue';
@@ -95,14 +95,14 @@ import Logout from '@/components/icon/Logout.vue';
 import { useRouter } from 'vue-router';
 import { downloadExcel, parseMerchantType, renderMsg } from '@/utils/common.js'
 import ServiceRateForm from '@/views/user/merchant/ServiceRateForm.vue';
-import ResetPwd from '@/components/icon/ResetPwd.vue'
+import ResetPwd from '@/components/icon/ResetPwd.vue';
 
 const rateRef = ref();
 const router = useRouter();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('2Yp0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('2Yp0');
 const pageData = ref([]);
 
 const queryParams = reactive({

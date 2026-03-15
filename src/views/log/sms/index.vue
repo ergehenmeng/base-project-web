@@ -54,10 +54,10 @@
 </template>
 <script setup>
 import { listPageApi } from '@/api/log/sms';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('uLa0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('uLa0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

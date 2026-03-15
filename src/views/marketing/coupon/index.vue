@@ -81,7 +81,7 @@
 import { closeApi, deleteApi, listPageApi, openApi } from '@/api/marketing/coupon'
 import { Bottom, Delete, Document, Edit, Top, Link } from '@element-plus/icons-vue'
 import { confirmMsg, messageBox, successMsg, warningMsg } from '@/utils/message'
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { shortUrlApi } from '@/api/common/index.js'
@@ -93,11 +93,11 @@ import { renderMsg } from '@/utils/common.js'
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('sPi0');
+const selectAuth = permStore.hasAuth('sPi0');
 const queryParams = reactive({
   queryName: null,
   page: 1,

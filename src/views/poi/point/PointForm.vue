@@ -46,7 +46,7 @@ import PoiAreaSelect from '@/components/PoiAreaSelect.vue';
 import PoiTypeSelect from '@/components/PoiTypeSelect.vue';
 import UploadImageList from '@/components/UploadImageList.vue';
 import { goBack } from '@/utils/common.js';
-import LocationMap from '@/components/LocationMap.vue'
+import LocationMap from '@/components/LocationMap.vue';
 
 const route = useRoute();
 const router = useRouter();

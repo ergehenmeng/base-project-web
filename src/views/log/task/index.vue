@@ -48,11 +48,11 @@
 <script setup>
 import { listPageApi } from '@/api/log/task';
 import { Document } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import ContentDialog from '@/components/ContentDialog.vue';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('foa0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('foa0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

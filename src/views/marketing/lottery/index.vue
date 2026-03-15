@@ -56,7 +56,7 @@
 <script setup>
 import { deleteApi, listPageApi } from '@/api/marketing/lottery';
 import { Delete, Document, Edit } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
@@ -64,11 +64,11 @@ import Lottery from '@/components/icon/Lottery.vue'
 import { renderMsg } from '@/utils/common.js'
 
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('owi0');
+const selectAuth = permStore.hasAuth('owi0');
 const queryParams = reactive({
   queryName: null,
   page: 1,

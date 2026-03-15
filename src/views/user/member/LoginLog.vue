@@ -28,7 +28,7 @@
         <el-table-column prop="deviceBrand" label="设备厂商" min-width="120" />
         <el-table-column prop="deviceModel" label="设备型号" min-width="150" />
         <el-table-column prop="softwareVersion" label="软件版本" min-width="150" />
-        <el-table-column prop="serialNumber" label="设备唯一编号" min-width="180" />
+        <el-table-column prop="serialNumber" label="设备序列号" min-width="180" />
         <el-table-column prop="createTime" label="登录时间" min-width="180" />
       </el-table>
       <div class="pagination-container">
@@ -46,14 +46,14 @@
 </template>
 <script setup>
 import { loginPageApi } from '@/api/user/member';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('YNp0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('YNp0');
 const pageData = ref([]);
 const activityDate = ref([])
 const queryParams = reactive({

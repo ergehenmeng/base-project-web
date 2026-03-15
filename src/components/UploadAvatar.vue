@@ -1,5 +1,8 @@
 <template>
-  <el-dialog title="头像上传" v-model="showDialog" width="600px" draggable align-center :close-on-press-escape="false" >
+  <el-dialog v-model="showDialog" width="600px" draggable align-center :close-on-press-escape="false" >
+    <template #header>
+      <span>{{props.title}}</span>
+    </template>
     <div v-loading="loading">
       <el-row>
         <el-col :span="12">
@@ -25,7 +28,9 @@
         <el-col :span="12">
           <div class="cropper-preview-box">
             <cropper-viewer selection="#cropperSelected" v-if="updateUrl"></cropper-viewer>
-            <div class="cropper-viewer" v-else></div>
+            <div class="cropper-viewer" v-else>
+              <el-image :src="previewUrl" v-show="previewUrl !== null && previewUrl !== undefined"></el-image>
+            </div>
             <canvas ref="canvasRef" style="display: none"></canvas>
           </div>
         </el-col>
@@ -54,7 +59,7 @@ import 'cropperjs';
 import { CropperCanvas, CropperCrosshair, CropperHandle, CropperImage, CropperSelection, CropperShade, CropperViewer } from 'cropperjs';
 import { RefreshLeft, RefreshRight, UploadFilled } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message.js';
-import { uploadApi } from '@/api/common/index.js';
+import { updateAvatarApi } from '@/api/system/user';
 
 const loading = ref(false);
 const selectRef = ref();
@@ -63,6 +68,15 @@ const cropperImgRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['confirm']);
 const updateUrl = ref();
+const previewUrl = ref();
+
+const props = defineProps({
+  title: {
+    type: String,
+    default: '头像上传',
+  }
+})
+
 const beforeUpload = (rawFile) => {
   if (rawFile.type.indexOf('image/') === -1) {
     errorMsg('请上传图片类型文件!');
@@ -87,9 +101,10 @@ const rotateRight = () => {
   cropperImgRef.value.$rotate('90deg');
 };
 
-const openDialog = () => {
+const openDialog = (url) => {
   updateUrl.value = null
   showDialog.value = true;
+  previewUrl.value = url;
 };
 
 const handleUpload = async () => {
@@ -113,7 +128,7 @@ const handleUpload = async () => {
       loading.value = true;
       const formData = new FormData();
       formData.append('file', blob, 'cropped-image.png');
-      uploadApi(formData)
+      updateAvatarApi(formData)
         .then(({ data: { host, path} }) => {
           emit("confirm", host + path);
           showDialog.value = false;
@@ -158,7 +173,6 @@ defineExpose({
   }
   cropper-viewer {
     border-radius: 50%;
-    border: 1px solid #ccc;
   }
 }
 

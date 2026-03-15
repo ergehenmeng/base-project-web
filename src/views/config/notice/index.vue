@@ -19,7 +19,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="170" />
         <el-table-column label="操作" fixed="right" width="100">
           <template #header>
-            <span>操作<QuestionTip content="注意：站内信模板的变更不会立即生效，需刷新缓存才能生效"/></span>
+            <span>操作<QuestionTip content="注意：站内信模板的变更不会立即生效，需刷新缓存(in_mail_template)才能生效"/></span>
           </template>
           <template #default="scope">
             <el-button v-has-perm="'D5R0'" type="primary" :icon="Edit" @click="handleEdit(scope.row)" link title="编辑"></el-button>
@@ -43,16 +43,16 @@
 <script setup>
 import { listPageApi } from '@/api/config/notice';
 import { Edit } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import NoticeForm from './NoticeForm.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const formRef = ref();
-const selectAuth = userStore.hasAuth('c5R0');
+const selectAuth = permStore.hasAuth('c5R0');
 
 const queryParams = reactive({
   queryName: null,

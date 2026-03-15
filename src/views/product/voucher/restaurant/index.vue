@@ -81,7 +81,7 @@
 import { deleteApi, exportApi, generateApi, listPageApi, platformUnShelvesApi, shelvesApi, unShelvesApi } from '@/api/product/restaurant';
 import { Bottom, Delete, Document, Download, Edit, Setting, Sunny, Top } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import { downloadExcel, format, renderMsg } from '@/utils/common.js';
 import MerchantSelect from '@/components/MerchantSelect.vue';
@@ -91,12 +91,12 @@ import QRCodeForm from '@/views/common/QRCodeForm.vue';
 
 const qrRef = ref();
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const formRef = ref();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('5MO0');
+const selectAuth = permStore.hasAuth('5MO0');
 const fileName = ref('');
 const queryParams = reactive({
   queryName: null,

@@ -30,7 +30,7 @@
         </el-popover>
       </el-form-item>
       <el-form-item label="路由地址" prop="path" class="w450">
-        <el-input v-model="formData.path" show-word-limit maxlength="100" />
+        <el-input v-model="formData.path" show-word-limit maxlength="100" title="配置http/https地址后会自动在新页面打开"/>
       </el-form-item>
       <el-form-item label="权限URL" prop="subPath" class="w450">
         <el-input type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" v-model="formData.subPath" maxlength="300" show-word-limit placeholder="多个逗号分割" />

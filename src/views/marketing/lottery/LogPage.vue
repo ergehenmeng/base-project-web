@@ -57,7 +57,7 @@
   </div>
 </template>
 <script setup>
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 import { logPageApi } from '@/api/marketing/lottery/index.js';
 import { Position } from '@element-plus/icons-vue'
@@ -65,11 +65,11 @@ import GrantForm from '@/views/marketing/lottery/GrantForm.vue'
 
 const grantFormRef = ref();
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('H1i0');
+const selectAuth = permStore.hasAuth('H1i0');
 const queryParams = reactive({
   queryName: null,
   page: 1,

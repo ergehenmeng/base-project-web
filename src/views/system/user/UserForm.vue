@@ -56,7 +56,7 @@ import { createApi, roleListApi, selectApi, updateApi } from '@/api/system/user'
 import { listApi } from '@/api/system/dept';
 import { successMsg } from '@/utils/message.js';
 import QuestionTip from '@/components/QuestionTip.vue'
-import useUserStore from '@/store/user.js'
+import usePermStore from '@/store/perm'
 import { useRouter } from 'vue-router'
 
 const router = useRouter();
@@ -67,8 +67,8 @@ const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 const disabled = ref(false);
-const userStore = useUserStore();
-const roleAuth = userStore.hasAuth('KjK0');
+const permStore = usePermStore();
+const roleAuth = permStore.hasAuth('KjK0');
 
 const formRules = reactive({
   nickName: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],

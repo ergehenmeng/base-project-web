@@ -21,7 +21,7 @@
         <el-table-column prop="nickName" label="昵称" width="120" />
         <el-table-column prop="userName" label="账户名" width="150" />
         <el-table-column prop="mobile" label="手机号" width="150" />
-        <el-table-column prop="state" label="状态" width="100" >
+        <el-table-column prop="state" label="状态" width="100">
           <template #default="scope">
             <el-switch v-model="scope.row.state" :active-value="1" :inactive-value="0" inline-prompt active-text="正常" inactive-text="锁定" disabled style="--el-switch-off-color: #ff4949" />
           </template>
@@ -30,7 +30,7 @@
         <el-table-column prop="remark" label="备注" />
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column prop="updateTime" label="更新时间" />
-        <el-table-column label="操作" width="180">
+        <el-table-column label="操作" width="220">
           <template #header>
             <span>操作</span>
             <CreateButton v-has-perm="'gqK0'" title="新增用户" @click="handleCreate"></CreateButton>
@@ -42,6 +42,9 @@
             <el-button v-has-perm="'8qK0'" v-show="scope.row.state === 0" type="success" :icon="Unlock" @click="handleUnlock(scope.row)" link title="解锁"></el-button>
             <el-button v-has-perm="'jqK0'" @click="handleReset(scope.row)" link title="重置密码">
               <ResetPwd></ResetPwd>
+            </el-button>
+            <el-button v-has-perm="'BqK0'" @click="handleUnbind(scope.row)" link title="解绑登录双因子校验">
+              <Unbind />
             </el-button>
             <el-button v-has-perm="'2qK0'" type="danger" :icon="Delete" @click="handleDelete(scope.row)" link title="删除"></el-button>
           </template>
@@ -62,20 +65,21 @@
   <UserForm ref="formRef" @reload="getPage"></UserForm>
 </template>
 <script setup>
-import { deleteApi, listPageApi, lockApi, resetPwdApi, unlockApi } from '@/api/system/user';
+import { deleteApi, listPageApi, lockApi, resetPwdApi, unbindTotpApi, unlockApi } from '@/api/system/user';
 import { Delete, Document, Edit, Lock, Unlock } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import UserForm from './UserForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
-import { renderMsg } from '@/utils/common.js'
-import ResetPwd from '@/components/icon/ResetPwd.vue'
+import { renderMsg } from '@/utils/common.js';
+import ResetPwd from '@/components/icon/ResetPwd.vue';
+import Unbind from '@/components/icon/Unbind.vue';
 
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('XqK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('XqK0');
 const pageData = ref([]);
 
 const queryParams = reactive({
@@ -108,15 +112,15 @@ onMounted(() => {
 });
 
 const handleDetail = (row) => {
-  formRef.value.openDialog({ id: row.id, type: "detail"});
+  formRef.value.openDialog({ id: row.id, type: 'detail' });
 };
 
 const handleEdit = (row) => {
-  formRef.value.openDialog({id: row.id, type: "edit"});
+  formRef.value.openDialog({ id: row.id, type: 'edit' });
 };
 
 const handleLock = (row) => {
-  const msg = renderMsg(["确定要", () => "锁定", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '锁定', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     lockApi(data).then(() => {
@@ -127,7 +131,7 @@ const handleLock = (row) => {
 };
 
 const handleUnlock = (row) => {
-  const msg = renderMsg(["确定要", () => "解锁", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '解锁', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     unlockApi(data).then(() => {
@@ -137,8 +141,18 @@ const handleUnlock = (row) => {
   });
 };
 
+const handleUnbind = (row) => {
+  const msg = renderMsg(['确定要解绑', () => '登录双因子校验', '吗?']);
+  confirmMsg(msg, () => {
+    const data = { id: row.id };
+    unbindTotpApi(data).then(() => {
+      successMsg('解绑成功');
+    });
+  });
+};
+
 const handleReset = (row) => {
-  const msg = renderMsg(["确定要", () => "重置", "该用户的密码吗?"]);
+  const msg = renderMsg(['确定要', () => '重置', '该用户的密码吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     resetPwdApi(data).then(() => {
@@ -149,7 +163,7 @@ const handleReset = (row) => {
 };
 
 const handleDelete = (row) => {
-  const msg = renderMsg(["确定要", () => "删除", "该用户吗?"]);
+  const msg = renderMsg(['确定要', () => '删除', '该用户吗?']);
   confirmMsg(msg, () => {
     const data = { id: row.id };
     deleteApi(data).then(() => {

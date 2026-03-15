@@ -44,19 +44,18 @@
 </template>
 <script setup>
 import { grantExportApi, grantPageApi } from '@/api/marketing/redeem';
-import useUserStore from '@/store/user';
-import { useRouter, useRoute } from 'vue-router';
+import usePermStore from '@/store/perm';
+import { useRoute } from 'vue-router';
 import { Download } from '@element-plus/icons-vue';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
 
-const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('0Ci0');
+const selectAuth = permStore.hasAuth('0Ci0');
 const queryParams = reactive({
   queryName: null,
   page: 1,

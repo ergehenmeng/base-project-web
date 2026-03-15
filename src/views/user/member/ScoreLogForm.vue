@@ -48,16 +48,15 @@
 </template>
 
 <script setup>
-import { scoreLogPageApi } from '@/api/user/member/index.js'
-import useUserStore from '@/store/user.js'
+import { scoreLogPageApi } from '@/api/user/member';
+import usePermStore from '@/store/perm';
 
 const loading = ref(false);
-const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('ANp0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('ANp0');
 const pageData = ref([]);
 
 const queryParams = reactive({

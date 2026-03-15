@@ -119,7 +119,7 @@
 import { deleteApi, exportApi, listPageApi, platformUnShelvesApi, recommendApi, shelvesApi, sortApi, unShelvesApi } from '@/api/product/item';
 import { Bottom, Delete, Document, Download, Edit, Link, Top } from '@element-plus/icons-vue';
 import { confirmMsg, messageBox, successMsg } from '@/utils/message'
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRouter } from 'vue-router';
 import { downloadExcel, numberValidator, renderMsg } from '@/utils/common.js'
 import ItemTag from '@/components/ItemTag.vue';
@@ -136,12 +136,12 @@ import Stock from '@/components/icon/Stock.vue'
 const { copy, isSupported } = useClipboard();
 const shortUrl = import.meta.env.VITE_ITEM_SHORT_URL;
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('8SO0');
-const sortAuth = userStore.hasAuth('LSO0');
+const selectAuth = permStore.hasAuth('8SO0');
+const sortAuth = permStore.hasAuth('LSO0');
 const stockFormRef = ref();
 const exportLoading = ref(false);
 

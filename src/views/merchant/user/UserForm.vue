@@ -4,6 +4,9 @@
       <el-form-item label="用户昵称" prop="nickName" class="w450">
         <el-input v-model="formData.nickName" show-word-limit maxlength="20" />
       </el-form-item>
+      <el-form-item label="账户名" prop="userName" class="w450">
+        <el-input v-model="formData.userName" show-word-limit maxlength="15" />
+      </el-form-item>
       <el-form-item label="手机号" prop="mobile" class="w450">
         <el-input v-model="formData.mobile" show-word-limit maxlength="11" />
       </el-form-item>
@@ -48,6 +51,10 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   nickName: [{ required: true, message: '昵称不能为空', trigger: 'blur' }],
+  userName: [
+    { required: true, message: '账号不能为空', trigger: 'blur' },
+    { min: 6, max: 15, message: '账号长度6~15字符', trigger: 'blur' }
+  ],
   mobile: [
     { required: true, message: '手机号不能为空', trigger: 'blur' },
     { pattern: /^1[3456789]\d{9}$/, message: '手机号格式不正确', trigger: 'blur' }
@@ -67,6 +74,7 @@ const formRules = reactive({
 const formData = ref({
   id: null,
   nickName: null,
+  userName: null,
   mobile: null,
   password: null,
   roleIds: [],
@@ -100,6 +108,7 @@ const resetForm = () => {
   formData.value = {
     id: null,
     nickName: null,
+    userName: null,
     mobile: null,
     password: null,
     roleIds: [],

@@ -26,7 +26,7 @@ import { sitePageApi } from '@/api/product/site';
 import { homestayPageApi } from '@/api/product/room';
 
 import { parseProductType } from '@/utils/common.js';
-import { warningMsg } from '@/utils/message.js'
+import { warningMsg } from '@/utils/message.js';
 
 const showDialog = ref(false);
 const emit = defineEmits(['reload']);

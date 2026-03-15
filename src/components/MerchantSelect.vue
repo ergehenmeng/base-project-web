@@ -10,7 +10,7 @@
 </template>
 <script setup>
 import { listApi } from '@/api/system/merchant';
-import useUserStore from '@/store/user.js';
+import useUserStore from '@/store/user';
 
 const userStore = useUserStore();
 const merchantList = ref([]);

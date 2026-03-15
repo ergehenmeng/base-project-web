@@ -44,18 +44,16 @@
 <script setup>
 import { listPageApi, exportApi } from '@/api/service/verify';
 import { Download } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
 
-const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const activityDate = ref([])
-const selectAuth = userStore.hasAuth('xK20');
+const selectAuth = permStore.hasAuth('xK20');
 const queryParams = reactive({
   queryName: '',
   page: 1,

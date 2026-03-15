@@ -29,10 +29,10 @@ import dayjs from 'dayjs';
 import { Setting } from '@element-plus/icons-vue';
 import { useRoute, useRouter } from 'vue-router';
 import TimePhase from '@/components/TimePhase.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 
-const userStore = useUserStore();
-const setupAuth = userStore.hasAuth('ACO0');
+const permStore = usePermStore();
+const setupAuth = permStore.hasAuth('ACO0');
 const router = useRouter();
 const route = useRoute();
 const dayList = ref([]);

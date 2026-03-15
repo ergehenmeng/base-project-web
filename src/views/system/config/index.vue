@@ -26,7 +26,7 @@
         <el-table-column prop="updateTime" label="更新时间" width="180"/>
         <el-table-column width="100">
           <template #header>
-            <span>操作<QuestionTip content="注意：系统参数变更不会立即生效，需刷新缓存才能生效"/></span>
+            <span>操作<QuestionTip content="注意：系统参数变更不会立即生效，需刷新缓存(sys_config)才能生效"/></span>
           </template>
           <template #default="scope">
             <el-button type="primary" :icon="Edit" @click="handleEdit(scope.row)" link></el-button>
@@ -51,11 +51,11 @@
 import { listPageApi } from '@/api/system/config';
 import { Edit } from '@element-plus/icons-vue';
 import EditForm from './EditForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import QuestionTip from '@/components/QuestionTip.vue'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('siK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('siK0');
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();

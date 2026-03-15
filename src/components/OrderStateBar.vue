@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { orderStateFormatNotStyle, refundStateFormat } from '../utils/common.js'
+import { orderStateFormatNotStyle, refundStateFormat } from '@/utils/common.js';
 
 const props = defineProps({
   width: {

@@ -1,5 +1,5 @@
 <template>
-  <el-menu router unique-opened :default-active="activeIndex">
+  <el-menu unique-opened :default-active="activeIndex" @select="routerHandle">
     <el-menu-item index="/home">
       <el-icon>
         <HomeFilled />
@@ -32,13 +32,14 @@
   </el-menu>
 </template>
 <script setup>
-import useUserStore from '@/store/user';
-import { useRoute } from 'vue-router';
+import usePermStore from '@/store/perm';
+import { useRoute, useRouter } from 'vue-router';
 import { HomeFilled } from '@element-plus/icons-vue'
 
 const route = useRoute();
-const userStore = useUserStore();
-const menuList = userStore.user?.menuList;
+const router = useRouter();
+const permStore = usePermStore();
+const menuList = permStore.perm?.menuList;
 
 // 获取当前要激活的菜单, 注意:如果url有3级,例如 /sys/help/create, 则激活的是 /sys/help,
 // 因为create页面是独立的,此处不做特殊处理,默认是不会选中的
@@ -50,6 +51,15 @@ const activeIndex = computed(() => {
   }
   return route.path;
 });
+
+const routerHandle = (key) => {
+  // 判断是否为外部链接
+  if (key.startsWith('http') || key.startsWith('https')) {
+    window.open(key, '_blank');
+  } else {
+    router.push(key);
+  }
+}
 
 </script>
 <style lang="scss" scoped>

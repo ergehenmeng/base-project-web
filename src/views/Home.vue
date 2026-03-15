@@ -31,7 +31,7 @@
         </StatisticsCard>
       </el-row>
       <el-row v-if="memberAuth">
-        <StatisticsChart title="注册统计" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
+        <StatisticsChart title="会员统计(一)" :height="300" :span="16" @reload="getDayRegisterData" v-model:active-date="registerParams.activeDate" v-model:select-type="registerParams.selectType">
           <template #icon>
             <Member></Member>
           </template>
@@ -39,7 +39,7 @@
             <div id="registerApp" style="width: 100%; height: 100%" v-loading="registerLoading" ></div>
           </template>
         </StatisticsChart>
-        <StatisticsChart title="注册渠道" :height="300" :span="8" :hidden-query="true">
+        <StatisticsChart title="会员统计(二)" :height="300" :span="8" :hidden-query="true">
           <template #icon>
             <Channel></Channel>
           </template>
@@ -158,7 +158,7 @@
         </StatisticsChart>
       </el-row>
       <el-row v-if="visitAuth">
-        <StatisticsChart title="浏览量" :height="300" :span="24" @reload="getDayVisitData" v-model:select-type="visitParams.selectType" v-model:active-date="visitParams.activeDate">
+        <StatisticsChart title="浏览统计" :height="300" :span="24" @reload="getDayVisitData" v-model:select-type="visitParams.selectType" v-model:active-date="visitParams.activeDate">
           <template #icon>
             <Visit></Visit>
           </template>
@@ -181,7 +181,7 @@
         </StatisticsChart>
       </el-row>
       <el-row v-if="collectAuth">
-        <StatisticsChart title="收藏量" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
+        <StatisticsChart title="收藏统计" :height="300" :span="24" @reload="getDayCollectData" v-model:select-type="collectParams.selectType" v-model:active-date="collectParams.activeDate">
           <template #icon>
             <Collect></Collect>
           </template>
@@ -239,7 +239,8 @@ import Order from '@/components/icon/Order.vue';
 import Visit from '@/components/icon/Visit.vue';
 import Channel from '@/components/icon/Channel.vue';
 import Collect from '@/components/icon/Collect.vue';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
+import useUserStore from '@/store/user';
 import Ranking from '@/components/icon/Ranking.vue'
 import First from '@/components/icon/First.vue'
 import Second from '@/components/icon/Second.vue'
@@ -251,23 +252,24 @@ import { useRouter } from 'vue-router'
 import Pickup from '@/components/icon/Pickup.vue'
 
 const router = useRouter();
+const permStore = usePermStore();
 const userStore = useUserStore();
-const memberAuth = userStore.hasAuth('uGU');
-const visitAuth = userStore.hasAuth('NGU');
-const collectAuth = userStore.hasAuth('GGU');
-const productAuth = userStore.hasAuth('AGU');
-const itemAuth = userStore.hasAuth('rGU');
-const merchantAuth = userStore.hasAuth('RGU');
-const orderAuth = userStore.hasAuth('9GU');
-const orderDayAuth = userStore.hasAuth('aGU');
-const cartAuth = userStore.hasAuth('0GU');
-const itemQueryAuth = userStore.hasAuth('2RD0');
-const refundQueryAuth = userStore.hasAuth('pt20');
-const ticketQueryAuth = userStore.hasAuth('5YD0');
-const voucherQueryAuth = userStore.hasAuth('0pD0');
-const homestayQueryAuth = userStore.hasAuth('laD0');
-const lineQueryAuth = userStore.hasAuth('4dD0');
-const venueQueryAuth = userStore.hasAuth('n8D0');
+const memberAuth = permStore.hasAuth('uGU');
+const visitAuth = permStore.hasAuth('NGU');
+const collectAuth = permStore.hasAuth('GGU');
+const productAuth = permStore.hasAuth('AGU');
+const itemAuth = permStore.hasAuth('rGU');
+const merchantAuth = permStore.hasAuth('RGU');
+const orderAuth = permStore.hasAuth('9GU');
+const orderDayAuth = permStore.hasAuth('aGU');
+const cartAuth = permStore.hasAuth('0GU');
+const itemQueryAuth = permStore.hasAuth('2RD0');
+const refundQueryAuth = permStore.hasAuth('pt20');
+const ticketQueryAuth = permStore.hasAuth('5YD0');
+const voucherQueryAuth = permStore.hasAuth('0pD0');
+const homestayQueryAuth = permStore.hasAuth('laD0');
+const lineQueryAuth = permStore.hasAuth('4dD0');
+const venueQueryAuth = permStore.hasAuth('n8D0');
 
 const itemRankingList = ref([
 ])

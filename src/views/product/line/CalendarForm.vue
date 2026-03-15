@@ -65,22 +65,22 @@
 import { monthApi } from '@/api/product/line';
 import { Setting } from '@element-plus/icons-vue';
 import { errorMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import dayjs from 'dayjs';
 import { useRoute } from 'vue-router';
 import SetupForm from './SetupForm.vue';
 import EditForm from './EditForm.vue';
 
 const route = useRoute();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const setupRef = ref();
 const editRef = ref();
 const loading = ref(false);
 const calendar = ref();
 const nowDate = ref(new Date());
 const dataMap = ref({});
-const selectAuth = userStore.hasAuth('Ovl0');
-const editAuth = userStore.hasAuth('Dvl0');
+const selectAuth = permStore.hasAuth('Ovl0');
+const editAuth = permStore.hasAuth('Dvl0');
 
 const queryParams = reactive({
   lineId: null,

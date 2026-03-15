@@ -16,10 +16,10 @@
 
 <script setup>
 import { unlockScreenApi, lockScreenApi } from '@/api/system/user';
-import { confirmMsg, successMsg } from '@/utils/message.js'
-import useUserStore from '@/store/user.js'
-import { rsaEncode } from '@/utils/common.js'
-import { renderMsg } from '@/utils/common.js'
+import { confirmMsg, successMsg } from '@/utils/message.js';
+import useUserStore from '@/store/user';
+import { rsaEncode } from '@/utils/common.js';
+import { renderMsg } from '@/utils/common.js';
 
 const loading = ref(false);
 const formDataRef = ref();

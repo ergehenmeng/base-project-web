@@ -34,7 +34,8 @@
       </li>
     </ul>
     <ChangePwd ref="changePwdRef"/>
-    <UploadAvatar ref="avatarRef" @confirm="confirm"/>
+    <UploadAvatar title="修改头像" ref="avatarRef" @confirm="confirm"/>
+    <UserProfile ref="userRef"/>
   </div>
 </template>
 <script setup>
@@ -45,20 +46,24 @@ import { unbindApi } from '@/api/system/user';
 import Logout from '@/components/icon/Logout.vue';
 import Password from '@/components/icon/Password.vue';
 import User from '@/components/icon/User.vue';
-import useDictStore from '@/store/dict.js'
-import useAreaStore from '@/store/area.js'
+import useDictStore from '@/store/dict.js';
+import useAreaStore from '@/store/area.js';
 import { Client } from '@stomp/stompjs';
-import { renderMsg } from '@/utils/common.js'
-import { ElLink } from 'element-plus'
-import { useRouter } from 'vue-router'
-import Unbind from '@/components/icon/Unbind.vue'
-import Bind from '@/components/icon/Bind.vue'
+import { renderMsg } from '@/utils/common.js';
+import { ElLink } from 'element-plus';
+import { useRouter } from 'vue-router';
+import Unbind from '@/components/icon/Unbind.vue';
+import Bind from '@/components/icon/Bind.vue';
 import { UserFilled } from '@element-plus/icons-vue';
 import UploadAvatar from '@/components/UploadAvatar.vue';
+import usePermStore from '@/store/perm';
+import UserProfile from '@/views/UserProfile.vue';
 
+const userRef = ref();
 const avatarRef = ref();
 const router = useRouter();
 const userStore = useUserStore();
+const permStore = usePermStore();
 const changePwdRef = ref();
 const nickName = userStore.user?.nickName;
 const avatarImg = ref();
@@ -71,7 +76,7 @@ const handleLogout = () => {
 };
 
 const handleAvatar = () => {
-  avatarRef.value.openDialog();
+  avatarRef.value.openDialog(avatarImg.value);
 }
 
 const confirm = (avatar) => {
@@ -148,7 +153,7 @@ const subscribe = () => {
 }
 
 const handleUser = () => {
-  console.log("待补全逻辑")
+  userRef.value.openDialog();
 };
 
 const handleChangePwd = () => {
@@ -185,7 +190,7 @@ const showNotice = ({ type, data }) => {
  * @returns {VNode|*}
  */
 const resultMsg = (auth, msg, clickFunc) => {
-  const selectAuth = userStore.hasAuth(auth);
+  const selectAuth = permStore.hasAuth(auth);
   if (selectAuth) {
     return h(ElLink, {
       style: {

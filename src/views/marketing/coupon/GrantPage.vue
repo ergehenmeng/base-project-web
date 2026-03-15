@@ -85,7 +85,7 @@
 <script setup>
 import { listPageApi } from '@/api/user/member';
 import { grantApi } from '@/api/marketing/coupon';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 import { Position } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message.js';
@@ -93,8 +93,8 @@ import { confirmMsg, successMsg } from '@/utils/message.js';
 const route = useRoute();
 const loading = ref(false);
 const total = ref(0);
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('1Pi0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('1Pi0');
 const queryParams = reactive({
   queryName: '',
   page: 1,

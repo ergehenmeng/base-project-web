@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import useUserStore from '@/store/user.js';
+import useUserStore from '@/store/user';
 import { errorMsg } from '@/utils/message.js';
 import { imageCheck } from '@/utils/image.js';
 import { Plus } from '@element-plus/icons-vue'

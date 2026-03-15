@@ -58,12 +58,12 @@
 <script setup>
 import { exportApi, listPageApi } from '@/api/merchant/freezeLog';
 import { Download } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { downloadExcel } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('EKu0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('EKu0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

@@ -43,17 +43,16 @@
 </template>
 <script setup>
 import { CircleCheck, Iphone } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user.js';
-import { useRoute, useRouter } from 'vue-router';
-import { sendSmsApi, smsLoginApi } from '@/api/login/index.js'
+import useUserStore from '@/store/user';
+import { useRouter } from 'vue-router';
+import { sendSmsApi, smsLoginApi } from '@/api/login';
 import defaultPng from '@/assets/images/refresh.svg';
 import Shield from '@/components/Shield.vue';
 import { startCountDown } from '@/utils/common.js'
-import { successMsg } from '@/utils/message.js'
+import { successMsg } from '@/utils/message.js';
 const userStore = useUserStore();
 const defaultImg = ref(defaultPng);
 const router = useRouter();
-const route = useRoute();
 const sendCode = ref(true);
 const formDataRef = ref();
 const loading = ref(false);

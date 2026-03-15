@@ -26,13 +26,13 @@ import { withdrawApplyApi, withdrawDetailApi } from '@/api/merchant/score';
 import { successMsg } from '@/utils/message.js';
 import { numberValidator } from '@/utils/common.js';
 import QuestionTip from '@/components/QuestionTip.vue';
-import useUserStore from '@/store/user.js';
+import usePermStore from '@/store/perm';
 import Big from 'big.js'
 
 const loading = ref(false);
 const emit = defineEmits(['reload']);
-const userStore = useUserStore();
-const withdrawAuth = userStore.hasAuth('5Vu0');
+const permStore = usePermStore();
+const withdrawAuth = permStore.hasAuth('5Vu0');
 
 const formRules = reactive({
   amount: [

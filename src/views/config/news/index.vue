@@ -81,16 +81,16 @@ import { deleteApi, listPageApi } from '@/api/config/news';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import NewsForm from './NewsForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
-import { renderMsg } from '@/utils/common.js'
+import { renderMsg } from '@/utils/common.js';
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const newsRef = ref();
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('LcR0');
+const selectAuth = permStore.hasAuth('LcR0');
 
 const queryParams = reactive({
   queryName: '',

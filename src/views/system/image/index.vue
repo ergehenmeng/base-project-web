@@ -61,15 +61,15 @@ import { deleteApi, listPageApi } from '@/api/system/image';
 import { Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import ImageForm from './ImageForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import useDictStore from '@/store/dict.js';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('image_type');
-const selectAuth = userStore.hasAuth('ogK0');
+const selectAuth = permStore.hasAuth('ogK0');
 const loading = ref(false);
 const total = ref(0);
 const imageRef = ref();

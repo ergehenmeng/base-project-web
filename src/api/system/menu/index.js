@@ -1,5 +1,19 @@
 import request from '@/utils/request';
 
+export const listPageApi = (params) => {
+  return request.get({
+    url: '/manage/menu/listPage',
+    params
+  });
+};
+
+export const treeApi = (params) => {
+  return request.get({
+    url: '/manage/menu/tree',
+    params
+  });
+};
+
 export const listMenuApi = (params) => {
   return request.get({
     url: '/manage/menu/list',

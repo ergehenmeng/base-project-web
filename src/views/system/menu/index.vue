@@ -67,15 +67,15 @@
 import { deleteApi, listMenuApi, sortApi, stateApi } from '@/api/system/menu';
 import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import MenuForm from './MenuForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('YhK0');
-const sortAuth = userStore.hasAuth('GhK0');
-const stateAuth = userStore.hasAuth('AhK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('YhK0');
+const sortAuth = permStore.hasAuth('GhK0');
+const stateAuth = permStore.hasAuth('AhK0');
 const loading = ref(false);
 const pageData = ref([]);
 const formRef = ref();
@@ -180,36 +180,3 @@ const updateState = (row) => {
   stateApi({ id: row.id, state: row.state }).finally(() => { loading.value = false;});
 };
 </script>
-
-<style lang="scss" scoped>
-.left-menu {
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.menu-content-main {
-  background-color: #fff;
-  padding: 20px 0;
-  border-radius: 3px;
-  min-height: calc(100vh - 120px);
-}
-
-.right-content-top {
-  .right-button {
-    float: right;
-  }
-
-  .el-input,
-  .el-select {
-    width: 200px;
-  }
-}
-
-.custom-tree-node {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  padding-right: 8px;
-}
-</style>

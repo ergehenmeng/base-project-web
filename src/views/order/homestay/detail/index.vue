@@ -78,7 +78,7 @@
 
 <script setup>
 import { selectApi, confirmApi } from '@/api/order/homestay';
-import { goBack, renderMsg } from '@/utils/common.js'
+import { goBack, renderMsg } from '@/utils/common.js';
 import { useRoute, useRouter } from 'vue-router';
 import { confirmMsg, successMsg } from '@/utils/message.js'
 import QuestionTip from '@/components/QuestionTip.vue';
@@ -86,7 +86,7 @@ import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
 import dayjs from 'dayjs';
-import CopyLink from '@/components/CopyLink.vue'
+import CopyLink from '@/components/CopyLink.vue';
 
 const loading = ref(false);
 const route = useRoute();

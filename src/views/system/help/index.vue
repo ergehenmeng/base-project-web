@@ -62,7 +62,7 @@
 import { deleteApi, listPageApi, sortApi } from '@/api/system/help';
 import { Delete, Edit } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import useDictStore from '@/store/dict.js';
 import { useRouter } from 'vue-router';
 import CreateButton from '@/components/CreateButton.vue';
@@ -70,9 +70,9 @@ import { renderMsg } from '@/utils/common.js'
 
 const dictStore = useDictStore();
 const dictList = dictStore.getDict('help_type');
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('W3U0');
-const sortAuth = userStore.hasAuth('o3U0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('W3U0');
+const sortAuth = permStore.hasAuth('o3U0');
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);

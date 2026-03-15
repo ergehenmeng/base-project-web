@@ -19,7 +19,7 @@
           <el-option label="套票" :value="7" />
         </el-select>
       </el-form-item>
-      <el-form-item label="套票票" prop="ticketIds" v-show="formData.category === 7">
+      <el-form-item label="套票" prop="ticketIds" v-show="formData.category === 7">
         <el-select v-model="formData.ticketIds" multiple :multiple-limit="5" filterable>
           <el-option v-for="item in ticketList" :label="item.title" :value="item.id" :key="item.id" >
             <span style="float: left">{{ item.title }}</span>
@@ -175,13 +175,13 @@ const loadTicketList = (noTips = false) => {
   }
   if (formData.value.category === 7) {
     if (!noTips) {
-      warningMsg('注意：选择套票票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
+      warningMsg('注意：选择套票时不受原始门票库存、上下架状态、预订时间的限制，且销量与原始门票无关');
     }
     formRules.ticketIds = [{ required: true, message: '请输入套票门票', trigger: 'change'}, {
-      validator: (rule, value, callback) => {
+      validator: (_rule, _value, callback) => {
         let length = formData.value.ticketIds.length
         if (length < 2) {
-          callback(new Error('套票票最少选择两张票'));
+          callback(new Error('套票最少选择两张票'));
         } else {
           callback();
         }

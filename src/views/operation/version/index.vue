@@ -69,25 +69,20 @@
 import { deleteApi, listPageApi, stateApi } from '@/api/operation/version';
 import { Bottom, Delete, Edit, Top } from '@element-plus/icons-vue'
 import { confirmMsg, successMsg } from '@/utils/message';
-import useUserStore from '@/store/user';
-import useDictStore from '@/store/dict.js';
-import { useRouter } from 'vue-router';
+import usePermStore from '@/store/perm';
 import VersionForm from './VersionForm.vue';
 import CreateButton from '@/components/CreateButton.vue';
 import { renderMsg } from '@/utils/common.js'
 import QrCode from '@/components/icon/QrCode.vue'
 import QRCodeForm from '@/views/common/QRCodeForm.vue'
 
-const router = useRouter();
-const userStore = useUserStore();
-const dictStore = useDictStore();
-const dictList = dictStore.getDict('notice_type');
+const permStore = usePermStore();
 const qrCodeRef = ref();
 const loading = ref(false);
 const total = ref(0);
 const formRef = ref();
 const pageData = ref([]);
-const selectAuth = userStore.hasAuth('zkU0');
+const selectAuth = permStore.hasAuth('zkU0');
 const versionName = ref('');
 
 const queryParams = reactive({

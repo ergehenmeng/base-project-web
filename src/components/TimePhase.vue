@@ -86,9 +86,9 @@ import TimePhaseDialog from '@/components/TimePhaseDialog.vue';
 import { Refresh } from '@element-plus/icons-vue';
 import { renderMsg } from '@/utils/common.js'
 import { deletePriceApi, resetPriceApi } from '@/api/product/site/index.js'
-import useUserStore from '@/store/user.js'
+import usePermStore from '@/store/perm'
 
-const userStore = useUserStore();
+const permStore = usePermStore();
 const popoverRef = ref();
 const dialogRef = ref();
 const startRef = ref('');
@@ -103,7 +103,7 @@ const checkedItems = ref([]);
 const visible = ref(false);
 const moveInMap = new Map();
 const moveOutMap = new Map();
-const resetAuth = userStore.hasAuth('9CO0');
+const resetAuth = permStore.hasAuth('9CO0');
 
 const selectHandle = (value, event) => {
   if (props.disabled || !event.target.classList.contains('item') || event.target.classList.contains('checked')) {
@@ -346,25 +346,27 @@ const doReset = (resetPhaseList = false) => {
     if (item.id === 'reset') {
       return;
     }
-    item.classList.remove('checked');
-    item.classList.remove('right');
-    item.style.width = '30px';
-    start.value = null;
-    end.value = null;
-    item.innerHTML = '';
-    startItem.value = null;
-    endItem.value = null;
-    checkedItems.value = [];
-    const mouseenterEvent = moveInMap.get(item);
-    const mouseleaveEvent = moveOutMap.get(item);
-    if (mouseenterEvent) {
-      item.removeEventListener('mouseenter', mouseenterEvent);
-    }
-    if (mouseleaveEvent) {
-      item.removeEventListener('mouseleave', mouseleaveEvent);
-    }
-    if (resetPhaseList) {
-      phaseList.value = [];
+    if (item.classList) {
+      item.classList.remove('checked');
+      item.classList.remove('right');
+      item.style.width = '30px';
+      start.value = null;
+      end.value = null;
+      item.innerHTML = '';
+      startItem.value = null;
+      endItem.value = null;
+      checkedItems.value = [];
+      const mouseenterEvent = moveInMap.get(item);
+      const mouseleaveEvent = moveOutMap.get(item);
+      if (mouseenterEvent) {
+        item.removeEventListener('mouseenter', mouseenterEvent);
+      }
+      if (mouseleaveEvent) {
+        item.removeEventListener('mouseleave', mouseleaveEvent);
+      }
+      if (resetPhaseList) {
+        phaseList.value = [];
+      }
     }
   });
 };

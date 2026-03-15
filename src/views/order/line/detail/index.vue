@@ -73,13 +73,13 @@
 
 <script setup>
 import { selectApi } from '@/api/order/line';
-import { durationFormat, goBack } from '@/utils/common.js'
+import { durationFormat, goBack } from '@/utils/common.js';
 import { useRoute, useRouter } from 'vue-router';
 import QuestionTip from '@/components/QuestionTip.vue';
 import PayType from '@/components/PayType.vue';
 import OrderAccountBar from '@/components/OrderAccountBar.vue';
 import OrderStateBar from '@/components/OrderStateBar.vue';
-import CopyLink from '@/components/CopyLink.vue'
+import CopyLink from '@/components/CopyLink.vue';
 
 const loading = ref(false);
 const route = useRoute();

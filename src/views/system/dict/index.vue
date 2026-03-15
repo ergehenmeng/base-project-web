@@ -42,7 +42,7 @@
         <el-table-column prop="createTime" label="创建时间" />
         <el-table-column label="操作" width="180">
           <template #header>
-            <span>操作<QuestionTip content="注意：数据字典的变更不会立即生效，需刷新缓存才能生效"/></span>
+            <span>操作<QuestionTip content="注意：数据字典的变更不会立即生效，需刷新缓存(sys_dict)才能生效"/></span>
             <CreateButton v-has-perm="'AmK0'" title="新增数据字典" @click="handleCreate"/>
           </template>
           <template #default="scope">
@@ -63,13 +63,13 @@ import { CirclePlus, Delete, Edit } from '@element-plus/icons-vue';
 import { confirmMsg, successMsg } from '@/utils/message';
 import DictForm from './DictForm.vue';
 import ItemForm from './ItemForm.vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import QuestionTip from '@/components/QuestionTip.vue'
 import { renderMsg } from '@/utils/common.js'
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('GmK0');
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('GmK0');
 const loading = ref(false);
 const dictRef = ref();
 const itemRef = ref();

@@ -3,12 +3,15 @@
     <div class="content-top">
       <el-form :inline="true" label-width="70px">
         <el-form-item v-has-perm="'w7K0'" style="margin-left: 30px">
-          <el-button type="primary" :icon="Refresh" @click="handeClear" :disabled="selected.length === 0">清除缓存 </el-button>
+          <el-button type="primary" :icon="Refresh" @click="handeClear" :disabled="selected.length === 0">清除缓存</el-button>
+        </el-form-item>
+        <el-form-item v-has-perm="'w7K0'" style="float: right; padding-right: 15px">
+          <el-button type="primary" :icon="Search" @click="deleteHandle">搜索</el-button>
         </el-form-item>
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :row-class-name="tableRowClass" :data="pageData"  @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :row-class-name="tableRowClass" :data="pageData" @selection-change="handleSelected" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column type="selection" width="50" />
         <el-table-column prop="cacheName" label="缓存名称" />
         <el-table-column prop="updateTime" label="最近一次更新时间" />
@@ -16,16 +19,19 @@
       </el-table>
     </div>
   </div>
+  <CacheForm ref="formRef" />
 </template>
 <script setup>
 import { clearApi, listPageApi } from '@/api/system/cache';
-import { Refresh } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import { Refresh, Search } from '@element-plus/icons-vue';
+import usePermStore from '@/store/perm';
 import dayjs from 'dayjs';
 import { successMsg } from '@/utils/message.js';
+import CacheForm from '@/views/system/cache/CacheForm.vue';
 
-const userStore = useUserStore();
-const selectAuth = userStore.hasAuth('E7K0');
+const formRef = ref();
+const permStore = usePermStore();
+const selectAuth = permStore.hasAuth('E7K0');
 const selected = ref([]);
 const loading = ref(false);
 const pageData = ref([]);
@@ -70,5 +76,9 @@ const tableRowClass = (row) => {
     return nowTime.diff(updateTime, 'minute') <= 60 ? 'success-row' : '';
   }
   return '';
+};
+
+const deleteHandle = () => {
+  formRef.value.openDialog();
 };
 </script>

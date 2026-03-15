@@ -78,7 +78,7 @@
 <script setup>
 import { exportApi, listPageApi } from '@/api/order/venue';
 import { Document, Download } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
+import usePermStore from '@/store/perm';
 import { useRoute, useRouter } from 'vue-router'
 import {
   closeTypeFormat,
@@ -87,20 +87,20 @@ import {
   payTypeFormat,
   refundStateFormat,
   venueTypeFormat
-} from '@/utils/common.js'
+} from '@/utils/common.js';
 import OrderStateSelect from '@/components/OrderStateSelect.vue';
 import { successMsg } from '@/utils/message.js';
-import QuestionTip from '@/components/QuestionTip.vue'
-import RefundStateSelect from '@/components/RefundStateSelect.vue'
+import QuestionTip from '@/components/QuestionTip.vue';
+import RefundStateSelect from '@/components/RefundStateSelect.vue';
 
 const route = useRoute();
 const router = useRouter();
-const userStore = useUserStore();
+const permStore = usePermStore();
 const loading = ref(false);
 const total = ref(0);
 const pageData = ref([]);
 const activityDate = ref([])
-const selectAuth = userStore.hasAuth('n8D0');
+const selectAuth = permStore.hasAuth('n8D0');
 const queryParams = reactive({
   queryName: '',
   page: 1,
