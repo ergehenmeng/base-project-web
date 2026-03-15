@@ -23,7 +23,7 @@
             <div style="display: flex; align-items: center">
               <el-image
                 fit="cover"
-                :src="scope.row.coverUrl[0]"
+                :src="scope.row.coverUrl && scope.row.coverUrl[0]"
                 :preview-src-list="scope.row.coverUrl"
                 style="width: 30px; height: 30px"
                 preview-teleported

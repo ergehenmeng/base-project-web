@@ -113,14 +113,19 @@ const convert = (fileList) => {
 };
 
 watch(fileList, (newVal, oldVal) => {
-  if (Array.isArray(newVal) && oldVal.length === 0) {
+  if (Array.isArray(newVal)) {
     showFile.value = convert(newVal);
+  } else if (!newVal) {
+    fileList.value = [];
+    showFile.value = [];
   }
 });
 
 onMounted(() => {
   if (Array.isArray(fileList.value)) {
     showFile.value = convert(fileList.value);
+  } else if (!fileList.value) {
+    fileList.value = [];
   }
 });
 </script>
