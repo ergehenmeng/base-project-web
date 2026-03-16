@@ -13,7 +13,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="账户名" prop="account">
-        <el-input v-model="formData.account" maxlength="20" @keyup="formData.account = formData.account.replace(/\W/g, '')">
+        <el-input v-model="formData.account" maxlength="20" @keyup="formData.account = formData.account?.replace(/\W/g, '')">
           <template #suffix>
             <QuestionTip content="该账号可以登录管理后台，默认密码联系人电话后8位"></QuestionTip>
           </template>
