@@ -42,9 +42,9 @@ export const loginPageApi = (params) => {
   });
 };
 
-export const sendNoticeApi = (data) => {
+export const sendMessageApi = (data) => {
   return request.post({
-    url: '/manage/member/sendNotice',
+    url: '/manage/member/sendMessage',
     data
   });
 };

@@ -53,7 +53,7 @@
   </div>
   <MemberTagForm ref="formRef" @reload="getPage"></MemberTagForm>
   <SendSmsForm ref="smsRef"></SendSmsForm>
-  <SendNoticeForm ref="noticeRef"></SendNoticeForm>
+  <SendMessageForm ref="noticeRef"></SendMessageForm>
 </template>
 <script setup>
 import { deleteApi, listPageApi, refreshApi } from '@/api/config/memberTag';
@@ -62,7 +62,7 @@ import { confirmMsg, successMsg } from '@/utils/message';
 import usePermStore from '@/store/perm';
 import CreateButton from '@/components/CreateButton.vue';
 import MemberTagForm from './MemberTagForm.vue';
-import SendNoticeForm from '@/views/common/SendNoticeForm.vue';
+import SendMessageForm from '@/views/common/SendMessageForm.vue';
 import SendSmsForm from '@/views/common/SendSmsForm.vue';
 import { useRouter } from 'vue-router';
 import { renderMsg } from '@/utils/common.js';

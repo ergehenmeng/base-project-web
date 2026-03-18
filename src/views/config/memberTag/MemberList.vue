@@ -85,7 +85,7 @@
     </div>
   </div>
   <SendSmsForm ref="smsRef"></SendSmsForm>
-  <SendNoticeForm ref="noticeRef"></SendNoticeForm>
+  <SendMessageForm ref="noticeRef"></SendMessageForm>
   <GrantCouponForm ref="couponRef"></GrantCouponForm>
 </template>
 <script setup>
@@ -93,7 +93,7 @@ import { memberListApi } from '@/api/config/memberTag';
 import usePermStore from '@/store/perm';
 import { useRoute } from 'vue-router';
 import SendSmsForm from "@/views/common/SendSmsForm.vue";
-import SendNoticeForm from "@/views/common/SendNoticeForm.vue";
+import SendMessageForm from "@/views/common/SendMessageForm.vue";
 import GrantCouponForm from "./GrantCouponForm.vue";
 
 const route = useRoute();
