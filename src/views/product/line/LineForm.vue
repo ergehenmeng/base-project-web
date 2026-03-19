@@ -50,6 +50,10 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
+      <el-form-item label="购买须知" prop="purchaseNotes">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes"></WangEditor>
+        <div v-else v-html="formData.purchaseNotes" class="html-preview"/>
+      </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" :width="570" :height="300"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
@@ -122,6 +126,7 @@ const formRules = reactive({
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   duration: [{ required: true, message: '游玩天数不能为空', trigger: 'change' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
+  purchaseNotes: [{ required: true, message: '购买须知不能为空', trigger: 'change' }],
   introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
@@ -146,6 +151,7 @@ const formData = ref({
       depict: null
     }
   ],
+  purchaseNotes: null,
   introduce: null
 });
 
