@@ -6,11 +6,8 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <MerchantSelect v-model="formData.merchantId" prop="merchantId" :clearable="false" width="350"></MerchantSelect>
-      <el-form-item label="商家LOGO" prop="logoUrl">
-        <UploadImage v-model:img-url="formData.logoUrl" :disabled="disabled"></UploadImage>
-      </el-form-item>
       <el-form-item label="标签" prop="searchTag">
-        <el-input-tag v-model="formData.searchTag" trigger="Space" placeholder="按空格键生成标签" :max="4" maxlength="4"/><QuestionTip content="注意：如实填写店铺主打菜、特色产品可增加曝光度"/>
+        <el-input-tag v-model="formData.searchTag" trigger="Space" placeholder="按空格键生成标签" :max="4" maxlength="4" /><QuestionTip content="注意：如实填写店铺主打菜、特色产品可增加曝光度" />
       </el-form-item>
       <el-form-item label="营业时间" prop="openTime">
         <el-input v-model="formData.openTime" show-word-limit maxlength="20" />
@@ -18,21 +15,24 @@
       <el-form-item label="商家电话" prop="phone">
         <el-input v-model="formData.phone" show-word-limit maxlength="13" />
       </el-form-item>
+      <el-form-item label="人居消费(元)" prop="avgCost">
+        <el-input v-model="formData.avgCost" maxlength="8" @keyup="formData.avgCost = numberValidator(formData.avgCost)" />
+      </el-form-item>
       <el-form-item label="省市县" prop="areaList">
         <AreaSelect v-model="formData.areaList"></AreaSelect>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress">
-        <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
+        <el-input type="textarea" v-model="formData.detailAddress" :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="经纬度" prop="latitude">
-        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
+        <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude" />
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="商家介绍" prop="introduceText">
         <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
-        <div v-else v-html="formData.introduce" class="html-preview"/>
+        <div v-else v-html="formData.introduce" class="html-preview" />
       </el-form-item>
     </el-form>
     <div>
@@ -52,7 +52,7 @@ import { createApi, selectApi, updateApi } from '@/api/product/restaurant';
 import WangEditor from '@/components/WangEditor.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { successMsg } from '@/utils/message.js';
-import { goBack, phoneValidator } from '@/utils/common.js';
+import { goBack, numberValidator, phoneValidator } from '@/utils/common.js';
 import UploadImageList from '@/components/UploadImageList.vue';
 import AreaSelect from '@/components/AreaSelect.vue';
 import UploadImage from '@/components/UploadImage.vue';
@@ -72,6 +72,7 @@ const formRules = reactive({
   merchantId: [{ required: true, message: '请选择所属商户', trigger: 'change' }],
   phone: [{ required: true, validator: phoneValidator, trigger: 'blur' }],
   openTime: [{ required: true, message: '营业时间不能为空', trigger: 'blur' }],
+  avgCost: [{ required: true, message: '人居消费不能为空', trigger: 'blur' }],
   areaList: [{ required: true, message: '请选择省市县', trigger: 'change', type: 'array' }],
   detailAddress: [
     { required: true, message: '详细地址不能为空', trigger: 'blur' },
@@ -85,9 +86,9 @@ const formRules = reactive({
 let formData = ref({
   id: null,
   title: null,
-  logoUrl: null,
   merchantId: null,
   phone: null,
+  avgCost: null,
   areaList: [],
   detailAddress: null,
   longitude: null,

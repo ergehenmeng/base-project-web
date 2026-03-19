@@ -23,25 +23,12 @@
     </div>
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
-        <el-table-column prop="coverUrl" label="店铺logo" width="100">
-          <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-image
-                fit="cover"
-                :src="scope.row.logoUrl?.split(',')[0]"
-                :preview-src-list="scope.row.logoUrl?.split(',')"
-                style="width: 30px; height: 30px"
-                preview-teleported
-                hide-on-click-modal
-              />
-            </div>
-          </template>
-        </el-table-column>
         <el-table-column prop="title" label="商家名称" min-width="150" />
         <el-table-column prop="merchantName" label="所属商户" min-width="150" />
         <el-table-column prop="state" label="状态" width="80" :formatter="formatter" />
         <el-table-column prop="openTime" label="营业时间" width="180" />
         <el-table-column prop="phone" label="商家热线" width="120" />
+        <el-table-column prop="avgCost" label="人均消费" width="120" />
         <el-table-column prop="detailAddress" label="详细地址" width="180" />
         <el-table-column prop="createTime" label="创建时间" width="180" />
         <el-table-column prop="updateTime" label="更新时间" width="180" />
