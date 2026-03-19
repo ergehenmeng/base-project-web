@@ -51,7 +51,7 @@
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="购买须知" prop="purchaseNotes">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes"></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" :width="570" :height="300"></WangEditor>
         <div v-else v-html="formData.purchaseNotes" class="html-preview"/>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
