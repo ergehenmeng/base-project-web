@@ -39,7 +39,7 @@
       <el-form-item label="特色服务" prop="keyService">
         <div style="width: 800px">
           <el-checkbox-group v-model="formData.keyService">
-            <el-checkbox v-for="item in keyServiceList" :key="item.hiddenValue" :label="item.showValue" :value="item.hiddenValue"></el-checkbox>
+            <el-checkbox v-for="item in keyServiceList" :key="item.hiddenValue" :value="item.hiddenValue">{{ item.showValue }}</el-checkbox>
           </el-checkbox-group>
         </div>
       </el-form-item>
@@ -123,6 +123,19 @@ const formData = ref({
   keyService: []
 });
 
+const normalizeMultiSelectValue = (value) => {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  if (value === null || value === undefined || value === '') {
+    return [];
+  }
+  return String(value)
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+};
+
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
@@ -130,6 +143,7 @@ const handleSave = () => {
       formData.value.provinceId = formData.value.areaList[0];
       formData.value.cityId = formData.value.areaList[1];
       formData.value.countyId = formData.value.areaList[2];
+      formData.value.keyService = normalizeMultiSelectValue(formData.value.keyService);
       if (formData.value.id) {
         updateApi(formData.value)
           .then(() => {
@@ -162,6 +176,7 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
+        formData.value.keyService = normalizeMultiSelectValue(res.data.keyService);
         if (res.data.countyId) {
           formData.value.areaList = [res.data.provinceId, res.data.cityId, res.data.countyId];
         } else {
