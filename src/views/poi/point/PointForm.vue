@@ -20,8 +20,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" v-if="!disabled" ></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-model:html-value="formData.introduce" v-if="!disabled" ></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -61,7 +61,7 @@ const formRules = reactive({
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   detailAddress: [{ required: true, message: '详细地址不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -72,7 +72,6 @@ const formData = ref({
   longitude: null,
   latitude: null,
   detailAddress: null,
-  introduceText: '',
   introduce: '',
   coverUrl: []
 });

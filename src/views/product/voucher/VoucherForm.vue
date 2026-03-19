@@ -57,8 +57,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="商品介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="商品介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" ></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -103,7 +103,7 @@ const formRules = reactive({
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '封面图不能为空', trigger: 'change', type: 'array' }],
   quota: [{ required: true, message: '限购数量不能为空', trigger: 'blur' }],
-  introduceText: [{ required: true, message: '商品介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '商品介绍不能为空', trigger: 'change' }]
 });
 
 let formData = ref({
@@ -127,7 +127,6 @@ let formData = ref({
   subTag: [],
   coverUrl: [],
   activityDate: [],
-  introduceText: null,
   introduce: null
 });
 
@@ -177,7 +176,6 @@ onMounted(() => {
       .then((res) => {
         formData.value = { ...res.data };
         formData.value.timeList = [res.data.effectTime, res.data.expireTime];
-        formData.value.introduceText = res.data.introduce;
         formData.value.validType = formData.value.validDays > 0 ? 0 : 1;
         validTypeChange(formData.value.validType);
         if (res.data.validDays > 0) {

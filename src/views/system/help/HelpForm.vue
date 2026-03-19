@@ -16,8 +16,8 @@
       <el-form-item label="问" prop="ask">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 3 }" v-model="formData.ask" maxlength="50" show-word-limit />
       </el-form-item>
-      <el-form-item label="答" prop="answerText">
-        <WangEditor v-model:html-value="formData.answer" v-model:text-value="formData.answerText"></WangEditor>
+      <el-form-item label="答" prop="answer">
+        <WangEditor v-model:html-value="formData.answer"></WangEditor>
       </el-form-item>
     </el-form>
     <div>
@@ -46,7 +46,7 @@ const formDataRef = ref();
 
 const formRules = reactive({
   ask: [{ required: true, message: "'问'不能为空", trigger: 'blur' }],
-  answerText: [{ required: true, message: "'答'不能为空", trigger: 'change' }],
+  answer: [{ required: true, message: "'答'不能为空", trigger: 'change' }],
   helpType: [{ required: true, message: '请选择帮助分类', trigger: 'change' }]
 });
 
@@ -54,7 +54,6 @@ const formData = ref({
   id: null,
   ask: '',
   answer: '',
-  answerText: '',
   helpType: null,
   state: 1
 });
@@ -93,7 +92,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.answerText = res.data.answer;
       })
       .finally(() => {
         loading.value = false;

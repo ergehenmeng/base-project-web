@@ -13,8 +13,8 @@
           <el-option v-for="item in dictList" :key="item.id" :label="item.showValue" :value="item.hiddenValue" />
         </el-select>
       </el-form-item>
-      <el-form-item label="公告内容" prop="contentText">
-        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
+      <el-form-item label="公告内容" prop="content">
+        <WangEditor v-model:html-value="formData.content" ></WangEditor>
       </el-form-item>
     </el-form>
     <div>
@@ -44,7 +44,7 @@ const formDataRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
-  contentText: [{ required: true, message: '内容不能为空', trigger: 'change' }],
+  content: [{ required: true, message: '内容不能为空', trigger: 'change' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   noticeType: [{ required: true, message: '请选择公告类型', trigger: 'change' }]
 });
@@ -54,7 +54,6 @@ const formData = ref({
   title: '',
   coverUrl: null,
   content: '',
-  contentText: '',
   noticeType: null
 });
 
@@ -92,7 +91,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.answerText = res.data.answer;
       })
       .finally(() => {
         loading.value = false;

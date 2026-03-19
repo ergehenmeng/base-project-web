@@ -14,8 +14,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" ></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" ></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -51,7 +51,7 @@ const formRules = reactive({
   areaCode: [{ required: true, message: '所属区域', trigger: 'change' }],
   playTime: [{ required: true, message: '预计游玩时间不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -59,7 +59,6 @@ const formData = ref({
   title: '',
   areaCode: '',
   playTime: null,
-  introduceText: '',
   introduce: '',
   coverUrl: []
 });

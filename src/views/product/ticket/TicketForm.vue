@@ -56,8 +56,8 @@
           <el-radio :value="false">非实名制</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -101,7 +101,7 @@ const formRules = reactive({
   stock: [{ required: true, message: '库存不能为空', trigger: 'blur' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
   dueDate: [{ required: true, message: '预定日期不能为空', trigger: 'blur', type: 'array' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -119,7 +119,6 @@ const formData = ref({
   quota: 99,
   ticketIds: [],
   dueDate: [],
-  introduceText: null,
   introduce: null
 });
 
@@ -211,7 +210,6 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.dueDate = [res.data.startDate, res.data.endDate];
-        formData.value.introduceText = res.data.introduce;
         let endDate = dayjs(res.data.endDate, 'YYYY-MM-DD')
         if (endDate.isBefore(dayjs())) {
           warningMsg("可预订时间已过期，请及时调整以免影响用户购买")

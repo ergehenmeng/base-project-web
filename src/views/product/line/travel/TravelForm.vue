@@ -28,7 +28,7 @@
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
       <el-form-item label="详细介绍" prop="introduce">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -93,12 +93,10 @@ let formData = ref({
   latitude: null,
   depict: null,
   coverUrl: [],
-  introduceText: null,
   introduce: null
 });
 
 const handleSave = () => {
-  console.log(formData.value.introduce);
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
@@ -142,7 +140,6 @@ onMounted(() => {
         } else {
           formData.value.areaList = [res.data.provinceId, res.data.cityId];
         }
-        formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
         loading.value = false;

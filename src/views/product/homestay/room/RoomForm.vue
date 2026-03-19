@@ -79,8 +79,8 @@
           </el-collapse>
         </div>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -130,8 +130,8 @@ const formRules = reactive({
   resident: [{ required: true, message: '居住人数不能为空', trigger: 'blur' }],
   infrastructure: [{ required: true, message: '请选择屋内设施', trigger: 'change', type: 'array' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }],
-  notesInText: [{ required: true, message: '入住须知不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }],
+  notesIn: [{ required: true, message: '入住须知不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -141,11 +141,11 @@ const formData = ref({
   roomType: null,
   confirmType: 1,
   refundType: 1,
+  notesIn: null,
   refundDescribe: null,
   dimension: null,
   resident: null,
   coverUrl: [],
-  introduceText: null,
   introduce: null,
   infrastructure: []
 });
@@ -186,7 +186,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
         loading.value = false;

@@ -39,8 +39,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
     </el-form>
@@ -90,7 +90,7 @@ const formRules = reactive({
     { min: 2, max: 50, message: '长度在 2 到 50 个字符', trigger: 'blur' }
   ],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -106,7 +106,6 @@ const formData = ref({
   latitude: null,
   depict: null,
   coverUrl: [],
-  introduceText: null,
   introduce: null
 });
 
@@ -154,7 +153,6 @@ onMounted(() => {
         } else {
           formData.value.areaList = [res.data.provinceId, res.data.cityId];
         }
-        formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
         loading.value = false;

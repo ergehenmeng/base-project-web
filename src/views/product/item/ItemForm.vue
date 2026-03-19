@@ -175,12 +175,12 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="购买须知" prop="purchaseNotesText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes" v-model:text-value="formData.purchaseNotesText"></WangEditor>
+      <el-form-item label="购买须知" prop="purchaseNotes">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.purchaseNotes"></WangEditor>
         <div v-else v-html="formData.purchaseNotes" class="html-preview" />
       </el-form-item>
-      <el-form-item label="商品介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="商品介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview" />
       </el-form-item>
     </el-form>
@@ -234,8 +234,8 @@ const formRules = reactive({
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change' }],
   multiSpec: [{ required: true, message: '请选择是否多规格', trigger: 'change' }],
   deliveryType: [{ required: true, message: '请选择发货方式', trigger: 'change' }],
-  purchaseNotesText: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
-  introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
+  purchaseNotes: [{ required: true, message: '请填写购买须知', trigger: 'blur' }],
+  introduce: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
 
 let formData = ref({
@@ -251,10 +251,8 @@ let formData = ref({
   pickupId: null,
   coverUrl: [],
   multiSpec: false,
-  introduceText: null,
   introduce: null,
   purchaseNotes: null,
-  purchaseNotesText: null,
   skuList: [
     {
       primarySpecValue: null,
@@ -491,8 +489,6 @@ const loadItemDetail = (id) => {
   selectApi({ id: id }).then((res) => {
     showSecondSpec.value = res.data.specList?.length > 1;
     formData.value = { ...res.data };
-    formData.value.introduceText = res.data.introduce;
-    formData.value.purchaseNotesText = res.data.purchaseNotes;
   });
 };
 

@@ -32,8 +32,8 @@
           <el-radio :value="false">关闭</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="详细信息" prop="contentText">
-        <WangEditor v-model:html-value="formData.content" v-model:text-value="formData.contentText"></WangEditor>
+      <el-form-item label="详细信息" prop="content">
+        <WangEditor v-model:html-value="formData.content" ></WangEditor>
       </el-form-item>
     </el-form>
     <div>
@@ -62,7 +62,7 @@ const formDataRef = ref();
 
 const formRules = reactive({
   title: [{ required: true, message: '资讯标题不能为空', trigger: 'blur' }],
-  contentText: [{ required: true, message: '详细信息不能为空', trigger: 'blur' }],
+  content: [{ required: true, message: '详细信息不能为空', trigger: 'blur' }],
   commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
 
@@ -80,7 +80,6 @@ const formData = ref({
   depict: '',
   content: '',
   commentSupport: false,
-  contentText: '',
   image: [],
   tagName: [],
   video: '',
@@ -152,7 +151,6 @@ onMounted(() => {
       selectApi(params)
         .then((res) => {
           formData.value = res.data;
-          formData.value.answerText = res.data.answer;
         })
         .finally(() => {
           loading.value = false;

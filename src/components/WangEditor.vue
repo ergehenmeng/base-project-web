@@ -3,7 +3,6 @@
     <div :style="{ border: '1px solid #ccc', width: props.width + 'px' }">
       <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" mode="simple" />
       <Editor v-model="htmlValue" :style="{ 'overflow-y': 'hidden', height: props.height + 'px' }" mode="simple" :defaultConfig="editorConfig" @onCreated="handleCreated" @onChange="setTextValue" />
-      <textarea v-model="textValue" style="display: none"></textarea>
     </div>
   </div>
 </template>
@@ -24,22 +23,7 @@ const uploadUrl = import.meta.env.VITE_API_PREFIX + '/manage/file/upload';
  * htmlValue
  * @type {ModelRef<unknown | undefined, string>}
  */
-const htmlValue = defineModel('htmlValue', {
-  get(val) {
-    if (val) {
-      return val;
-    }
-    return '<p><br></p>';
-  },
-  set(val) {
-    if (val) {
-      return val;
-    }
-    return '<p><br></p>';
-  }
-});
-
-const textValue = defineModel('textValue');
+const htmlValue = defineModel('htmlValue');
 
 const props = defineProps({
   placeholder: {
@@ -98,7 +82,14 @@ editorConfig.MENU_CONF['uploadImage'] = {
 };
 
 const setTextValue = (editor) => {
-  textValue.value = editor.getText();
+  // 同步 HTML 内容到父组件，确保图片等内容能正确保存
+  const html = editor.getHtml();
+  if (html && html !== '<p><br></p>') {
+    htmlValue.value = html;
+  } else if (html === '<p><br></p>') {
+    // 编辑器内容为空时，同步空值而非默认占位符
+    htmlValue.value = '';
+  }
 };
 
 onBeforeUnmount(() => {
@@ -110,6 +101,10 @@ const handleCreated = (editor) => {
   editorRef.value = editor;
   if (props.disabled) {
     editorRef.value?.disable();
+  }
+  // 初始化：如果父组件传入空值，设置编辑器显示空内容
+  if (!htmlValue.value) {
+    editor.clear();
   }
 };
 </script>

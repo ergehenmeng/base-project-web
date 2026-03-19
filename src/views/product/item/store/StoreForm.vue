@@ -45,8 +45,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="商家介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+      <el-form-item label="商家介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" ></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview" />
       </el-form-item>
     </el-form>
@@ -97,7 +97,7 @@ const formRules = reactive({
   depotAddressId: [{ required: true, message: '请选择退换货地址', trigger: 'change' }],
   latitude: [{ required: true, message: '请选择经纬度', trigger: 'change' }],
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
-  introduceText: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '商家介绍不能为空', trigger: 'change' }]
 });
 
 let formData = ref({
@@ -112,7 +112,6 @@ let formData = ref({
   latitude: null,
   openTime: null,
   coverUrl: [],
-  introduceText: null,
   introduce: null,
   depotAddressId: null,
   pickupId: null
@@ -162,7 +161,6 @@ onMounted(() => {
         } else {
           formData.value.areaList = [res.data.provinceId, res.data.cityId];
         }
-        formData.value.introduceText = res.data.introduce;
         handleMerchantChange(res.data.merchantId);
       })
       .finally(() => {

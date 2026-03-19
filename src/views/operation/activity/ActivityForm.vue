@@ -29,8 +29,8 @@
         <el-form-item label="关联景区" prop="scenicId">
           <ScenicSelect v-model="formData.scenicId"/><QuestionTip content="注意：关联景区后活动只会在该景区下显示"/>
         </el-form-item>
-        <el-form-item label="活动详细介绍" prop="introduceText">
-          <WangEditor v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText"></WangEditor>
+        <el-form-item label="活动详细介绍" prop="introduce">
+          <WangEditor v-model:html-value="formData.introduce" ></WangEditor>
         </el-form-item>
       </el-form>
     </el-scrollbar>
@@ -63,7 +63,7 @@ const formRules = reactive({
   activityTime: [{ required: true, message: '请选择活动时间', trigger: 'blur' }],
   address: [{ required: true, message: '活动地点不能为空', trigger: 'blur' }],
   coverUrl: [{ required: true, message: '请上传封面', trigger: 'change', type: 'array'}],
-  introduceText: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }],
+  introduce: [{ required: true, message: '活动详细介绍不能为空', trigger: 'blur' }],
   commentSupport: [{ required: true, message: '请选择是否开启留言', trigger: 'change' }]
 });
 
@@ -74,7 +74,6 @@ const formData = ref({
   activityTime: null,
   commentSupport: false,
   introduce: '',
-  introduceText: '',
   address: null,
   scenicId: null,
   coverUrl: []
@@ -114,7 +113,6 @@ onMounted(() => {
     selectApi(params)
       .then((res) => {
         formData.value = res.data;
-        formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
         loading.value = false;

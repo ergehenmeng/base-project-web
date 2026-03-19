@@ -50,8 +50,8 @@
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
       </el-form-item>
-      <el-form-item label="详细介绍" prop="introduceText">
-        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" v-model:text-value="formData.introduceText" :width="570" :height="300"></WangEditor>
+      <el-form-item label="详细介绍" prop="introduce">
+        <WangEditor v-if="!disabled" v-model:html-value="formData.introduce" :width="570" :height="300"></WangEditor>
         <div v-else v-html="formData.introduce" class="html-preview"/>
       </el-form-item>
       <h4>游玩信息</h4>
@@ -80,8 +80,8 @@
               <el-checkbox label="晚餐" :value="4" />
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="游玩介绍" :prop="`configList[${index}].depictText`" :rules="{ required: true, message: '游玩介绍不能为空', trigger: 'blur' }">
-            <WangEditor v-if="!disabled" v-model:html-value="item.depict" v-model:text-value="item.depictText" :width="570" :height="300"></WangEditor>
+          <el-form-item label="游玩介绍" :prop="`configList[${index}].depict`" :rules="{ required: true, message: '游玩介绍不能为空', trigger: 'blur' }">
+            <WangEditor v-if="!disabled" v-model:html-value="item.depict" :width="570" :height="300"></WangEditor>
             <div v-else v-html="item.depict" class="html-preview"/>
           </el-form-item>
         </div>
@@ -122,7 +122,7 @@ const formRules = reactive({
   coverUrl: [{ required: true, message: '请上传封面图', trigger: 'change', type: 'array' }],
   duration: [{ required: true, message: '游玩天数不能为空', trigger: 'change' }],
   advanceDay: [{ required: true, message: '提前购票不能为空', trigger: 'blur' }],
-  introduceText: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
+  introduce: [{ required: true, message: '详细介绍不能为空', trigger: 'change' }]
 });
 
 const formData = ref({
@@ -143,11 +143,9 @@ const formData = ref({
       endPoint: null,
       trafficType: null,
       repastList: [],
-      depict: null,
-      depictText: null
+      depict: null
     }
   ],
-  introduceText: null,
   introduce: null
 });
 
@@ -161,8 +159,7 @@ const changeDay = (value) => {
         endPoint: null,
         trafficType: null,
         repastList: [],
-        depict: null,
-        depictText: null
+        depict: null
       });
     }
   } else {
@@ -211,7 +208,6 @@ onMounted(() => {
       .then((res) => {
         formData.value = res.data;
         formData.value.startCity = [res.data.startProvinceId, res.data.startCityId];
-        formData.value.introduceText = res.data.introduce;
       })
       .finally(() => {
         loading.value = false;
