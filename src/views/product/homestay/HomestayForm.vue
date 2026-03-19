@@ -11,7 +11,6 @@
           <el-option label="五星" :value="5" />
           <el-option label="四星" :value="4" />
           <el-option label="三星" :value="3" />
-          <el-option label="二星" :value="2" />
           <el-option label="无" :value="0" />
         </el-select>
       </el-form-item>
