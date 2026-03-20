@@ -2,7 +2,7 @@
   <div>
     <div :style="{ border: '1px solid #ccc', width: props.width + 'px' }">
       <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" mode="simple" />
-      <Editor v-model="htmlValue" :style="{ 'overflow-y': 'hidden', height: props.height + 'px' }" mode="simple" :defaultConfig="editorConfig" @onCreated="handleCreated" @onChange="setTextValue" />
+      <Editor v-model="safeHtmlValue" :style="{ 'overflow-y': 'hidden', height: props.height + 'px' }" mode="simple" :defaultConfig="editorConfig" @onCreated="handleCreated" @onChange="setTextValue" />
     </div>
   </div>
 </template>
@@ -23,7 +23,19 @@ const uploadUrl = import.meta.env.VITE_API_PREFIX + '/manage/file/upload';
  * htmlValue
  * @type {ModelRef<unknown | undefined, string>}
  */
-const htmlValue = defineModel('htmlValue');
+const htmlValue = defineModel('htmlValue', {
+  type: String,
+  default: ''
+});
+
+const safeHtmlValue = computed({
+  get() {
+    return htmlValue.value ?? '';
+  },
+  set(value) {
+    htmlValue.value = typeof value === 'string' ? value : '';
+  }
+});
 
 const props = defineProps({
   placeholder: {

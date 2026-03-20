@@ -6,7 +6,7 @@
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
-        <el-input v-model="formData.depict" type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" show-word-limit maxlength="40" />
+        <el-input v-model="formData.depict" type="textarea" :autosize="{ minRows: 2, maxRows: 2 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="所属店铺" prop="storeId">
         <StoreSelect v-model="formData.storeId" @change="storeHandle" :clearable="false"></StoreSelect>
@@ -223,7 +223,7 @@ const formRules = reactive({
   title: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
   depict: [
     { required: true, message: '描述信息不能为空', trigger: 'blur' },
-    { min: 5, max: 40, message: '长度在 5 到 40 个字符', trigger: 'blur' }
+    { min: 5, max: 40, message: '长度在 5 到 50 个字符', trigger: 'blur' }
   ],
   quota: [
     { required: true, message: '限购数量不能为空', trigger: 'blur' },

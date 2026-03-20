@@ -30,7 +30,7 @@
         <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="描述信息" prop="intro">
-        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.intro" maxlength="100" show-word-limit />
+        <el-input type="textarea" :autosize="{ minRows: 4, maxRows: 5 }" v-model="formData.intro" maxlength="50" show-word-limit />
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
@@ -105,7 +105,7 @@ const formRules = reactive({
 
 const formData = ref({
   id: null,
-  homestayName: null,
+  title: null,
   level: null,
   merchantId: null,
   openTime: null,

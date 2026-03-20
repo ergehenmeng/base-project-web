@@ -34,7 +34,7 @@
         <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="描述信息" prop="depict">
-        <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 3, maxRows: 3 }" show-word-limit maxlength="50" />
+        <el-input type="textarea" v-model="formData.depict" :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />
       </el-form-item>
       <el-form-item label="封面图" prop="coverUrl">
         <UploadImageList v-model:file-list="formData.coverUrl" :disabled="disabled"></UploadImageList>
