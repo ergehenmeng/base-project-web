@@ -11,7 +11,7 @@
         <LocationMap v-model:latitude="formData.latitude" v-model:longitude="formData.longitude"/>
       </el-form-item>
       <el-form-item label="省市县" prop="areaList" class="w450">
-        <AreaSelect v-model="formData.areaList" cls="w400"/>
+        <AreaSelect v-model="formData.areaList" :cls="['w400']"/>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress" class="w450">
         <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />

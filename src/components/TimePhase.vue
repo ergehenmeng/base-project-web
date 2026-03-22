@@ -394,6 +394,10 @@ const props = defineProps({
   clearable: {
     type: Boolean,
     default: true
+  },
+  save: {
+    type: Boolean,
+    default: false
   }
 });
 

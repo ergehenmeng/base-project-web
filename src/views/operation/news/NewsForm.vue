@@ -18,7 +18,7 @@
         <el-input type="textarea" v-model="formData.video" placeholder="视频url地址"  :autosize="{ minRows: 2, maxRows: 4 }" show-word-limit maxlength="200" />
       </el-form-item>
       <el-form-item label="省市县" prop="areaList" class="w450" v-if="showField.includeLocation">
-        <AreaSelect v-model="formData.areaList" cls="w400"/>
+        <AreaSelect v-model="formData.areaList" :cls="['w400']"/>
       </el-form-item>
       <el-form-item label="详细地址" prop="detailAddress" class="w450" v-if="showField.includeLocation">
         <el-input type="textarea" v-model="formData.detailAddress"  :autosize="{ minRows: 2, maxRows: 3 }" show-word-limit maxlength="50" />

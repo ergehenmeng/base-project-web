@@ -18,7 +18,7 @@
         <el-tab-pane v-for="(item, index) in dayList" :label="item" :key="index" :name="item"></el-tab-pane>
       </el-tabs>
       <div style="padding-top: 20px; display: flex; justify-content: center">
-        <TimePhase v-model:phase-list="phaseList" :disabled="!setupAuth" :now-date="activeDay" :venue-site-id="venueSiteId"></TimePhase>
+        <TimePhase :save="true" v-model:phase-list="phaseList" :disabled="!setupAuth" :now-date="activeDay" :venue-site-id="venueSiteId"></TimePhase>
       </div>
     </div>
   </div>

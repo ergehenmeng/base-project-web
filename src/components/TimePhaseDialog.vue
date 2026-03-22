@@ -23,6 +23,7 @@ import { successMsg } from '@/utils/message.js'
 const formDataRef = ref();
 const showDialog = ref(false);
 const emit = defineEmits(['reload', 'cancel']);
+const shouldSave = ref(false);
 
 const formRules = reactive({
   price: [{ required: true, message: '价格不能为空', trigger: 'blur' }]
@@ -36,13 +37,14 @@ const formData = ref({
   venueSiteId: null
 });
 
-const openDialog = (startTime, endTime, nowDate, venueSiteId) => {
+const openDialog = (startTime, endTime, nowDate, venueSiteId, save) => {
   showDialog.value = true;
   resetForm();
   formData.value.startTime = startTime;
   formData.value.endTime = endTime;
   formData.value.nowDate = nowDate;
   formData.value.venueSiteId = venueSiteId;
+  shouldSave.value = save;
 };
 
 const resetForm = () => {
@@ -59,11 +61,16 @@ const resetForm = () => {
 const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
-      createPriceApi(formData.value).then(()=> {
-        successMsg('价格添加成功');
+      if (shouldSave.value) {
+        createPriceApi(formData.value).then(()=> {
+          successMsg('价格添加成功');
+          showDialog.value = false;
+          emit('reload', formData.value.price);
+        })
+      } else {
         showDialog.value = false;
         emit('reload', formData.value.price);
-      })
+      }
     }
   });
 };
