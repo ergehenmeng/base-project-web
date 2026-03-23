@@ -17,15 +17,8 @@
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
         <el-table-column prop="icon" label="图标">
           <template #default="scope">
-            <div style="display: flex; align-items: center">
-              <el-image
-                fit="cover"
-                :src="scope.row.icon?.split(',')[0]"
-                :preview-src-list="scope.row.icon?.split(',')"
-                style="width: 30px; height: 30px"
-                preview-teleported
-                hide-on-click-modal
-              />
+            <div style="display: flex; align-items: center; width: 24px; height: 24px; border-radius: 6px;">
+              <i v-if="getIconClass(scope.row.icon)" :class="getIconClass(scope.row.icon)" :style="{ color: '#fff', backgroundColor: getIconColor(scope.row.icon), fontSize: '16px', padding: '4px', borderRadius: '4px' }"></i>
             </div>
           </template>
         </el-table-column>
@@ -121,5 +114,17 @@ const handleCreate = () => {
 
 const handleEdit = (row) => {
   formRef.value.openDialog(row);
+};
+
+const getIconClass = (iconStr) => {
+  if (!iconStr) return '';
+  const parts = iconStr.split('|');
+  return parts[0] || '';
+};
+
+const getIconColor = (iconStr) => {
+  if (!iconStr) return '#409EFF';
+  const parts = iconStr.split('|');
+  return parts[1] || '#409EFF';
 };
 </script>

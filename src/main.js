@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
 import '@/styles/index.scss';
+import 'remixicon/fonts/remixicon.css';
 import { createPinia } from 'pinia';
 import { createPersistedState } from 'pinia-plugin-persistedstate';
 import hasPerm from '@/directive/hasPerm.js';
