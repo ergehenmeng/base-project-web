@@ -44,6 +44,36 @@ export default [
         ]
       },
       {
+        path: 'activity',
+        name: 'activity',
+        meta: {
+          title: '景区活动'
+        },
+        children: [
+          {
+            path: '',
+            name: 'activityIndex',
+            component: () => import('@/views/product/ticket/activity/index.vue')
+          },
+          {
+            path: 'create',
+            name: 'activityCreate',
+            component: () => import('@/views/product/ticket/activity/ActivityForm.vue'),
+            meta: {
+              title: '新增'
+            }
+          },
+          {
+            path: 'edit/:id',
+            name: 'activityEdit',
+            component: () => import('@/views/product/ticket/activity/ActivityForm.vue'),
+            meta: {
+              title: '编辑'
+            }
+          }
+        ]
+      },
+      {
         path: 'ticket',
         name: 'ticket',
         meta: {
