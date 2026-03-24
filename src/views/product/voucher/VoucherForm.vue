@@ -40,8 +40,8 @@
               <el-form-item label="规格值" :prop="`specList[${index}].valueList`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
                 <div class="spec-value">
                   <div class="spec-value-patch" v-for="(value, idx) in item.valueList" :key="idx">
-                    <el-form-item :prop="`specList[${index}].valueList[${idx}].name`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
-                      <el-input class="w140" v-model.trim="value.name" maxlength="8" @keyup="handleBlurValue(index, idx)" />
+                    <el-form-item :prop="`specList[${index}].valueList[${idx}]`" :rules="{ required: true, message: '请输入规格值', trigger: 'blur' }">
+                      <el-input class="w140" v-model.trim="item.valueList[idx]" maxlength="8" @keyup="handleBlurValue(index, idx)" />
                     </el-form-item>
                     <span class="close">
                       <el-icon @click="handleCloseValue(index, idx)" v-if="!disabled">
@@ -168,10 +168,8 @@ const formData = ref({
 const buildDefaultSpecList = () => {
   return [
     {
-      id: null,
-      level: 1,
       specName: null,
-      valueList: [{ name: null }]
+      valueList: [null]
     }
   ];
 };
@@ -197,10 +195,8 @@ const handleAddSpec = () => {
     return;
   }
   formData.value.specList.push({
-    id: null,
-    level: formData.value.specList.length + 1,
     specName: null,
-    valueList: [{ name: null }]
+    valueList: [null]
   });
 };
 
@@ -210,13 +206,10 @@ const handleCloseSpec = (index) => {
     return;
   }
   formData.value.specList.splice(index, 1);
-  formData.value.specList.forEach((item, idx) => {
-    item.level = idx + 1;
-  });
 };
 
 const handleAddValue = (index) => {
-  formData.value.specList[index].valueList.push({ name: null });
+  formData.value.specList[index].valueList.push(null);
 };
 
 const handleCloseValue = (index, idx) => {
@@ -241,10 +234,10 @@ const handleBlurSpec = (index) => {
 
 const handleBlurValue = (index, idx) => {
   const spec = formData.value.specList[index];
-  const valueList = spec.valueList.filter((item) => !!item.name).map((item) => item.name);
+  const valueList = spec.valueList.filter((item) => !!item).map((item) => item);
   if (new Set(valueList).size !== valueList.length) {
     errorMsg('规格值不能重复');
-    spec.valueList[idx].name = null;
+    spec.valueList[idx] = null;
   }
 };
 
@@ -260,15 +253,6 @@ const parseSpecConfig = (rawValue) => {
   } catch (_e) {
     return null;
   }
-};
-
-const buildSpecConfig = () => {
-  if (!enableSpec.value) {
-    return null;
-  }
-  return {
-    specList: formData.value.specList
-  };
 };
 
 const handleSave = () => {
@@ -287,10 +271,9 @@ const handleSave = () => {
       formData.value.effectDate = null;
       formData.value.expireDate = null;
     }
-    const specConfig = buildSpecConfig();
     const payload = {... formData.value,
       specEnabled: enableSpec.value,
-      specConfigJson: specConfig ? JSON.stringify(specConfig) : null
+      specConfigJson: JSON.stringify(formData.value.specList)
     };
     const api = formData.value.id ? updateApi : createApi;
     api(payload)
@@ -321,12 +304,12 @@ onMounted(() => {
           formData.value.activityDate = [res.data.effectDate, res.data.expireDate];
         }
         const specConfig = parseSpecConfig(res.data.specConfigJson);
-        if (!specConfig || !specConfig.specList || specConfig.specList.length === 0) {
+        if (!specConfig|| specConfig.length === 0) {
           enableSpec.value = false;
           formData.value.specList = [];
         } else {
           enableSpec.value = true;
-          formData.value.specList = specConfig.specList;
+          formData.value.specList = specConfig;
         }
       })
       .finally(() => {
@@ -352,7 +335,7 @@ const validTypeChange = (val) => {
 
 <style lang="scss" scoped>
 .voucher-group {
-  width: 1000px;
+  width: 910px;
   border: 1px solid #dcdfe6;
   padding: 10px;
 }
@@ -368,8 +351,8 @@ const validTypeChange = (val) => {
     position: relative;
     background-color: rgba(0, 0, 0, 0.02);
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 15px;
+    padding: 10px 10px 0 10px;
+    margin-bottom: 10px;
 
     .spec-close {
       position: absolute;
@@ -385,8 +368,7 @@ const validTypeChange = (val) => {
   flex-wrap: wrap;
 
   .spec-value-patch {
-    margin-right: 20px;
-    padding: 5px;
+    margin-right: 10px;
     text-align: center;
     position: relative;
 
@@ -401,5 +383,12 @@ const validTypeChange = (val) => {
 
 .el-form-item .el-form-item {
   margin-bottom: 18px;
+}
+
+.html-preview :deep(img) {
+  display: block;
+  max-width: 100% !important;  /* 超大图缩到容器内 */
+  width: auto !important;       /* 不强制拉伸小图 */
+  height: auto !important;
 }
 </style>

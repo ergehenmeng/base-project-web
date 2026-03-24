@@ -576,4 +576,12 @@ const handleChangeSpec = (value) => {
 .el-image-viewer__wrapper {
   z-index: 9999 !important;
 }
+
+.html-preview :deep(img) {
+   display: block;
+   max-width: 100% !important;  /* 超大图缩到容器内 */
+   width: auto !important;       /* 不强制拉伸小图 */
+   height: auto !important;
+ }
+
 </style>

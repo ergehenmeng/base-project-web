@@ -234,4 +234,11 @@ onMounted(() => {
 .line-day-config > .line-day-config-item:first-child {
   border-top: none;
 }
+
+.html-preview :deep(img) {
+  display: block;
+  max-width: 100% !important;  /* 超大图缩到容器内 */
+  width: auto !important;       /* 不强制拉伸小图 */
+  height: auto !important;
+}
 </style>
