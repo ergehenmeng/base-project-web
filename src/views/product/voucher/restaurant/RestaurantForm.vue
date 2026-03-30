@@ -74,6 +74,7 @@ const formRules = reactive({
   openTime: [{ required: true, message: '营业时间不能为空', trigger: 'blur' }],
   avgCost: [{ required: true, message: '人居消费不能为空', trigger: 'blur' }],
   areaList: [{ required: true, message: '请选择省市县', trigger: 'change', type: 'array' }],
+  searchTag: [{ required: true, message: '请输入标签', trigger: 'change', type: 'array' }],
   detailAddress: [
     { required: true, message: '详细地址不能为空', trigger: 'blur' },
     { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
