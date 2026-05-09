@@ -34,7 +34,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="标题" min-width="120" />
         <el-table-column prop="imgUrl" label="预览" width="60">
           <template #default="scope">

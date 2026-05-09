@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="参数名称" width="250" />
         <el-table-column prop="nid" label="标示符" width="250" />
         <el-table-column prop="content" label="配置信息" width="300" />
@@ -33,12 +33,12 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container">
+      <div class="pagination-container system-config-pagination">
         <el-pagination
           v-model:current-page="queryParams.page"
           v-model:page-size="queryParams.pageSize"
           :page-sizes="[10, 20, 50]"
-          layout="->, total, sizes, prev, pager, next"
+          layout="total, sizes, prev, pager, next"
           :total="total"
           @change="getPage"
         />
@@ -95,3 +95,9 @@ const handleEdit = (row) => {
   formRef.value.openDialog(row);
 };
 </script>
+<style lang="scss" scoped>
+.system-config-pagination {
+  display: flex;
+  justify-content: flex-start;
+}
+</style>

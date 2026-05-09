@@ -14,11 +14,11 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="icon" label="图标">
           <template #default="scope">
-            <div style="display: flex; align-items: center; width: 24px; height: 24px; border-radius: 6px;">
-              <i v-if="getIconClass(scope.row.icon)" :class="getIconClass(scope.row.icon)" :style="{ color: '#fff', backgroundColor: getIconColor(scope.row.icon), fontSize: '16px', padding: '4px', borderRadius: '4px' }"></i>
+            <div style="display: flex; align-items: center">
+              <i v-if="getIconClass(scope.row.icon)" :class="getIconClass(scope.row.icon)" :style="{ color: '#fff', backgroundColor: getIconColor(scope.row.icon), fontSize: '20px', padding: '4px', borderRadius: '4px' }"></i>
             </div>
           </template>
         </el-table-column>

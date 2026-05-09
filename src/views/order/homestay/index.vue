@@ -31,7 +31,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="orderNo" label="订单编号" width="200" />
         <el-table-column prop="title" label="房型名称" min-width="150" />
         <el-table-column prop="homestayName" label="民宿名称" min-width="130" />

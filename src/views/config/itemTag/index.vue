@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table row-key="id" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="标签名称" width="200"/>
         <el-table-column prop="icon" label="图标" width="120">
           <template #default="scope">
