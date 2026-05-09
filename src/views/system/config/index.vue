@@ -33,12 +33,12 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container system-config-pagination">
+      <div class="pagination-container">
         <el-pagination
           v-model:current-page="queryParams.page"
           v-model:page-size="queryParams.pageSize"
           :page-sizes="[10, 20, 50]"
-          layout="total, sizes, prev, pager, next"
+          layout="->, total, sizes, prev, pager, next"
           :total="total"
           @change="getPage"
         />
@@ -95,9 +95,3 @@ const handleEdit = (row) => {
   formRef.value.openDialog(row);
 };
 </script>
-<style lang="scss" scoped>
-.system-config-pagination {
-  display: flex;
-  justify-content: flex-start;
-}
-</style>
