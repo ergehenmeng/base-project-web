@@ -5,12 +5,6 @@
         <el-form-item label="搜索">
           <el-input v-model="queryParams.queryName" placeholder="单位名称" clearable @keyup.enter="search" maxlength="30" />
         </el-form-item>
-        <el-form-item label="签名方式">
-          <el-select v-model="queryParams.signType" clearable>
-            <el-option label="MD5" value="MD5" />
-            <el-option label="RSA" value="RSA" />
-          </el-select>
-        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search">搜索</el-button>
         </el-form-item>
@@ -19,7 +13,6 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="单位名称" min-width="200" />
-        <el-table-column prop="signType" label="签名方式" width="80" />
         <el-table-column prop="appKey" label="appKey" width="300" />
         <el-table-column prop="email" label="邮箱" width="180"/>
         <el-table-column prop="expireDate" label="过期时间" width="100" />
@@ -72,8 +65,7 @@ const selectAuth = permStore.hasAuth('9vK0');
 const queryParams = reactive({
   queryName: '',
   page: 1,
-  pageSize: 10,
-  signType: null
+  pageSize: 10
 });
 
 const pageData = ref([]);

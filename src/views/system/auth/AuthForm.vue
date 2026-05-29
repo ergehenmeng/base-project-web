@@ -1,17 +1,11 @@
 <template>
   <el-dialog v-model="showDialog" width="520px" draggable align-center :close-on-click-modal="false">
     <template #header>
-      <span>{{ dialogTitle }}<QuestionTip content="注意：相关业务代码需要开发人员额外开发"/></span>
+      <span>{{ dialogTitle }}<QuestionTip content="注意：默认为RSA签名, 相关业务代码需要开发人员额外开发"/></span>
     </template>
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="单位名称" prop="title" class="w450">
         <el-input v-model="formData.title" show-word-limit maxlength="20" />
-      </el-form-item>
-      <el-form-item label="签名方式" prop="signType" class="w450">
-        <el-select v-model="formData.signType" :disabled="formData.id !== null">
-          <el-option label="MD5" value="MD5" />
-          <el-option label="RSA" value="RSA" />
-        </el-select>
       </el-form-item>
       <el-form-item label="过期时间" prop="expireDate" class="w450">
         <el-date-picker v-model="formData.expireDate" type="date" value-format="YYYY-MM-DD" placeholder="默认有效期一年" :disabled-date="disableBeforeDate" />
@@ -46,14 +40,12 @@ const emit = defineEmits(['reload']);
 
 const formRules = reactive({
   title: [{ required: true, message: '单位名称不能为空', trigger: 'blur' }, { min: 2, max: 20, message: '单位名称长度2~20位', trigger: 'blur' }],
-  signType: [{ required: true, message: '签名方式不能为空', trigger: 'change' }],
   email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }, { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }],
 });
 
 const formData = ref({
   id: null,
   title: '',
-  signType: 'MD5',
   expireDate: null,
   email: null,
   remark: ''
@@ -74,7 +66,6 @@ const resetForm = () => {
   formData.value = {
     id: null,
     title: '',
-    signType: 'MD5',
     expireDate: null,
     email: null,
     remark: ''
