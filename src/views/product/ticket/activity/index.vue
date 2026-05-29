@@ -14,7 +14,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="标题" width="250" />
         <el-table-column prop="scenicName" label="所属景区" width="250" />
         <el-table-column prop="startDate" label="活动日期" width="280" :formatter="formatter"/>

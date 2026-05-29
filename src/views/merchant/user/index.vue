@@ -17,7 +17,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="nickName" label="用户昵称" min-width="120" />
         <el-table-column prop="mobile" label="手机号" min-width="150" />
         <el-table-column prop="state" label="状态" min-width="80" :formatter="formatter" />

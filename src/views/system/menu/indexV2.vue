@@ -30,7 +30,7 @@
             </el-form>
           </div>
           <div>
-            <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+            <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
               <el-table-column prop="title" label="菜单名称" width="120" />
               <el-table-column prop="icon" label="图标" :formatter="formatter" width="80">
                 <template #default="scope">

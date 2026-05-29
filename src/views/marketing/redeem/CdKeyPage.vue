@@ -21,7 +21,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="cdKey" label="兑换码" min-width="200" />
         <el-table-column prop="state" label="状态" min-width="80" :formatter="formatter" />
         <el-table-column prop="createTime" label="生成时间" min-width="180" />

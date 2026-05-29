@@ -35,7 +35,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="merchantName" label="商户名称" min-width="200"/>
         <el-table-column prop="accountType" label="资金变动类型" :formatter="formatter" min-width="150"/>
         <el-table-column prop="amount" label="变动金额" min-width="130"/>

@@ -23,7 +23,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="channel" label="客户端" width="100" />
         <el-table-column prop="version" label="版本号" width="100" />
         <el-table-column prop="state" label="状态" width="100" >

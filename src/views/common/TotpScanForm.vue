@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="绑定" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
+  <el-dialog title="绑定" v-model="showDialog" width="420px" draggable align-center :close-on-click-modal="false">
     <el-form ref="formDataRef" :model="formData" :rules="formRules" label-width="80px">
       <el-form-item label="二维码">
         <el-image fit="cover" :src="qrCode" style="width: 80%"></el-image>
@@ -10,8 +10,9 @@
       <div class="tips-container">
         <h5>说明</h5>
         <p class="tips">1、在Google Play或App Store上搜索Google Authenticator并下载</p>
-        <p class="tips">2、国内请在手机应用商店用Authenticator、TOTP、OTP关键字搜索并下载</p>
+        <p class="tips">2、国内请在手机应用商店用Authenticator、TOTP关键字搜索并下载</p>
         <p class="tips">3、APP扫描二维码后会生成动态口令，输入动态口令即可完成绑定</p>
+        <p class="tips">4、该二维码请勿泄露给其他任何人</p>
       </div>
     </el-form>
     <template #footer>
@@ -25,7 +26,7 @@
 
 <script setup>
 import { bindTotpApi } from '@/api/login';
-import { errorMsg } from '@/utils/message.js';
+import {errorMsg, successMsg} from '@/utils/message.js';
 const loading = ref(false);
 const showDialog = ref(false);
 const emit = defineEmits(['reload', 'close']);
@@ -74,9 +75,10 @@ const confirmHandle = () => {
         emit('close')
         showDialog.value = false
       }).then(( { data }) => {
-        showDialog.value = false;
-        emit('reload', data);
-      }).catch(() => {
+        successMsg('绑定成功', () => {
+          showDialog.value = false;
+          emit('reload', data);
+        })
       }).finally(() => {
         loading.value = false;
       });

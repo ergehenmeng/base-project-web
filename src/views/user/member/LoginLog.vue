@@ -22,7 +22,7 @@
       </el-form>
     </div>
     <div class="content-main">
-      <el-table :data="pageData" style="width: 100%" v-loading="loading" max-height="670" show-overflow-tooltip>
+      <el-table :data="pageData" style="width: 100%" v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="channel" label="登陆渠道" min-width="100" />
         <el-table-column prop="ip" label="登陆ip" min-width="120" />
         <el-table-column prop="deviceBrand" label="设备厂商" min-width="120" />
