@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { unlockScreenApi, lockScreenApi } from '@/api/system/user';
+import { unlockScreenApi, lockScreenApi } from '@/api/system/system';
 import { confirmMsg, successMsg } from '@/utils/message.js';
 import useUserStore from '@/store/user';
 import { rsaEncode } from '@/utils/common.js';
