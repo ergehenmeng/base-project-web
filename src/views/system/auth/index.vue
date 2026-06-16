@@ -13,7 +13,7 @@
     <div class="content-main">
       <el-table :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="650" show-overflow-tooltip>
         <el-table-column prop="title" label="单位名称" min-width="200" />
-        <el-table-column prop="appKey" label="appKey" width="300" />
+        <el-table-column prop="appId" label="appId" width="300" />
         <el-table-column prop="email" label="邮箱" width="180"/>
         <el-table-column prop="expireDate" label="过期时间" width="100" />
         <el-table-column prop="remark" label="备注" width="180" />
