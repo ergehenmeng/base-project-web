@@ -2,13 +2,13 @@
   <el-dialog title="修改密码" v-model="showDialog" width="450px" draggable align-center :close-on-click-modal="false">
     <el-form :model="formData" ref="formDataRef" :rules="formRules" label-position="right" label-width="auto" v-loading="loading">
       <el-form-item label="旧密码" prop="oldPwd" class="w380">
-        <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" show-password/>
+        <el-input v-model="formData.oldPwd" type="password" show-word-limit maxlength="20" show-password />
       </el-form-item>
       <el-form-item label="密码" prop="newPwd" class="w380">
-        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" show-password/>
+        <el-input v-model="formData.newPwd" type="password" placeholder="密码必须包含英文字符、数字、@#&_" show-word-limit maxlength="20" show-password />
       </el-form-item>
       <el-form-item label="确认密码" prop="confirmPwd" class="w380">
-        <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" show-password/>
+        <el-input v-model="formData.confirmPwd" type="password" show-word-limit maxlength="20" show-password />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -99,7 +99,7 @@ const handleSave = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
-      changePwdApi({oldPwd: rsaEncode(formData.value.oldPwd), newPwd: rsaEncode(formData.value.newPwd)})
+      changePwdApi({ oldPwd: rsaEncode(formData.value.oldPwd + '|' + new Date().getTime()), newPwd: rsaEncode(formData.value.newPwd + '|' + new Date().getTime()) })
         .then(() => {
           successMsg('修改密码成功');
           showDialog.value = false;

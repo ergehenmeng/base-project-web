@@ -100,7 +100,7 @@ const handleLogin = async () => {
       loading.value = true;
       loginApi({
         userName: formData.value.userName,
-        pwd: rsaEncode(formData.value.pwd),
+        pwd: rsaEncode(formData.value.pwd + '|' + new Date().getTime()),
         verifyCode: formData.value.verifyCode
       })
         .then(({ data: { data, state, uuid, qrcode, secretKey } }) => {

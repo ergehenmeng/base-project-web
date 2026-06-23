@@ -39,8 +39,8 @@
 import { createApi, roleIdsApi, updateApi } from '@/api/merchant/user';
 import { roleListApi } from '@/api/system/user';
 import { successMsg } from '@/utils/message.js';
-import QuestionTip from '@/components/QuestionTip.vue'
-import { rsaEncode } from '@/utils/common.js'
+import QuestionTip from '@/components/QuestionTip.vue';
+import { rsaEncode } from '@/utils/common.js';
 
 const loading = ref(false);
 const dialogTitle = ref('');
@@ -87,7 +87,7 @@ const openDialog = (row) => {
   if (row.id) {
     dialogTitle.value = '编辑用户';
     formData.value = { ...row };
-    roleIdsApi({id: row.id}).then((res) => {
+    roleIdsApi({ id: row.id }).then((res) => {
       formData.value.roleIds = res.data;
     });
     formRules.password = [
@@ -98,7 +98,7 @@ const openDialog = (row) => {
         message: '密码必须包含英文字符、数字、@#&_',
         trigger: 'blur'
       }
-    ]
+    ];
   } else {
     dialogTitle.value = '新增用户';
   }
@@ -122,7 +122,7 @@ const handleSave = () => {
     if (valid) {
       loading.value = true;
       if (formData.value.id) {
-        updateApi({ ...formData.value, password: formData.value.password ? rsaEncode(formData.value.password) : null })
+        updateApi({ ...formData.value, password: formData.value.password ? rsaEncode(formData.value.password + '|' + new Date().getTime()) : null })
           .then(() => {
             successMsg('修改用户成功');
             showDialog.value = false;
@@ -132,7 +132,7 @@ const handleSave = () => {
             loading.value = false;
           });
       } else {
-        createApi({ ...formData.value, password: rsaEncode(formData.value.password) })
+        createApi({ ...formData.value, password: rsaEncode(formData.value.password + '|' + new Date().getTime()) })
           .then(() => {
             successMsg('新增用户成功');
             showDialog.value = false;
