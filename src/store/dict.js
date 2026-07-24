@@ -45,8 +45,8 @@ const useDictStore = defineStore(
       if (nid.length === 0) {
         return;
       }
-      const nidList = [...nid];
-      const { data } = await dictListApi({ nidList });
+      const idList = [...nid];
+      const { data } = await dictListApi({ idList });
       data.forEach((item) => {
         dictMap.value[item.nid] = item.itemList;
       });
