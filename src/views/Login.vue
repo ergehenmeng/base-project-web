@@ -51,6 +51,7 @@ const tabIndex = ref(0);
       width: 500px;
       height: 100%;
       background-image: url('@/assets/images/login.png');
+      background-size: cover;
     }
 
     .login-layout-right {
