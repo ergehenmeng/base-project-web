@@ -28,8 +28,8 @@
             <Shield />
           </el-icon>
         </template>
-        <template #append>
-          <el-button :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle"> {{ buttonName  }}</el-button>
+        <template #suffix>
+          <a :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle">{{ buttonName }}</a>
         </template>
       </el-input>
     </el-form-item>
@@ -132,7 +132,7 @@ const handleLogin = async () => {
 const countDown = () => {
   startCountDown(60, (time) => {
     if (time > 0) {
-      buttonName.value = `${time}s后发送`;
+      buttonName.value = `${time}s后重新发送`;
     } else {
       buttonName.value = '发送验证码';
       sendCode.value = true;
@@ -175,6 +175,6 @@ onActivated(() => {
   color: #c0c4cc;
 }
 .send-btn-disabled:hover {
-  cursor: pointer;
+  cursor: not-allowed;
 }
 </style>
