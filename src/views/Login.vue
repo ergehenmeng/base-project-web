@@ -15,7 +15,7 @@
             <SmsLoginForm v-if="tabIndex === 1" />
           </keep-alive>
         </div>
-        <div class="login-copyright"><span>© 2026 智能运营管理平台</span></div>
+        <div class="login-copyright"><span>{{ systemName }}</span></div>
       </div>
     </div>
   </div>
@@ -23,8 +23,8 @@
 <script setup>
 import AccountLoginForm from '@/views/common/AccountLoginForm.vue';
 import SmsLoginForm from '@/views/common/SmsLoginForm.vue';
-
 const tabIndex = ref(0);
+const systemName = import.meta.env.VITE_SYSTEM_NAME;
 </script>
 <style lang="scss" scoped>
 .login-container {
