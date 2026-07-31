@@ -30,12 +30,13 @@
         <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
       </div>
     </el-form-item>
-    <el-form-item>
+    <div class="submit-button">
+      <div class="login-form-options"><a href="#">忘记密码？</a></div>
       <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
       </el-button>
-    </el-form-item>
+    </div>
   </el-form>
   <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail" />
   <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail" />
@@ -142,6 +143,29 @@ onActivated(() => {
 <style lang="scss" scoped>
 .login-form {
   width: 280px;
+  .submit-button {
+    margin-top: 10px;
+    .login-form-options {
+      display: flex;
+      justify-content: flex-end;
+      height: 24px;
+      margin: -2px 0 2px;
+      a {
+        color: #1769ff;
+        font-size: 13px;
+        line-height: 20px;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+        &:focus-visible {
+          outline: 2px solid rgba(23, 105, 255, 0.38);
+          outline-offset: 2px;
+          border-radius: 2px;
+        }
+      }
+    }
+  }
 }
 .login-form-verify {
   float: right;

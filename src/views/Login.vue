@@ -32,26 +32,22 @@ const tabIndex = ref(0);
   align-items: center;
   height: 100%;
   overflow: hidden;
-  background:
-    url('@/assets/images/background.png') repeat 1px 1px,
-    linear-gradient(132deg, rgba(0, 168, 255, 1) 0%, rgba(0, 210, 211, 1) 50%, rgba(0, 168, 255, 1) 100%);
-  background-blend-mode: multiply;
+  background: url('@/assets/images/background-square.png') center / cover no-repeat;
 
   .login-layout {
     width: 900px;
-    height: 400px;
+    height: 450px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.2);
 
     .login-layout-left {
       width: 500px;
       height: 100%;
-      background-image: url('@/assets/images/login.png');
-      background-size: cover;
+      background: url('@/assets/images/login.png') center / cover no-repeat;
     }
 
     .login-layout-right {
@@ -81,7 +77,7 @@ const tabIndex = ref(0);
       }
       .login-form-container {
         height: 300px;
-        padding-top: 30px;
+        padding-top: 10px;
       }
     }
   }
