@@ -1,5 +1,5 @@
 <template>
-  <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" >
+  <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData">
     <el-form-item prop="mobile">
       <el-input placeholder="请输入手机号" maxlength="11" v-model="formData.mobile" size="large">
         <template #prefix>
@@ -28,13 +28,13 @@
             <Shield />
           </el-icon>
         </template>
-        <template #suffix>
-          <span :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle" >{{buttonName}}</span>
+        <template #append>
+          <el-button :class="{ 'send-btn': sendCode, 'send-btn-disabled': !sendCode }" @click="sendSmsHandle"> {{ buttonName  }}</el-button>
         </template>
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading" >
+      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
       </el-button>
@@ -48,7 +48,7 @@ import { useRouter } from 'vue-router';
 import { sendSmsApi, smsLoginApi } from '@/api/login';
 import defaultPng from '@/assets/images/refresh.svg';
 import Shield from '@/components/Shield.vue';
-import { startCountDown } from '@/utils/common.js'
+import { startCountDown } from '@/utils/common.js';
 import { successMsg } from '@/utils/message.js';
 const userStore = useUserStore();
 const defaultImg = ref(defaultPng);
@@ -82,9 +82,9 @@ const errorHandle = () => {
 
 const loginFail = () => {
   formData.value.smsCode = null;
-  formData.value.verifyCode = null
-  getCode()
-}
+  formData.value.verifyCode = null;
+  getCode();
+};
 
 const sendSmsHandle = () => {
   if (!sendCode.value) {
@@ -94,13 +94,15 @@ const sendSmsHandle = () => {
   formDataRef.value.validate((valid) => {
     if (valid) {
       sendCode.value = false;
-      sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode }).then(() => {
-        countDown()
-        successMsg('验证码发送成功')
-      }).catch(() => {
-        sendCode.value = true;
-        loginFail()
-      });
+      sendSmsApi({ mobile: formData.value.mobile, verifyCode: formData.value.verifyCode })
+        .then(() => {
+          countDown();
+          successMsg('验证码发送成功');
+        })
+        .catch(() => {
+          sendCode.value = true;
+          loginFail();
+        });
     }
   });
 };
@@ -109,7 +111,7 @@ const handleLogin = async () => {
   if (loading.value) {
     return;
   }
-  formRules.smsCode = [{ required: true, message: '验证码不能为空', trigger: 'blur' }]
+  formRules.smsCode = [{ required: true, message: '验证码不能为空', trigger: 'blur' }];
   await formDataRef.value.validate((valid) => {
     if (valid) {
       loading.value = true;
@@ -118,7 +120,7 @@ const handleLogin = async () => {
           loginSuccessHandle(data);
         })
         .catch(() => {
-          loginFail()
+          loginFail();
         })
         .finally(() => {
           loading.value = false;
@@ -130,12 +132,12 @@ const handleLogin = async () => {
 const countDown = () => {
   startCountDown(60, (time) => {
     if (time > 0) {
-      buttonName.value = `${time}s后重新发送`;
+      buttonName.value = `${time}s后发送`;
     } else {
       buttonName.value = '发送验证码';
       sendCode.value = true;
     }
-  })
+  });
 };
 
 const loginSuccessHandle = (data) => {
@@ -147,7 +149,6 @@ const loginSuccessHandle = (data) => {
 onActivated(() => {
   getCode();
 });
-
 </script>
 <style lang="scss" scoped>
 .login-form {
