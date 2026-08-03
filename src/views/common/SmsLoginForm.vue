@@ -10,15 +10,17 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="verifyCode">
-      <el-input placeholder="图形验证码" v-model="formData.verifyCode" maxlength="4" size="large" style="width: 60%" @keyup.enter="sendSmsHandle">
-        <template #prefix>
-          <el-icon :size="20">
-            <CircleCheck />
-          </el-icon>
-        </template>
-      </el-input>
-      <div class="login-form-verify">
-        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+      <div>
+        <el-input placeholder="图形验证码" v-model="formData.verifyCode" maxlength="4" size="large" style="width: 60%" @keyup.enter="sendSmsHandle">
+          <template #prefix>
+            <el-icon :size="20">
+              <CircleCheck />
+            </el-icon>
+          </template>
+        </el-input>
+        <div class="login-form-verify">
+          <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+        </div>
       </div>
     </el-form-item>
     <el-form-item prop="smsCode">

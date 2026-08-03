@@ -19,19 +19,21 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="verifyCode">
-      <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
-        <template #prefix>
-          <el-icon :size="20">
-            <CircleCheck />
-          </el-icon>
-        </template>
-      </el-input>
-      <div class="login-form-verify">
-        <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+      <div>
+        <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
+          <template #prefix>
+            <el-icon :size="20">
+              <CircleCheck />
+            </el-icon>
+          </template>
+        </el-input>
+        <div class="login-form-verify">
+          <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+        </div>
       </div>
     </el-form-item>
     <div class="submit-button">
-      <div class="login-form-options"><a href="#">忘记密码？</a></div>
+      <div class="login-form-options"><a href="#" @click="forgetPwd">忘记密码？</a></div>
       <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
         <span v-if="!loading">登录</span>
         <span v-else>登录中</span>
@@ -50,6 +52,7 @@ import defaultPng from '@/assets/images/refresh.svg';
 import { loginApi } from '@/api/login';
 import TotpPrompt from '@/views/common/TotpPrompt.vue';
 import TotpScanForm from '@/views/common/TotpScanForm.vue';
+import { warningMsg } from '@/utils/message.js';
 
 const defaultImg = ref(defaultPng);
 const userStore = useUserStore();
@@ -133,6 +136,10 @@ const loginSuccessHandle = (data) => {
   userStore.user = { ...data };
   userStore.isLogin = true;
   router.replace('/home');
+};
+
+const forgetPwd = async () => {
+  warningMsg('请联系运营人员初始化密码');
 };
 
 onActivated(() => {
