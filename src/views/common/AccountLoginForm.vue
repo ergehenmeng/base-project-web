@@ -1,45 +1,45 @@
 <template>
   <div>
     <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" v-if="tabIndex === 0">
-    <el-form-item prop="userName">
-      <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large">
-        <template #prefix>
-          <el-icon :size="20">
-            <User />
-          </el-icon>
-        </template>
-      </el-input>
-    </el-form-item>
-    <el-form-item prop="pwd">
-      <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="20" size="large" type="password" show-password autocomplete="off">
-        <template #prefix>
-          <el-icon :size="20">
-            <Lock />
-          </el-icon>
-        </template>
-      </el-input>
-    </el-form-item>
-    <el-form-item prop="verifyCode">
-      <div>
-        <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
+      <el-form-item prop="userName">
+        <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large">
           <template #prefix>
             <el-icon :size="20">
-              <CircleCheck />
+              <User />
             </el-icon>
           </template>
         </el-input>
-        <div class="login-form-verify">
-          <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+      </el-form-item>
+      <el-form-item prop="pwd">
+        <el-input placeholder="请输入密码" v-model="formData.pwd" maxlength="20" size="large" type="password" show-password autocomplete="off">
+          <template #prefix>
+            <el-icon :size="20">
+              <Lock />
+            </el-icon>
+          </template>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="verifyCode">
+        <div>
+          <el-input placeholder="验证码" v-model="formData.verifyCode" maxlength="4" size="large" @keyup.enter="handleLogin" style="width: 60%">
+            <template #prefix>
+              <el-icon :size="20">
+                <CircleCheck />
+              </el-icon>
+            </template>
+          </el-input>
+          <div class="login-form-verify">
+            <img :src="verifyUrl" @click="getCode" alt="点击刷新" @error="errorHandle" />
+          </div>
         </div>
+      </el-form-item>
+      <div class="submit-button">
+        <div class="login-form-options"><a href="#" @click="forgetPwd">忘记密码？</a></div>
+        <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
+          <span v-if="!loading">登录</span>
+          <span v-else>登录中</span>
+        </el-button>
       </div>
-    </el-form-item>
-    <div class="submit-button">
-      <div class="login-form-options"><a href="#" @click="forgetPwd">忘记密码？</a></div>
-      <el-button style="width: 100%" size="large" type="primary" @click="handleLogin" :loading="loading">
-        <span v-if="!loading">登录</span>
-        <span v-else>登录中</span>
-      </el-button>
-    </div>
     </el-form>
     <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail" />
     <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail" />
