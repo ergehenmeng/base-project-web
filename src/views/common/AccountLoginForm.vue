@@ -1,5 +1,6 @@
 <template>
-  <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" v-if="tabIndex === 0">
+  <div>
+    <el-form class="login-form" :rules="formRules" ref="formDataRef" :model="formData" v-if="tabIndex === 0">
     <el-form-item prop="userName">
       <el-input placeholder="账户名/手机号" maxlength="15" v-model="formData.userName" size="large">
         <template #prefix>
@@ -39,9 +40,10 @@
         <span v-else>登录中</span>
       </el-button>
     </div>
-  </el-form>
-  <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail" />
-  <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail" />
+    </el-form>
+    <TotpPrompt ref="totpRef" @reload="loginSuccessHandle" @close="loginFail" />
+    <TotpScanForm ref="totpScanRef" @reload="loginSuccessHandle" @close="loginFail" />
+  </div>
 </template>
 <script setup>
 import useUserStore from '@/store/user';

@@ -8,12 +8,11 @@
           <a href="javascript:void(0);" :class="{ active: tabIndex === 1 }" @click="tabIndex = 1">短信登录</a>
         </div>
         <div class="login-form-container">
-          <keep-alive>
-            <AccountLoginForm v-if="tabIndex === 0" />
-          </keep-alive>
-          <keep-alive>
-            <SmsLoginForm v-if="tabIndex === 1" />
-          </keep-alive>
+          <Transition :name="tabIndex === 0 ? 'form-slide-right' : 'form-slide-left'" mode="out-in">
+            <KeepAlive>
+              <component :is="tabIndex === 0 ? AccountLoginForm : SmsLoginForm" />
+            </KeepAlive>
+          </Transition>
         </div>
         <div class="login-copyright"><span>{{ systemName }}</span></div>
       </div>
@@ -92,12 +91,39 @@ const systemName = import.meta.env.VITE_SYSTEM_NAME;
         height: 300px;
         padding-top: 20px;
       }
+      .form-slide-left-enter-active,
+      .form-slide-left-leave-active,
+      .form-slide-right-enter-active,
+      .form-slide-right-leave-active {
+        transition:
+          opacity 280ms ease-in-out,
+          transform 280ms cubic-bezier(0.65, 0, 0.35, 1);
+      }
+      .form-slide-left-enter-from,
+      .form-slide-right-leave-to {
+        opacity: 0;
+        transform: translate3d(32px, 0, 0);
+      }
+      .form-slide-left-leave-to,
+      .form-slide-right-enter-from {
+        opacity: 0;
+        transform: translate3d(-32px, 0, 0);
+      }
       .login-copyright {
         color: #7d89a3;
         font-size: 14px;
         line-height: 20px;
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-slide-left-enter-active,
+  .form-slide-left-leave-active,
+  .form-slide-right-enter-active,
+  .form-slide-right-leave-active {
+    transition-duration: 0.01ms;
   }
 }
 </style>
