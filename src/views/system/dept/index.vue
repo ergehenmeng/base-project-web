@@ -12,10 +12,10 @@
     </div>
     <div class="content-main">
       <el-table row-key="code" :data="pageData" style="width: 100%" stripe v-loading="loading" max-height="700" show-overflow-tooltip>
-        <el-table-column prop="title" label="部门名称" width="150"/>
-        <el-table-column prop="remark" label="备注" width="300" />
-        <el-table-column prop="createTime" label="创建时间" width="200" />
-        <el-table-column prop="updateTime" label="更新时间" width="200" />
+        <el-table-column prop="title" label="部门名称" />
+        <el-table-column prop="remark" label="备注" />
+        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column prop="updateTime" label="更新时间" />
         <el-table-column label="操作">
           <template #header>
             <span>操作</span>

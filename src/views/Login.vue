@@ -1,7 +1,6 @@
 <template>
   <div class="login-container">
     <div class="login-layout">
-      <div class="login-layout-left"></div>
       <div class="login-layout-right">
         <div class="login-switch-tab" :class="{ 'is-sms': tabIndex === 1 }">
           <a href="javascript:void(0);" :class="{ active: tabIndex === 0 }" @click="tabIndex = 0">密码登录</a>
@@ -14,7 +13,9 @@
             </KeepAlive>
           </Transition>
         </div>
-        <div class="login-copyright"><span>{{ systemName }}</span></div>
+        <div class="login-copyright"
+          ><span>{{ systemName }}</span></div
+        >
       </div>
     </div>
   </div>
@@ -28,32 +29,26 @@ const systemName = import.meta.env.VITE_SYSTEM_NAME;
 <style lang="scss" scoped>
 .login-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 100%;
   overflow: hidden;
-  background: url('@/assets/images/background-square.png') center / cover no-repeat;
+  background: url('@/assets/images/background-left.png') center / cover no-repeat;
 
   .login-layout {
-    width: 900px;
-    height: 450px;
+    height: 420px;
     display: flex;
     justify-content: center;
+    margin-right: 300px;
     align-items: center;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
-
-    .login-layout-left {
-      width: 500px;
-      height: 100%;
-      background: url('@/assets/images/login.png') center / cover no-repeat;
-    }
-
     .login-layout-right {
       width: 400px;
       height: 100%;
       padding: 30px;
+
       display: grid;
       place-items: center;
       background-color: #fff;
