@@ -8,7 +8,8 @@ import { createPersistedState } from 'pinia-plugin-persistedstate';
 import hasPerm from '@/directive/hasPerm.js';
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import vue3TreeOrg from 'vue3-tree-org';
-import "vue3-tree-org/lib/vue3-tree-org.css";
+import 'vue3-tree-org/lib/vue3-tree-org.css';
+import 'nprogress/nprogress.css';
 
 const app = createApp(App);
 // 绑定路由

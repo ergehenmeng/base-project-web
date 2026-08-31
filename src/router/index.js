@@ -1,7 +1,9 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import useUserStore from '@/store/user';
 import useBreadcrumbStore from '@/store/breadcrumb';
+import { useNProgress } from '@vueuse/integrations/useNProgress';
 
+const { isLoading } = useNProgress(null, { showSpinner: false });
 export const routes = [
   {
     path: '/login',
@@ -43,6 +45,7 @@ const whiteList = ['/login'];
 router.beforeEach((to, from, next) => {
   const breadcrumbStore = useBreadcrumbStore();
   breadcrumbStore.switchPage(to);
+  isLoading.value = true;
   const userStore = useUserStore();
   // 用户已登录, 即使访问登录页, 也跳转到首页
   if (userStore.isLogin) {
@@ -58,6 +61,10 @@ router.beforeEach((to, from, next) => {
     next('/login');
   }
 });
+
+router.afterEach(() => {
+  isLoading.value = false;
+})
 
 const modules = import.meta.glob('./modules/*/*.*', { eager: true });
 
