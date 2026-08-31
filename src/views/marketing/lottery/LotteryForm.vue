@@ -392,7 +392,7 @@ onMounted(() => {
 
   .lottery-page {
     border: 1px solid #ebeef5;
-    background: url('@/assets/images/lottery-bg.jpg') 0 0 / 374px 812px;
+    background: url('@/assets/images/lottery-1.jpg') 0 0 / 374px 812px;
     height: 812px;
     width: 374px;
     position: relative;
